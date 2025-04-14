@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using RecursosHumanos.Bussines;
+using RecursosHumanos.Utilities;
+
+namespace RecursosHumanos.View
+{
+    public partial class frmDepartamentos : Form
+    {
+        public frmDepartamentos()
+        {
+            InitializeComponent();
+            InicializarVentana();
+        }
+
+        public void InicializarVentana()
+        {
+            iniciarPaneles();
+            frmListadoDepartamentos formLeer = new frmListadoDepartamentos(pnlCambiante);
+            Formas.abrirPanelForm(formLeer, pnlCambiante);
+        }
+
+        private void iniciarPaneles()
+        {
+            pnlCambiante.Controls.Clear();
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            // Pasamos la referencia del panel pnlCambiante al formulario frmAgregarDepartamento
+            frmAgregarDepartamento formAgregar = new frmAgregarDepartamento(pnlCambiante);
+            Formas.abrirPanelForm(formAgregar, pnlCambiante);
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            // Pasamos la referencia del panel pnlCambiante al formulario frmAgregarDepartamento
+            frmEliminarDepartamento formEliminar = new frmEliminarDepartamento(pnlCambiante);
+            Formas.abrirPanelForm(formEliminar, pnlCambiante);
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+
+            // Pasamos la referencia del panel pnlCambiante al formulario frmAgregarDepartamento
+            frmActualizarDepartamento formActualizar = new frmActualizarDepartamento(pnlCambiante);
+            Formas.abrirPanelForm(formActualizar, pnlCambiante);
+        }
+
+        private void btnConsultar_Click(object sender, EventArgs e)
+        {
+            // Pasamos la referencia del panel pnlCambiante al formulario frmAgregarDepartamento
+            frmListadoDepartamentos formLeer = new frmListadoDepartamentos(pnlCambiante);
+            Formas.abrirPanelForm(formLeer, pnlCambiante);
+        }
+    }
+}
