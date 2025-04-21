@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RecursosHumanos.Data
 {
-    internal class ContratoDataAccess
+    internal class ContratosDataAccess
     {
     }
 }

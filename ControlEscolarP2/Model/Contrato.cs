@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace RecursosHumanos.Model
 {
-     class Contrato
+    public class Contrato
     {
         public int  Id_Contrato { get; set; }
         public int Id_Empleado { get; set; }
-
         public int Id_TipoContrato { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
