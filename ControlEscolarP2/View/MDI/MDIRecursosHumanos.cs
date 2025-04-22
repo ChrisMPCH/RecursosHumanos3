@@ -1,4 +1,5 @@
 ﻿using RecursosHumanos.Utilities;
+using RecursosHumanos.View.Contratos;
 using RecursosHumanos.View.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -201,8 +202,8 @@ namespace RecursosHumanos.View
         }
         private void btnListaContratos_Click(object sender, EventArgs e)
         {
-            Form frmListaContratos = new frmListaContratos();
-            abrirChildFormMDI(frmListaContratos);
+            Form frmActualizarContrato = new frmActualizarContrato();
+            abrirChildFormMDI(frmActualizarContrato);
         }
 
         #endregion

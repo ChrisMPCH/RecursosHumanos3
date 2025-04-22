@@ -8,12 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View
 {
     public partial class frmContratos : Form
     {
+        private readonly ContratoController _contratosController = new ContratoController();
+       // private readonly EmpleadosController _empleadosController = new EmpleadosController();
+
+
         public frmContratos()
         {
             InitializeComponent(); // Inicializa los componentes del formulario
@@ -89,43 +95,116 @@ namespace RecursosHumanos.View
         // Evento que se ejecuta al presionar el botón "Generar Contrato"
         private void btnGenerar1_Click(object sender, EventArgs e)
         {
-            // Validar matrícula
-            if (string.IsNullOrWhiteSpace(txtMatricula1.Text) || txtMatricula1.Text == "Ingresa tu matricula")
+            try
             {
-                MessageBox.Show("Por favor, ingrese su matrícula.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+                // VALIDACIÓN DE MATRÍCULA
+                string matricula = txtMatricula1.Text.Trim();
 
-            if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula1.Text.Trim()))
+                if (string.IsNullOrWhiteSpace(matricula) || matricula == "Ingresa tu matricula")
+                {
+                    MessageBox.Show("Por favor, ingrese su matrícula.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (!EmpleadoNegocio.EsNoMatriculaValido(matricula))
+                {
+                    MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // VALIDACIÓN DE CAMPOS VACÍOS
+                if (DatosVacios())
+                {
+                    MessageBox.Show("Por favor, llene todos los campos obligatorios.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // VALIDACIÓN DE FECHAS
+                if (!EmpleadoNegocio.ValidarFechas(dtpFechaInicio1.Value, dtpFechaFin1.Value))
+                {
+                    MessageBox.Show("La fecha de inicio debe ser menor que la fecha de fin.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // VALIDACIÓN DE HORARIOS
+                if (!EmpleadoNegocio.ValidarHorario(dtpHoraEntrada.Value, dtpHoraSalida1.Value))
+                {
+                    MessageBox.Show("La hora de entrada debe ser menor que la hora de salida.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // VALIDACIÓN DE SALARIO
+                if (!double.TryParse(txtSalario.Text, out double sueldo) || sueldo <= 0)
+                {
+                    MessageBox.Show("Por favor, ingrese un salario válido mayor a 0.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // VALIDACIÓN DE TIPO DE CONTRATO
+                if (!(cbxTipoContrato1.SelectedItem is KeyValuePair<int, string> tipoContratoSeleccionado))
+                {
+                    MessageBox.Show("Por favor, seleccione un tipo de contrato válido.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // CONSTRUCCIÓN DE EMPLEADO
+                Empleado empleado = new Empleado
+                {
+                    Matricula = matricula,
+                    // Asegúrate que tenga Id_Persona si ya fue buscado antes
+                };
+
+                // CONSTRUCCIÓN DE CONTRATO
+                Contrato contrato = new Contrato
+                {
+                    Id_TipoContrato = tipoContratoSeleccionado.Key,
+                    FechaInicio = dtpFechaInicio1.Value.Date,
+                    FechaFin = dtpFechaFin1.Value.Date,
+                    HoraEntrada = dtpHoraEntrada.Value.TimeOfDay,
+                    HoraSalida = dtpHoraSalida1.Value.TimeOfDay,
+                    Sueldo = sueldo,
+                    Descripcion = txtDescrpcion.Text.Trim(),
+                    Estatus = true
+                };
+
+                // LLAMADA AL CONTROLLER
+                var resultado = _contratosController.RegistrarContrato(contrato, empleado);
+
+                if (resultado.id > 0)
+                {
+                    MessageBox.Show(resultado.mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarFormulario();
+                }
+                else
+                {
+                    MessageBox.Show(resultado.mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
             {
-                MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            // Validar que todos los campos estén llenos
-            if (DatosVacios())
-            {
-                MessageBox.Show("Por favor, llene todos los campos.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Validar fechas
-            if (!EmpleadoNegocio.ValidarFechas(dtpFechaInicio1.Value, dtpFechaFin1.Value))
-            {
-                MessageBox.Show("La fecha de inicio debe ser menor que la fecha de fin.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Validar horario de entrada y salida
-            if (!EmpleadoNegocio.ValidarHorario(dtpHoraEntrada.Value, dtpHoraSalida1.Value))
-            {
-                MessageBox.Show("La hora de entrada debe ser menor que la hora de salida.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // Si todo es válido, generar contrato
-            MessageBox.Show("Contrato generado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void LimpiarFormulario()
+        {
+            // TextBoxes
+            txtMatricula1.Text = "Ingresa tu matricula";
+            txtDescrpcion.Text = "Ingresa una descripcion";
+            txtSalario.Text = "Ingresa el salario";
+
+            // ComboBox de tipo de contrato
+            cbxTipoContrato1.SelectedIndex = 0;
+
+            // DateTimePickers
+            dtpFechaInicio1.Value = DateTime.Today;
+            dtpFechaFin1.Value = DateTime.Today;
+
+            dtpHoraEntrada.Value = DateTime.Now;
+            dtpHoraSalida1.Value = DateTime.Now;
+        }
+
+
 
 
         private void btnBuscar_Click_1(object sender, EventArgs e)

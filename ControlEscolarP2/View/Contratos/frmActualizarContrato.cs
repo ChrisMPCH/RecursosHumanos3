@@ -1,0 +1,314 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Model;
+using RecursosHumanos.Utilities;
+
+namespace RecursosHumanos.View.Contratos
+{
+    public partial class frmActualizarContrato : Form
+    {
+        private readonly ContratoController _contratosController = new ContratoController();
+        public frmActualizarContrato()
+        {
+            InitializeComponent();
+            IniciarTabla();
+            InicializarCampos();
+            Panel pnlActualizar = splitContainer1.Panel1;
+            Panel pnlListaContratos = splitContainer1.Panel2;
+            InicializaVentanaContratos();
+        }
+        private void InicializaVentanaContratos()
+        {
+            PoblaComboTipoContrato();
+            splitContainer1.Panel1Collapsed = true;
+            dtpFechaInicio1.Value = DateTime.Now;
+            dtpFechaFin.Value = DateTime.Now;
+        }
+        private void PoblaComboTipoContrato()
+        {
+            Dictionary<int, string> list_tipoCon = new Dictionary<int, string>
+            {
+                { 1, "Fijo" },
+                { 2, "Temporal" }
+            };
+
+            cbxTipoContrato1.DataSource = new BindingSource(list_tipoCon, null);
+            cbxTipoContrato1.DisplayMember = "Value";
+            cbxTipoContrato1.ValueMember = "Key";
+
+            cbxTipoContrato1.SelectedValue = 1;
+        }
+
+        public static void InicializarCampos()
+        {
+            Formas.ConfigurarTextBox(txtMatricula1, "Ingresa tu matricula");
+
+        }
+
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            if (BuscarMatricula())
+            {
+                MessageBox.Show("Cargando datos.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private bool BuscarMatricula()
+        {
+            if (string.IsNullOrWhiteSpace(txtMatricula1.Text) || txtMatricula1.Text == "Ingresa tu matricula")
+            {
+                MessageBox.Show("Por favor, ingrese su matrícula.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula1.Text.Trim()))
+            {
+                MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void IniciarTabla()
+        {
+            Formas.ConfigurarEstiloDataGridView(dataGridContratos); // Configurar el estilo del DataGridView
+            ConfigurarColumnas(); // Agregar columnas personalizadas
+        }
+
+        private void ConfigurarColumnas()
+        {
+            dataGridContratos.Columns.Clear();
+            dataGridContratos.AutoGenerateColumns = false;
+
+            // ID oculto para manejar edición
+            DataGridViewTextBoxColumn colId = new DataGridViewTextBoxColumn();
+            colId.Name = "Id_Contrato";
+            colId.HeaderText = "ID";
+            colId.DataPropertyName = "Id_Contrato";
+            colId.Visible = false;
+            dataGridContratos.Columns.Add(colId);
+
+            dataGridContratos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Matricula",
+                HeaderText = "Matrícula",
+                DataPropertyName = "Matricula"
+            });
+
+            dataGridContratos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Nombre",
+                HeaderText = "Nombre",
+                DataPropertyName = "NombreEmpleado"
+            });
+
+            dataGridContratos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "TipoContrato",
+                HeaderText = "Tipo Contrato",
+                DataPropertyName = "NombreTipoContrato"
+            });
+
+            dataGridContratos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Salario",
+                HeaderText = "Salario",
+                DataPropertyName = "Sueldo",
+                DefaultCellStyle = { Format = "C2" } // Formato moneda
+            });
+
+            dataGridContratos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "FechaInicio",
+                HeaderText = "Fecha Inicio",
+                DataPropertyName = "FechaInicio",
+                DefaultCellStyle = { Format = "dd/MM/yyyy" }
+            });
+
+            dataGridContratos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "FechaFin",
+                HeaderText = "Fecha Fin",
+                DataPropertyName = "FechaFin",
+                DefaultCellStyle = { Format = "dd/MM/yyyy" }
+            });
+
+            dataGridContratos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "HoraEntrada",
+                HeaderText = "Hora Entrada",
+                DataPropertyName = "HoraEntrada",
+                DefaultCellStyle = { Format = @"hh\:mm" } // TimeSpan
+            });
+
+            dataGridContratos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "HoraSalida",
+                HeaderText = "Hora Salida",
+                DataPropertyName = "HoraSalida",
+                DefaultCellStyle = { Format = @"hh\:mm" }
+            });
+
+            dataGridContratos.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Descripcion",
+                HeaderText = "Descripción",
+                DataPropertyName = "Descripcion"
+            });
+
+            dataGridContratos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridContratos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridContratos.ReadOnly = true;
+            dataGridContratos.AllowUserToAddRows = false;
+            dataGridContratos.AllowUserToDeleteRows = false;
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            if (splitContainer1.Panel1Collapsed)
+            {
+                splitContainer1.Panel1Collapsed = false;
+                btnActualizar.Text = "Ocultar Actualizar";
+
+                // Solo recargar si la matrícula está llena y válida
+                string matricula = txtMatricula1.Text.Trim();
+
+                if (!string.IsNullOrWhiteSpace(matricula) && matricula != "Ingresa tu matricula")
+                {
+                    CargarContratos(matricula);
+                }
+            }
+            else
+            {
+                splitContainer1.Panel1Collapsed = true;
+                btnActualizar.Text = "Actualizar";
+            }
+        }
+
+      
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            Contrato contratoActualizado = new Contrato
+            {
+                Matricula = txtMatricula1.Text.Trim(),
+                Id_TipoContrato = ((KeyValuePair<int, string>)cbxTipoContrato1.SelectedItem).Key,
+                Sueldo = double.TryParse(txtSalario.Text, out double sueldo) ? sueldo : 0,
+                FechaInicio = dtpFechaInicio1.Value.Date,
+                FechaFin = dtpFechaFin.Value.Date,
+                HoraEntrada = dtpHoraEntrada.Value.TimeOfDay,
+                HoraSalida = dtpHoraSalida.Value.TimeOfDay,
+                Descripcion = txtDescripcion.Text.Trim(),
+                Estatus = true
+            };
+
+            var resultado = _contratosController.ActualizarContrato(contratoActualizado);
+
+            if (resultado.exito)
+            {
+                MessageBox.Show(resultado.mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                splitContainer1.Panel1Collapsed = true;
+                btnActualizar.Text = "Actualizar";
+                CargarContratos(txtMatricula1.Text.Trim());
+            }
+            else
+            {
+                MessageBox.Show(resultado.mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CargarContratos(string matricula)
+        {
+            try
+            {
+                var contratos = _contratosController.ObtenerTodosLosContratosPorMatricula(matricula);
+                dataGridContratos.DataSource = null;
+
+                if (contratos == null || contratos.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron contratos para esta matrícula.", "Sin resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Id_Contrato", typeof(int));
+                dt.Columns.Add("Matricula", typeof(string));
+                dt.Columns.Add("TipoContrato", typeof(string));
+                dt.Columns.Add("FechaInicio", typeof(string));
+                dt.Columns.Add("FechaFin", typeof(string));
+                dt.Columns.Add("HoraEntrada", typeof(string));
+                dt.Columns.Add("HoraSalida", typeof(string));
+                dt.Columns.Add("Sueldo", typeof(string));
+                dt.Columns.Add("Descripcion", typeof(string));
+                dt.Columns.Add("EstadoLaboral", typeof(string));
+
+                foreach (var contrato in contratos)
+                {
+                    dt.Rows.Add(
+                        contrato.Id_Contrato,
+                        contrato.Matricula,
+                        contrato.Id_TipoContrato.ToString(), // podrías cambiarlo por el nombre si lo agregas después
+                        contrato.FechaInicio.ToString("dd/MM/yyyy"),
+                        contrato.FechaFin.ToString("dd/MM/yyyy"),
+                        contrato.HoraEntrada.ToString(@"hh\:mm"),
+                        contrato.HoraSalida.ToString(@"hh\:mm"),
+                        contrato.Sueldo.ToString("C2"),
+                        contrato.Descripcion,
+                        contrato.Estatus ? "Activo" : "Inactivo"
+                    );
+                }
+
+                dataGridContratos.DataSource = dt;
+                ConfigurarColumnas(); // Asegúrate de que esta coincida con las columnas de arriba
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar contratos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    
+
+        private void ObtenerDetalleContrato(int idContrato)
+        {
+            var contrato = _contratosController.ObtenerDetalleContrato(idContrato);
+
+            if (contrato == null)
+            {
+                MessageBox.Show("No se pudo obtener el contrato.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            txtMatricula1.Text = contrato.Matricula;
+            cbxTipoContrato1.SelectedValue = contrato.Id_TipoContrato;
+            txtSalario.Text = contrato.Sueldo.ToString("0.00");
+            dtpFechaInicio1.Value = contrato.FechaInicio;
+            dtpFechaFin.Value = contrato.FechaFin;
+            dtpHoraEntrada.Value = DateTime.Today + contrato.HoraEntrada;
+            dtpHoraSalida.Value = DateTime.Today + contrato.HoraSalida;
+            txtDescripcion.Text = contrato.Descripcion;
+
+            this.Tag = contrato.Id_Contrato;
+            splitContainer1.Panel1Collapsed = false;
+        }
+
+        private void dataGridContratos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                int idContrato = Convert.ToInt32(dataGridContratos.Rows[e.RowIndex].Cells["Id_Contrato"].Value);
+                ObtenerDetalleContrato(idContrato);
+            }
+        }
+    }
+}
