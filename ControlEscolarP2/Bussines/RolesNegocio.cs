@@ -10,7 +10,11 @@ namespace RecursosHumanos.Bussines
 {
     class RolesNegocio
     {
-        internal static bool EsRolValido(String rol)
+        internal static bool EsRolNombreValido(String rol)
+        {
+            return Validaciones.EsAlfanumericoValido(rol);
+        }
+        internal static bool EsRolCodigoValido(String rol)
         {
             return Validaciones.EsAlfanumericoValido(rol);
         }

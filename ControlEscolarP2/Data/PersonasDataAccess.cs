@@ -3,6 +3,7 @@ using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
 using NLog;
 using Npgsql;
+using System.Data;
 
 namespace RecursosHumanos.Data
 {
@@ -128,6 +129,73 @@ namespace RecursosHumanos.Data
             }
         }
 
+        /// <summary>
+        /// Elimina una persona por su ID
+        /// </summary>
+        public bool EliminarPersona(int id)
+        {
+            try
+            {
+                string query = "UPDATE human_resours.persona SET estatus = 0 WHERE id_persona = @Id";
+                var param = _dbAccess.CreateParameter("@Id", id);
+
+                _dbAccess.Connect();
+                int filas = _dbAccess.ExecuteNonQuery(query, param);
+                return filas > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al eliminar la persona con ID {id}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Devuelve una persona por su ID
+        /// </summary>
+        public Persona? ObtenerPersonaPorId(int id)
+        {
+            try
+            {
+                string query = "SELECT * FROM human_resours.persona WHERE id_persona = @Id";
+                var parametro = _dbAccess.CreateParameter("@Id", id);
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametro);
+
+                if (resultado.Rows.Count == 0) return null;
+
+                DataRow row = resultado.Rows[0];
+                return new Persona
+                {
+                    Id_Persona = Convert.ToInt32(row["id_persona"]),
+                    Nombre = row["nombre"].ToString() ?? "",
+                    Ap_Paterno = row["ap_paterno"].ToString() ?? "",
+                    Ap_Materno = row["ap_materno"].ToString() ?? "",
+                    RFC = row["rfc"].ToString() ?? "",
+                    CURP = row["curp"].ToString() ?? "",
+                    Direccion = row["direccion"].ToString() ?? "",
+                    Telefono = row["telefono"].ToString() ?? "",
+                    Email = row["email"].ToString() ?? "",
+                    Fecha_Nacimiento = Convert.ToDateTime(row["fecha_nacimiento"]),
+                    Genero = row["genero"].ToString() ?? "",
+                    Estatus = Convert.ToInt16(row["estatus"])
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener persona con ID {id}");
+                return null;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
 
         //-----------------------------------------------------------------------------------------------------------------Existe()
 

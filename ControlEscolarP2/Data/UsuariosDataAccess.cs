@@ -235,8 +235,173 @@ namespace RecursosHumanos.Data
             }
         }
 
+        /// <summary>
+        /// Elimina un usuario de la base de datos por su ID
+        /// </summary>
+        /// <param name="idUsuario">ID del usuario a eliminar</param>
+        /// <returns>True si se eliminó correctamente</returns>
+        public bool EliminarUsuario(int idUsuario)
+        {
+            try
+            {
+                string query = "UPDATE administration.usuario SET estatus = 0 WHERE id_usuario = @Id";
+                var param = _dbAccess.CreateParameter("@Id", idUsuario);
+
+                _dbAccess.Connect();
+                int filas = _dbAccess.ExecuteNonQuery(query, param);
+                return filas > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al eliminar usuario con ID {idUsuario}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Devuelve un objeto Usuario por su ID (incluye los datos personales)
+        /// </summary>
+        /// <param name="idUsuario">ID del usuario</param>
+        /// <returns>Usuario o null si no se encuentra</returns>
+        public Usuario? ObtenerUsuarioPorId(int idUsuario)
+        {
+            try
+            {
+                string query = @"
+            SELECT u.*, p.*
+            FROM administration.usuario u
+            INNER JOIN human_resours.persona p ON u.id_persona = p.id_persona
+            WHERE u.id_usuario = @Id";
+
+                var param = _dbAccess.CreateParameter("@Id", idUsuario);
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, param);
+
+                if (resultado.Rows.Count == 0) return null;
+
+                DataRow row = resultado.Rows[0];
+
+                Persona persona = new Persona
+                {
+                    Id_Persona = Convert.ToInt32(row["id_persona"]),
+                    Nombre = row["nombre"].ToString() ?? "",
+                    Ap_Paterno = row["ap_paterno"].ToString() ?? "",
+                    Ap_Materno = row["ap_materno"].ToString() ?? "",
+                    RFC = row["rfc"].ToString() ?? "",
+                    CURP = row["curp"].ToString() ?? "",
+                    Direccion = row["direccion"].ToString() ?? "",
+                    Telefono = row["telefono"].ToString() ?? "",
+                    Email = row["email"].ToString() ?? "",
+                    Fecha_Nacimiento = Convert.ToDateTime(row["fecha_nacimiento"]),
+                    Genero = row["genero"].ToString() ?? "",
+                    Estatus = Convert.ToInt16(row["estatus"])
+                };
+
+                Usuario usuario = new Usuario
+                {
+                    Id_Usuario = Convert.ToInt32(row["id_usuario"]),
+                    Id_Persona = Convert.ToInt32(row["id_persona"]),
+                    Id_Rol = Convert.ToInt32(row["id_rol"]),
+                    UsuarioNombre = row["usuario"].ToString() ?? "",
+                    Contrasenia = row["contrasenia"].ToString() ?? "",
+                    Fecha_Creacion = Convert.ToDateTime(row["fecha_creacion"]),
+                    Fecha_Ultimo_Acceso = Convert.ToDateTime(row["fecha_ultimo_acceso"]),
+                    Estatus = Convert.ToInt16(row["estatus"]),
+                    DatosPersonales = persona
+                };
+
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener el usuario con ID {idUsuario}");
+                return null;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Valida si un usuario puede iniciar sesión según nombre de usuario, contraseña y estatus activo
+        /// </summary>
+        /// <param name="nombreUsuario">Nombre de usuario</param>
+        /// <param name="contrasenia">Contraseña</param>
+        /// <returns>Objeto Usuario si las credenciales son válidas, null si no</returns>
+        public Usuario? Login(string nombreUsuario, string contrasenia)
+        {
+            try
+            {
+                string query = @"
+            SELECT u.*, p.*
+            FROM administration.usuario u
+            INNER JOIN human_resours.persona p ON u.id_persona = p.id_persona
+            WHERE u.usuario = @Usuario AND u.contrasenia = @Contrasenia AND u.estatus = 1";
+
+                var parametros = new[]
+                {
+            _dbAccess.CreateParameter("@Usuario", nombreUsuario),
+            _dbAccess.CreateParameter("@Contrasenia", contrasenia)
+        };
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros);
+
+                if (resultado.Rows.Count == 0) return null;
+
+                DataRow row = resultado.Rows[0];
+
+                Persona persona = new Persona
+                {
+                    Id_Persona = Convert.ToInt32(row["id_persona"]),
+                    Nombre = row["nombre"].ToString() ?? "",
+                    Ap_Paterno = row["ap_paterno"].ToString() ?? "",
+                    Ap_Materno = row["ap_materno"].ToString() ?? "",
+                    RFC = row["rfc"].ToString() ?? "",
+                    CURP = row["curp"].ToString() ?? "",
+                    Direccion = row["direccion"].ToString() ?? "",
+                    Telefono = row["telefono"].ToString() ?? "",
+                    Email = row["email"].ToString() ?? "",
+                    Fecha_Nacimiento = Convert.ToDateTime(row["fecha_nacimiento"]),
+                    Genero = row["genero"].ToString() ?? "",
+                    Estatus = Convert.ToInt16(row["estatus"])
+                };
+
+                Usuario usuario = new Usuario
+                {
+                    Id_Usuario = Convert.ToInt32(row["id_usuario"]),
+                    Id_Persona = Convert.ToInt32(row["id_persona"]),
+                    Id_Rol = Convert.ToInt32(row["id_rol"]),
+                    UsuarioNombre = row["usuario"].ToString() ?? "",
+                    Contrasenia = row["contrasenia"].ToString() ?? "",
+                    Fecha_Creacion = Convert.ToDateTime(row["fecha_creacion"]),
+                    Fecha_Ultimo_Acceso = Convert.ToDateTime(row["fecha_ultimo_acceso"]),
+                    Estatus = Convert.ToInt16(row["estatus"]),
+                    DatosPersonales = persona
+                };
+
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al intentar iniciar sesión con usuario: {nombreUsuario}");
+                return null;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+
         //-----------------------------------------------------------------------------------------------------------------Existe()
-        
+
         /// <summary>
         /// Verifica si ya existe un nombre de usuario en la base de datos
         /// </summary>
@@ -262,6 +427,5 @@ namespace RecursosHumanos.Data
                 _dbAccess.Disconnect();
             }
         }
-
     }
 }

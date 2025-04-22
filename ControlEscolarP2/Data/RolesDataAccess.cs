@@ -3,6 +3,7 @@ using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
 using NLog;
 using Npgsql;
+using System.Data;
 
 namespace RecursosHumanos.Data
 {
@@ -28,76 +29,36 @@ namespace RecursosHumanos.Data
             }
         }
 
-
-
-        //-----------------------------------------------------------------------------------------------------------------Existe()
-
-
-    }
-}
-{
-    public class PersonasDataAccess
-    {
-        // Logger para registrar eventos, errores e información de esta clase
-        private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Data.PersonasDataAccess");
-
-        // Instancia del acceso a la base de datos PostgreSQL
-        private readonly PostgreSQLDataAccess _dbAccess;
-
-        // Constructor: inicializa la conexión a PostgreSQL
-        public PersonasDataAccess()
-        {
-            try
-            {
-                _dbAccess = PostgreSQLDataAccess.GetInstance();
-            }
-            catch (Exception e)
-            {
-                _logger.Fatal(e, "Error al inicializar PersonasDataAccess");
-                throw;
-            }
-        }
-
         /// <summary>
-        /// Inserta una nueva persona en la base de datos
+        /// Inserta un nuevo rol en la base de datos
         /// </summary>
-        /// <param name="persona">Objeto Persona a insertar</param>
-        /// <returns>ID generado o -1 si falla</returns>
-        public int InsertarPersona(Persona persona)
+        public int InsertarRol(Rol rol)
         {
             try
             {
-                string query = "INSERT INTO human_resours.persona (nombre, ap_paterno, ap_materno, rfc, curp, direccion, telefono, email, fecha_nacimiento, genero, estatus) " +
-                               "VALUES (@Nombre, @Ap_Paterno, @Ap_Materno, @RFC, @CURP, @Direccion, @Telefono, @Email, @FechaNacimiento, @Genero, @Estatus) " +
-                               "RETURNING id_persona;";
+                string query = @"
+                    INSERT INTO administration.roles (codigo, nombre, descripcion, estatus)
+                    VALUES (@Codigo, @Nombre, @Descripcion, @Estatus)
+                    RETURNING id_rol";
 
-                // Crear los parámetros para el query
                 var parametros = new[]
                 {
-                    _dbAccess.CreateParameter("@Nombre", persona.Nombre),
-                    _dbAccess.CreateParameter("@Ap_Paterno", persona.Ap_Paterno),
-                    _dbAccess.CreateParameter("@Ap_Materno", persona.Ap_Materno),
-                    _dbAccess.CreateParameter("@RFC", persona.RFC),
-                    _dbAccess.CreateParameter("@CURP", persona.CURP),
-                    _dbAccess.CreateParameter("@Direccion", persona.Direccion),
-                    _dbAccess.CreateParameter("@Telefono", persona.Telefono),
-                    _dbAccess.CreateParameter("@Email", persona.Email),
-                    _dbAccess.CreateParameter("@FechaNacimiento", persona.Fecha_Nacimiento),
-                    _dbAccess.CreateParameter("@Genero", persona.Genero),
-                    _dbAccess.CreateParameter("@Estatus", persona.Estatus)
+                    _dbAccess.CreateParameter("@Codigo", rol.Codigo),
+                    _dbAccess.CreateParameter("@Nombre", rol.Nombre),
+                    _dbAccess.CreateParameter("@Descripcion", rol.Descripcion),
+                    _dbAccess.CreateParameter("@Estatus", rol.Estatus)
                 };
 
-                // Ejecutar consulta
                 _dbAccess.Connect();
                 object? resultado = _dbAccess.ExecuteScalar(query, parametros);
                 int idGenerado = Convert.ToInt32(resultado);
 
-                _logger.Info($"Persona insertada correctamente con ID {idGenerado}");
+                _logger.Info($"Rol insertado correctamente con ID {idGenerado}");
                 return idGenerado;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Error al insertar persona: {persona.Nombre} {persona.Ap_Paterno}");
+                _logger.Error(ex, $"Error al insertar rol: {rol.Nombre}");
                 return -1;
             }
             finally
@@ -107,49 +68,38 @@ namespace RecursosHumanos.Data
         }
 
         /// <summary>
-        /// Actualiza los datos de una persona en la base de datos
+        /// Actualiza un rol existente
         /// </summary>
-        public bool ActualizarPersona(Persona persona)
+        public bool ActualizarRol(Rol rol)
         {
             try
             {
-                string query = "UPDATE human_resours.persona " +
-                               "SET nombre = @Nombre, ap_paterno = @Ap_Paterno, ap_materno = @Ap_Materno, " +
-                               "rfc = @RFC, curp = @CURP, direccion = @Direccion, telefono = @Telefono, " +
-                               "email = @Email, fecha_nacimiento = @FechaNacimiento, genero = @Genero, estatus = @Estatus " +
-                               "WHERE id_persona = @Id";
+                string query = @"
+                    UPDATE administration.roles
+                    SET codigo = @Codigo,
+                        nombre = @Nombre,
+                        descripcion = @Descripcion,
+                        estatus = @Estatus
+                    WHERE id_rol = @Id";
 
                 var parametros = new[]
                 {
-                    _dbAccess.CreateParameter("@Id", persona.Id_Persona),
-                    _dbAccess.CreateParameter("@Nombre", persona.Nombre),
-                    _dbAccess.CreateParameter("@Ap_Paterno", persona.Ap_Paterno),
-                    _dbAccess.CreateParameter("@Ap_Materno", persona.Ap_Materno),
-                    _dbAccess.CreateParameter("@RFC", persona.RFC),
-                    _dbAccess.CreateParameter("@CURP", persona.CURP),
-                    _dbAccess.CreateParameter("@Direccion", persona.Direccion),
-                    _dbAccess.CreateParameter("@Telefono", persona.Telefono),
-                    _dbAccess.CreateParameter("@Email", persona.Email),
-                    _dbAccess.CreateParameter("@FechaNacimiento", persona.Fecha_Nacimiento),
-                    _dbAccess.CreateParameter("@Genero", persona.Genero),
-                    _dbAccess.CreateParameter("@Estatus", persona.Estatus)
+                    _dbAccess.CreateParameter("@Id", rol.Id_Rol),
+                    _dbAccess.CreateParameter("@Codigo", rol.Codigo),
+                    _dbAccess.CreateParameter("@Nombre", rol.Nombre),
+                    _dbAccess.CreateParameter("@Descripcion", rol.Descripcion),
+                    _dbAccess.CreateParameter("@Estatus", rol.Estatus)
                 };
 
                 _dbAccess.Connect();
-                int filasAfectadas = _dbAccess.ExecuteNonQuery(query, parametros);
+                int filas = _dbAccess.ExecuteNonQuery(query, parametros);
 
-                if (filasAfectadas > 0)
-                {
-                    _logger.Info($"Persona con ID {persona.Id_Persona} actualizada correctamente");
-                    return true;
-                }
-
-                _logger.Warn($"No se encontró persona con ID {persona.Id_Persona}");
-                return false;
+                _logger.Info($"Rol actualizado ID {rol.Id_Rol}, filas afectadas: {filas}");
+                return filas > 0;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Error al actualizar la persona con ID {persona.Id_Persona}");
+                _logger.Error(ex, $"Error al actualizar rol ID {rol.Id_Rol}");
                 return false;
             }
             finally
@@ -158,28 +108,94 @@ namespace RecursosHumanos.Data
             }
         }
 
+        /// <summary>
+        /// Elimina un rol por ID
+        /// </summary>
+        public bool EliminarRol(int id)
+        {
+            try
+            {
+                string query = "UPDATE administration.roles SET estatus = 0 WHERE id_rol = @Id";
+                var parametro = _dbAccess.CreateParameter("@Id", id);
+
+                _dbAccess.Connect();
+                int filas = _dbAccess.ExecuteNonQuery(query, parametro);
+
+                _logger.Info($"Rol eliminado ID {id}, filas afectadas: {filas}");
+                return filas > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al eliminar rol ID {id}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Obtiene todos los roles registrados
+        /// </summary>
+        public List<Rol> ObtenerTodosLosRoles()
+        {
+            List<Rol> roles = new List<Rol>();
+
+            try
+            {
+                string query = "SELECT * FROM administration.roles ORDER BY id_rol";
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query);
+
+                foreach (DataRow row in resultado.Rows)
+                {
+                    Rol rol = new Rol
+                    {
+                        Id_Rol = Convert.ToInt32(row["id_rol"]),
+                        Codigo = row["codigo"].ToString() ?? "",
+                        Nombre = row["nombre"].ToString() ?? "",
+                        Descripcion = row["descripcion"].ToString() ?? "",
+                        Estatus = Convert.ToInt16(row["estatus"])
+                    };
+
+                    roles.Add(rol);
+                }
+
+                _logger.Info($"Se encontraron {roles.Count} roles.");
+                return roles;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener lista de roles");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
 
         //-----------------------------------------------------------------------------------------------------------------Existe()
-
         /// <summary>
-        /// Verifica si una CURP ya está registrada
+        /// Verifica si ya existe un rol con el mismo nombre
         /// </summary>
-        public bool ExisteCURP(string curp)
+        public bool ExisteNombreRol(string nombre)
         {
             try
             {
-                string query = "SELECT COUNT(*) FROM human_resours.persona WHERE curp = @CURP";
-                var parametro = _dbAccess.CreateParameter("@CURP", curp);
+                string query = "SELECT COUNT(*) FROM administration.roles WHERE nombre = @Nombre";
+                var parametro = _dbAccess.CreateParameter("@Nombre", nombre);
 
                 _dbAccess.Connect();
                 object? resultado = _dbAccess.ExecuteScalar(query, parametro);
                 int count = Convert.ToInt32(resultado);
-
                 return count > 0;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.Error(e, $"Error al verificar si existe CURP: {curp}");
+                _logger.Error(ex, $"Error al verificar existencia del rol por nombre: {nombre}");
                 throw;
             }
             finally
@@ -189,77 +205,23 @@ namespace RecursosHumanos.Data
         }
 
         /// <summary>
-        /// Verifica si un RFC ya está registrado
+        /// Verifica si ya existe un rol con el mismo código
         /// </summary>
-        public bool ExisteRFC(string rfc)
+        public bool ExisteCodigoRol(string codigo)
         {
             try
             {
-                string query = "SELECT COUNT(*) FROM human_resours.persona WHERE rfc = @RFC";
-                var parametro = _dbAccess.CreateParameter("@RFC", rfc);
-
-                _dbAccess.Connect();
-                object? resultado = _dbAccess.ExecuteScalar(query, parametro);
-                int count = Convert.ToInt32(resultado);
-
-                return count > 0;
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e, $"Error al verificar si existe RFC: {rfc}");
-                throw;
-            }
-            finally
-            {
-                _dbAccess.Disconnect();
-            }
-        }
-
-        /// <summary>
-        /// Verifica si un número de teléfono ya está registrado
-        /// </summary>
-        public bool ExisteTelefono(string telefono)
-        {
-            try
-            {
-                string query = "SELECT COUNT(*) FROM human_resours.persona WHERE telefono = @Telefono";
-                var parametro = _dbAccess.CreateParameter("@Telefono", telefono);
-
-                _dbAccess.Connect();
-                object? resultado = _dbAccess.ExecuteScalar(query, parametro);
-                int count = Convert.ToInt32(resultado);
-
-                return count > 0;
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e, $"Error al verificar si existe Teléfono: {telefono}");
-                throw;
-            }
-            finally
-            {
-                _dbAccess.Disconnect();
-            }
-        }
-
-        /// <summary>
-        /// Verifica si un correo ya existe en la base de datos
-        /// </summary>
-        public bool ExisteEmail(string email)
-        {
-            try
-            {
-                string query = "SELECT COUNT(*) FROM human_resours.persona WHERE email = @Email";
-                var parametro = _dbAccess.CreateParameter("@Email", email);
+                string query = "SELECT COUNT(*) FROM administration.roles WHERE codigo = @Codigo";
+                var parametro = _dbAccess.CreateParameter("@Codigo", codigo);
 
                 _dbAccess.Connect();
                 object? resultado = _dbAccess.ExecuteScalar(query, parametro);
                 int count = Convert.ToInt32(resultado);
                 return count > 0;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.Error(e, $"Error al verificar si existe Email: {email}");
+                _logger.Error(ex, $"Error al verificar existencia del rol por código: {codigo}");
                 throw;
             }
             finally

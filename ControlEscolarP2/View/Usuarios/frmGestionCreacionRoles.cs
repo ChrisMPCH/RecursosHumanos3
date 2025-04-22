@@ -1,4 +1,5 @@
 ﻿using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,12 @@ namespace RecursosHumanos.View
 {
     public partial class frmGestionCreacionRoles : Form
     {
+        private PermisosController _permisosController;
+
         public frmGestionCreacionRoles()
         {
             InitializeComponent();
+            _permisosController = new PermisosController();
             InicializarVentana();
         }
 
@@ -56,15 +60,21 @@ namespace RecursosHumanos.View
 
         public void InicializarCampos()
         {
-            Formas.ConfigurarTextBox(txtRol, "Ingrese codigo del Rol");
+            Formas.ConfigurarTextBox(txtRolNombre, "Ingrese nombre del Rol");
+            Formas.ConfigurarTextBox(txtRolCodigo, "Ingrese codigo del Rol");
             Formas.ConfigurarTextBox(txtDescripcion, "Describa lo que realizara el rol");
         }
 
         public bool DatosVaciosRoles()
         {
-            if (txtRol.Text == "Ingrese nombre del Rol" || txtRol.Text == "")
+            if (txtRolNombre.Text == "Ingrese nombre del Rol" || txtRolCodigo.Text == "")
             {
-                MessageBox.Show("Ingrese el nombre del Rol", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Ingrese nombre del Rol", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            if (txtRolCodigo.Text == "Ingrese codigo del Rol" || txtRolCodigo.Text == "")
+            {
+                MessageBox.Show("Ingrese codigo del Rol", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             if (txtDescripcion.Text == "Describa lo que realizara el rol" || txtDescripcion.Text == "")
@@ -77,9 +87,14 @@ namespace RecursosHumanos.View
 
         public bool DatosCorrectosRoles()
         {
-            if (!RolesNegocio.EsRolValido(txtRol.Text.Trim()))
+            if (!RolesNegocio.EsRolNombreValido(txtRolNombre.Text.Trim()))
             {
-                MessageBox.Show("Rol inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nombre del Rol inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            if (!RolesNegocio.EsRolCodigoValido(txtRolCodigo.Text.Trim()))
+            {
+                MessageBox.Show("Codigo del Rol inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             if (!RolesNegocio.EsDescripcionValida(txtDescripcion.Text.Trim()))
@@ -108,25 +123,20 @@ namespace RecursosHumanos.View
         //--------------------------------------------------------------------------------Llenado tabla
         private void FormLoad()
         {
-            // Lista de usuarios con datos simulados
-            List<Permiso> listaPermisos = new List<Permiso>
-            {
-                new Permiso { Codigo = "1ddd", Descripcion = "Altas", Estatus = "Activo", Check = false },
-                new Permiso { Codigo = "2ddd", Descripcion = "Bajas", Estatus = "Activo", Check = false },
-                new Permiso { Codigo = "3ddd", Descripcion = "Consultas", Estatus = "Activo", Check = false },
-                new Permiso { Codigo = "4ddd", Descripcion = "Actualizaciones", Estatus = "Activo", Check = false }
-            };
-
-            // Asignar la lista al DataGridView
-            dataGridPermisos.DataSource = listaPermisos;
+            CargarPermisosEnTabla();
         }
 
-        public class Permiso
+        private void CargarPermisosEnTabla()
         {
-            public string Codigo { get; set; }
-            public string Descripcion { get; set; }
-            public string Estatus { get; set; }
-            public bool Check { get; set; }
+            try
+            {
+                var listaPermisos = _permisosController.ObtenerPermisos();
+                dataGridPermisos.DataSource = listaPermisos;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los permisos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
     }

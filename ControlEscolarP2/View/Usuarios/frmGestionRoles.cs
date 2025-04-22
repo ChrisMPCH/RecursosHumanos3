@@ -86,7 +86,7 @@ namespace RecursosHumanos.View
 
         public bool DatosCorrectosRoles()
         {
-            if (!RolesNegocio.EsRolValido(txtRol.Text.Trim()))
+            if (!RolesNegocio.EsRolCodigoValido(txtRol.Text.Trim()))
             {
                 MessageBox.Show("Rol inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -204,5 +204,9 @@ namespace RecursosHumanos.View
             public string Estatus { get; set; }
         }
 
+        private void lblTitulo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
