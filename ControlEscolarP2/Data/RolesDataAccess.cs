@@ -1,0 +1,271 @@
+﻿using System;
+using RecursosHumanos.Model;
+using RecursosHumanos.Utilities;
+using NLog;
+using Npgsql;
+
+namespace RecursosHumanos.Data
+{
+    public class RolesDataAccess
+    {
+        // Logger para registrar eventos, errores e información de esta clase
+        private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Data.RolesDataAccess");
+
+        // Instancia del acceso a la base de datos PostgreSQL
+        private readonly PostgreSQLDataAccess _dbAccess;
+
+        // Constructor: inicializa la conexión a PostgreSQL
+        public RolesDataAccess()
+        {
+            try
+            {
+                _dbAccess = PostgreSQLDataAccess.GetInstance();
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal(e, "Error al inicializar RolesDataAccess");
+                throw;
+            }
+        }
+
+
+
+        //-----------------------------------------------------------------------------------------------------------------Existe()
+
+
+    }
+}
+{
+    public class PersonasDataAccess
+    {
+        // Logger para registrar eventos, errores e información de esta clase
+        private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Data.PersonasDataAccess");
+
+        // Instancia del acceso a la base de datos PostgreSQL
+        private readonly PostgreSQLDataAccess _dbAccess;
+
+        // Constructor: inicializa la conexión a PostgreSQL
+        public PersonasDataAccess()
+        {
+            try
+            {
+                _dbAccess = PostgreSQLDataAccess.GetInstance();
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal(e, "Error al inicializar PersonasDataAccess");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Inserta una nueva persona en la base de datos
+        /// </summary>
+        /// <param name="persona">Objeto Persona a insertar</param>
+        /// <returns>ID generado o -1 si falla</returns>
+        public int InsertarPersona(Persona persona)
+        {
+            try
+            {
+                string query = "INSERT INTO human_resours.persona (nombre, ap_paterno, ap_materno, rfc, curp, direccion, telefono, email, fecha_nacimiento, genero, estatus) " +
+                               "VALUES (@Nombre, @Ap_Paterno, @Ap_Materno, @RFC, @CURP, @Direccion, @Telefono, @Email, @FechaNacimiento, @Genero, @Estatus) " +
+                               "RETURNING id_persona;";
+
+                // Crear los parámetros para el query
+                var parametros = new[]
+                {
+                    _dbAccess.CreateParameter("@Nombre", persona.Nombre),
+                    _dbAccess.CreateParameter("@Ap_Paterno", persona.Ap_Paterno),
+                    _dbAccess.CreateParameter("@Ap_Materno", persona.Ap_Materno),
+                    _dbAccess.CreateParameter("@RFC", persona.RFC),
+                    _dbAccess.CreateParameter("@CURP", persona.CURP),
+                    _dbAccess.CreateParameter("@Direccion", persona.Direccion),
+                    _dbAccess.CreateParameter("@Telefono", persona.Telefono),
+                    _dbAccess.CreateParameter("@Email", persona.Email),
+                    _dbAccess.CreateParameter("@FechaNacimiento", persona.Fecha_Nacimiento),
+                    _dbAccess.CreateParameter("@Genero", persona.Genero),
+                    _dbAccess.CreateParameter("@Estatus", persona.Estatus)
+                };
+
+                // Ejecutar consulta
+                _dbAccess.Connect();
+                object? resultado = _dbAccess.ExecuteScalar(query, parametros);
+                int idGenerado = Convert.ToInt32(resultado);
+
+                _logger.Info($"Persona insertada correctamente con ID {idGenerado}");
+                return idGenerado;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al insertar persona: {persona.Nombre} {persona.Ap_Paterno}");
+                return -1;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Actualiza los datos de una persona en la base de datos
+        /// </summary>
+        public bool ActualizarPersona(Persona persona)
+        {
+            try
+            {
+                string query = "UPDATE human_resours.persona " +
+                               "SET nombre = @Nombre, ap_paterno = @Ap_Paterno, ap_materno = @Ap_Materno, " +
+                               "rfc = @RFC, curp = @CURP, direccion = @Direccion, telefono = @Telefono, " +
+                               "email = @Email, fecha_nacimiento = @FechaNacimiento, genero = @Genero, estatus = @Estatus " +
+                               "WHERE id_persona = @Id";
+
+                var parametros = new[]
+                {
+                    _dbAccess.CreateParameter("@Id", persona.Id_Persona),
+                    _dbAccess.CreateParameter("@Nombre", persona.Nombre),
+                    _dbAccess.CreateParameter("@Ap_Paterno", persona.Ap_Paterno),
+                    _dbAccess.CreateParameter("@Ap_Materno", persona.Ap_Materno),
+                    _dbAccess.CreateParameter("@RFC", persona.RFC),
+                    _dbAccess.CreateParameter("@CURP", persona.CURP),
+                    _dbAccess.CreateParameter("@Direccion", persona.Direccion),
+                    _dbAccess.CreateParameter("@Telefono", persona.Telefono),
+                    _dbAccess.CreateParameter("@Email", persona.Email),
+                    _dbAccess.CreateParameter("@FechaNacimiento", persona.Fecha_Nacimiento),
+                    _dbAccess.CreateParameter("@Genero", persona.Genero),
+                    _dbAccess.CreateParameter("@Estatus", persona.Estatus)
+                };
+
+                _dbAccess.Connect();
+                int filasAfectadas = _dbAccess.ExecuteNonQuery(query, parametros);
+
+                if (filasAfectadas > 0)
+                {
+                    _logger.Info($"Persona con ID {persona.Id_Persona} actualizada correctamente");
+                    return true;
+                }
+
+                _logger.Warn($"No se encontró persona con ID {persona.Id_Persona}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al actualizar la persona con ID {persona.Id_Persona}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+
+        //-----------------------------------------------------------------------------------------------------------------Existe()
+
+        /// <summary>
+        /// Verifica si una CURP ya está registrada
+        /// </summary>
+        public bool ExisteCURP(string curp)
+        {
+            try
+            {
+                string query = "SELECT COUNT(*) FROM human_resours.persona WHERE curp = @CURP";
+                var parametro = _dbAccess.CreateParameter("@CURP", curp);
+
+                _dbAccess.Connect();
+                object? resultado = _dbAccess.ExecuteScalar(query, parametro);
+                int count = Convert.ToInt32(resultado);
+
+                return count > 0;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, $"Error al verificar si existe CURP: {curp}");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Verifica si un RFC ya está registrado
+        /// </summary>
+        public bool ExisteRFC(string rfc)
+        {
+            try
+            {
+                string query = "SELECT COUNT(*) FROM human_resours.persona WHERE rfc = @RFC";
+                var parametro = _dbAccess.CreateParameter("@RFC", rfc);
+
+                _dbAccess.Connect();
+                object? resultado = _dbAccess.ExecuteScalar(query, parametro);
+                int count = Convert.ToInt32(resultado);
+
+                return count > 0;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, $"Error al verificar si existe RFC: {rfc}");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Verifica si un número de teléfono ya está registrado
+        /// </summary>
+        public bool ExisteTelefono(string telefono)
+        {
+            try
+            {
+                string query = "SELECT COUNT(*) FROM human_resours.persona WHERE telefono = @Telefono";
+                var parametro = _dbAccess.CreateParameter("@Telefono", telefono);
+
+                _dbAccess.Connect();
+                object? resultado = _dbAccess.ExecuteScalar(query, parametro);
+                int count = Convert.ToInt32(resultado);
+
+                return count > 0;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, $"Error al verificar si existe Teléfono: {telefono}");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        /// <summary>
+        /// Verifica si un correo ya existe en la base de datos
+        /// </summary>
+        public bool ExisteEmail(string email)
+        {
+            try
+            {
+                string query = "SELECT COUNT(*) FROM human_resours.persona WHERE email = @Email";
+                var parametro = _dbAccess.CreateParameter("@Email", email);
+
+                _dbAccess.Connect();
+                object? resultado = _dbAccess.ExecuteScalar(query, parametro);
+                int count = Convert.ToInt32(resultado);
+                return count > 0;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, $"Error al verificar si existe Email: {email}");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+    }
+}
