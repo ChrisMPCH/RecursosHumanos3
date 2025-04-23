@@ -325,7 +325,7 @@ namespace RecursosHumanos.Data
         {
             try
             {
-                _logger.Debug($"Actualizando contrato con ID {contrato.Id_Contrato} para el empleado con ID {contrato.Matricula}");
+                _logger.Debug($"Actualizando contrato con ID {contrato.Id_Contrato} para el empleado con Matricula {contrato.Matricula}");
 
                 string queryContrato = @"
             UPDATE human_resours.contrato

@@ -202,8 +202,8 @@ namespace RecursosHumanos.View
         }
         private void btnListaContratos_Click(object sender, EventArgs e)
         {
-            Form frmActualizarContrato = new frmActualizarContrato();
-            abrirChildFormMDI(frmActualizarContrato);
+            Form frmActualizarContratos = new frmActualizarContratos();
+            abrirChildFormMDI(frmActualizarContratos);
         }
 
         #endregion

@@ -7,6 +7,7 @@ using NLog;
 using Npgsql;
 using RecursosHumanos.Model;
 using RecursosHumanos.Data;
+using RecursosHumanos.Bussines;
 
 namespace RecursosHumanos.Controller
 {
@@ -111,10 +112,11 @@ namespace RecursosHumanos.Controller
                     return (false, "No se proporcionaron datos del contrato");
                 }
 
-                if (contrato.Id_Contrato <= 0)
+                if (!EmpleadoNegocio.EsNoMatriculaValido(contrato.Matricula))
                 {
-                    return (false, "ID de contrato no válido");
+                    return (false, "El formato de matrícula no es válido.");
                 }
+
 
                 // Verificar si el contrato existe
                 Contrato? contratoExistente = _contratosDataAccess.ObtenerContratoPorId(contrato.Id_Contrato);

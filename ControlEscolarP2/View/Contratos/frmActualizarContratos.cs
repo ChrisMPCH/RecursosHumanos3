@@ -14,24 +14,32 @@ using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View.Contratos
 {
-    public partial class frmActualizarContrato : Form
+    public partial class frmActualizarContratos : Form
     {
         private readonly ContratoController _contratosController = new ContratoController();
-        public frmActualizarContrato()
+
+        public frmActualizarContratos()
         {
             InitializeComponent();
             IniciarTabla();
             InicializarCampos();
             Panel pnlActualizar = splitContainer1.Panel1;
             Panel pnlListaContratos = splitContainer1.Panel2;
-            InicializaVentanaContratos();
-        }
-        private void InicializaVentanaContratos()
-        {
-            PoblaComboTipoContrato();
             splitContainer1.Panel1Collapsed = true;
+            PoblaComboTipoContrato();
             dtpFechaInicio1.Value = DateTime.Now;
             dtpFechaFin.Value = DateTime.Now;
+            txtSalario.KeyPress += txtSalario_KeyPress;
+        }
+        private void IniciarTabla()
+        {
+            Formas.ConfigurarEstiloDataGridView(dataGridContratos); // Configurar el estilo del DataGridView
+            ConfigurarColumnas(); // Agregar columnas personalizadas
+        }
+        public static void InicializarCampos()
+        {
+            Formas.ConfigurarTextBox(txtMatricula1, "Ingresa tu matricula");
+
         }
         private void PoblaComboTipoContrato()
         {
@@ -46,44 +54,6 @@ namespace RecursosHumanos.View.Contratos
             cbxTipoContrato1.ValueMember = "Key";
 
             cbxTipoContrato1.SelectedValue = 1;
-        }
-
-        public static void InicializarCampos()
-        {
-            Formas.ConfigurarTextBox(txtMatricula1, "Ingresa tu matricula");
-
-        }
-
-
-        private void btnBuscar_Click(object sender, EventArgs e)
-        {
-            if (BuscarMatricula())
-            {
-                MessageBox.Show("Cargando datos.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private bool BuscarMatricula()
-        {
-            if (string.IsNullOrWhiteSpace(txtMatricula1.Text) || txtMatricula1.Text == "Ingresa tu matricula")
-            {
-                MessageBox.Show("Por favor, ingrese su matrícula.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula1.Text.Trim()))
-            {
-                MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            return true;
-        }
-
-        private void IniciarTabla()
-        {
-            Formas.ConfigurarEstiloDataGridView(dataGridContratos); // Configurar el estilo del DataGridView
-            ConfigurarColumnas(); // Agregar columnas personalizadas
         }
 
         private void ConfigurarColumnas()
@@ -176,6 +146,11 @@ namespace RecursosHumanos.View.Contratos
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
+            if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula1.Text.Trim()))
+            {
+                MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            } 
             if (splitContainer1.Panel1Collapsed)
             {
                 splitContainer1.Panel1Collapsed = false;
@@ -194,38 +169,7 @@ namespace RecursosHumanos.View.Contratos
                 splitContainer1.Panel1Collapsed = true;
                 btnActualizar.Text = "Actualizar";
             }
-        }
 
-      
-
-        private void btnGuardar_Click(object sender, EventArgs e)
-        {
-            Contrato contratoActualizado = new Contrato
-            {
-                Matricula = txtMatricula1.Text.Trim(),
-                Id_TipoContrato = ((KeyValuePair<int, string>)cbxTipoContrato1.SelectedItem).Key,
-                Sueldo = double.TryParse(txtSalario.Text, out double sueldo) ? sueldo : 0,
-                FechaInicio = dtpFechaInicio1.Value.Date,
-                FechaFin = dtpFechaFin.Value.Date,
-                HoraEntrada = dtpHoraEntrada.Value.TimeOfDay,
-                HoraSalida = dtpHoraSalida.Value.TimeOfDay,
-                Descripcion = txtDescripcion.Text.Trim(),
-                Estatus = true
-            };
-
-            var resultado = _contratosController.ActualizarContrato(contratoActualizado);
-
-            if (resultado.exito)
-            {
-                MessageBox.Show(resultado.mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                splitContainer1.Panel1Collapsed = true;
-                btnActualizar.Text = "Actualizar";
-                CargarContratos(txtMatricula1.Text.Trim());
-            }
-            else
-            {
-                MessageBox.Show(resultado.mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void CargarContratos(string matricula)
@@ -277,37 +221,79 @@ namespace RecursosHumanos.View.Contratos
                 MessageBox.Show($"Error al cargar contratos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-    
 
-        private void ObtenerDetalleContrato(int idContrato)
+        private void btnGuardar_Click(object sender, EventArgs e)
         {
-            var contrato = _contratosController.ObtenerDetalleContrato(idContrato);
+            string matricula = txtMatricula1.Text.Trim();
 
-            if (contrato == null)
+            if (string.IsNullOrWhiteSpace(matricula) )
             {
-                MessageBox.Show("No se pudo obtener el contrato.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Por favor, ingrese su matrícula.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula1.Text.Trim()))
+            {
+                MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Contrato contratoActualizado = new Contrato
+            {
+                Matricula = txtMatricula1.Text.Trim(),
+                Id_TipoContrato = ((KeyValuePair<int, string>)cbxTipoContrato1.SelectedItem).Key,
+                Sueldo = double.TryParse(txtSalario.Text, out double sueldo) ? sueldo : 0,
+                FechaInicio = dtpFechaInicio1.Value.Date,
+                FechaFin = dtpFechaFin.Value.Date,
+                HoraEntrada = dtpHoraEntrada.Value.TimeOfDay,
+                HoraSalida = dtpHoraSalida.Value.TimeOfDay,
+                Descripcion = txtDescripcion.Text.Trim(),
+                Estatus = true
+            };
 
-            txtMatricula1.Text = contrato.Matricula;
-            cbxTipoContrato1.SelectedValue = contrato.Id_TipoContrato;
-            txtSalario.Text = contrato.Sueldo.ToString("0.00");
-            dtpFechaInicio1.Value = contrato.FechaInicio;
-            dtpFechaFin.Value = contrato.FechaFin;
-            dtpHoraEntrada.Value = DateTime.Today + contrato.HoraEntrada;
-            dtpHoraSalida.Value = DateTime.Today + contrato.HoraSalida;
-            txtDescripcion.Text = contrato.Descripcion;
+            var resultado = _contratosController.ActualizarContrato(contratoActualizado);
 
-            this.Tag = contrato.Id_Contrato;
-            splitContainer1.Panel1Collapsed = false;
+            if (resultado.exito)
+            {
+                MessageBox.Show(resultado.mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                splitContainer1.Panel1Collapsed = true;
+                btnActualizar.Text = "Actualizar";
+                CargarContratos(txtMatricula1.Text.Trim());
+            }
+            else
+            {
+                MessageBox.Show(resultado.mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void dataGridContratos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (BuscarMatricula())
             {
-                int idContrato = Convert.ToInt32(dataGridContratos.Rows[e.RowIndex].Cells["Id_Contrato"].Value);
-                ObtenerDetalleContrato(idContrato);
+                MessageBox.Show("Cargando datos.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private bool BuscarMatricula()
+        {
+            if (string.IsNullOrWhiteSpace(txtMatricula1.Text) || txtMatricula1.Text == "Ingresa tu matricula")
+            {
+                MessageBox.Show("Por favor, ingrese su matrícula.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula1.Text.Trim()))
+            {
+                MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+        // Método para validar que solo se ingresen números en el campo Salario
+        private void txtSalario_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // Bloquea cualquier carácter que no sea número
             }
         }
     }
