@@ -36,6 +36,41 @@ namespace RecursosHumanos.Data
         }
 
         /// <summary>
+        /// Elimina una relación específica entre un rol y un permiso
+        /// </summary>
+        public bool EliminarRolPermisoPorRelacion(int idRol, int idPermiso)
+        {
+            try
+            {
+                string query = @"
+            DELETE FROM administration.roles_permisos 
+            WHERE id_rol = @IdRol AND id_permiso = @IdPermiso";
+
+                var parametros = new[]
+                {
+            _dbAccess.CreateParameter("@IdRol", idRol),
+            _dbAccess.CreateParameter("@IdPermiso", idPermiso)
+        };
+
+                _dbAccess.Connect();
+                int filas = _dbAccess.ExecuteNonQuery(query, parametros);
+
+                _logger.Info($"Eliminada relación Rol {idRol} - Permiso {idPermiso}, filas afectadas: {filas}");
+                return filas > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al eliminar relación rol-permiso: Rol={idRol}, Permiso={idPermiso}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+
+        /// <summary>
         /// Inserta una nueva relación rol-permiso
         /// </summary>
         public int InsertarRolPermiso(RolPermiso rolPermiso)
@@ -72,61 +107,25 @@ namespace RecursosHumanos.Data
         }
 
         /// <summary>
-        /// Actualiza una relación existente de rol-permiso
+        /// Elimina todos los permisos asignados a un rol
         /// </summary>
-        public bool ActualizarRolPermiso(RolPermiso rolPermiso)
+        /// <param name="idRol"></param>
+        /// <returns></returns>
+        public bool EliminarPermisosDeRol(int idRol)
         {
             try
             {
-                string query = @"
-                    UPDATE administration.roles_permisos
-                    SET id_rol = @IdRol,
-                        id_permiso = @IdPermiso
-                    WHERE id_roles_permisos = @Id";
-
-                var parametros = new[]
-                {
-                    _dbAccess.CreateParameter("@Id", rolPermiso.Id_Roles_Permisos),
-                    _dbAccess.CreateParameter("@IdRol", rolPermiso.Id_Rol),
-                    _dbAccess.CreateParameter("@IdPermiso", rolPermiso.Id_Permiso)
-                };
-
-                _dbAccess.Connect();
-                int filas = _dbAccess.ExecuteNonQuery(query, parametros);
-
-                _logger.Info($"RolPermiso actualizado ID {rolPermiso.Id_Roles_Permisos}, filas afectadas: {filas}");
-                return filas > 0;
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, $"Error al actualizar rol-permiso ID {rolPermiso.Id_Roles_Permisos}");
-                return false;
-            }
-            finally
-            {
-                _dbAccess.Disconnect();
-            }
-        }
-
-        /// <summary>
-        /// Elimina una relación rol-permiso por su ID
-        /// </summary>
-        public bool EliminarRolPermiso(int id)
-        {
-            try
-            {
-                string query = "UPDATE administration.roles_permisos SET estatus = 0 WHERE id_roles_permisos = @Id";
-                var param = _dbAccess.CreateParameter("@Id", id);
+                string query = "DELETE FROM administration.roles_permisos WHERE id_rol = @IdRol";
+                var param = _dbAccess.CreateParameter("@IdRol", idRol);
 
                 _dbAccess.Connect();
                 int filas = _dbAccess.ExecuteNonQuery(query, param);
-
-                _logger.Info($"RolPermiso eliminado ID {id}, filas afectadas: {filas}");
-                return filas > 0;
+                _logger.Info($"Se eliminaron {filas} permisos del rol con ID {idRol}");
+                return true;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Error al eliminar rol-permiso ID {id}");
+                _logger.Error(ex, $"Error al eliminar permisos del rol ID {idRol}");
                 return false;
             }
             finally
@@ -135,45 +134,6 @@ namespace RecursosHumanos.Data
             }
         }
 
-        /// <summary>
-        /// Devuelve todas las relaciones rol-permiso
-        /// </summary>
-        public List<RolPermiso> ObtenerTodosRolesPermisos()
-        {
-            List<RolPermiso> lista = new List<RolPermiso>();
-
-            try
-            {
-                string query = "SELECT * FROM administration.roles_permisos ORDER BY id_roles_permisos";
-
-                _dbAccess.Connect();
-                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query);
-
-                foreach (DataRow row in resultado.Rows)
-                {
-                    RolPermiso item = new RolPermiso
-                    {
-                        Id_Roles_Permisos = Convert.ToInt32(row["id_roles_permisos"]),
-                        Id_Rol = Convert.ToInt32(row["id_rol"]),
-                        Id_Permiso = Convert.ToInt32(row["id_permiso"])
-                    };
-
-                    lista.Add(item);
-                }
-
-                _logger.Info($"Se encontraron {lista.Count} relaciones rol-permiso.");
-                return lista;
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Error al obtener lista de roles-permisos");
-                throw;
-            }
-            finally
-            {
-                _dbAccess.Disconnect();
-            }
-        }
 
         /// <summary>
         /// Devuelve todos los permisos asignados a un rol
@@ -222,7 +182,6 @@ namespace RecursosHumanos.Data
                 _dbAccess.Disconnect();
             }
         }
-
         //-----------------------------------------------------------------------------------------------------------------Existe()
 
         /// <summary>
@@ -258,5 +217,7 @@ namespace RecursosHumanos.Data
                 _dbAccess.Disconnect();
             }
         }
+        
+
     }
 }

@@ -31,6 +31,9 @@ namespace RecursosHumanos.Utilities
 
         public static void ConfigurarEstiloDataGridView(Guna2DataGridView dataGridViewStyle)
         {
+            // Asegurar que el grid permita edición si se necesita
+            dataGridViewStyle.ReadOnly = false;
+
             // Colores neutros
             dataGridViewStyle.BackgroundColor = Color.LightGray;
             dataGridViewStyle.GridColor = Color.DarkGray;
@@ -50,20 +53,24 @@ namespace RecursosHumanos.Utilities
             dataGridViewStyle.ColumnHeadersDefaultCellStyle.BackColor = Color.Gray;
             dataGridViewStyle.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
 
-            // Aplicar formato a la columna "Check" si existe
+            // Aplicar formato por columna
             foreach (DataGridViewColumn col in dataGridViewStyle.Columns)
             {
-                if (col.Name.ToLower() == "check")
+                if (col.Name.ToLower() == "seleccionar")
                 {
-                    col.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells; // Ancho fijo basado en el contenido
+                    col.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                     col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    col.ReadOnly = false; // ✅ Solo esta columna es editable
                 }
                 else
                 {
-                    col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; // El resto de columnas se expanden dinámicamente
-                    col.ReadOnly = true;  // Hacer que no sea editable
+                    col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    col.ReadOnly = true; // ❌ No editable
                 }
             }
+
+            // Permitir editar directamente con un solo clic
+            dataGridViewStyle.EditMode = DataGridViewEditMode.EditOnEnter;
         }
 
         public static void ConfigurarTextBox(Guna2TextBox txtBox, string textoOriginal)

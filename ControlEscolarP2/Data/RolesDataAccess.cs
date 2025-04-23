@@ -28,6 +28,43 @@ namespace RecursosHumanos.Data
                 throw;
             }
         }
+        /// <summary>
+        /// Obtiene un rol por su ID
+        /// </summary>
+        /// <param name="codigo"></param>
+        /// <returns>El rol</returns>
+        public Rol? ObtenerRolPorCodigo(string codigo)
+        {
+            try
+            {
+                string query = "SELECT * FROM administration.roles WHERE codigo = @Codigo";
+                var param = _dbAccess.CreateParameter("@Codigo", codigo);
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, param);
+
+                if (resultado.Rows.Count == 0) return null;
+
+                DataRow row = resultado.Rows[0];
+                return new Rol
+                {
+                    Id_Rol = Convert.ToInt32(row["id_rol"]),
+                    Codigo = row["codigo"].ToString() ?? "",
+                    Nombre = row["nombre"].ToString() ?? "",
+                    Descripcion = row["descripcion"].ToString() ?? "",
+                    Estatus = Convert.ToInt16(row["estatus"])
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al buscar rol por código: {codigo}");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
 
         /// <summary>
         /// Inserta un nuevo rol en la base de datos
@@ -77,18 +114,14 @@ namespace RecursosHumanos.Data
                 string query = @"
                     UPDATE administration.roles
                     SET codigo = @Codigo,
-                        nombre = @Nombre,
-                        descripcion = @Descripcion,
-                        estatus = @Estatus
+                        descripcion = @Descripcion
                     WHERE id_rol = @Id";
 
                 var parametros = new[]
                 {
                     _dbAccess.CreateParameter("@Id", rol.Id_Rol),
                     _dbAccess.CreateParameter("@Codigo", rol.Codigo),
-                    _dbAccess.CreateParameter("@Nombre", rol.Nombre),
                     _dbAccess.CreateParameter("@Descripcion", rol.Descripcion),
-                    _dbAccess.CreateParameter("@Estatus", rol.Estatus)
                 };
 
                 _dbAccess.Connect();
@@ -111,22 +144,20 @@ namespace RecursosHumanos.Data
         /// <summary>
         /// Elimina un rol por ID
         /// </summary>
-        public bool EliminarRol(int id)
+        public bool DesactivarRol(int idRol)
         {
             try
             {
-                string query = "UPDATE administration.roles SET estatus = 0 WHERE id_rol = @Id";
-                var parametro = _dbAccess.CreateParameter("@Id", id);
+                string query = "UPDATE administration.roles SET estatus = 0 WHERE id_rol = @IdRol";
+                var param = _dbAccess.CreateParameter("@IdRol", idRol);
 
                 _dbAccess.Connect();
-                int filas = _dbAccess.ExecuteNonQuery(query, parametro);
-
-                _logger.Info($"Rol eliminado ID {id}, filas afectadas: {filas}");
+                int filas = _dbAccess.ExecuteNonQuery(query, param);
                 return filas > 0;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Error al eliminar rol ID {id}");
+                _logger.Error(ex, $"Error al desactivar rol con ID {idRol}");
                 return false;
             }
             finally

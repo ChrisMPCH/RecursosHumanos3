@@ -50,6 +50,29 @@ namespace RecursosHumanos.Controller
         }
 
         /// <summary>
+        /// Devuelve la lista de todos los permisos registrados en formato corto
+        /// </summary>
+        public List<Permiso> ObtenerPermisosCorto()
+        {
+            try
+            {
+                var permisos = _permisosData.ObtenerTodosLosPermisos();
+                return permisos.Select(p => new Permiso
+                {
+                    Id_Permiso = p.Id_Permiso,
+                    Codigo = p.Codigo,
+                    Descripcion = p.Descripcion
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener permisos (corto)");
+                return new List<Permiso>();
+            }
+        }
+
+
+        /// <summary>
         /// Devuelve un permiso específico por su ID
         /// </summary>
         public Permiso? ObtenerPermisoPorId(int id)

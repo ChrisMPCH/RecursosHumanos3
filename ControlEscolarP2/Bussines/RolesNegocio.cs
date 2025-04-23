@@ -12,15 +12,15 @@ namespace RecursosHumanos.Bussines
     {
         internal static bool EsRolNombreValido(String rol)
         {
-            return Validaciones.EsAlfanumericoValido(rol);
+            return true;
         }
         internal static bool EsRolCodigoValido(String rol)
         {
-            return Validaciones.EsAlfanumericoValido(rol);
+            return true;
         }
         internal static bool EsDescripcionValida(String desc)
         {
-            return Validaciones.EsAlfanumericoValido(desc);
+            return true;
         }
     }
 }
