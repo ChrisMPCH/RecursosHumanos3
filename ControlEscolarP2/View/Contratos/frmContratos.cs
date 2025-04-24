@@ -209,19 +209,46 @@ namespace RecursosHumanos.View
 
         private void btnBuscar_Click_1(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtMatricula1.Text) || txtMatricula1.Text == "Ingresa tu matricula")
+            string matricula = txtMatricula1.Text.Trim();
+
+            // Validar que no esté vacío ni sea el texto por defecto
+            if (string.IsNullOrWhiteSpace(matricula) || matricula == "Ingresa tu matricula")
             {
                 MessageBox.Show("Por favor, ingrese su matrícula.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return ;
+                return;
             }
 
-            if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula1.Text.Trim()))
+            // Validar formato de matrícula
+            if (!EmpleadoNegocio.EsNoMatriculaValido(matricula))
             {
-                MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return ;
+                MessageBox.Show("Número de matrícula inválido.\nEjemplo válido: E-2023-123", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-             MessageBox.Show("Cargando datos.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
+
+            // Verificar existencia y estatus del empleado
+            //var empleado = new EmpleadoController().ObtenerEmpleadoPorMatricula(matricula);
+            //if (empleado == null)
+            //{
+             //   MessageBox.Show("No se encontró un empleado con esa matrícula.", "Empleado no encontrado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+             //   return;
+           // }
+
+           // if (!empleado.Estatus)
+            //{
+               // MessageBox.Show("Este empleado está dado de baja.\nNo se puede asignar un nuevo contrato.", "Acción no permitida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+               // return;
+           // }
+
+            // Verificar si ya tiene un contrato activo
+            bool yaTieneContrato = _contratosController.TieneContratoActivo(matricula);
+            if (yaTieneContrato)
+            {
+                MessageBox.Show("Este empleado ya tiene un contrato activo.\nNo se puede registrar uno nuevo hasta finalizar el anterior.", "Contrato existente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Todo bien, puede continuar
+            MessageBox.Show("Empleado válido. Puede generarse un nuevo contrato.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // Método para validar que solo se ingresen números en el campo Salario

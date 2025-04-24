@@ -100,6 +100,25 @@ namespace RecursosHumanos.Controller
                 throw;
             }
         }
+        public List<Contrato> ObtenerContratosFiltrados(string matricula, int tipoContrato, int estatus, int departamento, DateTime fechaInicio, DateTime fechaFin)
+        {
+            try
+            {
+                return _contratosDataAccess.ObtenerContratosFiltrados(matricula, tipoContrato, estatus, departamento, fechaInicio, fechaFin);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener contratos filtrados");
+                return new List<Contrato>();
+            }
+        }
+        public bool TieneContratoActivo(string matricula)
+        {
+            return _contratosDataAccess.TieneContratoActivo(matricula);
+        }
+
+
+
 
         //actualizar un contrato
         public (bool exito, string mensaje) ActualizarContrato(Contrato contrato)
