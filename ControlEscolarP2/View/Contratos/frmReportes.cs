@@ -9,13 +9,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RecursosHumanos.Bussines;
 using RecursosHumanos.Utilities;
+using  RecursosHumanos.Model;
+using RecursosHumanos.Controller;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using static RecursosHumanos.View.frmListaUsuarios;
+using System.Windows.Forms;
 
 namespace RecursosHumanos.View
 {
     public partial class frmReportes : Form
     {
+        private ContratoController _contratosController = new ContratoController();
         public frmReportes()
         {
             InitializeComponent();
@@ -24,6 +28,8 @@ namespace RecursosHumanos.View
         {
             InicializaVentanaReportes();
             IniciarTabla();
+            InicializarCampos();
+
 
         }
 
@@ -31,6 +37,10 @@ namespace RecursosHumanos.View
         {
             Formas.ConfigurarEstiloDataGridView(dataGridUsuarios); // Configurar el estilo del DataGridView
             ConfigurarColumnas(); // Agregar columnas personalizadas
+        }
+        public static void InicializarCampos()
+        {
+            Formas.ConfigurarTextBox(txtMatricula, "Ingresa la matricula");
         }
 
         private void ConfigurarColumnas()
@@ -48,39 +58,15 @@ namespace RecursosHumanos.View
 
             dataGridUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
-
-
-
-
         private void InicializaVentanaReportes()
         {
-            PoblaComboAntiguedad();
-            PoblaComboAsistencia();
             PoblaComboDepartamento();
-            PoblaComboEstadoaboral();
-            dtpFechaIngreso.Value = DateTime.Now;
+            PoblaComboEstatus();
+            PoblaComboTipoContrato();
+            dtpFechaInicio.Value = DateTime.Now;
+            dtpFechaFin.Value = DateTime.Now;
         }
 
-        private void PoblaComboAsistencia()
-        {
-            // Crear un diccionario con los valores
-            Dictionary<int, string> list_asistencia = new Dictionary<int, string>
-            {
-                { 1, "Asistio" },
-                { 0, "Null" },
-                { 2, "No asistio" }
-            };
-
-            // Asignar el diccionario al ComboBox
-            cbxAsistencia1.DataSource = new BindingSource(list_asistencia, null);
-            cbxAsistencia1.DisplayMember = "Value";  // Lo que se muestra
-            cbxAsistencia1.ValueMember = "Key";      // Lo que se guarda como SelectedValue
-
-            cbxAsistencia1.SelectedValue = 1;
-
-        }
-
-        
         private void PoblaComboDepartamento()
         {
             // Crear un diccionario con los valores
@@ -99,33 +85,7 @@ namespace RecursosHumanos.View
             cbxDepartamento1.SelectedValue = 1;
 
         }
-
-      
-        private void PoblaComboAntiguedad()
-        {
-            // Crear un diccionario con los valores
-            Dictionary<int, string> list_antiguedad = new Dictionary<int, string>
-            {
-                { 1, "1 año" },
-                { 0, "Null" },
-                { 2, "2 años" },
-                {3, "3 años" },
-                {4, "4 años" },
-                {5, "5 años" }
-            };
-
-            // Asignar el diccionario al ComboBox
-            cbxAntiguedad1.DataSource = new BindingSource(list_antiguedad, null);
-            cbxAntiguedad1.DisplayMember = "Value";  // Lo que se muestra
-            cbxAntiguedad1.ValueMember = "Key";      // Lo que se guarda como SelectedValue
-
-            cbxAntiguedad1.SelectedValue = 1;
-
-        }
-
-      
-
-        private void PoblaComboEstadoaboral()
+        private void PoblaComboEstatus()
         {
             // Crear un diccionario con los valores
             Dictionary<int, string> list_estadoL = new Dictionary<int, string>
@@ -136,38 +96,29 @@ namespace RecursosHumanos.View
             };
 
             // Asignar el diccionario al ComboBox
-            cbxEstadoLaboral1.DataSource = new BindingSource(list_estadoL, null);
-            cbxEstadoLaboral1.DisplayMember = "Value";  // Lo que se muestra
-            cbxEstadoLaboral1.ValueMember = "Key";      // Lo que se guarda como SelectedValue
+            cbxEstatus.DataSource = new BindingSource(list_estadoL, null);
+            cbxEstatus.DisplayMember = "Value";  // Lo que se muestra
+            cbxEstatus.ValueMember = "Key";      // Lo que se guarda como SelectedValue
 
-            cbxEstadoLaboral1.SelectedValue = 1;
+            cbxEstatus.SelectedValue = 1;
 
         }
-        private void cbxEstadoLaboral_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void PoblaComboTipoContrato()
         {
-            if (cbxEstadoLaboral1.SelectedValue != null && int.TryParse(cbxEstadoLaboral1.SelectedValue.ToString(), out int selectedValue))
+            // Crear un diccionario con los valores
+            Dictionary<int, string> list_tipoC = new Dictionary<int, string>
             {
-                if (selectedValue == 2 || selectedValue == 0 || selectedValue == 1)
-                {
-                    lblEstadoLaboral.Visible = true;
-                }
-                else
-                {
-                    lblEstadoLaboral.Visible = false;
-                }
-            }
+                { 1, "Temporal" },
+                { 0, "Null" },
+                { 2, "Indifinido" }
+            };
+            // Asignar el diccionario al ComboBox
+            cbxTipoContrato.DataSource = new BindingSource(list_tipoC, null);
+            cbxTipoContrato.DisplayMember = "Value";  // Lo que se muestra
+            cbxTipoContrato.ValueMember = "Key";      // Lo que se guarda como SelectedValue
+            cbxTipoContrato.SelectedValue = 1;
         }
-     
-        private bool GenerarReporte()
-        {
-            if (DatosVacios())
-            {
-                MessageBox.Show("Por favor, seleccione un tipo de reporte.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            return true;
-        }
-
 
 
         private bool BuscarTipoReporte()
@@ -181,7 +132,7 @@ namespace RecursosHumanos.View
         }
         private bool DatosVacios()
         {
-            if (cbxAsistencia1.Text == "" || cbxDepartamento1.Text == "" || cbxAntiguedad1.Text == "" || cbxEstadoLaboral1.Text == "" || dtpFechaIngreso.Text == "")
+            if (cbxDepartamento1.Text == "" || cbxTipoContrato.Text == "" || cbxEstatus.Text == "" || dtpFechaInicio.Text == "")
             {
                 return true;
             }
@@ -191,23 +142,79 @@ namespace RecursosHumanos.View
             }
         }
 
-        private void btnAceptar1_Click(object sender, EventArgs e)
-        {
-            if (BuscarTipoReporte())
-            {
-                MessageBox.Show("Reporte seleccionado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
+       
 
         private void btnGenerar1_Click(object sender, EventArgs e)
         {
-         
-            if (GenerarReporte())
+            string matricula = txtMatricula.Text.Trim();
+
+            // Validación correcta solo si se ingresó algo distinto del texto por defecto
+            if (!string.IsNullOrEmpty(matricula) && matricula != "Ingresa la matricula")
             {
-                MessageBox.Show("El reporte se generara correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (!EmpleadoNegocio.EsNoMatriculaValido(matricula))
+                {
+                    MessageBox.Show("La matrícula ingresada no tiene un formato válido.\nEjemplo: E-2023-456", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
             }
+            else
+            {
+                // Si el campo estaba vacío o con texto de ayuda, lo tratamos como filtro nulo
+                matricula = null;
+            }
+
+            int tipoContrato = cbxTipoContrato.SelectedValue != null ? (int)cbxTipoContrato.SelectedValue : 0;
+            int estatus = cbxEstatus.SelectedValue != null ? (int)cbxEstatus.SelectedValue : 0;
+            int departamento = cbxDepartamento1.SelectedValue != null ? (int)cbxDepartamento1.SelectedValue : 0;
+            DateTime fechaInicio = dtpFechaInicio.Value.Date;
+            DateTime fechaFin = dtpFechaFin.Value.Date;
+
+            List<Contrato> contratos = new ContratoController().ObtenerContratosFiltrados(
+                matricula, tipoContrato, estatus, departamento, fechaInicio, fechaFin);
+
+            dataGridUsuarios.Rows.Clear();
+            foreach (var c in contratos)
+            {
+                dataGridUsuarios.Rows.Add(
+                    c.Matricula,
+                    (DateTime.Now - c.FechaInicio).Days / 30 + " meses",
+                    c.Estatus ? "Activo" : "Inactivo",
+                    c.FechaInicio.ToShortDateString(),
+                    c.FechaFin.ToShortDateString()
+                );
+            }
+
+            MessageBox.Show(
+                contratos.Count > 0
+                    ? $"Se encontraron {contratos.Count} contrato(s) con los filtros aplicados."
+                    : "No se encontraron contratos con los filtros aplicados.",
+                "Resultado del reporte",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+
+        } 
+
+        private void cbxEstadoLaboral1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbxEstatus.SelectedValue != null && int.TryParse(cbxEstatus.SelectedValue.ToString(), out int selectedValue))
+            {
+                if (selectedValue == 2 || selectedValue == 0 || selectedValue == 1)
+                {
+                    lblEstatus.Visible = true;
+                }
+                else
+                {
+                    lblEstatus.Visible = false;
+                }
+            }
+        }
+
         
-    }
+        
+    
+
+
     }
 }
 

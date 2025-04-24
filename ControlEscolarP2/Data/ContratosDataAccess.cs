@@ -384,6 +384,120 @@ namespace RecursosHumanos.Data
                 _dbAccess.Disconnect();
             }
         }
+        public List<Contrato> ObtenerContratosFiltrados(string matricula, int tipoContrato, int estatus, int departamento, DateTime fechaInicio, DateTime fechaFin)
+        {
+            List<Contrato> contratos = new List<Contrato>();
+
+            try
+            {
+                StringBuilder query = new StringBuilder(@"
+            SELECT c.id_contrato, e.matricula, c.id_tipocontrato, c.fecha_inicio, c.fecha_fin,
+                   c.hora_entrada, c.hora_salida, c.salario, c.descripcion, c.estatus
+            FROM human_resours.contrato c
+            INNER JOIN human_resours.empleado e ON c.id_empleado = e.id_empleado
+            INNER JOIN human_resours.persona p ON e.id_persona = p.id_persona
+            INNER JOIN human_resours.departamento d ON e.id_departamento = d.id_departamento
+            WHERE 1=1");
+
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
+
+                //  Filtro por matrícula exacta
+                if (!string.IsNullOrEmpty(matricula))
+                {
+                    query.Append(" AND e.matricula = @matricula");
+                    parametros.Add(_dbAccess.CreateParameter("@matricula", matricula));
+                }
+
+                if (tipoContrato != 0)
+                {
+                    query.Append(" AND c.id_tipocontrato = @tipoContrato");
+                    parametros.Add(_dbAccess.CreateParameter("@tipoContrato", tipoContrato));
+                }
+
+                if (estatus != 0)
+                {
+                    query.Append(" AND c.estatus = @estatus");
+                    parametros.Add(_dbAccess.CreateParameter("@estatus", estatus == 1 ? 1 : 0));
+                }
+
+                if (departamento != 0)
+                {
+                    query.Append(" AND d.id_departamento = @departamento");
+                    parametros.Add(_dbAccess.CreateParameter("@departamento", departamento));
+                }
+
+                query.Append(" AND c.fecha_inicio BETWEEN @fechaInicio AND @fechaFin");
+                parametros.Add(_dbAccess.CreateParameter("@fechaInicio", fechaInicio));
+                parametros.Add(_dbAccess.CreateParameter("@fechaFin", fechaFin));
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query.ToString(), parametros.ToArray());
+
+                foreach (DataRow row in resultado.Rows)
+                {
+                    Contrato contrato = new Contrato
+                    {
+                        Id_Contrato = Convert.ToInt32(row["id_contrato"]),
+                        Matricula = row["matricula"].ToString() ?? "",
+                        Id_TipoContrato = Convert.ToInt32(row["id_tipocontrato"]),
+                        FechaInicio = Convert.ToDateTime(row["fecha_inicio"]),
+                        FechaFin = Convert.ToDateTime(row["fecha_fin"]),
+                        HoraEntrada = TimeSpan.Parse(row["hora_entrada"].ToString()),
+                        HoraSalida = TimeSpan.Parse(row["hora_salida"].ToString()),
+                        Sueldo = Convert.ToDouble(row["salario"]),
+                        Descripcion = row["descripcion"].ToString() ?? "",
+                        Estatus = Convert.ToInt32(row["estatus"]) == 1
+                    };
+
+                    contratos.Add(contrato);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener contratos filtrados");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+
+            return contratos;
+        }
+
+        public bool TieneContratoActivo(string matricula)
+        {
+            try
+            {
+                string query = @"
+            SELECT COUNT(*) 
+            FROM human_resours.contrato c
+            INNER JOIN human_resours.empleado e ON c.id_empleado = e.id_empleado
+            WHERE e.matricula = @matricula AND c.estatus = 1";
+
+                NpgsqlParameter paramMatricula = _dbAccess.CreateParameter("@matricula", matricula);
+
+                _dbAccess.Connect();
+                object? resultado = _dbAccess.ExecuteScalar(query, paramMatricula);
+
+                int cantidad = Convert.ToInt32(resultado);
+                bool tieneContrato = cantidad > 0;
+
+                _logger.Debug($"Contrato activo para {matricula}: {(tieneContrato ? "Sí" : "No")}");
+                return tieneContrato;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al verificar contrato activo para la matrícula {matricula}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+
 
     }
 }

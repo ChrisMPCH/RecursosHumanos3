@@ -358,7 +358,7 @@ namespace RecursosHumanos.View
             btnReportes.Padding = new Padding(40, 0, 0, 0);
             btnReportes.Size = new Size(297, 53);
             btnReportes.TabIndex = 3;
-            btnReportes.Text = "Reportes de Empleados";
+            btnReportes.Text = "Reportes de Contratos";
             btnReportes.TextAlign = ContentAlignment.MiddleLeft;
             btnReportes.UseVisualStyleBackColor = true;
             btnReportes.Click += btnReportes_Click;
@@ -445,7 +445,7 @@ namespace RecursosHumanos.View
             btnListaContratos.Padding = new Padding(40, 0, 0, 0);
             btnListaContratos.Size = new Size(297, 53);
             btnListaContratos.TabIndex = 7;
-            btnListaContratos.Text = "Lista de Contratos";
+            btnListaContratos.Text = "Actualizar Contratos";
             btnListaContratos.TextAlign = ContentAlignment.MiddleLeft;
             btnListaContratos.UseVisualStyleBackColor = true;
             btnListaContratos.Click += btnListaContratos_Click;

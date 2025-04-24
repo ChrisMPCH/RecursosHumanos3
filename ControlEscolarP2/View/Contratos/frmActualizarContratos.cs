@@ -150,15 +150,41 @@ namespace RecursosHumanos.View.Contratos
             {
                 MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-            } 
+            }
+
+            if (dataGridContratos.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Selecciona un contrato para actualizar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Obtener el ID del contrato seleccionado
+            int idContrato = Convert.ToInt32(dataGridContratos.SelectedRows[0].Cells["Id_Contrato"].Value);
+
+            // Obtener los detalles desde el controller
+            var contrato = _contratosController.ObtenerDetalleContrato(idContrato);
+
+            if (contrato == null)
+            {
+                MessageBox.Show("No se pudo obtener la información del contrato.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Validar que no esté finalizado o cancelado (inactivo)
+            if (!contrato.Estatus || contrato.FechaFin.Date < DateTime.Now.Date)
+            {
+                MessageBox.Show("Este contrato está finalizado o cancelado y no puede ser editado.", "Acción no permitida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Mostrar u ocultar el panel de actualización
             if (splitContainer1.Panel1Collapsed)
             {
                 splitContainer1.Panel1Collapsed = false;
                 btnActualizar.Text = "Ocultar Actualizar";
 
-                // Solo recargar si la matrícula está llena y válida
+                // Cargar nuevamente los contratos (opcional)
                 string matricula = txtMatricula1.Text.Trim();
-
                 if (!string.IsNullOrWhiteSpace(matricula) && matricula != "Ingresa tu matricula")
                 {
                     CargarContratos(matricula);
