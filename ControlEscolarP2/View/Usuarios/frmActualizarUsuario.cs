@@ -1,4 +1,6 @@
 ﻿using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,9 @@ namespace RecursosHumanos.View
 {
     public partial class frmActualizarUsuario : Form
     {
+        private int? idUsuario = null;
+        private int? idPersona = null;
+
         public frmActualizarUsuario()
         {
             InitializeComponent();
@@ -29,6 +34,7 @@ namespace RecursosHumanos.View
         {
             PoblaComboEstatus();
             PoblaComboGenero();
+            PoblaComboRoles();
         }
 
         public void InicializarCampos()
@@ -42,6 +48,11 @@ namespace RecursosHumanos.View
             Formas.ConfigurarTextBox(txtCorreo, "Ingrese correo electrónico");
             Formas.ConfigurarTextBox(txtDireccion, "Ingrese direccion");
             Formas.ConfigurarTextBox(txtTelefono, "Ingrese teléfono");
+            Formas.ConfigurarTextBox(txtContrasenia, "Ingrese nueva contraseña");
+            Formas.ConfigurarTextBox(txtContraseniaCon, "Confirme nueva contraseña");
+            txtContrasenia.UseSystemPasswordChar = true;
+            txtContraseniaCon.UseSystemPasswordChar = true;
+
             dtpFechaIngreso.Enabled = false;
         }
 
@@ -87,7 +98,53 @@ namespace RecursosHumanos.View
             {
                 return false;
             }
-            return true;
+
+            UsuariosController controller = new UsuariosController();
+
+            Persona persona = new Persona
+            {
+                Id_Persona = idPersona.Value,
+                Nombre = txtNombre.Text.Trim(),
+                Ap_Paterno = txtApellidoP.Text.Trim(),
+                Ap_Materno = txtApellidoM.Text.Trim(),
+                RFC = txtRFC.Text.Trim(),
+                CURP = txtCURP.Text.Trim(),
+                Direccion = txtDireccion.Text.Trim(),
+                Telefono = txtTelefono.Text.Trim(),
+                Email = txtCorreo.Text.Trim(),
+                Fecha_Nacimiento = dtaNacimiento.Value,
+                Genero = cbxGenero.Text,
+                Estatus = 1
+            };
+
+            Usuario usuario = new Usuario
+            {
+                Id_Usuario = idUsuario.Value,
+                Id_Persona = idPersona.Value,
+                UsuarioNombre = txtUsuario.Text.Trim(),
+                Contrasenia = txtContrasenia.Text.Trim(), // ← Ya permite actualizar
+                Id_Rol = (int)cbRoles.SelectedValue,      // ← Ya actualiza el rol
+                Fecha_Ultimo_Acceso = DateTime.Now,
+                Estatus = (short)(cbxEstatus.SelectedIndex == 0 ? 1 : 0),
+                DatosPersonales = persona
+            };
+
+            var resultado = controller.ActualizarUsuario(usuario);
+
+            if (resultado)
+            {
+                MessageBox.Show("Usuario actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                InicializarCampos();
+                DesbloquearCampos(false);
+                idUsuario = null;
+                idPersona = null;
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("No se pudo actualizar el usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
 
         private bool DatosValidos()
@@ -127,6 +184,40 @@ namespace RecursosHumanos.View
                 MessageBox.Show("Género inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
+
+            if (!UsuarioNegocio.EsContraseñaValido(txtContrasenia.Text.Trim()))
+            {
+                MessageBox.Show("Contraseña inválida. Debe tener al menos 8 caracteres.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (!UsuarioNegocio.EsConfirmarContraseñaValido(txtContrasenia.Text.Trim(), txtContraseniaCon.Text.Trim()))
+            {
+                MessageBox.Show("Las contraseñas no coinciden.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (cbRoles.SelectedValue == null || (int)cbRoles.SelectedValue == 0)
+            {
+                MessageBox.Show("Seleccione un rol para el usuario", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(txtContrasenia.Text))
+            {
+                if (!UsuarioNegocio.EsContraseñaValido(txtContrasenia.Text.Trim()))
+                {
+                    MessageBox.Show("Contraseña inválida. Debe tener al menos 8 caracteres.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+
+                if (!UsuarioNegocio.EsConfirmarContraseñaValido(txtContrasenia.Text.Trim(), txtContraseniaCon.Text.Trim()))
+                {
+                    MessageBox.Show("Las contraseñas no coinciden.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+
 
             return true;
         }
@@ -211,6 +302,42 @@ namespace RecursosHumanos.View
             {
                 return false;
             }
+
+            UsuariosController controller = new UsuariosController();
+            var usuario = controller.ObtenerUsuarios()
+                                    .FirstOrDefault(u => u.UsuarioNombre.Equals(txtUsuario.Text.Trim(), StringComparison.OrdinalIgnoreCase));
+
+            if (usuario == null)
+            {
+                MessageBox.Show("Usuario no encontrado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Guardar IDs
+            idUsuario = usuario.Id_Usuario;
+            idPersona = usuario.Id_Persona;
+
+            // Mostrar datos en los campos
+            txtNombre.Text = usuario.DatosPersonales.Nombre;
+            txtApellidoP.Text = usuario.DatosPersonales.Ap_Paterno;
+            txtApellidoM.Text = usuario.DatosPersonales.Ap_Materno;
+            txtRFC.Text = usuario.DatosPersonales.RFC;
+            txtCURP.Text = usuario.DatosPersonales.CURP;
+            txtDireccion.Text = usuario.DatosPersonales.Direccion;
+            txtTelefono.Text = usuario.DatosPersonales.Telefono;
+            txtCorreo.Text = usuario.DatosPersonales.Email;
+            dtaNacimiento.Value = usuario.DatosPersonales.Fecha_Nacimiento > dtaNacimiento.MinDate
+                ? usuario.DatosPersonales.Fecha_Nacimiento
+                : DateTime.Today;
+            cbRoles.SelectedValue = usuario.Id_Rol;
+            cbxGenero.SelectedIndex = usuario.DatosPersonales.Genero.ToUpper().StartsWith("H") ? 1 : 0;
+            cbxEstatus.SelectedIndex = usuario.Estatus == 1 ? 0 : 1;
+            txtContrasenia.Text = usuario.Contrasenia;
+            txtContraseniaCon.Text = usuario.Contrasenia;
+
+            PoblarCombos();
+            DesbloquearCampos(true);
+
             return true;
         }
 
@@ -227,31 +354,37 @@ namespace RecursosHumanos.View
             cbxGenero.Enabled = accion;
             cbxEstatus.Enabled = accion;
             dtaNacimiento.Enabled = accion;
+            cbRoles.Enabled = accion;
+            txtContrasenia.Enabled = accion;
+            txtContraseniaCon.Enabled = accion;
         }
 
         private void btnBuscarU_Click(object sender, EventArgs e)
         {
-            if (BuscarUsuario())
-            {
-                MessageBox.Show("Usuario encontrado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                PoblarCombos();
-                DesbloquearCampos(true);
-            }
+            BuscarUsuario();
         }
 
         private void btnGuardarCambios_Click(object sender, EventArgs e)
         {
-            if (GuardarUsuario())
-            {
-                MessageBox.Show("Datos guardados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            GuardarUsuario();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             InicializarCampos();
             DesbloquearCampos(false);
+        }
 
+        private void PoblaComboRoles()
+        {
+            RolesController controller = new RolesController();
+            var roles = controller.ObtenerRolesActivos();
+            roles.Insert(0, new Rol { Id_Rol = 0, Nombre = "Seleccione" });
+
+            cbRoles.DataSource = roles;
+            cbRoles.DisplayMember = "Nombre";
+            cbRoles.ValueMember = "Id_Rol";
+            cbRoles.SelectedValue = 0;
         }
 
     }

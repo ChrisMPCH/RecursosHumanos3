@@ -35,9 +35,9 @@ namespace RecursosHumanos.Data
         }
 
         /// <summary>
-        /// Devuelve la lista de todos los usuarios del sistema
+        /// Devuelve la lista de todos los usuarios del sistema (con su rol y datos personales)
         /// </summary>
-        /// <returns>Lista de usuarios con su información personal</returns>
+        /// <returns>Lista de usuarios</returns>
         public List<Usuario> ObtenerTodosLosUsuarios()
         {
             List<Usuario> usuarios = new List<Usuario>();
@@ -45,20 +45,22 @@ namespace RecursosHumanos.Data
             try
             {
                 string query = @"
-                    SELECT u.id_usuario, u.usuario, u.contrasenia, u.id_persona, u.id_rol,
-                           u.fecha_creacion, u.fecha_ultimo_acceso, u.estatus,
-                           p.nombre, p.ap_paterno, p.ap_materno, p.rfc, p.curp, p.direccion,
-                           p.telefono, p.email, p.fecha_nacimiento, p.genero, p.estatus as estatus_persona
-                    FROM administration.usuario u
-                    INNER JOIN human_resours.persona p ON u.id_persona = p.id_persona
-                    ORDER BY u.id_usuario";
+            SELECT u.id_usuario, u.usuario, u.contrasenia, u.id_persona, u.id_rol,
+                   u.fecha_creacion, u.fecha_ultimo_acceso, u.estatus,
+                   r.nombre AS nombre_rol,
+                   p.nombre, p.ap_paterno, p.ap_materno, p.rfc, p.curp, p.direccion,
+                   p.telefono, p.email, p.fecha_nacimiento, p.genero, p.estatus AS estatus_persona
+            FROM administration.usuario u
+            INNER JOIN administration.roles r ON u.id_rol = r.id_rol
+            INNER JOIN human_resours.persona p ON u.id_persona = p.id_persona
+            ORDER BY u.id_usuario";
 
                 _dbAccess.Connect();
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query);
 
                 foreach (DataRow row in resultado.Rows)
                 {
-                    // Construye el objeto Persona con los datos de la base
+                    // Construir la persona
                     Persona persona = new Persona
                     {
                         Id_Persona = Convert.ToInt32(row["id_persona"]),
@@ -75,7 +77,14 @@ namespace RecursosHumanos.Data
                         Estatus = Convert.ToInt16(row["estatus_persona"])
                     };
 
-                    // Construye el objeto Usuario con sus datos + la persona asociada
+                    // Construir el rol
+                    Rol rol = new Rol
+                    {
+                        Id_Rol = Convert.ToInt32(row["id_rol"]),
+                        Nombre = row["nombre_rol"].ToString() ?? ""
+                    };
+
+                    // Construir el usuario
                     Usuario usuario = new Usuario
                     {
                         Id_Usuario = Convert.ToInt32(row["id_usuario"]),
@@ -86,7 +95,8 @@ namespace RecursosHumanos.Data
                         Fecha_Creacion = Convert.ToDateTime(row["fecha_creacion"]),
                         Fecha_Ultimo_Acceso = Convert.ToDateTime(row["fecha_ultimo_acceso"]),
                         Estatus = Convert.ToInt16(row["estatus"]),
-                        DatosPersonales = persona
+                        DatosPersonales = persona,
+                        Rol = rol // ← Aquí se incluye el objeto Rol completo ✅
                     };
 
                     usuarios.Add(usuario);

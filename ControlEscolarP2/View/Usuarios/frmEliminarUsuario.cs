@@ -1,4 +1,5 @@
 ﻿using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace RecursosHumanos.View
 {
     public partial class frmEliminarUsuario : Form
     {
+        private int? idUsuarioEncontrado = null;
+
         public frmEliminarUsuario()
         {
             InitializeComponent();
@@ -62,6 +65,37 @@ namespace RecursosHumanos.View
             {
                 return false;
             }
+
+            UsuariosController controller = new UsuariosController();
+            var listaUsuarios = controller.ObtenerUsuarios();
+            var usuario = listaUsuarios.FirstOrDefault(u => u.UsuarioNombre.Equals(txtUsuario.Text.Trim(), StringComparison.OrdinalIgnoreCase));
+
+            if (usuario == null)
+            {
+                MessageBox.Show("Usuario no encontrado.", "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            PoblarCombos();
+
+            // Guardar el ID
+            idUsuarioEncontrado = usuario.Id_Usuario;
+
+            // Llenar campos con info de la persona
+            txtNombre.Text = usuario.DatosPersonales.Nombre;
+            txtApellidoP.Text = usuario.DatosPersonales.Ap_Paterno;
+            txtApellidoM.Text = usuario.DatosPersonales.Ap_Materno;
+            txtRFC.Text = usuario.DatosPersonales.RFC;
+            txtCURP.Text = usuario.DatosPersonales.CURP;
+            txtDireccion.Text = usuario.DatosPersonales.Direccion;
+            txtTelefono.Text = usuario.DatosPersonales.Telefono;
+            txtCorreo.Text = usuario.DatosPersonales.Email;
+            dtaNacimiento.Value = usuario.DatosPersonales.Fecha_Nacimiento;
+            cbRoles.SelectedValue = usuario.Rol;
+            cbxGenero.SelectedIndex = usuario.DatosPersonales.Genero.ToUpper().StartsWith("H") ? 1 : 0;
+            cbxEstatus.SelectedIndex = usuario.Estatus == 1 ? 0 : 1;
+
+            DesbloquearCampos(false);
             return true;
         }
 
@@ -87,8 +121,8 @@ namespace RecursosHumanos.View
             //Crear un diccionario con los valores
             Dictionary<int, string> list_puestos = new Dictionary<int, string>
                 {
-                    { 1, "Femenino" },
-                    { 2, "Masculino" }
+                    { 1, "Hombre" },
+                    { 2, "Mujer" }
                 };
 
             //Asignar los valores al comboBox
@@ -116,11 +150,7 @@ namespace RecursosHumanos.View
 
         private void btnBuscarU_Click(object sender, EventArgs e)
         {
-            if (BuscarUsuario())
-            {
-                MessageBox.Show("Usuario encontrado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                PoblarCombos();
-            }
+            BuscarUsuario();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -130,8 +160,25 @@ namespace RecursosHumanos.View
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Usuario eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Formas.ConfigurarTextBox(txtUsuario, "Ingrese nombre de usuario");
+            if (idUsuarioEncontrado == null)
+            {
+                MessageBox.Show("Debes buscar primero un usuario válido.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            UsuariosController controller = new UsuariosController();
+            var resultado = controller.EliminarUsuario(idUsuarioEncontrado.Value);
+
+            if (resultado.exito)
+            {
+                MessageBox.Show(resultado.mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Formas.ConfigurarTextBox(txtUsuario, "Ingrese nombre de usuario");
+                idUsuarioEncontrado = null;
+            }
+            else
+            {
+                MessageBox.Show(resultado.mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

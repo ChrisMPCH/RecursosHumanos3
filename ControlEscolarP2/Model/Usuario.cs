@@ -19,6 +19,7 @@ namespace RecursosHumanos.Model
         public short Estatus { get; set; }
 
         public Persona DatosPersonales { get; set; }
+        public Rol Rol { get; internal set; }
 
         public Usuario()
         {

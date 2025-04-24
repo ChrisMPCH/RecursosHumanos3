@@ -1,4 +1,6 @@
-﻿using RecursosHumanos.Utilities;
+﻿using RecursosHumanos.Controller;
+using RecursosHumanos.Model;
+using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,68 +43,75 @@ namespace RecursosHumanos.View
 
         private void PoblaComboRol()
         {
-            // Crear un diccionario con los valores
-            Dictionary<int, string> list_roles = new Dictionary<int, string>
+            try
             {
-                { 0, "----------" },
-                { 1, "ADMIN" },
-                { 2, "RH_MANAGER" },
-                { 3, "RH_ANALYST" },
-                { 4, "SUPERVISOR" },
-            };
+                RolesController controller = new RolesController();
+                var roles = controller.ObtenerRolesActivos();
+                roles.Insert(0, new Rol { Id_Rol = 0, Nombre = "----------" });
 
-            // Asignar el diccionario al ComboBox
-            cbRoles.DataSource = new BindingSource(list_roles, null);
-            cbRoles.DisplayMember = "Value";  // Lo que se muestra
-            cbRoles.ValueMember = "Key";      // Lo que se guarda como SelectedValue
-
-            cbRoles.SelectedValue = 0;
+                cbRoles.DataSource = roles;
+                cbRoles.DisplayMember = "Nombre";
+                cbRoles.ValueMember = "Id_Rol";
+                cbRoles.SelectedValue = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar roles: " + ex.Message);
+            }
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            if ((int)cbRoles.SelectedIndex == 0)
+            int idRol = (int)cbRoles.SelectedValue;
+
+            if (idRol == 0)
             {
                 MessageBox.Show("Seleccione un rol para buscar", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                FormLoad();
                 return;
             }
 
-            // Obtener el nombre del rol desde el diccionario
-            string rolSeleccionado = ((KeyValuePair<int, string>)cbRoles.SelectedItem).Value;
+            var usuariosFiltrados = listaUsuarios.Where(x => x.Id_Rol == idRol).Select(u => new
+            {
+                Nombre = u.UsuarioNombre,
+                FechaCreacion = u.Fecha_Creacion,
+                UltimoAcceso = u.Fecha_Ultimo_Acceso,
+                Estatus = u.Estatus == 1 ? "Activo" : "Inactivo",
+                Rol = u.Rol.Nombre
+            }).ToList();
 
-            // Filtrar la lista de usuarios por el rol seleccionado
-            var listaConFiltro = listaUsuarios.Where(x => x.Rol == rolSeleccionado).ToList();
-
-            // Asignar la lista filtrada al DataGridView
-            dataGridUsuarios.DataSource = listaConFiltro;
+            dataGridUsuarios.DataSource = usuariosFiltrados;
         }
 
         //--------------------------------------------------------------------------------Llenado tabla
         List<Usuario> listaUsuarios;
         private void FormLoad()
         {
-            // Lista de usuarios con datos simulados
-            listaUsuarios = new List<Usuario>
-            {
-            new Usuario { Nombre = "Juan Pérez", FechaCreacion = DateTime.Now.AddMonths(-3), UltimoAcceso = DateTime.Now, Estatus = "Activo", Rol = "ADMIN" },
-            new Usuario { Nombre = "Ana Gómez", FechaCreacion = DateTime.Now.AddMonths(-2), UltimoAcceso = DateTime.Now.AddDays(-1), Estatus = "Inactivo", Rol = "RH_MANAGER" },
-            new Usuario { Nombre = "Carlos López", FechaCreacion = DateTime.Now.AddMonths(-1), UltimoAcceso = DateTime.Now.AddDays(-5), Estatus = "Activo", Rol = "SUPERVISOR" }
-            };
-
-            // Asignar la lista al DataGridView
-            dataGridUsuarios.DataSource = listaUsuarios;
+            cargarUsuariosTabla();
         }
 
-        public class Usuario
+        private void cargarUsuariosTabla() 
         {
-            public string Nombre { get; set; }
-            public DateTime FechaCreacion { get; set; }
-            public DateTime UltimoAcceso { get; set; }
-            public string Estatus { get; set; }
-            public string Rol { get; set; }
+            try
+            {
+                UsuariosController controller = new UsuariosController();
+                listaUsuarios = controller.ObtenerUsuarios();
+
+                // Puedes transformar la lista para que solo muestre campos visibles si quieres
+                var datosMostrar = listaUsuarios.Select(u => new
+                {
+                    Nombre = u.UsuarioNombre,
+                    FechaCreacion = u.Fecha_Creacion,
+                    UltimoAcceso = u.Fecha_Ultimo_Acceso,
+                    Estatus = u.Estatus == 1 ? "Activo" : "Inactivo",
+                    Rol = u.Rol.Nombre
+                }).ToList();
+
+                dataGridUsuarios.DataSource = datosMostrar;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar usuarios: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
-
     }
 }

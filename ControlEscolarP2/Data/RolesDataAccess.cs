@@ -175,7 +175,7 @@ namespace RecursosHumanos.Data
 
             try
             {
-                string query = "SELECT * FROM administration.roles ORDER BY id_rol";
+                string query = "SELECT * FROM administration.roles ORDER BY id_rol"; //WHERE estatus = 1 ORDER BY nombre"
 
                 _dbAccess.Connect();
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query);

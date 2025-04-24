@@ -125,11 +125,11 @@ namespace RecursosHumanos.View
         }
         private bool GuardarEmpleado()
         {
-            if (!frmRegistroPersonas.GenerarPersona())
-            {
-                MessageBox.Show("Faltan los datos de la persona.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
+            //if (!frmRegistroPersonas.GenerarPersona())
+            //{
+            //    MessageBox.Show("Faltan los datos de la persona.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return false;
+            //}
             if (DatosVacios())
             {
                 MessageBox.Show("Por favor, llene todos los campos.", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);

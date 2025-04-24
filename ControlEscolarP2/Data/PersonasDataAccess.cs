@@ -197,6 +197,51 @@ namespace RecursosHumanos.Data
             }
         }
 
+        /// <summary>
+        /// Elimina una persona si no tiene relaciones en otras tablas
+        /// </summary>
+        /// <param name="idPersona"></param>
+        /// <returns></returns>
+        public bool EliminarPersonaSiNoTieneRelaciones(int idPersona)
+        {
+            try
+            {
+                // Verificar si la persona está relacionada a usuarios o empleados
+                string verificarQuery = @"
+            SELECT 
+                (SELECT COUNT(*) FROM administration.usuario WHERE id_persona = @IdPersona) +
+                (SELECT COUNT(*) FROM human_resours.empleado WHERE id_persona = @IdPersona) AS TotalRelaciones;";
+
+                var param = _dbAccess.CreateParameter("@IdPersona", idPersona);
+                _dbAccess.Connect();
+                object? resultado = _dbAccess.ExecuteScalar(verificarQuery, param);
+                int relaciones = Convert.ToInt32(resultado);
+
+                if (relaciones > 0)
+                {
+                    _logger.Warn($"No se puede eliminar la persona ID {idPersona} porque tiene {relaciones} relaciones.");
+                    return false;
+                }
+
+                // Si no tiene relaciones, eliminarla
+                string eliminarQuery = "DELETE FROM human_resours.persona WHERE id_persona = @IdPersona";
+                int filas = _dbAccess.ExecuteNonQuery(eliminarQuery, param);
+
+                _logger.Info($"Persona con ID {idPersona} eliminada correctamente.");
+                return filas > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al eliminar persona ID {idPersona}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+
         //-----------------------------------------------------------------------------------------------------------------Existe()
 
         /// <summary>

@@ -189,6 +189,23 @@ namespace RecursosHumanos.Controller
                 return (false, "Error inesperado al eliminar el rol.");
             }
         }
+        /// <summary>
+        /// Obtiene la lista de roles activos
+        /// </summary>
+        /// <returns></returns>
+        public List<Rol> ObtenerRolesActivos()
+        {
+            try
+            {
+                return _rolesData.ObtenerTodosLosRoles();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error desde RolesController al obtener roles activos");
+                return new List<Rol>();
+            }
+        }
+
 
     }
 }

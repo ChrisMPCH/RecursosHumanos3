@@ -10,12 +10,17 @@ using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using Guna.UI2.WinForms.Suite;
 using RecursosHumanos.Bussines;
+using RecursosHumanos.Data;
+using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
+using RecursosHumanos.Controller;
 
 namespace RecursosHumanos.View
 {
     public partial class frmRegistroPersonas : Form
     {
+        public static int IdPersonaRegistrada { get; set; } //para usarlo en usuarios xd
+        public static Persona? personaGenerada;
 
         public frmRegistroPersonas()
         {
@@ -56,10 +61,12 @@ namespace RecursosHumanos.View
 
         private void btnRegistrarUsuario_Click(object sender, EventArgs e)
         {
-            if (GenerarPersona())
+            personaGenerada = GenerarPersona();
+            if (personaGenerada != null)
             {
-                MessageBox.Show("Datos de persona capturados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DesbloquearCampos(false);
+                MDIRecursosHumanos mid = new MDIRecursosHumanos();
+                mid.BloquearBotonesMenu();
             }
         }
 
@@ -76,17 +83,40 @@ namespace RecursosHumanos.View
             cbGenero.Enabled = accion;
         }
 
-        public static bool GenerarPersona()
+        public static Persona GenerarPersona()
         {
-            if (!DatosVaciosPersona())
+            try
             {
-                return false;
+                if (!DatosVaciosPersona())
+                {
+                    return null;
+                }
+                if (!DatosCorrectosPersona())
+                {
+                    return null;
+                }
+
+                Persona persona = new Persona
+                {
+                    Nombre = txtNombre.Text.Trim(),
+                    Ap_Paterno = txtPaterno.Text.Trim(),
+                    Ap_Materno = txtMaterno.Text.Trim(),
+                    RFC = txtRFC.Text.Trim(),
+                    CURP = txtCURP.Text.Trim(),
+                    Direccion = txtDireccion.Text.Trim(),
+                    Telefono = txtTelefono.Text.Trim(),
+                    Email = txtCorreo.Text.Trim(),
+                    Fecha_Nacimiento = dtpFechaNacimiento.Value,
+                    Genero = cbGenero.Text,
+                    Estatus = 1
+                };
+                return persona;
             }
-            if (!DatosCorrectosPersona())
+            catch (Exception ex)
             {
-                return false;
+                MessageBox.Show("Error inesperado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
-            return true;
         }
 
         public static bool DatosVaciosPersona()
@@ -187,7 +217,15 @@ namespace RecursosHumanos.View
 
         private void btnPersonaCancelar_Click(object sender, EventArgs e)
         {
+            personaGenerada = null;
+            MessageBox.Show("Se canceló el registro y se eliminó la persona.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             DesbloquearCampos(true);
+            InicializarCampos();
+            var mid = this.MdiParent as MDIRecursosHumanos;
+            mid?.DesbloquearBotonesMenu();
         }
+
+        //--------------------------------------------------------------------------------Creacion de Persona
+
     }
 }
