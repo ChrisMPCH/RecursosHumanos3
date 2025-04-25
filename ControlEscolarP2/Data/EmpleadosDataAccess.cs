@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Npgsql;
 using NLog;
 using RecursosHumanos.Model;
@@ -110,27 +113,27 @@ namespace RecursosHumanos.Data
 
                 // Query para actualizar empleado
                 string query = @"
-                    UPDATE human_resours.empleado
-                    SET fecha_ingreso = @FechaIngreso,
-                        fecha_baja = @FechaBaja,
-                        id_departamento = @IdDepartamento,
-                        id_puesto = @IdPuesto,
-                        matricula = @Matricula,
-                        motivo = @Motivo,
-                        estatus = @Estatus
-                    WHERE id_empleado = @IdEmpleado;";
+            UPDATE human_resours.empleado
+            SET fecha_ingreso = @FechaIngreso,
+                fecha_baja = @FechaBaja,
+                id_departamento = @IdDepartamento,
+                id_puesto = @IdPuesto,
+                matricula = @Matricula,
+                motivo = @Motivo,
+                estatus = @Estatus
+            WHERE id_empleado = @IdEmpleado;";
 
                 var parametros = new[]
                 {
-                    _dbAccess.CreateParameter("@IdEmpleado", empleado.Id_Empleado),
-                    _dbAccess.CreateParameter("@FechaIngreso", empleado.Fecha_Ingreso),
-                    _dbAccess.CreateParameter("@FechaBaja", empleado.Fecha_Baja ?? (object)DBNull.Value),
-                    _dbAccess.CreateParameter("@IdDepartamento", empleado.Id_Departamento),
-                    _dbAccess.CreateParameter("@IdPuesto", empleado.Id_Puesto),
-                    _dbAccess.CreateParameter("@Matricula", empleado.Matricula),
-                    _dbAccess.CreateParameter("@Motivo", empleado.Motivo),
-                    _dbAccess.CreateParameter("@Estatus", empleado.Estatus)
-                };
+            _dbAccess.CreateParameter("@IdEmpleado", empleado.Id_Empleado),
+            _dbAccess.CreateParameter("@FechaIngreso", empleado.Fecha_Ingreso),
+            _dbAccess.CreateParameter("@FechaBaja", empleado.Fecha_Baja ?? (object)DBNull.Value),
+            _dbAccess.CreateParameter("@IdDepartamento", empleado.Id_Departamento),
+            _dbAccess.CreateParameter("@IdPuesto", empleado.Id_Puesto),
+            _dbAccess.CreateParameter("@Matricula", empleado.Matricula),
+            _dbAccess.CreateParameter("@Motivo", empleado.Motivo),
+            _dbAccess.CreateParameter("@Estatus", empleado.Estatus)
+        };
 
                 _dbAccess.Connect();
                 int filas = _dbAccess.ExecuteNonQuery(query, parametros);
@@ -146,178 +149,66 @@ namespace RecursosHumanos.Data
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Error al actualizar empleado con ID {empleado.Id_Empleado}");
-                return false;
-            }
-            finally
-            {
-                _dbAccess.Disconnect();
+                _logger.Error($"Error al actualizar empleado con ID {empleado.Id_Empleado}: {ex.Message}");
+                return false; // Se asegura que siempre se devuelva un valor
             }
         }
 
-        /// <summary>
-        /// Obtiene un empleado y su persona asociada por ID
-        /// </summary>
-        public Empleado? ObtenerEmpleadoPorId(int id)
+
+        public List<Empleado> ObtenerEmpleados()
         {
+            List<Empleado> lista = new List<Empleado>();
+
+            string query = @"
+        SELECT 
+            e.id_empleado, 
+            p.nombre, 
+            p.apellido, 
+            e.id_puesto, 
+            e.id_departamento, 
+            e.estatus
+        FROM 
+            human_resours.empleado e
+        JOIN 
+            human_resours.persona p ON e.id_persona = p.id_persona
+        WHERE 
+            e.estatus != 'Baja'";
+
             try
             {
-                string query = @"
-                    SELECT e.*, p.*
-                    FROM human_resours.empleado e
-                    INNER JOIN human_resours.persona p ON e.id_persona = p.id_persona
-                    WHERE e.id_empleado = @Id";
+                var db = PostgreSQLDataAccess.GetInstance();
 
-                var param = _dbAccess.CreateParameter("@Id", id);
-
-                _dbAccess.Connect();
-                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, param);
-
-                if (resultado.Rows.Count == 0)
+                if (!db.Connect())
                 {
-                    _logger.Warn($"Empleado con ID {id} no encontrado");
-                    return null;
+                    throw new Exception("No se pudo conectar a la base de datos.");
                 }
 
-                DataRow row = resultado.Rows[0];
+                DataTable result = db.ExecuteQuery_Reader(query);
 
-                // Crea la persona
-                Persona persona = new Persona
+                foreach (DataRow row in result.Rows)
                 {
-                    Id_Persona = Convert.ToInt32(row["id_persona"]),
-                    Nombre = row["nombre"].ToString() ?? "",
-                    Ap_Paterno = row["ap_paterno"].ToString() ?? "",
-                    Ap_Materno = row["ap_materno"].ToString() ?? "",
-                    RFC = row["rfc"].ToString() ?? "",
-                    CURP = row["curp"].ToString() ?? "",
-                    Direccion = row["direccion"].ToString() ?? "",
-                    Telefono = row["telefono"].ToString() ?? "",
-                    Email = row["email"].ToString() ?? "",
-                    Fecha_Nacimiento = Convert.ToDateTime(row["fecha_nacimiento"]),
-                    Genero = row["genero"].ToString() ?? "",
-                    Estatus = Convert.ToInt16(row["estatus"])
-                };
-
-                // Crea el empleado
-                Empleado empleado = new Empleado(
-                    Convert.ToInt32(row["id_empleado"]),
-                    Convert.ToInt32(row["id_persona"]),
-                    Convert.ToDateTime(row["fecha_ingreso"]),
-                    row["fecha_baja"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["fecha_baja"]) : null,
-                    Convert.ToInt32(row["id_departamento"]),
-                    Convert.ToInt32(row["id_puesto"]),
-                    row["matricula"].ToString() ?? "",
-                    row["motivo"].ToString() ?? "",
-                    Convert.ToInt16(row["estatus"]),
-                    persona
-                );
-
-                return empleado;
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, $"Error al obtener empleado con ID {id}");
-                return null;
-            }
-            finally
-            {
-                _dbAccess.Disconnect();
-            }
-        }
-
-        /// <summary>
-        /// Devuelve todos los empleados con sus datos personales
-        /// </summary>
-        public List<Empleado> ObtenerTodosLosEmpleados()
-        {
-            List<Empleado> empleados = new List<Empleado>();
-
-            try
-            {
-                string query = @"
-                    SELECT e.*, p.*
-                    FROM human_resours.empleado e
-                    INNER JOIN human_resours.persona p ON e.id_persona = p.id_persona
-                    ORDER BY e.id_empleado";
-
-                _dbAccess.Connect();
-                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query);
-
-                foreach (DataRow row in resultado.Rows)
-                {
-                    Persona persona = new Persona
+                    var empleado = new Empleado
                     {
-                        Id_Persona = Convert.ToInt32(row["id_persona"]),
-                        Nombre = row["nombre"].ToString() ?? "",
-                        Ap_Paterno = row["ap_paterno"].ToString() ?? "",
-                        Ap_Materno = row["ap_materno"].ToString() ?? "",
-                        RFC = row["rfc"].ToString() ?? "",
-                        CURP = row["curp"].ToString() ?? "",
-                        Direccion = row["direccion"].ToString() ?? "",
-                        Telefono = row["telefono"].ToString() ?? "",
-                        Email = row["email"].ToString() ?? "",
-                        Fecha_Nacimiento = Convert.ToDateTime(row["fecha_nacimiento"]),
-                        Genero = row["genero"].ToString() ?? "",
-                        Estatus = Convert.ToInt16(row["estatus"])
+                        Id_Empleado = Convert.ToInt32(row["id_empleado"]),
+                        DatosPersonales = new Persona
+                        {
+                            Nombre = row["nombre"] as string ?? "",
+                            Ap_Paterno = row["apellido"] as string ?? ""
+                        },
+                        Id_Puesto = Convert.ToInt32(row["id_puesto"]),
+                        Id_Departamento = Convert.ToInt32(row["id_departamento"]),
+                        // Convierte estatus a short si es posible
+                        Estatus = row["estatus"] != DBNull.Value ? Convert.ToInt16(row["estatus"]) : (short)0
                     };
-
-                    Empleado empleado = new Empleado(
-                        Convert.ToInt32(row["id_empleado"]),
-                        Convert.ToInt32(row["id_persona"]),
-                        Convert.ToDateTime(row["fecha_ingreso"]),
-                        row["fecha_baja"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["fecha_baja"]) : null,
-                        Convert.ToInt32(row["id_departamento"]),
-                        Convert.ToInt32(row["id_puesto"]),
-                        row["matricula"].ToString() ?? "",
-                        row["motivo"].ToString() ?? "",
-                        Convert.ToInt16(row["estatus"]),
-                        persona
-                    );
-
-                    empleados.Add(empleado);
+                    lista.Add(empleado);
                 }
-
-                _logger.Info($"Se encontraron {empleados.Count} empleados");
-                return empleados;
+                db.Disconnect();
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al obtener todos los empleados");
-                throw;
+                throw new Exception("Error al obtener empleados", ex);
             }
-            finally
-            {
-                _dbAccess.Disconnect();
-            }
-        }
-
-        //-----------------------------------------------------------------------------------------------------------------Existe()
-
-        /// <summary>
-        /// Verifica si una matrícula ya existe
-        /// </summary>
-        public bool ExisteMatricula(string matricula)
-        {
-            try
-            {
-                string query = "SELECT COUNT(*) FROM human_resours.empleado WHERE matricula = @Matricula";
-                var param = _dbAccess.CreateParameter("@Matricula", matricula);
-
-                _dbAccess.Connect();
-                object? resultado = _dbAccess.ExecuteScalar(query, param);
-                int count = Convert.ToInt32(resultado);
-
-                return count > 0;
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, $"Error al verificar matrícula: {matricula}");
-                throw;
-            }
-            finally
-            {
-                _dbAccess.Disconnect();
-            }
+            return lista;
         }
     }
 }
