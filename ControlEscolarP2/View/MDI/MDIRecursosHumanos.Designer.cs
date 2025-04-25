@@ -816,7 +816,6 @@ namespace RecursosHumanos.View
             panelChildForm.ShadowDecoration.CustomizableEdges = customizableEdges2;
             panelChildForm.Size = new Size(1216, 796);
             panelChildForm.TabIndex = 5;
-            panelChildForm.Paint += panelChildForm_Paint;
             // 
             // pnlIntroduccion
             // 
@@ -1349,11 +1348,11 @@ namespace RecursosHumanos.View
         private ToolStripMenuItem mozaicoToolStripMenuItem;
         private Panel panelSideMenu;
         private Panel panelLogo;
-        private Button btnContarDias;
-        private Button btnRegistroAuditorias;
-        private Button btnReportes;
-        private Button btnSalidas;
-        private Button btnEntradas;
+        public static Button btnContarDias;
+        public static Button btnRegistroAuditorias;
+        public static Button btnReportes;
+        public static Button btnSalidas;
+        public static Button btnEntradas;
         private System.Windows.Forms.Timer tiempo;
         private Label lblInicio;
         private Guna.UI2.WinForms.Guna2ShadowPanel pnlLogo;
@@ -1398,13 +1397,13 @@ namespace RecursosHumanos.View
         public Guna.UI2.WinForms.Guna2GradientPanel panelChildForm;
         private Label lblHoraActual;
         private Label lblEmpleadosActNumero;
-        private Button btnEliminarEmpleados;
-        private Button btnActualizarEmpleados;
-        private Button btnListaEmpleados;
-        private Button btnLisUsuarios;
-        private Button btnEliminarUsuarios;
-        private Button btnActualizarUsuarios;
-        private Button subRegistroPersonas;
+        public static Button btnEliminarEmpleados;
+        public static Button btnActualizarEmpleados;
+        public static Button btnListaEmpleados;
+        public static Button btnLisUsuarios;
+        public static Button btnEliminarUsuarios;
+        public static Button btnActualizarUsuarios;
+        public static Button subRegistroPersonas;
         public static Guna.UI2.WinForms.Guna2Separator Separador2;
         public static Label lblTempo1;
         public static Label lblAccion1;

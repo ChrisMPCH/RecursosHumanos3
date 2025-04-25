@@ -18,6 +18,7 @@ namespace RecursosHumanos.View
         {
             InitializeComponent();
             InicializarVentana();
+            VerificarPermisos();
         }
 
         public void InicializarVentana()
@@ -61,9 +62,25 @@ namespace RecursosHumanos.View
             Formas.abrirPanelForm(formLeer, pnlCambiante);
         }
 
-        private void lblInfoUsuario_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Verifica los permisos del usuario para habilitar o deshabilitar los botones de registro.
+        /// </summary>
+        private void VerificarPermisos()
         {
+            var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
 
+            if (permisosUsuario.Contains(46)) // Agregar puesto
+            {
+                frmPuestos.btnAgregar.Enabled = true;
+            }
+            if (permisosUsuario.Contains(47)) // Editar puesto
+            {
+                frmPuestos.btnActualizar.Enabled = true;
+            }
+            if (permisosUsuario.Contains(48)) // Eliminar puesto
+            {
+                frmPuestos.btnEliminar.Enabled = true;
+            }
         }
     }
 }

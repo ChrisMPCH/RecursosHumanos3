@@ -13,7 +13,6 @@ namespace RecursosHumanos.Controller
 
         private readonly RolesDataAccess _rolesData;
         private readonly RolesPermisosDataAccess _rolesPermisosData;
-
         public RolesController()
         {
             try
@@ -27,7 +26,6 @@ namespace RecursosHumanos.Controller
                 throw;
             }
         }
-
         /// <summary>
         /// Obtiene la lista de todos los roles registrados en la base de datos
         /// </summary>
@@ -44,7 +42,6 @@ namespace RecursosHumanos.Controller
                 return new List<Rol>();
             }
         }
-
         /// <summary>
         /// Crea un nuevo rol con la lista de permisos asignados
         /// </summary>
@@ -90,7 +87,6 @@ namespace RecursosHumanos.Controller
                 return (false, "Error inesperado al crear el rol.");
             }
         }
-
         /// <summary>
         /// Obtiene un rol específico por su código
         /// </summary>
@@ -108,7 +104,6 @@ namespace RecursosHumanos.Controller
                 return null;
             }
         }
-
         /// <summary>
         /// Actualiza un rol existente y sus permisos
         /// </summary>
@@ -164,7 +159,6 @@ namespace RecursosHumanos.Controller
                 return (false, "Ocurrió un error inesperado.");
             }
         }
-
         /// <summary>
         /// Elimina un rol de forma lógica (soft delete) y elimina sus permisos asociados
         /// </summary>
@@ -205,7 +199,5 @@ namespace RecursosHumanos.Controller
                 return new List<Rol>();
             }
         }
-
-
     }
 }

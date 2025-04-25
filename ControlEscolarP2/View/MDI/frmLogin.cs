@@ -1,4 +1,5 @@
-﻿using RecursosHumanos.Bussines;
+﻿using Guna.UI2.AnimatorNS;
+using RecursosHumanos.Bussines;
 using RecursosHumanos.Controller;
 using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
@@ -17,6 +18,8 @@ namespace RecursosHumanos.View
     public partial class frmLogin : Form
     {
         public static List<int> permisosUsuario = new List<int>();
+        public static LoginController controller = new LoginController();
+        public static Usuario? usuarioLogueado = null;
 
         public frmLogin()
         {
@@ -45,9 +48,7 @@ namespace RecursosHumanos.View
             string usuario = txtUsuario.Text.Trim();
             string contrasenia = txtContrasenia.Text.Trim();
 
-            LoginController controller = new LoginController();
-
-            Usuario? usuarioLogueado = controller.Login(usuario, contrasenia);
+            usuarioLogueado = controller.Login(usuario, contrasenia);
 
             if (usuarioLogueado != null)
             {
@@ -102,7 +103,15 @@ namespace RecursosHumanos.View
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            VerificarUsuario();
+            if (VerificarUsuario())
+            {
+                // Actualizar fecha de acceso del usuario logueado
+                if (usuarioLogueado != null)
+                {
+                    usuarioLogueado.Fecha_Ultimo_Acceso = DateTime.Now;
+                    controller.ActualizarFechaUltimoAcceso(usuarioLogueado);
+                }
+            }
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {

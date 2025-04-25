@@ -18,6 +18,7 @@ namespace RecursosHumanos.View
         {
             InitializeComponent();
             InicializarVentana();
+            VerificarPermisos();
         }
 
         public void InicializarVentana()
@@ -59,6 +60,27 @@ namespace RecursosHumanos.View
             // Pasamos la referencia del panel pnlCambiante al formulario frmAgregarDepartamento
             frmListadoDepartamentos formLeer = new frmListadoDepartamentos(pnlCambiante);
             Formas.abrirPanelForm(formLeer, pnlCambiante);
+        }
+
+        /// <summary>
+        /// Verifica los permisos del usuario para habilitar o deshabilitar los botones de registro.
+        /// </summary>
+        private void VerificarPermisos()
+        {
+            var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
+
+            if (permisosUsuario.Contains(50)) // Agregar departamento
+            {
+                frmDepartamentos.btnAgregar.Enabled = true;
+            }
+            if (permisosUsuario.Contains(51)) // Editar departamento
+            {
+                frmDepartamentos.btnActualizar.Enabled = true;
+            }
+            if (permisosUsuario.Contains(52)) // Eliminar departamento
+            {
+                frmDepartamentos.btnEliminar.Enabled = true;
+            }
         }
     }
 }

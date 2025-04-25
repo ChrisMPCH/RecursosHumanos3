@@ -14,54 +14,52 @@ namespace RecursosHumanos.Controller
 {
     public class LoginController
     {
-        private readonly PersonasDataAccess _personasAccess;
         private readonly UsuarioDataAccess _usuariosAccess;
-
-        private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Controller.LoginController");
-
-
-
-        public LoginController(PersonasDataAccess personasDataAccess, UsuarioDataAccess usuarioDataAccess)
-        {
-            _personasAccess = personasDataAccess;
-            _usuariosAccess = usuarioDataAccess;
-        }
 
         public LoginController()
         {
-
+            _usuariosAccess = new UsuarioDataAccess();
         }
 
         /// <summary>
-        /// Inicia sesión con un usuario existente.
+        /// Método para manejar el proceso de login.
         /// </summary>
-        /// <param name="nombreUsuario"></param>
-        /// <param name="contrasenia"></param>
-        /// <returns></returns>
+        /// <param name="nombreUsuario">Nombre del usuario</param>
+        /// <param name="contrasenia">Contraseña del usuario</param>
+        /// <returns>Usuario logueado o null si las credenciales son incorrectas</returns>
         public Usuario? Login(string nombreUsuario, string contrasenia)
         {
-            try
+            if (string.IsNullOrWhiteSpace(nombreUsuario) || string.IsNullOrWhiteSpace(contrasenia))
             {
-                return _usuariosAccess.Login(nombreUsuario, contrasenia);
+                throw new ArgumentException("El nombre de usuario y la contraseña no pueden estar vacíos.");
             }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Error al intentar iniciar sesión");
-                return null;
-            }
+
+            return _usuariosAccess.Login(nombreUsuario, contrasenia);
         }
 
         /// <summary>
-        /// Obtiene los permisos del usuario según su ID
+        /// Actualiza la fecha de último acceso del usuario.
         /// </summary>
-        /// <param name="idUsuario">ID del usuario que inició sesión</param>
-        /// <returns>Lista de IDs de permisos que tiene el usuario</returns>
-        public List<int> ObtenerPermisosUsuario(int idUsuario)
+        /// <param name="usuario">Usuario a actualizar</param>
+        public void ActualizarFechaUltimoAcceso(Usuario usuario)
         {
-            // Obtén los permisos del usuario desde el DataAccess
-            return _usuariosAccess.ObtenerPermisosUsuario(idUsuario);
+            if (usuario == null)
+            {
+                throw new ArgumentNullException(nameof(usuario), "El usuario no puede ser nulo.");
+            }
+
+            usuario.Fecha_Ultimo_Acceso = DateTime.Now;
+            _usuariosAccess.ActualizarUsuario(usuario);
         }
 
-
+        /// <summary>
+        /// Obtiene los permisos del usuario según su ID.
+        /// </summary>
+        /// <param name="idUsuario">ID del usuario</param>
+        /// <returns>Lista de IDs de permisos</returns>
+        public List<int> ObtenerPermisosUsuario(int idUsuario)
+        {
+            return _usuariosAccess.ObtenerPermisosUsuario(idUsuario);
+        }
     }
 }

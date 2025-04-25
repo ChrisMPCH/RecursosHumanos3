@@ -19,6 +19,7 @@ namespace RecursosHumanos.View
     {
         private RolesController _rolesController;
         private PermisosController _permisosController;
+        RolesController rolesController = new RolesController();
 
         public frmGestionRoles()
         {
@@ -26,6 +27,9 @@ namespace RecursosHumanos.View
             _rolesController = new RolesController();
             _permisosController = new PermisosController();
             InicializarVentana();
+            VerificarPermisos();
+            // Configurar el modo de edición del DataGridView
+            dataGridPermisos.EditMode = DataGridViewEditMode.EditOnEnter;
         }
 
         private void InicializarVentana()
@@ -111,8 +115,7 @@ namespace RecursosHumanos.View
                     return false;
                 }
 
-                RolesController controller = new RolesController();
-                var resultado = controller.ActualizarRolConPermisos(rolEditado, permisosSeleccionados);
+                var resultado = rolesController.ActualizarRolConPermisos(rolEditado, permisosSeleccionados);
 
                 if (resultado.exito)
                 {
@@ -125,7 +128,7 @@ namespace RecursosHumanos.View
                     MessageBox.Show(resultado.mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
-                }
+            }
             catch (Exception ex)
             {
                 MessageBox.Show("Error inesperado al guardar los cambios: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -198,31 +201,65 @@ namespace RecursosHumanos.View
             }
             else if (btnBuscar.Text == "Editar")
             {
-                HabilitarEditar();
-                btnCancelar.Text = "Cancelar";
+                var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
+                if (permisosUsuario.Contains(28)) // Editar rol
+                {
+                    int idRol = Convert.ToInt32(txtRolCodigo.Tag);
+                    if (idRol == 39)
+                    {
+                        MessageBox.Show("Por seguridad del Programa, no se puede editar el rol ADMIN.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    HabilitarEditar();
+                    btnCancelar.Text = "Cancelar";
+                }
+                else
+                {
+                    frmGestionRoles.btnGuardarEdicion.Enabled = false;
+                    MessageBox.Show("No tiene permisos para editar el rol.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
             }
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            if (txtRolCodigo.Tag == null)
-            {
-                MessageBox.Show("Debe buscar un rol antes de poder eliminarlo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
 
-            int idRol = Convert.ToInt32(txtRolCodigo.Tag);
-            var resultado = _rolesController.EliminarRol(idRol);
-
-            if (resultado.exito)
+            if (permisosUsuario.Contains(29)) // Eliminar rol
             {
-                MessageBox.Show(resultado.mensaje, "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                RestablecerTodo();
+                if (txtRolCodigo.Tag == null)
+                {
+                    MessageBox.Show("Debe buscar un rol antes de poder eliminarlo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int idRol = Convert.ToInt32(txtRolCodigo.Tag);
+                if (idRol == 39)
+                {
+                    MessageBox.Show("Por seguridad del Programa, no se puede eliminar el rol ADMIN.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var resultado = _rolesController.EliminarRol(idRol);
+
+                if (resultado.exito)
+                {
+                    MessageBox.Show(resultado.mensaje, "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    RestablecerTodo();
+                }
+                else
+                {
+                    MessageBox.Show(resultado.mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
-                MessageBox.Show(resultado.mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                frmGestionRoles.btnEliminar.Enabled = false;
+                MessageBox.Show("No tiene permisos para eliminar roles rol.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
         }
 
         private void btnGuardarEdicion_Click(object sender, EventArgs e)
@@ -230,6 +267,7 @@ namespace RecursosHumanos.View
             if(EditarRol())
             {
                 RestablecerTodo();
+                MDIRecursosHumanos.VerificarPermisos();
             }
         }
 
@@ -354,6 +392,7 @@ namespace RecursosHumanos.View
                 dataGridPermisos.Columns.Insert(0, checkBoxCol);
             }
         }
+
         /// <summary>
         /// Carga los permisos en el DataGridView
         /// </summary>
@@ -443,5 +482,17 @@ namespace RecursosHumanos.View
             return permisosIds;
         }
 
+        /// <summary>
+        /// Verifica los permisos del usuario para habilitar o deshabilitar los botones de registro.
+        /// </summary>
+        private void VerificarPermisos()
+        {
+            var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
+
+            if (!permisosUsuario.Contains(29)) // Eliminar rol
+            {
+                frmGestionRoles.btnEliminar.Enabled = false;
+            }
+        }
     }
 }

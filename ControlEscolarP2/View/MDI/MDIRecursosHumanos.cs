@@ -19,7 +19,6 @@ namespace RecursosHumanos.View
         public static Form? formActivada = null;
         public static List<int> permisosUsuario = frmLogin.permisosUsuario;
 
-
         // Constructor del formulario principal, se inicializan los componentes y el menú MDI
         public MDIRecursosHumanos()
         {
@@ -69,19 +68,17 @@ namespace RecursosHumanos.View
                 subMenu.Visible = false; // Si ya está visible, lo ocultamos
             }
         }
-
+        
         // Función para esconder un submenú dependiendo de su estado actual
         public static void showNoSubMenu(Panel subMenu)
         {
             // Si el submenú no está visible, lo mostramos
             subMenu.Visible = false; // Si ya está visible, lo ocultamos
         }
-
         private void picMenu_Click(object sender, EventArgs e)
         {
             Formas.CloseOtherForms(this);
         }
-
 
         //-----------------------------------------------------------------------Christopher
         #region
@@ -97,36 +94,30 @@ namespace RecursosHumanos.View
             // Usamos el método para abrir el formulario con las configuraciones estándar
             abrirChildFormMDI(frmRegistroPersonas);
         }
-
         private void btnLisUsuarios_Click(object sender, EventArgs e)
         {
             Form frmListaUsuarios = new frmListaUsuarios();
             abrirChildFormMDI(frmListaUsuarios);
         }
-
         private void btnActualizarUsuarios_Click(object sender, EventArgs e)
         {
             Form frmActualizarUsuario = new frmActualizarUsuario();
             abrirChildFormMDI(frmActualizarUsuario);
         }
-
         private void btnEliminarUsuarios_Click(object sender, EventArgs e)
         {
             Form frmEliminarUsuarios = new frmEliminarUsuario();
             abrirChildFormMDI(frmEliminarUsuarios);
         }
-
         private void btnRoles_Click_1(object sender, EventArgs e)
         {
             showSubMenu(pnlSubRoles); // Muestra u oculta el submenú de Roles
         }
-
         private void btnGestionRoles_Click(object sender, EventArgs e)
         {
             Form frmGestionRoles = new frmGestionRoles();
             abrirChildFormMDI(frmGestionRoles);
         }
-
         private void btnCreacionRoles_Click(object sender, EventArgs e)
         {
             Form frmGestionCreacionRoles = new frmGestionCreacionRoles();
@@ -140,25 +131,21 @@ namespace RecursosHumanos.View
         {
             showSubMenu(subVanessaPanel); // Muestra u oculta el submenú de Vanessa
         }
-
         private void RegistroEmpleados_Click(object sender, EventArgs e)
         {
             Form frmRegistroEmpleado = new frmRegistroEmpleado();
             abrirChildFormMDI(frmRegistroEmpleado);
         }
-
         private void ListaEmpleados_Click(object sender, EventArgs e)
         {
             Form frmListaEmpleados = new frmListaEmpleados();
             abrirChildFormMDI(frmListaEmpleados);
         }
-
         private void ActualizarEmpleados_Click(object sender, EventArgs e)
         {
             Form frmActualizarEmpleado = new frmActualizarEmpleado();
             abrirChildFormMDI(frmActualizarEmpleado);
         }
-
         private void btnEliminarEmpleados_Click(object sender, EventArgs e)
         {
             Form frmEliminarEmpleado = new frmEliminarEmpleado();
@@ -169,13 +156,11 @@ namespace RecursosHumanos.View
             Form frmDepartamentos = new frmDepartamentos();
             abrirChildFormMDI(frmDepartamentos);
         }
-
         private void btnPuestos_Click(object sender, EventArgs e)
         {
             Form frmPuestos = new frmPuestos();
             abrirChildFormMDI(frmPuestos);
         }
-
 
         private void btnContratos_Click_1(object sender, EventArgs e)
         {
@@ -220,8 +205,6 @@ namespace RecursosHumanos.View
         {
             showSubMenu(subFridaPanel); // Muestra u oculta el submenú de Frida
         }
-
-
 
         private void btnContarDias_Click(object sender, EventArgs e)
         {
@@ -299,20 +282,20 @@ namespace RecursosHumanos.View
             abrirChildFormMDI(frmAuditoria);
         }
 
-        private void panelChildForm_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-
         //-------------------------------------------------------------------------------Permisos
 
         /// <summary>
         /// Verifica los permisos del usuario actual y habilita o deshabilita los botones del menú según corresponda.
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        private void VerificarPermisos()
+        public static void VerificarPermisos()
         {
+            if (permisosUsuario == null || permisosUsuario.Count == 0)
+            {
+                MessageBox.Show("No se han asignado permisos para este usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             // Usuarios
             if (permisosUsuario.Contains(22)) // Ver usuarios
             {
@@ -321,14 +304,7 @@ namespace RecursosHumanos.View
             if (permisosUsuario.Contains(23) || permisosUsuario.Contains(36)) // Agregar usuario y empleado
             {
                 subRegistroPersonas.Enabled = true;
-                if (permisosUsuario.Contains(23)) // Agregar usuario
-                {
-                    frmGuardarInformacion.btnRegistrarUsuario.Enabled = true;
-                }
-                if (permisosUsuario.Contains(36)) // Agregar empleado
-                {
-                    frmGuardarInformacion.btnRegitrarEmpleado.Enabled = true;
-                }
+
             }
             if (permisosUsuario.Contains(24)) // Editar usuario
             {
@@ -348,20 +324,7 @@ namespace RecursosHumanos.View
             {
                 btnCreacionRoles.Enabled = true;
 
-                if (permisosUsuario.Contains(27)) // Crear rol
-                {
-                    frmGestionRoles.btnGuardar.Enabled = true;  
-                }
-                if (permisosUsuario.Contains(28)) // Editar rol
-                {
-                    frmGestionRoles.btnGuardarEdicion.Enabled = true;
-                }
-                if (permisosUsuario.Contains(29)) // Eliminar rol
-                {
-                    frmGestionRoles.btnEliminar.Enabled = true;
-                }
             }
-            
 
             // Permisos
             if (permisosUsuario.Contains(30)) // Ver permisos
@@ -403,44 +366,20 @@ namespace RecursosHumanos.View
             btnRegistroAuditorias.Enabled = true;
             }
 
-            // ** Nuevos apartados:**
-
             // Puestos
             if (permisosUsuario.Contains(45)) // Ver puestos
             {
                 btnPuestos.Enabled = true;
-            }
-            if (permisosUsuario.Contains(46)) // Agregar puesto
-            {
-                frmPuestos.btnAgregar.Enabled = true;
-            }
-            if (permisosUsuario.Contains(47)) // Editar puesto
-            {
-                frmPuestos.btnActualizar.Enabled = true;
-            }
-            if (permisosUsuario.Contains(48)) // Eliminar puesto
-            {
-                frmPuestos.btnEliminar.Enabled = true;
+
             }
 
             // Departamentos
             if (permisosUsuario.Contains(49)) // Ver departamentos
             {
                 btnDepartamentos.Enabled = true;
-            }
-            if (permisosUsuario.Contains(50)) // Agregar departamento
-            {
-                frmDepartamentos.btnAgregar.Enabled = true;
-            }
-            if (permisosUsuario.Contains(51)) // Editar departamento
-            {
-                frmDepartamentos.btnActualizar.Enabled = true;
-            }
-            if (permisosUsuario.Contains(52)) // Eliminar departamento
-            {
-                frmDepartamentos.btnEliminar.Enabled = true;
-            }
 
+            }
+            
             // Asistencias
             if (permisosUsuario.Contains(53)) // Gestionar asistencias
             {

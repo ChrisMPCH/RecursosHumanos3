@@ -17,6 +17,7 @@ namespace RecursosHumanos.View
         public frmGuardarInformacion()
         {
             InitializeComponent();
+            VerificarPermisos();
         }
 
         private void btnRegistrarUsuario_Click(object sender, EventArgs e)
@@ -53,5 +54,23 @@ namespace RecursosHumanos.View
             frmRegistroPersonas.InicializarCampos();
             MDIRecursosHumanos.DesbloquearBotonesMenu();
         }
+
+        /// <summary>
+        /// Verifica los permisos del usuario para habilitar o deshabilitar los botones de registro.
+        /// </summary>
+        private void VerificarPermisos()
+        {
+            var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
+
+            if (permisosUsuario.Contains(23)) // Agregar usuario
+            {
+                frmGuardarInformacion.btnRegistrarUsuario.Enabled = true;
+            }
+            if (permisosUsuario.Contains(36)) // Agregar empleado
+            {
+                frmGuardarInformacion.btnRegitrarEmpleado.Enabled = true;
+            }
+        }
+
     }
 }

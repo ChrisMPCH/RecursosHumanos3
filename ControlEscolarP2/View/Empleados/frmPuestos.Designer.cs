@@ -185,7 +185,6 @@
             lblInfoUsuario.TabIndex = 2;
             lblInfoUsuario.Text = "Selecciona la opción deseada";
             lblInfoUsuario.TextAlign = ContentAlignment.MiddleLeft;
-            lblInfoUsuario.Click += lblInfoUsuario_Click;
             // 
             // lblGenero
             // 

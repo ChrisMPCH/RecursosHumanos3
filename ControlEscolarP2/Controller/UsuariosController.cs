@@ -120,5 +120,24 @@ namespace RecursosHumanos.Controller
                 return false;
             }
         }
+        /// <summary>  
+        /// Obtiene un usuario por su ID.  
+        /// </summary>  
+        /// <param name="idUsuario"></param>  
+        /// <returns></returns>  
+        public Usuario? ObtenerUsuarioPorId(int idUsuario)
+        {
+            try
+            {
+                _logger.Debug($"Obteniendo usuario con ID {idUsuario}");
+                return _usuariosAccess.ObtenerUsuarioPorId(idUsuario);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener usuario con ID {idUsuario}");
+                return null;
+            }
+        }
+
     }
 }

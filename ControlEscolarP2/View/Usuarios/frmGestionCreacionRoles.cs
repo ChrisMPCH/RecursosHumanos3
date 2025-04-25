@@ -23,6 +23,7 @@ namespace RecursosHumanos.View
             InitializeComponent();
             _permisosController = new PermisosController();
             InicializarVentana();
+            VerificarPermisos();
         }
 
         private void InicializarVentana()
@@ -242,6 +243,19 @@ namespace RecursosHumanos.View
                 MessageBox.Show("Error al obtener los permisos seleccionados: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return permisosIds;
+        }
+
+        /// <summary>
+        /// Verifica los permisos del usuario para habilitar o deshabilitar los botones de registro.
+        /// </summary>
+        private void VerificarPermisos()
+        {
+            var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
+
+            if (!permisosUsuario.Contains(27)) // CreaR rol
+            {
+                btnGuardar.Enabled = false;
+            }
         }
     }
 }

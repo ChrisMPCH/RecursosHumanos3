@@ -540,7 +540,6 @@
         private Guna.UI2.WinForms.Guna2Panel pnlTabla;
         private Guna.UI2.WinForms.Guna2DataGridView dataGridPermisos;
         private Guna.UI2.WinForms.Guna2Button btnCancelar;
-        public static Guna.UI2.WinForms.Guna2Button btnGuardar;
         private Label lblInfPermisos;
         private Label lblInfo1;
         private Guna.UI2.WinForms.Guna2TextBox txtRolCodigo;
@@ -548,15 +547,16 @@
         private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaIngreso;
         private Label lblFechaNacimiento;
         private Guna.UI2.WinForms.Guna2Separator separador1;
-        public static Guna.UI2.WinForms.Guna2Button btnGuardarEdicion;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         private Guna.UI2.WinForms.Guna2VSeparator guna2vSeparator1;
-        private Guna.UI2.WinForms.Guna2Button btnBuscar;
-        public static Guna.UI2.WinForms.Guna2Button btnEliminar;
         private Guna.UI2.WinForms.Guna2TextBox txtDescripcion;
         private Label lblDescripcion;
         private Label lblInfo2;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2DataGridView dataGridRolesU;
+        private Guna.UI2.WinForms.Guna2Button btnBuscar;
+        public static Guna.UI2.WinForms.Guna2Button btnGuardar;
+        public static Guna.UI2.WinForms.Guna2Button btnGuardarEdicion;
+        public static Guna.UI2.WinForms.Guna2Button btnEliminar;
     }
 }
