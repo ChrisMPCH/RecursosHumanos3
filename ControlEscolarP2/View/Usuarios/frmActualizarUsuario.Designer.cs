@@ -30,6 +30,11 @@
         {
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges43 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges44 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmActualizarUsuario));
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -68,13 +73,13 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges40 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges41 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges42 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmActualizarUsuario));
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             lblTitulo = new Label();
             pnlInfoEsmpleado = new Guna.UI2.WinForms.Guna2GradientPanel();
+            pcVerContraseña = new PictureBox();
+            txtContraseniaCon = new Guna.UI2.WinForms.Guna2TextBox();
+            lblContraseniaCon = new Label();
+            txtContrasenia = new Guna.UI2.WinForms.Guna2TextBox();
+            lblContrasenia = new Label();
             cbRoles = new Guna.UI2.WinForms.Guna2ComboBox();
             lblRol = new Label();
             Separator2 = new Guna.UI2.WinForms.Guna2Separator();
@@ -105,17 +110,12 @@
             lblRFC = new Label();
             lblGenero = new Label();
             lblMatricula = new Label();
-            dtpFechaIngreso = new Guna.UI2.WinForms.Guna2DateTimePicker();
+            dtpFechaCreacion = new Guna.UI2.WinForms.Guna2DateTimePicker();
             lblEstatus = new Label();
-            lblFechaIngreso = new Label();
+            lblFechaCreacion = new Label();
             lblApellidoP = new Label();
             Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             lblBienvenida2 = new Label();
-            pcVerContraseña = new PictureBox();
-            txtContraseniaCon = new Guna.UI2.WinForms.Guna2TextBox();
-            lblContraseniaCon = new Label();
-            txtContrasenia = new Guna.UI2.WinForms.Guna2TextBox();
-            lblContrasenia = new Label();
             pnlInfoEsmpleado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pcVerContraseña).BeginInit();
             SuspendLayout();
@@ -172,9 +172,9 @@
             pnlInfoEsmpleado.Controls.Add(lblRFC);
             pnlInfoEsmpleado.Controls.Add(lblGenero);
             pnlInfoEsmpleado.Controls.Add(lblMatricula);
-            pnlInfoEsmpleado.Controls.Add(dtpFechaIngreso);
+            pnlInfoEsmpleado.Controls.Add(dtpFechaCreacion);
             pnlInfoEsmpleado.Controls.Add(lblEstatus);
-            pnlInfoEsmpleado.Controls.Add(lblFechaIngreso);
+            pnlInfoEsmpleado.Controls.Add(lblFechaCreacion);
             pnlInfoEsmpleado.Controls.Add(lblApellidoP);
             pnlInfoEsmpleado.Controls.Add(Separator1);
             pnlInfoEsmpleado.Controls.Add(lblBienvenida2);
@@ -185,6 +185,90 @@
             pnlInfoEsmpleado.ShadowDecoration.CustomizableEdges = customizableEdges44;
             pnlInfoEsmpleado.Size = new Size(1011, 744);
             pnlInfoEsmpleado.TabIndex = 5;
+            // 
+            // pcVerContraseña
+            // 
+            pcVerContraseña.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pcVerContraseña.BackgroundImageLayout = ImageLayout.Zoom;
+            pcVerContraseña.Cursor = Cursors.Hand;
+            pcVerContraseña.Image = (Image)resources.GetObject("pcVerContraseña.Image");
+            pcVerContraseña.Location = new Point(942, 408);
+            pcVerContraseña.Name = "pcVerContraseña";
+            pcVerContraseña.Size = new Size(30, 26);
+            pcVerContraseña.SizeMode = PictureBoxSizeMode.Zoom;
+            pcVerContraseña.TabIndex = 80;
+            pcVerContraseña.TabStop = false;
+            pcVerContraseña.Click += pcVerContraseña_Click;
+            // 
+            // txtContraseniaCon
+            // 
+            txtContraseniaCon.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            txtContraseniaCon.Animated = true;
+            txtContraseniaCon.BorderRadius = 5;
+            txtContraseniaCon.CustomizableEdges = customizableEdges1;
+            txtContraseniaCon.DefaultText = "Ingresar contraseña";
+            txtContraseniaCon.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtContraseniaCon.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtContraseniaCon.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtContraseniaCon.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtContraseniaCon.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtContraseniaCon.Font = new Font("Segoe UI", 9.75F);
+            txtContraseniaCon.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtContraseniaCon.Location = new Point(764, 452);
+            txtContraseniaCon.Margin = new Padding(3, 4, 3, 4);
+            txtContraseniaCon.MaxLength = 50;
+            txtContraseniaCon.Name = "txtContraseniaCon";
+            txtContraseniaCon.PlaceholderText = "";
+            txtContraseniaCon.SelectedText = "";
+            txtContraseniaCon.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            txtContraseniaCon.Size = new Size(230, 28);
+            txtContraseniaCon.TabIndex = 79;
+            // 
+            // lblContraseniaCon
+            // 
+            lblContraseniaCon.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            lblContraseniaCon.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            lblContraseniaCon.ForeColor = Color.Black;
+            lblContraseniaCon.Location = new Point(509, 455);
+            lblContraseniaCon.Name = "lblContraseniaCon";
+            lblContraseniaCon.Size = new Size(249, 25);
+            lblContraseniaCon.TabIndex = 77;
+            lblContraseniaCon.Text = "Confirmar contraseña *";
+            // 
+            // txtContrasenia
+            // 
+            txtContrasenia.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            txtContrasenia.Animated = true;
+            txtContrasenia.BorderRadius = 5;
+            txtContrasenia.CustomizableEdges = customizableEdges3;
+            txtContrasenia.DefaultText = "Ingresar contraseña";
+            txtContrasenia.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtContrasenia.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtContrasenia.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtContrasenia.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtContrasenia.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtContrasenia.Font = new Font("Segoe UI", 9.75F);
+            txtContrasenia.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtContrasenia.Location = new Point(694, 406);
+            txtContrasenia.Margin = new Padding(3, 4, 3, 4);
+            txtContrasenia.MaxLength = 50;
+            txtContrasenia.Name = "txtContrasenia";
+            txtContrasenia.PlaceholderText = "";
+            txtContrasenia.SelectedText = "";
+            txtContrasenia.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            txtContrasenia.Size = new Size(230, 28);
+            txtContrasenia.TabIndex = 78;
+            // 
+            // lblContrasenia
+            // 
+            lblContrasenia.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            lblContrasenia.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            lblContrasenia.ForeColor = Color.Black;
+            lblContrasenia.Location = new Point(529, 407);
+            lblContrasenia.Name = "lblContrasenia";
+            lblContrasenia.Size = new Size(148, 25);
+            lblContrasenia.TabIndex = 76;
+            lblContrasenia.Text = "Contraseña *";
             // 
             // cbRoles
             // 
@@ -709,25 +793,25 @@
             lblMatricula.TabIndex = 23;
             lblMatricula.Text = "Usuario *";
             // 
-            // dtpFechaIngreso
+            // dtpFechaCreacion
             // 
-            dtpFechaIngreso.BackColor = Color.Transparent;
-            dtpFechaIngreso.Checked = true;
-            dtpFechaIngreso.CustomizableEdges = customizableEdges41;
-            dtpFechaIngreso.Enabled = false;
-            dtpFechaIngreso.FillColor = Color.White;
-            dtpFechaIngreso.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtpFechaIngreso.Format = DateTimePickerFormat.Short;
-            dtpFechaIngreso.ImeMode = ImeMode.NoControl;
-            dtpFechaIngreso.Location = new Point(259, 598);
-            dtpFechaIngreso.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
-            dtpFechaIngreso.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
-            dtpFechaIngreso.Name = "dtpFechaIngreso";
-            dtpFechaIngreso.RightToLeft = RightToLeft.No;
-            dtpFechaIngreso.ShadowDecoration.CustomizableEdges = customizableEdges42;
-            dtpFechaIngreso.Size = new Size(121, 31);
-            dtpFechaIngreso.TabIndex = 13;
-            dtpFechaIngreso.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
+            dtpFechaCreacion.BackColor = Color.Transparent;
+            dtpFechaCreacion.Checked = true;
+            dtpFechaCreacion.CustomizableEdges = customizableEdges41;
+            dtpFechaCreacion.Enabled = false;
+            dtpFechaCreacion.FillColor = Color.White;
+            dtpFechaCreacion.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dtpFechaCreacion.Format = DateTimePickerFormat.Long;
+            dtpFechaCreacion.ImeMode = ImeMode.NoControl;
+            dtpFechaCreacion.Location = new Point(374, 570);
+            dtpFechaCreacion.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
+            dtpFechaCreacion.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
+            dtpFechaCreacion.Name = "dtpFechaCreacion";
+            dtpFechaCreacion.RightToLeft = RightToLeft.No;
+            dtpFechaCreacion.ShadowDecoration.CustomizableEdges = customizableEdges42;
+            dtpFechaCreacion.Size = new Size(208, 31);
+            dtpFechaCreacion.TabIndex = 13;
+            dtpFechaCreacion.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
             // 
             // lblEstatus
             // 
@@ -740,15 +824,15 @@
             lblEstatus.TabIndex = 9;
             lblEstatus.Text = "Estatus *";
             // 
-            // lblFechaIngreso
+            // lblFechaCreacion
             // 
-            lblFechaIngreso.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblFechaIngreso.ForeColor = Color.Black;
-            lblFechaIngreso.Location = new Point(83, 604);
-            lblFechaIngreso.Name = "lblFechaIngreso";
-            lblFechaIngreso.Size = new Size(170, 25);
-            lblFechaIngreso.TabIndex = 7;
-            lblFechaIngreso.Text = "Fecha ingreso: ";
+            lblFechaCreacion.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            lblFechaCreacion.ForeColor = Color.Black;
+            lblFechaCreacion.Location = new Point(108, 570);
+            lblFechaCreacion.Name = "lblFechaCreacion";
+            lblFechaCreacion.Size = new Size(272, 25);
+            lblFechaCreacion.TabIndex = 7;
+            lblFechaCreacion.Text = "Fecha de creación: ";
             // 
             // lblApellidoP
             // 
@@ -779,89 +863,6 @@
             lblBienvenida2.Size = new Size(410, 37);
             lblBienvenida2.TabIndex = 2;
             lblBienvenida2.Text = "Información del usuario";
-            // 
-            // pcVerContraseña
-            // 
-            pcVerContraseña.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pcVerContraseña.BackgroundImageLayout = ImageLayout.Zoom;
-            pcVerContraseña.Cursor = Cursors.Hand;
-            pcVerContraseña.Image = (Image)resources.GetObject("pcVerContraseña.Image");
-            pcVerContraseña.Location = new Point(942, 408);
-            pcVerContraseña.Name = "pcVerContraseña";
-            pcVerContraseña.Size = new Size(30, 26);
-            pcVerContraseña.SizeMode = PictureBoxSizeMode.Zoom;
-            pcVerContraseña.TabIndex = 80;
-            pcVerContraseña.TabStop = false;
-            // 
-            // txtContraseniaCon
-            // 
-            txtContraseniaCon.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            txtContraseniaCon.Animated = true;
-            txtContraseniaCon.BorderRadius = 5;
-            txtContraseniaCon.CustomizableEdges = customizableEdges1;
-            txtContraseniaCon.DefaultText = "Ingresar contraseña";
-            txtContraseniaCon.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtContraseniaCon.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtContraseniaCon.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtContraseniaCon.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtContraseniaCon.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtContraseniaCon.Font = new Font("Segoe UI", 9.75F);
-            txtContraseniaCon.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtContraseniaCon.Location = new Point(764, 452);
-            txtContraseniaCon.Margin = new Padding(3, 4, 3, 4);
-            txtContraseniaCon.MaxLength = 50;
-            txtContraseniaCon.Name = "txtContraseniaCon";
-            txtContraseniaCon.PlaceholderText = "";
-            txtContraseniaCon.SelectedText = "";
-            txtContraseniaCon.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            txtContraseniaCon.Size = new Size(230, 28);
-            txtContraseniaCon.TabIndex = 79;
-            // 
-            // lblContraseniaCon
-            // 
-            lblContraseniaCon.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            lblContraseniaCon.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblContraseniaCon.ForeColor = Color.Black;
-            lblContraseniaCon.Location = new Point(509, 455);
-            lblContraseniaCon.Name = "lblContraseniaCon";
-            lblContraseniaCon.Size = new Size(249, 25);
-            lblContraseniaCon.TabIndex = 77;
-            lblContraseniaCon.Text = "Confirmar contraseña *";
-            // 
-            // txtContrasenia
-            // 
-            txtContrasenia.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            txtContrasenia.Animated = true;
-            txtContrasenia.BorderRadius = 5;
-            txtContrasenia.CustomizableEdges = customizableEdges3;
-            txtContrasenia.DefaultText = "Ingresar contraseña";
-            txtContrasenia.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtContrasenia.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtContrasenia.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtContrasenia.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtContrasenia.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtContrasenia.Font = new Font("Segoe UI", 9.75F);
-            txtContrasenia.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtContrasenia.Location = new Point(694, 406);
-            txtContrasenia.Margin = new Padding(3, 4, 3, 4);
-            txtContrasenia.MaxLength = 50;
-            txtContrasenia.Name = "txtContrasenia";
-            txtContrasenia.PlaceholderText = "";
-            txtContrasenia.SelectedText = "";
-            txtContrasenia.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            txtContrasenia.Size = new Size(230, 28);
-            txtContrasenia.TabIndex = 78;
-            // 
-            // lblContrasenia
-            // 
-            lblContrasenia.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            lblContrasenia.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblContrasenia.ForeColor = Color.Black;
-            lblContrasenia.Location = new Point(529, 407);
-            lblContrasenia.Name = "lblContrasenia";
-            lblContrasenia.Size = new Size(148, 25);
-            lblContrasenia.TabIndex = 76;
-            lblContrasenia.Text = "Contraseña *";
             // 
             // frmActualizarUsuario
             // 
@@ -906,9 +907,9 @@
         private Label lblRFC;
         private Label lblGenero;
         private Label lblMatricula;
-        private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaIngreso;
+        private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaCreacion;
         private Label lblEstatus;
-        private Label lblFechaIngreso;
+        private Label lblFechaCreacion;
         private Label lblApellidoP;
         private Guna.UI2.WinForms.Guna2Separator Separator1;
         private Label lblBienvenida2;

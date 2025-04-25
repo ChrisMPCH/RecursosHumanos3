@@ -55,6 +55,7 @@ namespace RecursosHumanos.Controller
                 return (false, "Error inesperado. Contacte al administrador.", -99);
             }
         }
+
         /// <summary>
         /// Elimina el registro de una persona si no tiene relaciones en la base de datos.
         /// </summary>

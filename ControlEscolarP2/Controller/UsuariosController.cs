@@ -121,5 +121,25 @@ namespace RecursosHumanos.Controller
             }
         }
 
+        /// <summary>
+        /// Inicia sesión con un usuario existente.
+        /// </summary>
+        /// <param name="nombreUsuario"></param>
+        /// <param name="contrasenia"></param>
+        /// <returns></returns>
+        public Usuario? Login(string nombreUsuario, string contrasenia)
+        {
+            try
+            {
+                return _usuariosAccess.Login(nombreUsuario, contrasenia);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al intentar iniciar sesión");
+                return null;
+            }
+        }
+
+
     }
 }

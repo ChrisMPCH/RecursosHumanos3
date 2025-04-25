@@ -125,18 +125,6 @@ namespace RecursosHumanos.Data
         {
             try
             {
-                // Primero insertamos la persona asociada
-                int idPersona = _personasData.InsertarPersona(usuario.DatosPersonales);
-
-                if (idPersona <= 0)
-                {
-                    _logger.Error($"No se pudo insertar la persona del usuario: {usuario.UsuarioNombre}");
-                    return -1;
-                }
-
-                // Asignar el ID de persona generado al objeto usuario
-                usuario.Id_Persona = idPersona;
-
                 // Preparar la consulta para insertar el usuario
                 string query = @"
                 INSERT INTO administration.usuario 
@@ -231,7 +219,7 @@ namespace RecursosHumanos.Data
                 {
                     _logger.Warn($"No se encontró usuario con ID {usuario.Id_Usuario} para actualizar.");
                 }
-
+                _logger.Debug($"Filas afectadas: {filasAfectadas}");
                 return exito;
             }
             catch (Exception ex)
@@ -259,6 +247,7 @@ namespace RecursosHumanos.Data
 
                 _dbAccess.Connect();
                 int filas = _dbAccess.ExecuteNonQuery(query, param);
+                _logger.Info($"Usuario con ID {idUsuario} eliminado correctamente.");
                 return filas > 0;
             }
             catch (Exception ex)
@@ -324,7 +313,7 @@ namespace RecursosHumanos.Data
                     Estatus = Convert.ToInt16(row["estatus"]),
                     DatosPersonales = persona
                 };
-
+                _logger.Info($"Usuario con ID {idUsuario} obtenido correctamente.");
                 return usuario;
             }
             catch (Exception ex)
@@ -356,9 +345,9 @@ namespace RecursosHumanos.Data
 
                 var parametros = new[]
                 {
-            _dbAccess.CreateParameter("@Usuario", nombreUsuario),
-            _dbAccess.CreateParameter("@Contrasenia", contrasenia)
-        };
+                    _dbAccess.CreateParameter("@Usuario", nombreUsuario),
+                    _dbAccess.CreateParameter("@Contrasenia", contrasenia)
+                };
 
                 _dbAccess.Connect();
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametros);
@@ -395,6 +384,8 @@ namespace RecursosHumanos.Data
                     Estatus = Convert.ToInt16(row["estatus"]),
                     DatosPersonales = persona
                 };
+
+                _logger.Info($"Usuario {nombreUsuario} inició sesión exitosamente.");
 
                 return usuario;
             }

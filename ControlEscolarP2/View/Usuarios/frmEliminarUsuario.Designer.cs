@@ -30,6 +30,8 @@
         {
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges41 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges42 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -68,10 +70,10 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges38 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges39 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges40 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             lblTitulo = new Label();
             pnlInfoEsmpleado = new Guna.UI2.WinForms.Guna2GradientPanel();
+            cbRoles = new Guna.UI2.WinForms.Guna2ComboBox();
+            lblRol = new Label();
             Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             btnEliminar = new Guna.UI2.WinForms.Guna2Button();
             btnBuscarU = new Guna.UI2.WinForms.Guna2Button();
@@ -100,16 +102,14 @@
             lblRFC = new Label();
             lblGenero = new Label();
             lblMatricula = new Label();
-            dtpFechaBaja = new Guna.UI2.WinForms.Guna2DateTimePicker();
-            dtpFechaIngreso = new Guna.UI2.WinForms.Guna2DateTimePicker();
+            dtpFechaUltimoAcc = new Guna.UI2.WinForms.Guna2DateTimePicker();
+            dtpFechaCreacion = new Guna.UI2.WinForms.Guna2DateTimePicker();
             lblEstatus = new Label();
-            lblFechaBaja = new Label();
+            lblFechaUltimoAcc = new Label();
             lblFechaCreacion = new Label();
             lblApellidoP = new Label();
             Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             lblBienvenida2 = new Label();
-            cbRoles = new Guna.UI2.WinForms.Guna2ComboBox();
-            lblRol = new Label();
             pnlInfoEsmpleado.SuspendLayout();
             SuspendLayout();
             // 
@@ -160,10 +160,10 @@
             pnlInfoEsmpleado.Controls.Add(lblRFC);
             pnlInfoEsmpleado.Controls.Add(lblGenero);
             pnlInfoEsmpleado.Controls.Add(lblMatricula);
-            pnlInfoEsmpleado.Controls.Add(dtpFechaBaja);
-            pnlInfoEsmpleado.Controls.Add(dtpFechaIngreso);
+            pnlInfoEsmpleado.Controls.Add(dtpFechaUltimoAcc);
+            pnlInfoEsmpleado.Controls.Add(dtpFechaCreacion);
             pnlInfoEsmpleado.Controls.Add(lblEstatus);
-            pnlInfoEsmpleado.Controls.Add(lblFechaBaja);
+            pnlInfoEsmpleado.Controls.Add(lblFechaUltimoAcc);
             pnlInfoEsmpleado.Controls.Add(lblFechaCreacion);
             pnlInfoEsmpleado.Controls.Add(lblApellidoP);
             pnlInfoEsmpleado.Controls.Add(Separator1);
@@ -175,6 +175,35 @@
             pnlInfoEsmpleado.ShadowDecoration.CustomizableEdges = customizableEdges42;
             pnlInfoEsmpleado.Size = new Size(1011, 744);
             pnlInfoEsmpleado.TabIndex = 5;
+            // 
+            // cbRoles
+            // 
+            cbRoles.BackColor = Color.Transparent;
+            cbRoles.BorderRadius = 5;
+            cbRoles.CustomizableEdges = customizableEdges1;
+            cbRoles.DrawMode = DrawMode.OwnerDrawFixed;
+            cbRoles.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbRoles.Enabled = false;
+            cbRoles.FocusedColor = Color.FromArgb(94, 148, 255);
+            cbRoles.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            cbRoles.Font = new Font("Segoe UI", 10F);
+            cbRoles.ForeColor = Color.FromArgb(68, 88, 112);
+            cbRoles.ItemHeight = 30;
+            cbRoles.Location = new Point(738, 136);
+            cbRoles.Name = "cbRoles";
+            cbRoles.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            cbRoles.Size = new Size(135, 36);
+            cbRoles.TabIndex = 72;
+            // 
+            // lblRol
+            // 
+            lblRol.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            lblRol.ForeColor = Color.Black;
+            lblRol.Location = new Point(673, 137);
+            lblRol.Name = "lblRol";
+            lblRol.Size = new Size(59, 27);
+            lblRol.TabIndex = 73;
+            lblRol.Text = "Rol *";
             // 
             // Separator2
             // 
@@ -671,45 +700,45 @@
             lblMatricula.TabIndex = 23;
             lblMatricula.Text = "Usuario:";
             // 
-            // dtpFechaBaja
+            // dtpFechaUltimoAcc
             // 
-            dtpFechaBaja.BackColor = Color.Transparent;
-            dtpFechaBaja.Checked = true;
-            dtpFechaBaja.CustomizableEdges = customizableEdges37;
-            dtpFechaBaja.FillColor = Color.White;
-            dtpFechaBaja.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtpFechaBaja.Format = DateTimePickerFormat.Long;
-            dtpFechaBaja.ImeMode = ImeMode.NoControl;
-            dtpFechaBaja.Location = new Point(204, 596);
-            dtpFechaBaja.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
-            dtpFechaBaja.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
-            dtpFechaBaja.Name = "dtpFechaBaja";
-            dtpFechaBaja.RightToLeft = RightToLeft.No;
-            dtpFechaBaja.ShadowDecoration.CustomizableEdges = customizableEdges38;
-            dtpFechaBaja.Size = new Size(197, 31);
-            dtpFechaBaja.TabIndex = 13;
-            dtpFechaBaja.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
+            dtpFechaUltimoAcc.BackColor = Color.Transparent;
+            dtpFechaUltimoAcc.Checked = true;
+            dtpFechaUltimoAcc.CustomizableEdges = customizableEdges37;
+            dtpFechaUltimoAcc.FillColor = Color.White;
+            dtpFechaUltimoAcc.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dtpFechaUltimoAcc.Format = DateTimePickerFormat.Long;
+            dtpFechaUltimoAcc.ImeMode = ImeMode.NoControl;
+            dtpFechaUltimoAcc.Location = new Point(130, 586);
+            dtpFechaUltimoAcc.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
+            dtpFechaUltimoAcc.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
+            dtpFechaUltimoAcc.Name = "dtpFechaUltimoAcc";
+            dtpFechaUltimoAcc.RightToLeft = RightToLeft.No;
+            dtpFechaUltimoAcc.ShadowDecoration.CustomizableEdges = customizableEdges38;
+            dtpFechaUltimoAcc.Size = new Size(267, 31);
+            dtpFechaUltimoAcc.TabIndex = 13;
+            dtpFechaUltimoAcc.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
             // 
-            // dtpFechaIngreso
+            // dtpFechaCreacion
             // 
-            dtpFechaIngreso.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            dtpFechaIngreso.BackColor = Color.Transparent;
-            dtpFechaIngreso.Checked = true;
-            dtpFechaIngreso.CustomizableEdges = customizableEdges39;
-            dtpFechaIngreso.Enabled = false;
-            dtpFechaIngreso.FillColor = Color.White;
-            dtpFechaIngreso.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtpFechaIngreso.Format = DateTimePickerFormat.Long;
-            dtpFechaIngreso.ImeMode = ImeMode.NoControl;
-            dtpFechaIngreso.Location = new Point(706, 596);
-            dtpFechaIngreso.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
-            dtpFechaIngreso.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
-            dtpFechaIngreso.Name = "dtpFechaIngreso";
-            dtpFechaIngreso.RightToLeft = RightToLeft.No;
-            dtpFechaIngreso.ShadowDecoration.CustomizableEdges = customizableEdges40;
-            dtpFechaIngreso.Size = new Size(197, 31);
-            dtpFechaIngreso.TabIndex = 5;
-            dtpFechaIngreso.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
+            dtpFechaCreacion.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            dtpFechaCreacion.BackColor = Color.Transparent;
+            dtpFechaCreacion.Checked = true;
+            dtpFechaCreacion.CustomizableEdges = customizableEdges39;
+            dtpFechaCreacion.Enabled = false;
+            dtpFechaCreacion.FillColor = Color.White;
+            dtpFechaCreacion.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dtpFechaCreacion.Format = DateTimePickerFormat.Long;
+            dtpFechaCreacion.ImeMode = ImeMode.NoControl;
+            dtpFechaCreacion.Location = new Point(640, 513);
+            dtpFechaCreacion.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
+            dtpFechaCreacion.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
+            dtpFechaCreacion.Name = "dtpFechaCreacion";
+            dtpFechaCreacion.RightToLeft = RightToLeft.No;
+            dtpFechaCreacion.ShadowDecoration.CustomizableEdges = customizableEdges40;
+            dtpFechaCreacion.Size = new Size(197, 31);
+            dtpFechaCreacion.TabIndex = 5;
+            dtpFechaCreacion.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
             // 
             // lblEstatus
             // 
@@ -722,22 +751,22 @@
             lblEstatus.TabIndex = 9;
             lblEstatus.Text = "Estatus:";
             // 
-            // lblFechaBaja
+            // lblFechaUltimoAcc
             // 
-            lblFechaBaja.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblFechaBaja.ForeColor = Color.Black;
-            lblFechaBaja.Location = new Point(41, 602);
-            lblFechaBaja.Name = "lblFechaBaja";
-            lblFechaBaja.Size = new Size(167, 25);
-            lblFechaBaja.TabIndex = 8;
-            lblFechaBaja.Text = "Fecha de baja: ";
+            lblFechaUltimoAcc.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            lblFechaUltimoAcc.ForeColor = Color.Black;
+            lblFechaUltimoAcc.Location = new Point(98, 548);
+            lblFechaUltimoAcc.Name = "lblFechaUltimoAcc";
+            lblFechaUltimoAcc.Size = new Size(266, 25);
+            lblFechaUltimoAcc.TabIndex = 8;
+            lblFechaUltimoAcc.Text = "Fecha de ultimo acceso: ";
             // 
             // lblFechaCreacion
             // 
             lblFechaCreacion.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblFechaCreacion.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
             lblFechaCreacion.ForeColor = Color.Black;
-            lblFechaCreacion.Location = new Point(498, 602);
+            lblFechaCreacion.Location = new Point(632, 483);
             lblFechaCreacion.Name = "lblFechaCreacion";
             lblFechaCreacion.Size = new Size(212, 25);
             lblFechaCreacion.TabIndex = 7;
@@ -772,34 +801,6 @@
             lblBienvenida2.Size = new Size(410, 37);
             lblBienvenida2.TabIndex = 2;
             lblBienvenida2.Text = "Información del usuario";
-            // 
-            // cbRoles
-            // 
-            cbRoles.BackColor = Color.Transparent;
-            cbRoles.BorderRadius = 5;
-            cbRoles.CustomizableEdges = customizableEdges1;
-            cbRoles.DrawMode = DrawMode.OwnerDrawFixed;
-            cbRoles.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbRoles.FocusedColor = Color.FromArgb(94, 148, 255);
-            cbRoles.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            cbRoles.Font = new Font("Segoe UI", 10F);
-            cbRoles.ForeColor = Color.FromArgb(68, 88, 112);
-            cbRoles.ItemHeight = 30;
-            cbRoles.Location = new Point(738, 136);
-            cbRoles.Name = "cbRoles";
-            cbRoles.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            cbRoles.Size = new Size(135, 36);
-            cbRoles.TabIndex = 72;
-            // 
-            // lblRol
-            // 
-            lblRol.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblRol.ForeColor = Color.Black;
-            lblRol.Location = new Point(673, 137);
-            lblRol.Name = "lblRol";
-            lblRol.Size = new Size(59, 27);
-            lblRol.TabIndex = 73;
-            lblRol.Text = "Rol *";
             // 
             // frmEliminarUsuario
             // 
@@ -843,10 +844,10 @@
         private Label lblRFC;
         private Label lblGenero;
         private Label lblMatricula;
-        private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaBaja;
-        private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaIngreso;
+        private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaUltimoAcc;
+        private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaCreacion;
         private Label lblEstatus;
-        private Label lblFechaBaja;
+        private Label lblFechaUltimoAcc;
         private Label lblFechaCreacion;
         private Label lblApellidoP;
         private Guna.UI2.WinForms.Guna2Separator Separator1;

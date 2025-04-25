@@ -1,4 +1,5 @@
-﻿using RecursosHumanos.Utilities;
+﻿using RecursosHumanos.Controller;
+using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,9 +35,23 @@ namespace RecursosHumanos.View
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            Form frmGuardarInf = new frmGuardarInformacion();
-            Formas.abrirPanelForm(frmGuardarInf, frmRegistroPersonas.pnlCambiante);
+            if (frmRegistroPersonas.IdPersonaRegistrada == -1)
+            {
+                frmRegistroPersonas.InicializarCampos();
+                return;
+            }
+            PersonasController personasController = new PersonasController();
+            var exito = personasController.CancelarRegistroPersona(frmRegistroPersonas.IdPersonaRegistrada);
+            if (!exito)
+            {
+                MessageBox.Show("No se canceló el registro, no se pudo eliminar la persona.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            frmRegistroPersonas.IdPersonaRegistrada = -1;
+            MessageBox.Show("Se canceló el registro y se eliminó la persona.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            frmRegistroPersonas.DesbloquearCampos(true);
             frmRegistroPersonas.InicializarCampos();
+            MDIRecursosHumanos.DesbloquearBotonesMenu();
         }
     }
 }

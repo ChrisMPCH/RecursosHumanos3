@@ -1,5 +1,6 @@
 ﻿using RecursosHumanos.Bussines;
 using RecursosHumanos.Controller;
+using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -20,12 +21,13 @@ namespace RecursosHumanos.View
         public frmEliminarUsuario()
         {
             InitializeComponent();
-            InicializarVentana();
+            InicializarCampos();
         }
 
-        public void InicializarVentana()
+        public void InicializarCampos()
         {
             Formas.ConfigurarTextBox(txtUsuario, "Ingrese nombre de usuario");
+            VaciarCampos();
             DesbloquearCampos(false);
         }
 
@@ -33,6 +35,7 @@ namespace RecursosHumanos.View
         {
             PoblaComboEstatus();
             PoblaComboGenero();
+            PoblaComboRol();
         }
 
         private bool DatosVaciosUsuario()
@@ -81,7 +84,7 @@ namespace RecursosHumanos.View
             // Guardar el ID
             idUsuarioEncontrado = usuario.Id_Usuario;
 
-            // Llenar campos con info de la persona
+            // Llenar campos con info del usuario
             txtNombre.Text = usuario.DatosPersonales.Nombre;
             txtApellidoP.Text = usuario.DatosPersonales.Ap_Paterno;
             txtApellidoM.Text = usuario.DatosPersonales.Ap_Materno;
@@ -90,10 +93,45 @@ namespace RecursosHumanos.View
             txtDireccion.Text = usuario.DatosPersonales.Direccion;
             txtTelefono.Text = usuario.DatosPersonales.Telefono;
             txtCorreo.Text = usuario.DatosPersonales.Email;
-            dtaNacimiento.Value = usuario.DatosPersonales.Fecha_Nacimiento;
-            cbRoles.SelectedValue = usuario.Rol;
-            cbxGenero.SelectedIndex = usuario.DatosPersonales.Genero.ToUpper().StartsWith("H") ? 1 : 0;
-            cbxEstatus.SelectedIndex = usuario.Estatus == 1 ? 0 : 1;
+
+            dtaNacimiento.Value = usuario.DatosPersonales.Fecha_Nacimiento > dtaNacimiento.MinDate
+                ? usuario.DatosPersonales.Fecha_Nacimiento
+                : DateTime.Today;
+
+            // Fecha creación
+            if (usuario.Fecha_Creacion >= dtpFechaCreacion.MinDate &&
+                usuario.Fecha_Creacion <= dtpFechaCreacion.MaxDate)
+            {
+                dtpFechaCreacion.Value = usuario.Fecha_Creacion;
+            }
+            else
+            {
+                dtpFechaCreacion.Value = DateTime.Today;
+            }
+
+            // Fecha último acceso
+            if (usuario.Fecha_Ultimo_Acceso >= dtpFechaUltimoAcc.MinDate &&
+                usuario.Fecha_Ultimo_Acceso <= dtpFechaUltimoAcc.MaxDate)
+            {
+                dtpFechaUltimoAcc.Value = usuario.Fecha_Ultimo_Acceso;
+            }
+            else
+            {
+                dtpFechaUltimoAcc.Value = DateTime.Today;
+            }
+
+
+            cbRoles.SelectedValue = usuario.Id_Rol;
+
+            var genero = usuario.DatosPersonales.Genero?.ToLower();
+            if (genero == "mujer")
+                cbxGenero.SelectedValue = 2;
+            else if (genero == "hombre")
+                cbxGenero.SelectedValue = 1;
+            else
+                cbxGenero.SelectedValue = 0; // Por si acaso
+
+            cbxEstatus.SelectedValue = usuario.Estatus;
 
             DesbloquearCampos(false);
             return true;
@@ -105,7 +143,7 @@ namespace RecursosHumanos.View
             Dictionary<int, string> list_estatus = new Dictionary<int, string>
                 {
                     { 1, "Activo" },
-                    { 2, "Inactivo" }
+                    { 0, "Inactivo" }
                 };
 
             //Asignar los valores al comboBox
@@ -132,6 +170,27 @@ namespace RecursosHumanos.View
             cbxGenero.SelectedIndex = 1;
         }
 
+        private void PoblaComboRol()
+        {
+            try
+            {
+                RolesController controller = new RolesController();
+                var roles = controller.ObtenerRolesActivos();
+
+                // Agrega opción por defecto
+                roles.Insert(0, new Rol { Id_Rol = 0, Nombre = "Seleccione" });
+
+                cbRoles.DataSource = roles;
+                cbRoles.DisplayMember = "Nombre";
+                cbRoles.ValueMember = "Id_Rol";
+                cbRoles.SelectedValue = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los roles: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void DesbloquearCampos(bool accion)
         {
             txtNombre.Enabled = accion;
@@ -145,7 +204,10 @@ namespace RecursosHumanos.View
             cbxGenero.Enabled = accion;
             cbxEstatus.Enabled = accion;
             dtaNacimiento.Enabled = accion;
-            dtpFechaBaja.Enabled = accion;
+            dtpFechaUltimoAcc.Enabled = accion;
+            dtpFechaCreacion.Enabled = accion;
+            dtpFechaUltimoAcc.Enabled = accion;
+
         }
 
         private void btnBuscarU_Click(object sender, EventArgs e)
@@ -155,7 +217,8 @@ namespace RecursosHumanos.View
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            Formas.ConfigurarTextBox(txtUsuario, "Ingrese nombre de usuario");
+            InicializarCampos();
+            DesbloquearCampos(false);
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -179,6 +242,24 @@ namespace RecursosHumanos.View
             {
                 MessageBox.Show(resultado.mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void VaciarCampos()
+        {
+            txtNombre.Text = string.Empty;
+            txtApellidoP.Text = string.Empty;
+            txtApellidoM.Text = string.Empty;
+            txtRFC.Text = string.Empty;
+            txtCURP.Text = string.Empty;
+            txtDireccion.Text = string.Empty;
+            txtTelefono.Text = string.Empty;
+            txtCorreo.Text = string.Empty;
+
+            dtaNacimiento.Value = DateTime.Today;
+            dtpFechaUltimoAcc.Value = DateTime.Today;
+
+            cbRoles.SelectedValue = 0;
+            idUsuarioEncontrado = null;
         }
     }
 }

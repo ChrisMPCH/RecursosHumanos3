@@ -1,4 +1,6 @@
 ﻿using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -27,7 +29,7 @@ namespace RecursosHumanos.View
             txtContrasenia.UseSystemPasswordChar = true; // Oculta la contraseña por defecto
         }
 
-        private bool GenerarUsuario()
+        private bool VerificarUsuario()
         {
             if (!DatosVaciosLogin())
             {
@@ -37,7 +39,25 @@ namespace RecursosHumanos.View
             {
                 return false;
             }
-            return true;
+
+            string usuario = txtUsuario.Text.Trim();
+            string contrasenia = txtContrasenia.Text.Trim();
+
+            UsuariosController controller = new UsuariosController();
+            Usuario? usuarioLogueado = controller.Login(usuario, contrasenia);
+
+            if (usuarioLogueado != null)
+            {
+                MessageBox.Show($"Bienvenido, {usuarioLogueado.DatosPersonales.Nombre}", "Login exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Usuario o contraseña incorrectos.", "Error de autenticación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
         }
 
         private bool DatosVaciosLogin()
@@ -72,11 +92,7 @@ namespace RecursosHumanos.View
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (GenerarUsuario())
-            {
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
+            VerificarUsuario();
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {

@@ -54,7 +54,7 @@ namespace RecursosHumanos.View
         }
 
         // Función para mostrar o esconder un submenú dependiendo de su estado actual
-        private void showSubMenu(Panel subMenu)
+        public static void showSubMenu(Panel subMenu)
         {
             // Si el submenú no está visible, lo mostramos
             if (!subMenu.Visible)
@@ -68,7 +68,7 @@ namespace RecursosHumanos.View
         }
 
         // Función para esconder un submenú dependiendo de su estado actual
-        private void showNoSubMenu(Panel subMenu)
+        public static void showNoSubMenu(Panel subMenu)
         {
             // Si el submenú no está visible, lo mostramos
             subMenu.Visible = false; // Si ya está visible, lo ocultamos
@@ -257,7 +257,7 @@ namespace RecursosHumanos.View
             // code
             this.Close();
         }
-        public void BloquearBotonesMenu()
+        public static void BloquearBotonesMenu()
         {
             btmUsuario.Enabled = false;
             btmVanessa.Enabled = false;
@@ -271,10 +271,10 @@ namespace RecursosHumanos.View
             showNoSubMenu(subFridaPanel);
             showNoSubMenu(pnlSubRoles);
 
-            btnSalidas.Enabled = false;
+            btmSalir.Enabled = false;
         }
 
-        public void DesbloquearBotonesMenu()
+        public static void DesbloquearBotonesMenu()
         {
             btmUsuario.Enabled = true;
             btmVanessa.Enabled = true;
@@ -288,7 +288,7 @@ namespace RecursosHumanos.View
             showSubMenu(subFridaPanel);
             showSubMenu(pnlSubRoles);
 
-            btnSalidas.Enabled = true;
+            btmSalir.Enabled = true;
         }
 
         private void btnRegistroAuditorias_Click(object sender, EventArgs e)

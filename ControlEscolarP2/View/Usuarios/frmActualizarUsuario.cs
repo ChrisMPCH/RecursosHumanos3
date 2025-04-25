@@ -34,7 +34,7 @@ namespace RecursosHumanos.View
         {
             PoblaComboEstatus();
             PoblaComboGenero();
-            PoblaComboRoles();
+            PoblaComboRol();
         }
 
         public void InicializarCampos()
@@ -51,9 +51,9 @@ namespace RecursosHumanos.View
             Formas.ConfigurarTextBox(txtContrasenia, "Ingrese nueva contraseña");
             Formas.ConfigurarTextBox(txtContraseniaCon, "Confirme nueva contraseña");
             txtContrasenia.UseSystemPasswordChar = true;
-            txtContraseniaCon.UseSystemPasswordChar = true;
+            txtContraseniaCon.UseSystemPasswordChar = false;
 
-            dtpFechaIngreso.Enabled = false;
+            dtpFechaCreacion.Enabled = false;
         }
 
         private void PoblaComboEstatus()
@@ -62,7 +62,7 @@ namespace RecursosHumanos.View
             Dictionary<int, string> list_estatus = new Dictionary<int, string>
             {
                 { 1, "Activo" },
-                { 2, "Inactivo" }
+                { 0, "Inactivo" }
             };
 
             //Asignar los valores al comboBox
@@ -73,13 +73,34 @@ namespace RecursosHumanos.View
             cbxEstatus.SelectedIndex = 1;
         }
 
+        private void PoblaComboRol()
+        {
+            try
+            {
+                RolesController controller = new RolesController();
+                var roles = controller.ObtenerRolesActivos();
+
+                // Agrega opción por defecto
+                roles.Insert(0, new Rol { Id_Rol = 0, Nombre = "Seleccione" });
+
+                cbRoles.DataSource = roles;
+                cbRoles.DisplayMember = "Nombre";
+                cbRoles.ValueMember = "Id_Rol";
+                cbRoles.SelectedValue = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los roles: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void PoblaComboGenero()
         {
             //Crear un diccionario con los valores
             Dictionary<int, string> list_puestos = new Dictionary<int, string>
             {
-                { 1, "Femenino" },
-                { 2, "Masculino" }
+                { 1, "Hombre" },
+                { 2, "Mujer" }
             };
 
             //Asignar los valores al comboBox
@@ -88,6 +109,8 @@ namespace RecursosHumanos.View
             cbxGenero.ValueMember = "Key"; //lo que se guarda como SelectedValue
             cbxGenero.SelectedIndex = 1;
         }
+
+
         private bool GuardarUsuario()
         {
             if (DatosVacios())
@@ -114,7 +137,7 @@ namespace RecursosHumanos.View
                 Email = txtCorreo.Text.Trim(),
                 Fecha_Nacimiento = dtaNacimiento.Value,
                 Genero = cbxGenero.Text,
-                Estatus = 1
+                Estatus = Convert.ToInt16(cbxEstatus.SelectedValue) // Fix: Convert SelectedValue to short
             };
 
             Usuario usuario = new Usuario
@@ -149,12 +172,6 @@ namespace RecursosHumanos.View
 
         private bool DatosValidos()
         {
-            if (!EmpleadoNegocio.EsNoMatriculaValido(txtUsuario.Text.Trim()))
-            {
-                MessageBox.Show("Matrícula inválida.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
             if (!PersonasNegocio.EsEmailValido(txtCorreo.Text.Trim()))
             {
                 MessageBox.Show("Correo inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -203,6 +220,12 @@ namespace RecursosHumanos.View
                 return false;
             }
 
+            if (!UsuarioNegocio.EsNombreUsuarioValido(txtUsuario.Text.Trim()))
+            {
+                MessageBox.Show("Matrícula inválida.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
             if (!string.IsNullOrWhiteSpace(txtContrasenia.Text))
             {
                 if (!UsuarioNegocio.EsContraseñaValido(txtContrasenia.Text.Trim()))
@@ -217,8 +240,6 @@ namespace RecursosHumanos.View
                     return false;
                 }
             }
-
-
             return true;
         }
 
@@ -303,6 +324,8 @@ namespace RecursosHumanos.View
                 return false;
             }
 
+            PoblarCombos();
+
             UsuariosController controller = new UsuariosController();
             var usuario = controller.ObtenerUsuarios()
                                     .FirstOrDefault(u => u.UsuarioNombre.Equals(txtUsuario.Text.Trim(), StringComparison.OrdinalIgnoreCase));
@@ -326,18 +349,35 @@ namespace RecursosHumanos.View
             txtDireccion.Text = usuario.DatosPersonales.Direccion;
             txtTelefono.Text = usuario.DatosPersonales.Telefono;
             txtCorreo.Text = usuario.DatosPersonales.Email;
+
+            if (usuario.Fecha_Creacion != DateTime.MinValue)
+            {
+                dtpFechaCreacion.Value = usuario.Fecha_Creacion;
+            }
+            else
+            {
+                dtpFechaCreacion.Value = DateTime.Today;
+            }
+
             dtaNacimiento.Value = usuario.DatosPersonales.Fecha_Nacimiento > dtaNacimiento.MinDate
                 ? usuario.DatosPersonales.Fecha_Nacimiento
                 : DateTime.Today;
+
             cbRoles.SelectedValue = usuario.Id_Rol;
-            cbxGenero.SelectedIndex = usuario.DatosPersonales.Genero.ToUpper().StartsWith("H") ? 1 : 0;
-            cbxEstatus.SelectedIndex = usuario.Estatus == 1 ? 0 : 1;
+
+            var genero = usuario.DatosPersonales.Genero?.ToLower();
+            if (genero == "mujer")
+                cbxGenero.SelectedValue = 2;
+            else if (genero == "hombre")
+                cbxGenero.SelectedValue = 1;
+            else
+                cbxGenero.SelectedValue = 0; // Por si acaso
+
+            cbxEstatus.SelectedValue = usuario.Estatus;
+
             txtContrasenia.Text = usuario.Contrasenia;
-            txtContraseniaCon.Text = usuario.Contrasenia;
 
-            PoblarCombos();
             DesbloquearCampos(true);
-
             return true;
         }
 
@@ -375,17 +415,9 @@ namespace RecursosHumanos.View
             DesbloquearCampos(false);
         }
 
-        private void PoblaComboRoles()
+        private void pcVerContraseña_Click(object sender, EventArgs e)
         {
-            RolesController controller = new RolesController();
-            var roles = controller.ObtenerRolesActivos();
-            roles.Insert(0, new Rol { Id_Rol = 0, Nombre = "Seleccione" });
-
-            cbRoles.DataSource = roles;
-            cbRoles.DisplayMember = "Nombre";
-            cbRoles.ValueMember = "Id_Rol";
-            cbRoles.SelectedValue = 0;
+            txtContrasenia.UseSystemPasswordChar = !txtContrasenia.UseSystemPasswordChar;
         }
-
     }
 }

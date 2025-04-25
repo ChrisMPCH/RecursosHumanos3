@@ -99,7 +99,9 @@ namespace RecursosHumanos.View
 
         public bool GenerarUsuario()
         {
-            if (frmRegistroPersonas.personaGenerada == null)
+            var idPersona = frmRegistroPersonas.IdPersonaRegistrada!;
+
+            if (idPersona <= 0)
             {
                 MessageBox.Show("Faltan los datos de la persona.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -114,14 +116,13 @@ namespace RecursosHumanos.View
             }
 
             UsuariosController controller = new UsuariosController();
-            var personaGenerada = frmRegistroPersonas.personaGenerada;
 
             Usuario nuevoUsuario = new Usuario
             {
                 UsuarioNombre = txtNombre.Text.Trim(),
                 Contrasenia = txtContrasenia.Text.Trim(),
-                Id_Persona = personaGenerada.Id_Persona,
-                Id_Rol = (int)cbRoles.SelectedValue,//este no es
+                Id_Persona = idPersona,
+                Id_Rol = (int)cbRoles.SelectedValue,
                 Fecha_Creacion = DateTime.Now,
                 Fecha_Ultimo_Acceso = DateTime.Now,
                 Estatus = 1
@@ -132,12 +133,14 @@ namespace RecursosHumanos.View
             {
                 MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                MDIRecursosHumanos mid = new MDIRecursosHumanos();
-                mid.BloquearBotonesMenu();
-
                 // Limpiar y volver a panel anterior
                 frmRegistroPersonas.InicializarCampos();
                 frmRegistroPersonas.DesbloquearCampos(true);
+
+                InicializarCampos();
+
+                MDIRecursosHumanos.DesbloquearBotonesMenu();
+
                 Form frmGuardarInf = new frmGuardarInformacion();
                 Formas.abrirPanelForm(frmGuardarInf, frmRegistroPersonas.pnlCambiante);
                 return true;
@@ -151,11 +154,20 @@ namespace RecursosHumanos.View
 
         private void btnCancelar_Click_1(object sender, EventArgs e)
         {
-            frmRegistroPersonas.personaGenerada = null;
+            PersonasController personasController = new PersonasController();
+            var exito = personasController.CancelarRegistroPersona(frmRegistroPersonas.IdPersonaRegistrada);
+            if (!exito)
+            {
+                MessageBox.Show("No se canceló el registro, no se pudo eliminar la persona.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            frmRegistroPersonas.IdPersonaRegistrada = 0;
+            frmRegistroPersonas.DesbloquearCampos(true);
             MessageBox.Show("Se canceló el registro y se eliminó la persona.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
             InicializarCampos();
-            var mid = this.MdiParent as MDIRecursosHumanos;
-            mid?.DesbloquearBotonesMenu();
+            MDIRecursosHumanos.DesbloquearBotonesMenu();
+
             Form frmGuardarInf = new frmGuardarInformacion();
             Formas.abrirPanelForm(frmGuardarInf, frmRegistroPersonas.pnlCambiante);
         }
