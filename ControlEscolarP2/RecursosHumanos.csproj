@@ -25,9 +25,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="View\Empleados\frmListaEmpleados.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="View\Empleados\frmListaEmpleados.cs" />
   </ItemGroup>
 
   <ItemGroup>
