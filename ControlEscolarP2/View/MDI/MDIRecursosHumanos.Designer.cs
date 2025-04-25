@@ -816,6 +816,7 @@ namespace RecursosHumanos.View
             panelChildForm.ShadowDecoration.CustomizableEdges = customizableEdges2;
             panelChildForm.Size = new Size(1217, 846);
             panelChildForm.TabIndex = 5;
+            panelChildForm.Paint += panelChildForm_Paint;
             // 
             // pnlIntroduccion
             // 
@@ -1404,26 +1405,26 @@ namespace RecursosHumanos.View
         private Button btnEliminarUsuarios;
         private Button btnActualizarUsuarios;
         private Button subRegistroPersonas;
-        public static Panel subChristopherPanel;
-        public static Panel subVanessaPanel;
-        public static Panel subFridaPanel;
-        public static Button btnFrida;
-        public static Panel subNatalyPanel;
-        public static Button btnNataly;
-        public static Button btmSalir;
-        public static Button btmVanessa;
-        public static Button btmUsuario;
-        public static Panel pnlSubRoles;
-        public static Button btnCreacionRoles;
-        public static Button btnGestionRoles;
-        public static Button btnRoles;
-        public static Button btnPuestos;
-        public static Button btnDepartamentos;
-        public static Button btnContratos;
         public Guna.UI2.WinForms.Guna2Separator Separador2;
         public Label lblTempo1;
         public Label lblAccion1;
         public Guna.UI2.WinForms.Guna2HtmlLabel lblUsuario1;
         public Button btnListaContratos;
+        public Panel subChristopherPanel;
+        public Panel subVanessaPanel;
+        public Panel subFridaPanel;
+        public Button btnFrida;
+        public Panel subNatalyPanel;
+        public Button btnNataly;
+        public Button btmSalir;
+        public Button btmVanessa;
+        public Button btmUsuario;
+        public Panel pnlSubRoles;
+        public Button btnCreacionRoles;
+        public Button btnGestionRoles;
+        public Button btnRoles;
+        public Button btnPuestos;
+        public Button btnDepartamentos;
+        public Button btnContratos;
     }
 }

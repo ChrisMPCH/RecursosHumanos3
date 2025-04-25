@@ -16,7 +16,6 @@ namespace RecursosHumanos.View
 {
     public partial class frmLogin : Form
     {
-        private readonly LoginController controller;
         public static List<int> permisosUsuario = new List<int>();
 
         public frmLogin()
@@ -45,6 +44,8 @@ namespace RecursosHumanos.View
 
             string usuario = txtUsuario.Text.Trim();
             string contrasenia = txtContrasenia.Text.Trim();
+
+            LoginController controller = new LoginController();
 
             Usuario? usuarioLogueado = controller.Login(usuario, contrasenia);
 

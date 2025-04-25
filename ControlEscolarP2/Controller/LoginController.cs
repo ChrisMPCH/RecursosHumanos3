@@ -19,12 +19,18 @@ namespace RecursosHumanos.Controller
 
         private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Controller.LoginController");
 
+
+
         public LoginController(PersonasDataAccess personasDataAccess, UsuarioDataAccess usuarioDataAccess)
         {
             _personasAccess = personasDataAccess;
             _usuariosAccess = usuarioDataAccess;
         }
 
+        public LoginController()
+        {
+
+        }
 
         /// <summary>
         /// Inicia sesión con un usuario existente.
