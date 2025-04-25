@@ -20,7 +20,6 @@ namespace RecursosHumanos.View
         private RolesController _rolesController;
         private PermisosController _permisosController;
 
-
         public frmGestionRoles()
         {
             InitializeComponent();

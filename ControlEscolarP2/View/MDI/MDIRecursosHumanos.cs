@@ -17,12 +17,15 @@ namespace RecursosHumanos.View
     public partial class MDIRecursosHumanos : Form
     {
         public static Form? formActivada = null;
+        public static List<int> permisosUsuario = frmLogin.permisosUsuario;
+
 
         // Constructor del formulario principal, se inicializan los componentes y el menú MDI
         public MDIRecursosHumanos()
         {
             InitializeComponent(); // Inicializa los controles en el formulario
             MDIRecursosHumanos_Load();
+            //VerificarPermisos();
         }
 
         private void MDIRecursosHumanos_Load()
@@ -86,7 +89,6 @@ namespace RecursosHumanos.View
         {
             showSubMenu(subChristopherPanel); // Muestra u oculta el submenú de Usuarios
         }
-
         private void registrarPersonas_Click(object sender, EventArgs e)
         {
             // Creamos la instancia del formulario hijo
@@ -296,5 +298,119 @@ namespace RecursosHumanos.View
             Form frmAuditoria = new frmAuditoria();
             abrirChildFormMDI(frmAuditoria);
         }
+
+
+        //-------------------------------------------------------------------------------Permisos
+
+        /// <summary>
+        /// Verifica los permisos del usuario actual y habilita o deshabilita los botones del menú según corresponda.
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        //private void VerificarPermisos()
+        //{
+        //    // Usuarios
+        //    if (permisosUsuario.Contains(22)) // Ver usuarios
+        //    {
+        //        btmUsuario.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(23)) // Agregar usuario
+        //    {
+        //        btnAgregarUsuario.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(24)) // Editar usuario
+        //    {
+        //        btnEditarUsuario.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(25)) // Eliminar usuario
+        //    {
+        //        btnEliminarUsuarios.Enabled = true;
+        //    }
+
+        //    // Roles
+        //    if (permisosUsuario.Contains(26)) // Ver roles
+        //    {
+        //        btnGestionRoles.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(27)) // Agregar rol
+        //    {
+        //        btnCreacionRoles.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(28)) // Editar rol
+        //    {
+        //        btnEditarRol.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(29)) // Eliminar rol
+        //    {
+        //        btnEliminarRol.Enabled = true;
+        //    }
+
+        //    // Permisos
+        //    if (permisosUsuario.Contains(30)) // Ver permisos
+        //    {
+        //        btnVerPermisos.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(31)) // Ver asignaciones de permisos a roles
+        //    {
+        //        btnVerAsignacionesPermisos.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(32)) // Asignar permiso a rol
+        //    {
+        //        btnAsignarPermisoRol.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(33)) // Editar asignación de permiso a rol
+        //    {
+        //        btnEditarAsignacionPermiso.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(34)) // Eliminar asignación de permiso a rol
+        //    {
+        //        btnEliminarAsignacionPermiso.Enabled = true;
+        //    }
+
+        //    // Empleados
+        //    if (permisosUsuario.Contains(35)) // Ver empleados
+        //    {
+        //        btnListaEmpleados.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(36)) // Agregar empleados
+        //    {
+        //        RegistroEmpleados.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(37)) // Editar empleados
+        //    {
+        //        btnEditarEmpleado.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(38)) // Eliminar empleados
+        //    {
+        //        btnEliminarEmpleado.Enabled = true;
+        //    }
+
+        //    // Contratos
+        //    if (permisosUsuario.Contains(39)) // Ver contratos
+        //    {
+        //        btnListaContratos.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(40)) // Agregar contrato
+        //    {
+        //        btnAgregarContrato.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(41)) // Editar contrato
+        //    {
+        //        btnEditarContrato.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(42)) // Eliminar contrato
+        //    {
+        //        btnEliminarContrato.Enabled = true;
+        //    }
+
+        //    // Bitácora
+        //    if (permisosUsuario.Contains(43)) // Ver bitácora
+        //    {
+        //        btnVerBitacora.Enabled = true;
+        //    }
+        //    if (permisosUsuario.Contains(44)) // Eliminar movimiento en bitácora
+        //    {
+        //        btnEliminarMovimiento.Enabled = true;
+        //    }
+        //}
     }
 }

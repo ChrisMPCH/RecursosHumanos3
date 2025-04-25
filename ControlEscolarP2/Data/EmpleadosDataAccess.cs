@@ -154,7 +154,6 @@ namespace RecursosHumanos.Data
             }
         }
 
-
         public List<Empleado> ObtenerEmpleados()
         {
             List<Empleado> lista = new List<Empleado>();

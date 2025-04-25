@@ -16,6 +16,9 @@ namespace RecursosHumanos.View
 {
     public partial class frmLogin : Form
     {
+        private readonly LoginController controller;
+        public static List<int> permisosUsuario = new List<int>();
+
         public frmLogin()
         {
             InitializeComponent();
@@ -43,12 +46,18 @@ namespace RecursosHumanos.View
             string usuario = txtUsuario.Text.Trim();
             string contrasenia = txtContrasenia.Text.Trim();
 
-            UsuariosController controller = new UsuariosController();
             Usuario? usuarioLogueado = controller.Login(usuario, contrasenia);
 
             if (usuarioLogueado != null)
             {
                 MessageBox.Show($"Bienvenido, {usuarioLogueado.DatosPersonales.Nombre}", "Login exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+                // Obtener los permisos del usuario
+                List<int> idPermisosUsuario = controller.ObtenerPermisosUsuario(usuarioLogueado.Id_Usuario);
+
+                // Pasar los permisos para ternerlos en la interfaz principal
+                permisosUsuario = idPermisosUsuario;
+
                 this.DialogResult = DialogResult.OK;
                 this.Close();
                 return true;
@@ -98,10 +107,12 @@ namespace RecursosHumanos.View
         {
             this.Close();
         }
-
         private void pcVerContraseña_Click(object sender, EventArgs e)
         { 
             txtContrasenia.UseSystemPasswordChar = !txtContrasenia.UseSystemPasswordChar;
         }
+
+        //-------------------------------------------------------------------------------Permisos
+        
     }
 }

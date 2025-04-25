@@ -399,6 +399,44 @@ namespace RecursosHumanos.Data
                 _dbAccess.Disconnect();
             }
         }
+        /// <summary>
+        /// Obtiene los permisos de un usuario según su rol
+        /// </summary>
+        /// <param name="idUsuario"></param>
+        /// <returns></returns>
+        public List<int> ObtenerPermisosUsuario(int idUsuario)
+        {
+            try
+            {
+                // Query para obtener los permisos del usuario según su rol
+                string query = @"
+                SELECT rp.id_permiso
+                FROM administration.roles_permisos rp
+                INNER JOIN administration.usuario u ON rp.id_rol = u.id_rol
+                WHERE u.id_usuario = @IdUsuario";
+
+                var param = _dbAccess.CreateParameter("@IdUsuario", idUsuario);
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, param);
+
+                List<int> permisos = new List<int>();
+                foreach (DataRow row in resultado.Rows)
+                {
+                    permisos.Add(Convert.ToInt32(row["id_permiso"]));
+                }
+                _logger.Info($"Se obtuvieron {permisos.Count} permisos para el usuario con ID {idUsuario}.");
+                return permisos;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener los permisos del usuario con ID {idUsuario}");
+                return new List<int>();  // En caso de error, devolvemos una lista vacía
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
 
 
         //-----------------------------------------------------------------------------------------------------------------Existe()
