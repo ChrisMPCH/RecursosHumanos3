@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View
@@ -125,21 +127,53 @@ namespace RecursosHumanos.View
         }
         private bool GuardarEmpleado()
         {
-            //if (!frmRegistroPersonas.GenerarPersona())
-            //{
-            //    MessageBox.Show("Faltan los datos de la persona.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return false;
-            //}
-            if (DatosVacios())
+            if (!frmRegistroPersonas.GenerarPersona())
             {
-                MessageBox.Show("Por favor, llene todos los campos.", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Faltan los datos de la persona.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
+
+            if (DatosVacios())
+            {
+                MessageBox.Show("Por favor, llene todos los campos.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
             if (!DatosValidos())
             {
                 return false;
             }
-            return true;
+
+            try
+            {
+                Empleado nuevoEmpleado = new Empleado
+                {
+                    //DatosPersonales = frmRegistroPersonas.PersonaGenerada, // cuando se genere una persona
+                    Matricula = txtMatricula.Text.Trim(),
+                    Fecha_Ingreso = dtpFechaIngreso.Value,
+                    Fecha_Baja = null,
+                    Id_Departamento = Convert.ToInt32(cbxDepartamento.SelectedValue),
+                    Id_Puesto = Convert.ToInt32(cbxPuesto.SelectedValue),
+                    Motivo = null,
+                    Estatus = Convert.ToInt16(cbxEstatus.SelectedValue)
+                };
+
+                var controlador = new EmpleadoController();
+                var (idEmpleado, mensaje) = controlador.RegistrarEmpleado(nuevoEmpleado);
+
+                if (idEmpleado <= 0)
+                {
+                    MessageBox.Show(mensaje, "Error al registrar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error inesperado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -171,16 +205,6 @@ namespace RecursosHumanos.View
                     MessageBox.Show("Por favor, selecciona un archivo de Excel válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-        }
-
-        private void pnlInfoEsmpleado_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void lblMatricula_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
