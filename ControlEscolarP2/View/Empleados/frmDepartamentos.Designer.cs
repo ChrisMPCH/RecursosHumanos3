@@ -94,6 +94,7 @@
             btnConsultar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnConsultar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnConsultar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnConsultar.Enabled = false;
             btnConsultar.FillColor = Color.DimGray;
             btnConsultar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnConsultar.ForeColor = Color.White;
@@ -113,6 +114,7 @@
             btnActualizar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnActualizar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnActualizar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnActualizar.Enabled = false;
             btnActualizar.FillColor = Color.DimGray;
             btnActualizar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnActualizar.ForeColor = Color.White;
@@ -132,6 +134,7 @@
             btnEliminar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnEliminar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnEliminar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnEliminar.Enabled = false;
             btnEliminar.FillColor = Color.DimGray;
             btnEliminar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnEliminar.ForeColor = Color.White;
@@ -151,6 +154,7 @@
             btnAgregar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnAgregar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnAgregar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnAgregar.Enabled = false;
             btnAgregar.FillColor = Color.DimGray;
             btnAgregar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnAgregar.ForeColor = Color.White;
@@ -240,10 +244,10 @@
         private Label lblInfoUsuario;
         public static Guna.UI2.WinForms.Guna2TextBox txtApMaterno;
         private Panel pnFondo;
-        public Guna.UI2.WinForms.Guna2GradientPanel pnlCambiante;
-        private Guna.UI2.WinForms.Guna2Button btnConsultar;
-        private Guna.UI2.WinForms.Guna2Button btnActualizar;
-        private Guna.UI2.WinForms.Guna2Button btnEliminar;
-        private Guna.UI2.WinForms.Guna2Button btnAgregar;
+        public static Guna.UI2.WinForms.Guna2GradientPanel pnlCambiante;
+        public static Guna.UI2.WinForms.Guna2Button btnConsultar;
+        public static Guna.UI2.WinForms.Guna2Button btnActualizar;
+        public static Guna.UI2.WinForms.Guna2Button btnEliminar;
+        public static Guna.UI2.WinForms.Guna2Button btnAgregar;
     }
 }

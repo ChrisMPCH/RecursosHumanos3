@@ -737,7 +737,7 @@ namespace RecursosHumanos.View
             pnlLogo.Controls.Add(picLogo);
             pnlLogo.FillColor = Color.FromArgb(254, 255, 254, 255);
             pnlLogo.ForeColor = Color.Black;
-            pnlLogo.Location = new Point(922, 9);
+            pnlLogo.Location = new Point(921, 9);
             pnlLogo.Name = "pnlLogo";
             pnlLogo.Radius = 12;
             pnlLogo.RightToLeft = RightToLeft.No;
@@ -764,12 +764,12 @@ namespace RecursosHumanos.View
             pnlFechaHora.Controls.Add(lblFecha);
             pnlFechaHora.Dock = DockStyle.Bottom;
             pnlFechaHora.FillColor = Color.White;
-            pnlFechaHora.Location = new Point(0, 809);
+            pnlFechaHora.Location = new Point(0, 759);
             pnlFechaHora.Name = "pnlFechaHora";
             pnlFechaHora.Radius = 2;
             pnlFechaHora.ShadowColor = Color.Empty;
             pnlFechaHora.ShadowShift = 2;
-            pnlFechaHora.Size = new Size(1217, 37);
+            pnlFechaHora.Size = new Size(1216, 37);
             pnlFechaHora.TabIndex = 8;
             // 
             // lblHoraActual
@@ -814,7 +814,7 @@ namespace RecursosHumanos.View
             panelChildForm.Location = new Point(267, 0);
             panelChildForm.Name = "panelChildForm";
             panelChildForm.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            panelChildForm.Size = new Size(1217, 846);
+            panelChildForm.Size = new Size(1216, 796);
             panelChildForm.TabIndex = 5;
             panelChildForm.Paint += panelChildForm_Paint;
             // 
@@ -828,13 +828,13 @@ namespace RecursosHumanos.View
             pnlIntroduccion.Controls.Add(lblCaracteristicas2);
             pnlIntroduccion.FillColor = Color.FromArgb(254, 255, 254, 255);
             pnlIntroduccion.ForeColor = Color.Black;
-            pnlIntroduccion.Location = new Point(15, 289);
+            pnlIntroduccion.Location = new Point(15, 239);
             pnlIntroduccion.Name = "pnlIntroduccion";
             pnlIntroduccion.Radius = 12;
             pnlIntroduccion.RightToLeft = RightToLeft.No;
             pnlIntroduccion.ShadowColor = Color.FromArgb(175, 159, 168);
             pnlIntroduccion.ShadowShift = 3;
-            pnlIntroduccion.Size = new Size(1180, 177);
+            pnlIntroduccion.Size = new Size(1179, 177);
             pnlIntroduccion.TabIndex = 16;
             // 
             // Separator5
@@ -842,7 +842,7 @@ namespace RecursosHumanos.View
             Separator5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Separator5.Location = new Point(12, 29);
             Separator5.Name = "Separator5";
-            Separator5.Size = new Size(1153, 12);
+            Separator5.Size = new Size(1152, 12);
             Separator5.TabIndex = 14;
             // 
             // lblCaracteristicas
@@ -889,13 +889,13 @@ namespace RecursosHumanos.View
             pnlActReciente.Controls.Add(lblActRecientes);
             pnlActReciente.FillColor = Color.FromArgb(254, 255, 254, 255);
             pnlActReciente.ForeColor = Color.Black;
-            pnlActReciente.Location = new Point(15, 506);
+            pnlActReciente.Location = new Point(15, 456);
             pnlActReciente.Name = "pnlActReciente";
             pnlActReciente.Radius = 12;
             pnlActReciente.RightToLeft = RightToLeft.No;
             pnlActReciente.ShadowColor = Color.FromArgb(175, 159, 168);
             pnlActReciente.ShadowShift = 3;
-            pnlActReciente.Size = new Size(1180, 286);
+            pnlActReciente.Size = new Size(1179, 286);
             pnlActReciente.TabIndex = 14;
             // 
             // Separador4
@@ -903,7 +903,7 @@ namespace RecursosHumanos.View
             Separador4.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             Separador4.Location = new Point(21, 251);
             Separador4.Name = "Separador4";
-            Separador4.Size = new Size(1140, 19);
+            Separador4.Size = new Size(1139, 19);
             Separador4.TabIndex = 10;
             // 
             // Separador2
@@ -911,7 +911,7 @@ namespace RecursosHumanos.View
             Separador2.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             Separador2.Location = new Point(21, 108);
             Separador2.Name = "Separador2";
-            Separador2.Size = new Size(1140, 19);
+            Separador2.Size = new Size(1139, 19);
             Separador2.TabIndex = 4;
             // 
             // Separador3
@@ -919,7 +919,7 @@ namespace RecursosHumanos.View
             Separador3.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             Separador3.Location = new Point(21, 183);
             Separador3.Name = "Separador3";
-            Separador3.Size = new Size(1140, 12);
+            Separador3.Size = new Size(1139, 12);
             Separador3.TabIndex = 7;
             // 
             // lblTempo3
@@ -929,7 +929,7 @@ namespace RecursosHumanos.View
             lblTempo3.ForeColor = Color.DimGray;
             lblTempo3.Location = new Point(681, 235);
             lblTempo3.Name = "lblTempo3";
-            lblTempo3.Size = new Size(480, 16);
+            lblTempo3.Size = new Size(479, 16);
             lblTempo3.TabIndex = 14;
             lblTempo3.Text = "Hace 10 minutos";
             lblTempo3.TextAlign = ContentAlignment.TopRight;
@@ -941,7 +941,7 @@ namespace RecursosHumanos.View
             lblTempo2.ForeColor = Color.DimGray;
             lblTempo2.Location = new Point(937, 166);
             lblTempo2.Name = "lblTempo2";
-            lblTempo2.Size = new Size(224, 16);
+            lblTempo2.Size = new Size(223, 16);
             lblTempo2.TabIndex = 13;
             lblTempo2.Text = "Hace 10 minutos";
             lblTempo2.TextAlign = ContentAlignment.TopRight;
@@ -953,7 +953,7 @@ namespace RecursosHumanos.View
             lblTempo1.ForeColor = Color.DimGray;
             lblTempo1.Location = new Point(948, 89);
             lblTempo1.Name = "lblTempo1";
-            lblTempo1.Size = new Size(216, 16);
+            lblTempo1.Size = new Size(215, 16);
             lblTempo1.TabIndex = 12;
             lblTempo1.Text = "Hace 10 minutos";
             lblTempo1.TextAlign = ContentAlignment.TopRight;
@@ -965,7 +965,7 @@ namespace RecursosHumanos.View
             lblAccion3.ForeColor = Color.DimGray;
             lblAccion3.Location = new Point(21, 235);
             lblAccion3.Name = "lblAccion3";
-            lblAccion3.Size = new Size(971, 16);
+            lblAccion3.Size = new Size(970, 16);
             lblAccion3.TabIndex = 11;
             lblAccion3.Text = "Actualizó informacion de empleado1";
             // 
@@ -988,7 +988,7 @@ namespace RecursosHumanos.View
             lblAccion2.ForeColor = Color.DimGray;
             lblAccion2.Location = new Point(21, 164);
             lblAccion2.Name = "lblAccion2";
-            lblAccion2.Size = new Size(971, 16);
+            lblAccion2.Size = new Size(970, 16);
             lblAccion2.TabIndex = 8;
             lblAccion2.Text = "Actualizó informacion de empleado1";
             // 
@@ -1011,7 +1011,7 @@ namespace RecursosHumanos.View
             lblAccion1.ForeColor = Color.DimGray;
             lblAccion1.Location = new Point(21, 89);
             lblAccion1.Name = "lblAccion1";
-            lblAccion1.Size = new Size(974, 16);
+            lblAccion1.Size = new Size(973, 16);
             lblAccion1.TabIndex = 5;
             lblAccion1.Text = "Actualizó informacion de empleado1";
             // 
@@ -1032,7 +1032,7 @@ namespace RecursosHumanos.View
             Separador1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Separador1.Location = new Point(25, 46);
             Separador1.Name = "Separador1";
-            Separador1.Size = new Size(1140, 14);
+            Separador1.Size = new Size(1139, 14);
             Separador1.TabIndex = 2;
             // 
             // lblActRecientes
@@ -1277,7 +1277,7 @@ namespace RecursosHumanos.View
             pnlBienvenida.RightToLeft = RightToLeft.No;
             pnlBienvenida.ShadowColor = Color.FromArgb(175, 159, 168);
             pnlBienvenida.ShadowShift = 1;
-            pnlBienvenida.Size = new Size(828, 120);
+            pnlBienvenida.Size = new Size(827, 120);
             pnlBienvenida.TabIndex = 5;
             // 
             // lblBienvenida2
@@ -1287,7 +1287,7 @@ namespace RecursosHumanos.View
             lblBienvenida2.ForeColor = Color.DimGray;
             lblBienvenida2.Location = new Point(13, 52);
             lblBienvenida2.Name = "lblBienvenida2";
-            lblBienvenida2.Size = new Size(812, 60);
+            lblBienvenida2.Size = new Size(811, 60);
             lblBienvenida2.TabIndex = 1;
             lblBienvenida2.Text = "La plataforma integral para la gestión de recursos humanos que simplifica todos sus procesos.";
             // 
@@ -1297,7 +1297,7 @@ namespace RecursosHumanos.View
             lblBienvenida.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblBienvenida.Location = new Point(13, 19);
             lblBienvenida.Name = "lblBienvenida";
-            lblBienvenida.Size = new Size(812, 33);
+            lblBienvenida.Size = new Size(811, 33);
             lblBienvenida.TabIndex = 0;
             lblBienvenida.Text = "Bienvenido a Human Resarce";
             // 
@@ -1405,26 +1405,26 @@ namespace RecursosHumanos.View
         private Button btnEliminarUsuarios;
         private Button btnActualizarUsuarios;
         private Button subRegistroPersonas;
-        public Guna.UI2.WinForms.Guna2Separator Separador2;
-        public Label lblTempo1;
-        public Label lblAccion1;
-        public Guna.UI2.WinForms.Guna2HtmlLabel lblUsuario1;
-        public Button btnListaContratos;
-        public Panel subChristopherPanel;
-        public Panel subVanessaPanel;
-        public Panel subFridaPanel;
-        public Button btnFrida;
-        public Panel subNatalyPanel;
-        public Button btnNataly;
-        public Button btmSalir;
-        public Button btmVanessa;
-        public Button btmUsuario;
-        public Panel pnlSubRoles;
-        public Button btnCreacionRoles;
-        public Button btnGestionRoles;
-        public Button btnRoles;
-        public Button btnPuestos;
-        public Button btnDepartamentos;
-        public Button btnContratos;
+        public static Guna.UI2.WinForms.Guna2Separator Separador2;
+        public static Label lblTempo1;
+        public static Label lblAccion1;
+        public static Guna.UI2.WinForms.Guna2HtmlLabel lblUsuario1;
+        public static Button btnListaContratos;
+        public static Panel subChristopherPanel;
+        public static Panel subVanessaPanel;
+        public static Panel subFridaPanel;
+        public static Button btnFrida;
+        public static Panel subNatalyPanel;
+        public static Button btnNataly;
+        public static Button btmSalir;
+        public static Button btmVanessa;
+        public static Button btmUsuario;
+        public static Panel pnlSubRoles;
+        public static Button btnCreacionRoles;
+        public static Button btnGestionRoles;
+        public static Button btnRoles;
+        public static Button btnPuestos;
+        public static Button btnDepartamentos;
+        public static Button btnContratos;
     }
 }

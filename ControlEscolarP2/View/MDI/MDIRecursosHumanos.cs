@@ -368,18 +368,6 @@ namespace RecursosHumanos.View
             {
             btnCreacionRoles.Enabled = true;
             }
-            if (permisosUsuario.Contains(31)) // Ver asignaciones de permisos a roles ELIMINAR PERMISO 31
-            {
-            }
-            if (permisosUsuario.Contains(32)) // Asignar permiso a rol ELIMINAR PERMISO 32
-            {
-            }
-            if (permisosUsuario.Contains(33)) // Editar asignación de permiso a rol ELIMINAR PERMISO 33
-            {
-            }
-            if (permisosUsuario.Contains(34)) // Eliminar asignación de permiso a rol ELIMINAR PERMISO 34
-            {
-            }
 
             // Empleados
             if (permisosUsuario.Contains(35)) // Ver empleados
@@ -408,18 +396,69 @@ namespace RecursosHumanos.View
             {
             btnListaContratos.Enabled = true;
             }
-            if (permisosUsuario.Contains(42)) // Eliminar contrato ELIMINAR PERMISO 42
-            {
-            }
 
-            // Bitácora
+            // Bitácora 
             if (permisosUsuario.Contains(43)) // Ver bitácora
             {
             btnRegistroAuditorias.Enabled = true;
             }
-            if (permisosUsuario.Contains(44)) // Eliminar movimiento en bitácora ELIMINAR PERMISO 42
+
+            // ** Nuevos apartados:**
+
+            // Puestos
+            if (permisosUsuario.Contains(45)) // Ver puestos
             {
+                btnPuestos.Enabled = true;
             }
+            if (permisosUsuario.Contains(46)) // Agregar puesto
+            {
+                frmPuestos.btnAgregar.Enabled = true;
+            }
+            if (permisosUsuario.Contains(47)) // Editar puesto
+            {
+                frmPuestos.btnActualizar.Enabled = true;
+            }
+            if (permisosUsuario.Contains(48)) // Eliminar puesto
+            {
+                frmPuestos.btnEliminar.Enabled = true;
+            }
+
+            // Departamentos
+            if (permisosUsuario.Contains(49)) // Ver departamentos
+            {
+                btnDepartamentos.Enabled = true;
+            }
+            if (permisosUsuario.Contains(50)) // Agregar departamento
+            {
+                frmDepartamentos.btnAgregar.Enabled = true;
+            }
+            if (permisosUsuario.Contains(51)) // Editar departamento
+            {
+                frmDepartamentos.btnActualizar.Enabled = true;
+            }
+            if (permisosUsuario.Contains(52)) // Eliminar departamento
+            {
+                frmDepartamentos.btnEliminar.Enabled = true;
+            }
+
+            // Asistencias
+            if (permisosUsuario.Contains(53)) // Gestionar asistencias
+            {
+                btnEntradas.Enabled = true;
+            }
+
+            // Ausencias
+            if (permisosUsuario.Contains(57)) // Gestionar ausencias
+            {
+                btnSalidas.Enabled = true;
+            }
+
+            // Contar días trabajados
+            if (permisosUsuario.Contains(61)) // Gestionar días trabajados
+            {
+                btnContarDias.Enabled = true;
+            }
+
         }
     }
 }
