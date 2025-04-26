@@ -1,0 +1,244 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Npgsql;
+using RecursosHumanos.Model;
+using RecursosHumanos.Models;
+using RecursosHumanos.Utilities;
+
+namespace RecursosHumanos.Data
+{
+    public class DepartamentoDataAccess
+    {
+        private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Data.DepartamentoDataAccess");
+        private readonly PostgreSQLDataAccess _dbAccess = null;
+
+        public DepartamentoDataAccess()
+        {
+            try
+            {
+                _dbAccess = PostgreSQLDataAccess.GetInstance();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al inicializar el acceso a datos de DepartamentoDataAccess");
+                throw;
+            }
+        }
+
+        public int InsertarDepartamento(Departamento departamento)
+        {
+            try
+            {
+                string query = @"
+INSERT INTO human_resources.departamento 
+(nombre_departamento, ubicacion, telefono_departamento, email_departamento, estatus)
+VALUES 
+(@NombreDepartamento, @Ubicacion, @TelefonoDepartamento, @EmailDepartamento, @Estatus)
+RETURNING id_departamento";
+
+                NpgsqlParameter[] parameters = new NpgsqlParameter[]
+                {
+                    _dbAccess.CreateParameter("@NombreDepartamento", departamento.NombreDepartamento),
+                    _dbAccess.CreateParameter("@Ubicacion", departamento.Ubicacion),
+                    _dbAccess.CreateParameter("@TelefonoDepartamento", departamento.TelefonoDepartamento),
+                    _dbAccess.CreateParameter("@EmailDepartamento", departamento.EmailDepartamento),
+                    _dbAccess.CreateParameter("@Estatus", departamento.Estatus ? 1 : 0)
+                };
+
+                _dbAccess.Connect();
+                object? resultado = _dbAccess.ExecuteScalar(query, parameters);
+                int idDepartamento = Convert.ToInt32(resultado);
+                _logger.Info($"Departamento insertado con ID: {idDepartamento}");
+
+                return idDepartamento;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al insertar el departamento: {departamento.NombreDepartamento}");
+                return -1;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        public List<Departamento> ObtenerTodosLosDepartamentos(bool soloActivos = true)
+        {
+            List<Departamento> departamentos = new List<Departamento>();
+
+            try
+            {
+                string query = @"
+SELECT d.id_departamento, d.nombre_departamento, d.ubicacion, d.telefono_departamento, d.email_departamento, d.estatus
+FROM human_resources.departamento d
+WHERE 1=1";
+
+                List<NpgsqlParameter> parameters = new List<NpgsqlParameter>();
+
+                if (soloActivos)
+                {
+                    query += " AND d.estatus = 1";
+                }
+
+                query += " ORDER BY d.id_departamento";
+
+                _dbAccess.Connect();
+                DataTable result = _dbAccess.ExecuteQuery_Reader(query, parameters.ToArray());
+
+                foreach (DataRow row in result.Rows)
+                {
+                    Departamento departamento = new Departamento
+                    {
+                        IdDepartamento = Convert.ToInt32(row["id_departamento"]),
+                        NombreDepartamento = row["nombre_departamento"].ToString() ?? "",
+                        Ubicacion = row["ubicacion"].ToString() ?? "",
+                        TelefonoDepartamento = row["telefono_departamento"].ToString() ?? "",
+                        EmailDepartamento = row["email_departamento"].ToString() ?? "",
+                        Estatus = Convert.ToInt32(row["estatus"]) == 1
+                    };
+
+                    departamentos.Add(departamento);
+                }
+
+                _logger.Debug($"Se obtuvieron {departamentos.Count} registros de departamentos");
+                return departamentos;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al intentar obtener la lista de departamentos desde la base de datos");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        public Departamento? ObtenerDepartamentoPorId(int idDepartamento)
+        {
+            try
+            {
+                string query = @"
+SELECT d.id_departamento, d.nombre_departamento, d.ubicacion, d.telefono_departamento, d.email_departamento, d.estatus
+FROM human_resources.departamento d
+WHERE d.id_departamento = @IdDepartamento";
+
+                NpgsqlParameter paramId = _dbAccess.CreateParameter("@IdDepartamento", idDepartamento);
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, paramId);
+
+                if (resultado.Rows.Count == 0)
+                {
+                    _logger.Warn($"No se encontró ningún departamento con ID {idDepartamento}");
+                    return null;
+                }
+
+                DataRow row = resultado.Rows[0];
+
+                Departamento departamento = new Departamento
+                {
+                    IdDepartamento = Convert.ToInt32(row["id_departamento"]),
+                    NombreDepartamento = row["nombre_departamento"].ToString() ?? "",
+                    Ubicacion = row["ubicacion"].ToString() ?? "",
+                    TelefonoDepartamento = row["telefono_departamento"].ToString() ?? "",
+                    EmailDepartamento = row["email_departamento"].ToString() ?? "",
+                    Estatus = Convert.ToInt32(row["estatus"]) == 1
+                };
+
+                return departamento;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener el departamento con ID {idDepartamento}");
+                return null;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        public bool ExisteDepartamentoPorId(int idDepartamento)
+        {
+            try
+            {
+                string query = "SELECT COUNT(*) FROM human_resources.departamento WHERE id_departamento = @IdDepartamento";
+
+                NpgsqlParameter paramIdDepartamento = _dbAccess.CreateParameter("@IdDepartamento", idDepartamento);
+
+                _dbAccess.Connect();
+                object? resultado = _dbAccess.ExecuteScalar(query, paramIdDepartamento);
+
+                int cantidad = Convert.ToInt32(resultado);
+                bool existe = cantidad > 0;
+
+                return existe;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al verificar la existencia del departamento con ID {idDepartamento}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        public bool ActualizarDepartamento(Departamento departamento)
+        {
+            try
+            {
+                _logger.Debug($"Actualizando departamento con ID {departamento.IdDepartamento}");
+
+                string query = @"
+UPDATE human_resources.departamento
+SET nombre_departamento = @NombreDepartamento,
+    ubicacion = @Ubicacion,
+    telefono_departamento = @TelefonoDepartamento,
+    email_departamento = @EmailDepartamento,
+    estatus = @Estatus
+WHERE id_departamento = @IdDepartamento";
+
+                NpgsqlParameter paramIdDepartamento = _dbAccess.CreateParameter("@IdDepartamento", departamento.IdDepartamento);
+                NpgsqlParameter paramNombre = _dbAccess.CreateParameter("@NombreDepartamento", departamento.NombreDepartamento);
+                NpgsqlParameter paramUbicacion = _dbAccess.CreateParameter("@Ubicacion", departamento.Ubicacion);
+                NpgsqlParameter paramTelefono = _dbAccess.CreateParameter("@TelefonoDepartamento", departamento.TelefonoDepartamento);
+                NpgsqlParameter paramEmail = _dbAccess.CreateParameter("@EmailDepartamento", departamento.EmailDepartamento);
+                NpgsqlParameter paramEstatus = _dbAccess.CreateParameter("@Estatus", departamento.Estatus ? 1 : 0);
+
+                _dbAccess.Connect();
+                int filasAfectadas = _dbAccess.ExecuteNonQuery(query,
+                    paramNombre, paramUbicacion, paramTelefono, paramEmail, paramEstatus, paramIdDepartamento);
+
+                bool exito = filasAfectadas > 0;
+
+                if (!exito)
+                {
+                    _logger.Warn($"No se pudo actualizar el departamento con ID {departamento.IdDepartamento}. No se encontró el registro.");
+                }
+                else
+                {
+                    _logger.Debug($"Departamento con ID {departamento.IdDepartamento} actualizado correctamente.");
+                }
+
+                return exito;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al actualizar el departamento con ID {departamento.IdDepartamento}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+    }
+}
