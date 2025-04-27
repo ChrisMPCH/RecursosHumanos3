@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using RecursosHumanos.Data;
+using RecursosHumanos.Model;
 
 namespace RecursosHumanos.Bussines
 {
@@ -26,5 +28,12 @@ namespace RecursosHumanos.Bussines
         {
             return horaEntrada < horaSalida;
         }
+
+        public static Empleado? ObtenerEmpleadoPorMatricula(string matricula)
+        {
+            var empleadosData = new EmpleadosDataAccess();
+            return empleadosData.ObtenerEmpleadoPorMatricula(matricula);
+        }
+
     }
 }

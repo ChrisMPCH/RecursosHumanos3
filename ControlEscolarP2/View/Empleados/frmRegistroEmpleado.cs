@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using RecursosHumanos.Bussines;
 using RecursosHumanos.Controller;
 using RecursosHumanos.Model;
@@ -158,10 +159,10 @@ namespace RecursosHumanos.View
                     Estatus = Convert.ToInt16(cbxEstatus.SelectedValue)
                 };
 
-                var controlador = new EmpleadoController();
-                var (idEmpleado, mensaje) = controlador.RegistrarEmpleado(nuevoEmpleado);
+                var controlador = new EmpleadosController();
+                var (exito, idEmpleado, mensaje) = controlador.RegistrarEmpleado(nuevoEmpleado);
 
-                if (idEmpleado <= 0)
+                if (!exito)
                 {
                     MessageBox.Show(mensaje, "Error al registrar", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;

@@ -166,6 +166,11 @@ namespace RecursosHumanos.Controller
             }
         }
 
+        public Contrato? ObtenerContratoActivoPorMatricula(string matricula)
+        {
+            var contratos = ObtenerTodosLosContratosPorMatricula(matricula);
+            return contratos.FirstOrDefault(c => c.Estatus);
+        }
 
     }
 }

@@ -162,7 +162,7 @@ namespace RecursosHumanos.Data
         SELECT 
             e.id_empleado, 
             p.nombre, 
-            p.apellido, 
+            p.ap_paterno, 
             e.id_puesto, 
             e.id_departamento, 
             e.estatus
@@ -171,7 +171,7 @@ namespace RecursosHumanos.Data
         JOIN 
             human_resours.persona p ON e.id_persona = p.id_persona
         WHERE 
-            e.estatus != 'Baja'";
+            e.estatus != 0";
 
             try
             {
@@ -192,7 +192,7 @@ namespace RecursosHumanos.Data
                         DatosPersonales = new Persona
                         {
                             Nombre = row["nombre"] as string ?? "",
-                            Ap_Paterno = row["apellido"] as string ?? ""
+                            Ap_Paterno = row["ap_paterno"] as string ?? ""
                         },
                         Id_Puesto = Convert.ToInt32(row["id_puesto"]),
                         Id_Departamento = Convert.ToInt32(row["id_departamento"]),
@@ -209,5 +209,161 @@ namespace RecursosHumanos.Data
             }
             return lista;
         }
+
+        // Verifica si ya existe una matrícula
+        public bool ExisteMatricula(string matricula)
+        {
+            string query = "SELECT COUNT(*) FROM human_resours.empleado WHERE matricula = @Matricula;";
+            var parametros = new[]
+            {
+        _dbAccess.CreateParameter("@Matricula", matricula)
+    };
+
+            try
+            {
+                _dbAccess.Connect();
+                int count = Convert.ToInt32(_dbAccess.ExecuteScalar(query, parametros));
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error verificando existencia de matrícula {matricula}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        // Obtener todos los empleados (cambia el nombre del tuyo actual)
+        public List<Empleado> ObtenerTodosLosEmpleados()
+        {
+            return ObtenerEmpleados(); // Tu método actual ya sirve para esto.
+        }
+
+        // Dar de baja a un empleado
+        public bool DarDeBajaEmpleado(int idEmpleado)
+        {
+            string query = "UPDATE human_resours.empleado SET estatus = 0 WHERE id_empleado = @IdEmpleado;";
+
+            var parametros = new[]
+            {
+        _dbAccess.CreateParameter("@IdEmpleado", idEmpleado)
+    };
+
+            try
+            {
+                _dbAccess.Connect();
+                int filas = _dbAccess.ExecuteNonQuery(query, parametros);
+                return filas > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al dar de baja empleado con ID {idEmpleado}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        // Obtener empleado por ID
+        public Empleado? ObtenerEmpleadoPorId(int idEmpleado)
+        {
+            string query = @"
+        SELECT e.id_empleado, p.nombre, p.ap_paterno, e.id_puesto, e.id_departamento, e.estatus
+        FROM human_resours.empleado e
+        JOIN human_resours.persona p ON e.id_persona = p.id_persona
+        WHERE e.id_empleado = @IdEmpleado;";
+
+            var parametros = new[]
+            {
+        _dbAccess.CreateParameter("@IdEmpleado", idEmpleado)
+    };
+
+            try
+            {
+                _dbAccess.Connect();
+                DataTable result = _dbAccess.ExecuteQuery_Reader(query, parametros);
+
+                if (result.Rows.Count > 0)
+                {
+                    DataRow row = result.Rows[0];
+                    return new Empleado
+                    {
+                        Id_Empleado = Convert.ToInt32(row["id_empleado"]),
+                        DatosPersonales = new Persona
+                        {
+                            Nombre = row["nombre"] as string ?? "",
+                            Ap_Paterno = row["ap_paterno"] as string ?? ""
+                        },
+                        Id_Puesto = Convert.ToInt32(row["id_puesto"]),
+                        Id_Departamento = Convert.ToInt32(row["id_departamento"]),
+                        Estatus = row["estatus"] != DBNull.Value ? Convert.ToInt16(row["estatus"]) : (short)0
+                    };
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener empleado con ID {idEmpleado}");
+                return null;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+        // Obtener empleado por matrícula
+        public Empleado? ObtenerEmpleadoPorMatricula(string matricula)
+        {
+            string query = @"
+        SELECT e.id_empleado, p.nombre, p.ap_paterno, e.id_puesto, e.id_departamento, e.estatus
+        FROM human_resours.empleado e
+        JOIN human_resours.persona p ON e.id_persona = p.id_persona
+        WHERE e.matricula = @Matricula;";
+
+            var parametros = new[]
+            {
+        _dbAccess.CreateParameter("@Matricula", matricula)
+    };
+
+            try
+            {
+                _dbAccess.Connect();
+                DataTable result = _dbAccess.ExecuteQuery_Reader(query, parametros);
+
+                if (result.Rows.Count > 0)
+                {
+                    DataRow row = result.Rows[0];
+                    return new Empleado
+                    {
+                        Id_Empleado = Convert.ToInt32(row["id_empleado"]),
+                        DatosPersonales = new Persona
+                        {
+                            Nombre = row["nombre"] as string ?? "",
+                            Ap_Paterno = row["ap_paterno"] as string ?? ""
+                        },
+                        Id_Puesto = Convert.ToInt32(row["id_puesto"]),
+                        Id_Departamento = Convert.ToInt32(row["id_departamento"]),
+                        Estatus = row["estatus"] != DBNull.Value ? Convert.ToInt16(row["estatus"]) : (short)0
+                    };
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener empleado con matrícula {matricula}");
+                return null;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
     }
 }

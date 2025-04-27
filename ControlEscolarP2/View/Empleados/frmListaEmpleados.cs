@@ -66,9 +66,12 @@ namespace RecursosHumanos.View
             cmbEstatus.SelectedIndex = 0;
         }
 
+        
+
         private void CargarEmpleados()
         {
             empleados = empleadosDataAccess.ObtenerEmpleados();
+            dgvEmpleados.Columns.Clear(); // <-- limpia las columnas anteriores
             dgvEmpleados.DataSource = empleados.Select(e => new
             {
                 ID = e.Id_Empleado,
@@ -88,8 +91,7 @@ namespace RecursosHumanos.View
         {
             string nombreFiltro = txtNombre.Text.Trim().ToLower();
 
-            // Verifica si SelectedItem es null antes de realizar el unboxing
-            int departamentoFiltro = 0;  // Valor predeterminado
+            int departamentoFiltro = 0;
             if (cmbDepartamento.SelectedItem is KeyValuePair<int, string> selectedDepartamento)
             {
                 departamentoFiltro = selectedDepartamento.Key;
@@ -112,8 +114,10 @@ namespace RecursosHumanos.View
                 Estatus = e.Estatus
             }).ToList();
 
+            dgvEmpleados.Columns.Clear(); // <-- limpia columnas antes
             dgvEmpleados.DataSource = filtrados;
         }
+
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
@@ -125,6 +129,11 @@ namespace RecursosHumanos.View
             cmbEstatus.SelectedIndex = 0;
             // Carga todos los empleados sin filtros
             CargarEmpleados();
+        }
+
+        private void dgvEmpleados_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
