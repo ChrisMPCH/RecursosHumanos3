@@ -44,37 +44,49 @@ namespace RecursosHumanos.Data
         {
             try
             {
-                // Inserta primero a la persona
+                // 1. Intentar insertar persona
                 int idPersona = _personasData.InsertarPersona(empleado.DatosPersonales);
                 if (idPersona <= 0)
                 {
-                    _logger.Error($"No se pudo insertar la persona del empleado: {empleado.Matricula}");
+                    _logger.Error($"Error: No se pudo insertar la persona para empleado {empleado.Matricula}");
+                    MessageBox.Show("Error: No se pudo insertar la persona.");
                     return -1;
                 }
 
-                // Asignar el ID de la persona al objeto empleado
+                // 2. Asignar ID persona al empleado
                 empleado.Id_Persona = idPersona;
 
-                // Query para insertar el empleado
-                string query = @"
-                    INSERT INTO human_resours.empleado
-                    (id_persona, fecha_ingreso, fecha_baja, id_departamento, id_puesto, matricula, motivo, estatus)
-                    VALUES
-                    (@IdPersona, @FechaIngreso, @FechaBaja, @IdDepartamento, @IdPuesto, @Matricula, @Motivo, @Estatus)
-                    RETURNING id_empleado;";
+                // 3. Asegurarme que los datos importantes existen
+                if (string.IsNullOrEmpty(empleado.Matricula))
+                {
+                    MessageBox.Show("Error: Matrícula vacía.");
+                    return -1;
+                }
+                if (empleado.Id_Departamento <= 0 || empleado.Id_Puesto <= 0)
+                {
+                    MessageBox.Show("Error: Departamento o Puesto no seleccionado.");
+                    return -1;
+                }
 
-                // Parámetros para la consulta
+                // 4. Hacer el insert
+                string query = @"
+            INSERT INTO human_resours.empleado
+            (id_persona, fecha_ingreso, fecha_baja, id_departamento, id_puesto, matricula, motivo, estatus)
+            VALUES
+            (@IdPersona, @FechaIngreso, @FechaBaja, @IdDepartamento, @IdPuesto, @Matricula, @Motivo, @Estatus)
+            RETURNING id_empleado;";
+
                 var parametros = new[]
                 {
-                    _dbAccess.CreateParameter("@IdPersona", empleado.Id_Persona),
-                    _dbAccess.CreateParameter("@FechaIngreso", empleado.Fecha_Ingreso),
-                    _dbAccess.CreateParameter("@FechaBaja", empleado.Fecha_Baja ?? (object)DBNull.Value),
-                    _dbAccess.CreateParameter("@IdDepartamento", empleado.Id_Departamento),
-                    _dbAccess.CreateParameter("@IdPuesto", empleado.Id_Puesto),
-                    _dbAccess.CreateParameter("@Matricula", empleado.Matricula),
-                    _dbAccess.CreateParameter("@Motivo", empleado.Motivo),
-                    _dbAccess.CreateParameter("@Estatus", empleado.Estatus)
-                };
+            _dbAccess.CreateParameter("@IdPersona", empleado.Id_Persona),
+            _dbAccess.CreateParameter("@FechaIngreso", empleado.Fecha_Ingreso),
+            _dbAccess.CreateParameter("@FechaBaja", empleado.Fecha_Baja ?? (object)DBNull.Value),
+            _dbAccess.CreateParameter("@IdDepartamento", empleado.Id_Departamento),
+            _dbAccess.CreateParameter("@IdPuesto", empleado.Id_Puesto),
+            _dbAccess.CreateParameter("@Matricula", empleado.Matricula),
+            _dbAccess.CreateParameter("@Motivo", empleado.Motivo),
+            _dbAccess.CreateParameter("@Estatus", empleado.Estatus)
+        };
 
                 _dbAccess.Connect();
                 object? resultado = _dbAccess.ExecuteScalar(query, parametros);
@@ -86,6 +98,7 @@ namespace RecursosHumanos.Data
             catch (Exception ex)
             {
                 _logger.Error(ex, $"Error al insertar empleado con matrícula {empleado.Matricula}");
+                MessageBox.Show("Error al guardar empleado: " + ex.Message);  // <- ¡Aquí también muestra el error exacto!
                 return -1;
             }
             finally
@@ -94,65 +107,6 @@ namespace RecursosHumanos.Data
             }
         }
 
-        /// <summary>
-        /// Actualiza los datos de un empleado y su persona asociada
-        /// </summary>
-        public bool ActualizarEmpleado(Empleado empleado)
-        {
-            try
-            {
-                _logger.Debug($"Actualizando empleado ID {empleado.Id_Empleado} con persona ID {empleado.Id_Persona}");
-
-                // Primero actualizar la persona
-                bool personaActualizada = _personasData.ActualizarPersona(empleado.DatosPersonales);
-                if (!personaActualizada)
-                {
-                    _logger.Warn($"No se pudo actualizar la persona con ID {empleado.Id_Persona}");
-                    return false;
-                }
-
-                // Query para actualizar empleado
-                string query = @"
-            UPDATE human_resours.empleado
-            SET fecha_ingreso = @FechaIngreso,
-                fecha_baja = @FechaBaja,
-                id_departamento = @IdDepartamento,
-                id_puesto = @IdPuesto,
-                matricula = @Matricula,
-                motivo = @Motivo,
-                estatus = @Estatus
-            WHERE id_empleado = @IdEmpleado;";
-
-                var parametros = new[]
-                {
-            _dbAccess.CreateParameter("@IdEmpleado", empleado.Id_Empleado),
-            _dbAccess.CreateParameter("@FechaIngreso", empleado.Fecha_Ingreso),
-            _dbAccess.CreateParameter("@FechaBaja", empleado.Fecha_Baja ?? (object)DBNull.Value),
-            _dbAccess.CreateParameter("@IdDepartamento", empleado.Id_Departamento),
-            _dbAccess.CreateParameter("@IdPuesto", empleado.Id_Puesto),
-            _dbAccess.CreateParameter("@Matricula", empleado.Matricula),
-            _dbAccess.CreateParameter("@Motivo", empleado.Motivo),
-            _dbAccess.CreateParameter("@Estatus", empleado.Estatus)
-        };
-
-                _dbAccess.Connect();
-                int filas = _dbAccess.ExecuteNonQuery(query, parametros);
-
-                if (filas > 0)
-                {
-                    _logger.Info($"Empleado con ID {empleado.Id_Empleado} actualizado correctamente");
-                    return true;
-                }
-
-                _logger.Warn($"No se encontró empleado con ID {empleado.Id_Empleado} para actualizar");
-                return false;
-            }
-            catch (Exception ex)
-            {
-                _logger.Error($"Error al actualizar empleado con ID {empleado.Id_Empleado}: {ex.Message}");
-                return false; // Se asegura que siempre se devuelva un valor
-            }
-        }
 
         public List<Empleado> ObtenerEmpleados()
         {
