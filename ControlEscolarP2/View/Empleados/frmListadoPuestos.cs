@@ -1,4 +1,6 @@
-﻿using Guna.UI2.WinForms;
+using Guna.UI2.WinForms;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Models;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -25,31 +27,59 @@ namespace RecursosHumanos.View
             this.pnlCambiante = pnlCambiante; // Guardamos la referencia del panel
             InicializarVentana();
         }
-        
+
         public void InicializarVentana()
         {
-
             IniciarTabla();
+            FormLoad();
         }
 
         private void IniciarTabla()
         {
-            Formas.ConfigurarEstiloDataGridView(dataGridPuestos);
-            ConfigurarAnchoColumnas(300);
+            Formas.ConfigurarEstiloDataGridView(dgvPuestos);
         }
-
-        private void ConfigurarAnchoColumnas(int ancho)
-        {
-            foreach (DataGridViewColumn columna in dataGridPuestos.Columns)
-            {
-                columna.Width = ancho; // Asignar un ancho fijo a todas las columnas
-            }
-        }
+        
 
         private void btnRegresar_Click(object sender, EventArgs e)
         {
-            // Limpiar el panel de frmDepartamentos al hacer clic en Cancelar
+            // Limpiar el panel de frmListadoPuestos al hacer clic en Regresar
             Formas.limpiarPanel(pnlCambiante);
+        }
+
+        private void FormLoad()
+        {
+            CargarPuestosEnTabla();
+        }
+        List<Puesto> listaPuestos;
+
+        private void CargarPuestosEnTabla()
+        {
+            try
+            {
+                PuestoController controller = new PuestoController();
+                listaPuestos = controller.ObtenerTodosLosPuestos(soloActivos: false); // Mostrar todos, activos e inactivos
+
+                // Transformar la lista para personalizar cómo se muestran los datos
+                var datosMostrar = listaPuestos.Select(p => new
+                {
+                    ID = p.IdPuesto,
+                    Nombre = p.NombrePuesto,
+                    Descripcion = p.DescripcionPuesto,
+                    Estatus = p.Estatus ? "Activo" : "Inactivo"
+                }).ToList();
+
+                dgvPuestos.DataSource = datosMostrar;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar puestos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
