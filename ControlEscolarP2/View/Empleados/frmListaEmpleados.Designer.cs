@@ -46,12 +46,14 @@
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             lblTitulo = new Label();
             separador1 = new Guna.UI2.WinForms.Guna2Separator();
             lblFechaNacimiento = new Label();
@@ -68,6 +70,7 @@
             Puesto = new DataGridViewTextBoxColumn();
             Estatus = new DataGridViewTextBoxColumn();
             pnlInfoUsuario = new Guna.UI2.WinForms.Guna2GradientPanel();
+            btnLimpiar = new Guna.UI2.WinForms.Guna2Button();
             lblNombre = new Label();
             txtNombre = new Guna.UI2.WinForms.Guna2TextBox();
             cmbEstatus = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -157,7 +160,7 @@
             cmbDepartamento.Location = new Point(177, 46);
             cmbDepartamento.Name = "cmbDepartamento";
             cmbDepartamento.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            cmbDepartamento.Size = new Size(179, 36);
+            cmbDepartamento.Size = new Size(199, 36);
             cmbDepartamento.TabIndex = 50;
             // 
             // btnBuscar
@@ -172,10 +175,10 @@
             btnBuscar.FillColor = Color.DimGray;
             btnBuscar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnBuscar.ForeColor = Color.White;
-            btnBuscar.Location = new Point(876, 43);
+            btnBuscar.Location = new Point(789, 42);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            btnBuscar.Size = new Size(121, 45);
+            btnBuscar.Size = new Size(121, 40);
             btnBuscar.TabIndex = 51;
             btnBuscar.Text = "Buscar";
             btnBuscar.Click += btnBuscar_Click;
@@ -324,6 +327,7 @@
             // 
             pnlInfoUsuario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlInfoUsuario.BackColor = Color.White;
+            pnlInfoUsuario.Controls.Add(btnLimpiar);
             pnlInfoUsuario.Controls.Add(lblNombre);
             pnlInfoUsuario.Controls.Add(txtNombre);
             pnlInfoUsuario.Controls.Add(cmbEstatus);
@@ -338,20 +342,40 @@
             pnlInfoUsuario.Controls.Add(dtpFechaIngreso);
             pnlInfoUsuario.Controls.Add(lblFechaNacimiento);
             pnlInfoUsuario.Controls.Add(separador1);
-            pnlInfoUsuario.CustomizableEdges = customizableEdges15;
+            pnlInfoUsuario.CustomizableEdges = customizableEdges17;
             pnlInfoUsuario.Font = new Font("Microsoft Sans Serif", 8.25F);
             pnlInfoUsuario.Location = new Point(0, 54);
             pnlInfoUsuario.Name = "pnlInfoUsuario";
-            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges18;
             pnlInfoUsuario.Size = new Size(1011, 749);
             pnlInfoUsuario.TabIndex = 27;
+            // 
+            // btnLimpiar
+            // 
+            btnLimpiar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnLimpiar.Animated = true;
+            btnLimpiar.CustomizableEdges = customizableEdges11;
+            btnLimpiar.DisabledState.BorderColor = Color.DarkGray;
+            btnLimpiar.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnLimpiar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnLimpiar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnLimpiar.FillColor = Color.DimGray;
+            btnLimpiar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
+            btnLimpiar.ForeColor = Color.White;
+            btnLimpiar.Location = new Point(789, 88);
+            btnLimpiar.Name = "btnLimpiar";
+            btnLimpiar.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            btnLimpiar.Size = new Size(121, 40);
+            btnLimpiar.TabIndex = 61;
+            btnLimpiar.Text = "Limpiar";
+            btnLimpiar.Click += btnLimpiar_Click;
             // 
             // lblNombre
             // 
             lblNombre.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblNombre.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
             lblNombre.ForeColor = Color.Black;
-            lblNombre.Location = new Point(203, 94);
+            lblNombre.Location = new Point(14, 98);
             lblNombre.Name = "lblNombre";
             lblNombre.Size = new Size(105, 27);
             lblNombre.TabIndex = 59;
@@ -361,7 +385,7 @@
             // 
             txtNombre.Animated = true;
             txtNombre.BorderRadius = 5;
-            txtNombre.CustomizableEdges = customizableEdges11;
+            txtNombre.CustomizableEdges = customizableEdges13;
             txtNombre.DefaultText = "Ingrese nombre";
             txtNombre.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtNombre.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -370,20 +394,20 @@
             txtNombre.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtNombre.Font = new Font("Segoe UI", 9.75F);
             txtNombre.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtNombre.Location = new Point(314, 94);
+            txtNombre.Location = new Point(115, 94);
             txtNombre.MaxLength = 20;
             txtNombre.Name = "txtNombre";
             txtNombre.PlaceholderText = "";
             txtNombre.SelectedText = "";
-            txtNombre.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            txtNombre.Size = new Size(291, 28);
+            txtNombre.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            txtNombre.Size = new Size(261, 28);
             txtNombre.TabIndex = 58;
             // 
             // cmbEstatus
             // 
             cmbEstatus.BackColor = Color.Transparent;
             cmbEstatus.BorderRadius = 5;
-            cmbEstatus.CustomizableEdges = customizableEdges13;
+            cmbEstatus.CustomizableEdges = customizableEdges15;
             cmbEstatus.DrawMode = DrawMode.OwnerDrawFixed;
             cmbEstatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbEstatus.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -391,9 +415,9 @@
             cmbEstatus.Font = new Font("Segoe UI", 10F);
             cmbEstatus.ForeColor = Color.FromArgb(68, 88, 112);
             cmbEstatus.ItemHeight = 30;
-            cmbEstatus.Location = new Point(560, 46);
+            cmbEstatus.Location = new Point(466, 46);
             cmbEstatus.Name = "cmbEstatus";
-            cmbEstatus.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            cmbEstatus.ShadowDecoration.CustomizableEdges = customizableEdges16;
             cmbEstatus.Size = new Size(179, 36);
             cmbEstatus.TabIndex = 57;
             // 
@@ -402,7 +426,7 @@
             lblEstatus.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblEstatus.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
             lblEstatus.ForeColor = Color.Black;
-            lblEstatus.Location = new Point(456, 52);
+            lblEstatus.Location = new Point(382, 55);
             lblEstatus.Name = "lblEstatus";
             lblEstatus.Size = new Size(98, 27);
             lblEstatus.TabIndex = 56;
@@ -438,7 +462,6 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmListaEmpleados";
             Text = "frmListadoUsuarios";
-            Load += frmListaEmpleados_Load;
             pnlTabla.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvEmpleados).EndInit();
             pnlInfoUsuario.ResumeLayout(false);
@@ -469,5 +492,6 @@
         private Label lblEstatus;
         private Label lblNombre;
         public Guna.UI2.WinForms.Guna2TextBox txtNombre;
+        private Guna.UI2.WinForms.Guna2Button btnLimpiar;
     }
 }

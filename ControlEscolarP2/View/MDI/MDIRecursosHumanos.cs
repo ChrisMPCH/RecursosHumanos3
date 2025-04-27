@@ -1,4 +1,5 @@
 ﻿using RecursosHumanos.Utilities;
+using RecursosHumanos.View.Contratos;
 using RecursosHumanos.View.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace RecursosHumanos.View
         }
 
         // Función para mostrar o esconder un submenú dependiendo de su estado actual
-        private void showSubMenu(Panel subMenu)
+        public static void showSubMenu(Panel subMenu)
         {
             // Si el submenú no está visible, lo mostramos
             if (!subMenu.Visible)
@@ -65,6 +66,14 @@ namespace RecursosHumanos.View
                 subMenu.Visible = false; // Si ya está visible, lo ocultamos
             }
         }
+
+        // Función para esconder un submenú dependiendo de su estado actual
+        public static void showNoSubMenu(Panel subMenu)
+        {
+            // Si el submenú no está visible, lo mostramos
+            subMenu.Visible = false; // Si ya está visible, lo ocultamos
+        }
+
         private void picMenu_Click(object sender, EventArgs e)
         {
             Formas.CloseOtherForms(this);
@@ -72,6 +81,7 @@ namespace RecursosHumanos.View
 
 
         //-----------------------------------------------------------------------Christopher
+        #region
         private void btmChristopher_Click(object sender, EventArgs e)
         {
             showSubMenu(subChristopherPanel); // Muestra u oculta el submenú de Usuarios
@@ -121,11 +131,7 @@ namespace RecursosHumanos.View
             abrirChildFormMDI(frmGestionCreacionRoles);
         }
 
-        private void btnPermisos_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        #endregion
         //-----------------------------------------------------------------------Vanessa
         #region
         private void btmVanessa_Click(object sender, EventArgs e)
@@ -201,8 +207,8 @@ namespace RecursosHumanos.View
         }
         private void btnListaContratos_Click(object sender, EventArgs e)
         {
-            Form frmListaContratos = new frmListaContratos();
-            abrirChildFormMDI(frmListaContratos);
+            Form frmActualizarContratos = new frmActualizarContratos();
+            abrirChildFormMDI(frmActualizarContratos);
         }
 
         #endregion
@@ -250,6 +256,39 @@ namespace RecursosHumanos.View
         {
             // code
             this.Close();
+        }
+        public static void BloquearBotonesMenu()
+        {
+            btmUsuario.Enabled = false;
+            btmVanessa.Enabled = false;
+            btnNataly.Enabled = false;
+            btnFrida.Enabled = false;
+            btnRoles.Enabled = false;
+
+            showNoSubMenu(subChristopherPanel);
+            showNoSubMenu(subVanessaPanel);
+            showNoSubMenu(subNatalyPanel);
+            showNoSubMenu(subFridaPanel);
+            showNoSubMenu(pnlSubRoles);
+
+            btmSalir.Enabled = false;
+        }
+
+        public static void DesbloquearBotonesMenu()
+        {
+            btmUsuario.Enabled = true;
+            btmVanessa.Enabled = true;
+            btnNataly.Enabled = true;
+            btnFrida.Enabled = true;
+            btnRoles.Enabled = true;
+
+            showSubMenu(subChristopherPanel);
+            showSubMenu(subVanessaPanel);
+            showSubMenu(subNatalyPanel);
+            showSubMenu(subFridaPanel);
+            showSubMenu(pnlSubRoles);
+
+            btmSalir.Enabled = true;
         }
 
         private void btnRegistroAuditorias_Click(object sender, EventArgs e)

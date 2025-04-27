@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -43,12 +43,8 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRegistroEmpleado));
             pnlInfoEsmpleado = new Guna.UI2.WinForms.Guna2GradientPanel();
-            dtpFechaBaja = new Guna.UI2.WinForms.Guna2DateTimePicker();
-            lblFechaBaja = new Label();
             txtMatricula = new Guna.UI2.WinForms.Guna2TextBox();
             ptbInfoMatricula = new Guna.UI2.WinForms.Guna2PictureBox();
             btnCargaMasiva = new Guna.UI2.WinForms.Guna2Button();
@@ -76,8 +72,6 @@
             pnlInfoEsmpleado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlInfoEsmpleado.BackColor = Color.White;
             pnlInfoEsmpleado.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            pnlInfoEsmpleado.Controls.Add(dtpFechaBaja);
-            pnlInfoEsmpleado.Controls.Add(lblFechaBaja);
             pnlInfoEsmpleado.Controls.Add(txtMatricula);
             pnlInfoEsmpleado.Controls.Add(ptbInfoMatricula);
             pnlInfoEsmpleado.Controls.Add(btnCargaMasiva);
@@ -94,50 +88,18 @@
             pnlInfoEsmpleado.Controls.Add(lblDepartamento);
             pnlInfoEsmpleado.Controls.Add(guna2Separator1);
             pnlInfoEsmpleado.Controls.Add(lblBienvenida2);
-            pnlInfoEsmpleado.CustomizableEdges = customizableEdges15;
+            pnlInfoEsmpleado.CustomizableEdges = customizableEdges13;
             pnlInfoEsmpleado.Location = new Point(0, 0);
             pnlInfoEsmpleado.Name = "pnlInfoEsmpleado";
-            pnlInfoEsmpleado.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            pnlInfoEsmpleado.ShadowDecoration.CustomizableEdges = customizableEdges14;
             pnlInfoEsmpleado.Size = new Size(1011, 454);
             pnlInfoEsmpleado.TabIndex = 4;
-            pnlInfoEsmpleado.Paint += pnlInfoEsmpleado_Paint;
-            // 
-            // dtpFechaBaja
-            // 
-            dtpFechaBaja.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            dtpFechaBaja.BackColor = Color.Transparent;
-            dtpFechaBaja.Checked = true;
-            dtpFechaBaja.CustomizableEdges = customizableEdges1;
-            dtpFechaBaja.FillColor = Color.White;
-            dtpFechaBaja.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtpFechaBaja.Format = DateTimePickerFormat.Short;
-            dtpFechaBaja.ImeMode = ImeMode.NoControl;
-            dtpFechaBaja.Location = new Point(595, 301);
-            dtpFechaBaja.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
-            dtpFechaBaja.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
-            dtpFechaBaja.Name = "dtpFechaBaja";
-            dtpFechaBaja.RightToLeft = RightToLeft.No;
-            dtpFechaBaja.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            dtpFechaBaja.Size = new Size(121, 31);
-            dtpFechaBaja.TabIndex = 6;
-            dtpFechaBaja.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
-            // 
-            // lblFechaBaja
-            // 
-            lblFechaBaja.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            lblFechaBaja.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblFechaBaja.ForeColor = Color.Black;
-            lblFechaBaja.Location = new Point(455, 307);
-            lblFechaBaja.Name = "lblFechaBaja";
-            lblFechaBaja.Size = new Size(151, 25);
-            lblFechaBaja.TabIndex = 38;
-            lblFechaBaja.Text = "Fecha baja: ";
             // 
             // txtMatricula
             // 
             txtMatricula.Animated = true;
             txtMatricula.BorderRadius = 5;
-            txtMatricula.CustomizableEdges = customizableEdges3;
+            txtMatricula.CustomizableEdges = customizableEdges1;
             txtMatricula.DefaultText = "Ingrese matrícula";
             txtMatricula.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtMatricula.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -152,19 +114,19 @@
             txtMatricula.Name = "txtMatricula";
             txtMatricula.PlaceholderText = "";
             txtMatricula.SelectedText = "";
-            txtMatricula.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            txtMatricula.ShadowDecoration.CustomizableEdges = customizableEdges2;
             txtMatricula.Size = new Size(484, 34);
             txtMatricula.TabIndex = 1;
             // 
             // ptbInfoMatricula
             // 
-            ptbInfoMatricula.CustomizableEdges = customizableEdges5;
+            ptbInfoMatricula.CustomizableEdges = customizableEdges3;
             ptbInfoMatricula.Image = Properties.Resources._40796_help___icon;
             ptbInfoMatricula.ImageRotate = 0F;
             ptbInfoMatricula.Location = new Point(695, 88);
             ptbInfoMatricula.Margin = new Padding(3, 2, 3, 2);
             ptbInfoMatricula.Name = "ptbInfoMatricula";
-            ptbInfoMatricula.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            ptbInfoMatricula.ShadowDecoration.CustomizableEdges = customizableEdges4;
             ptbInfoMatricula.Size = new Size(23, 24);
             ptbInfoMatricula.SizeMode = PictureBoxSizeMode.Zoom;
             ptbInfoMatricula.TabIndex = 30;
@@ -174,7 +136,7 @@
             // btnCargaMasiva
             // 
             btnCargaMasiva.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnCargaMasiva.CustomizableEdges = customizableEdges7;
+            btnCargaMasiva.CustomizableEdges = customizableEdges5;
             btnCargaMasiva.DisabledState.BorderColor = Color.DarkGray;
             btnCargaMasiva.DisabledState.CustomBorderColor = Color.DarkGray;
             btnCargaMasiva.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -182,9 +144,9 @@
             btnCargaMasiva.FillColor = Color.DimGray;
             btnCargaMasiva.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnCargaMasiva.ForeColor = Color.White;
-            btnCargaMasiva.Location = new Point(830, 69);
+            btnCargaMasiva.Location = new Point(776, 87);
             btnCargaMasiva.Name = "btnCargaMasiva";
-            btnCargaMasiva.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btnCargaMasiva.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnCargaMasiva.Size = new Size(169, 43);
             btnCargaMasiva.TabIndex = 29;
             btnCargaMasiva.Text = "Carga Masiva";
@@ -226,7 +188,7 @@
             // btnGuardar
             // 
             btnGuardar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnGuardar.CustomizableEdges = customizableEdges9;
+            btnGuardar.CustomizableEdges = customizableEdges7;
             btnGuardar.DisabledState.BorderColor = Color.DarkGray;
             btnGuardar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnGuardar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -234,9 +196,9 @@
             btnGuardar.FillColor = Color.DimGray;
             btnGuardar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnGuardar.ForeColor = Color.White;
-            btnGuardar.Location = new Point(830, 118);
+            btnGuardar.Location = new Point(776, 136);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            btnGuardar.ShadowDecoration.CustomizableEdges = customizableEdges8;
             btnGuardar.Size = new Size(169, 43);
             btnGuardar.TabIndex = 25;
             btnGuardar.Text = "Guardar";
@@ -252,7 +214,6 @@
             lblMatricula.Size = new Size(132, 25);
             lblMatricula.TabIndex = 23;
             lblMatricula.Text = "Matrícula: ";
-            lblMatricula.Click += lblMatricula_Click;
             // 
             // btnCancelar
             // 
@@ -260,7 +221,7 @@
             btnCancelar.BackColor = Color.Black;
             btnCancelar.CustomBorderColor = Color.Black;
             btnCancelar.CustomBorderThickness = new Padding(1);
-            btnCancelar.CustomizableEdges = customizableEdges11;
+            btnCancelar.CustomizableEdges = customizableEdges9;
             btnCancelar.DisabledState.BorderColor = Color.DarkGray;
             btnCancelar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnCancelar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -268,9 +229,9 @@
             btnCancelar.FillColor = Color.White;
             btnCancelar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnCancelar.ForeColor = Color.Black;
-            btnCancelar.Location = new Point(830, 170);
+            btnCancelar.Location = new Point(776, 188);
             btnCancelar.Name = "btnCancelar";
-            btnCancelar.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            btnCancelar.ShadowDecoration.CustomizableEdges = customizableEdges10;
             btnCancelar.Size = new Size(169, 43);
             btnCancelar.TabIndex = 22;
             btnCancelar.Text = "Cancelar";
@@ -281,17 +242,17 @@
             dtpFechaIngreso.Anchor = AnchorStyles.Left;
             dtpFechaIngreso.BackColor = Color.Transparent;
             dtpFechaIngreso.Checked = true;
-            dtpFechaIngreso.CustomizableEdges = customizableEdges13;
+            dtpFechaIngreso.CustomizableEdges = customizableEdges11;
             dtpFechaIngreso.FillColor = Color.White;
             dtpFechaIngreso.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dtpFechaIngreso.Format = DateTimePickerFormat.Short;
             dtpFechaIngreso.ImeMode = ImeMode.NoControl;
-            dtpFechaIngreso.Location = new Point(220, 301);
+            dtpFechaIngreso.Location = new Point(447, 298);
             dtpFechaIngreso.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
             dtpFechaIngreso.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
             dtpFechaIngreso.Name = "dtpFechaIngreso";
             dtpFechaIngreso.RightToLeft = RightToLeft.No;
-            dtpFechaIngreso.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            dtpFechaIngreso.ShadowDecoration.CustomizableEdges = customizableEdges12;
             dtpFechaIngreso.Size = new Size(121, 31);
             dtpFechaIngreso.TabIndex = 5;
             dtpFechaIngreso.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
@@ -312,7 +273,7 @@
             lblFechaIngreso.Anchor = AnchorStyles.Left;
             lblFechaIngreso.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
             lblFechaIngreso.ForeColor = Color.Black;
-            lblFechaIngreso.Location = new Point(56, 307);
+            lblFechaIngreso.Location = new Point(283, 304);
             lblFechaIngreso.Name = "lblFechaIngreso";
             lblFechaIngreso.Size = new Size(185, 25);
             lblFechaIngreso.TabIndex = 7;
@@ -388,7 +349,6 @@
         private Label lblFechaIngreso;
         private Label lblPuesto;
         private Label lblDepartamento;
-        private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaBaja;
         private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaIngreso;
         private Guna.UI2.WinForms.Guna2Button btnCancelar;
         private Label lblMatricula;
@@ -401,6 +361,5 @@
         private Guna.UI2.WinForms.Guna2PictureBox ptbInfoMatricula;
         private ToolTip InfoMatricula;
         public Guna.UI2.WinForms.Guna2TextBox txtMatricula;
-        private Label lblFechaBaja;
     }
 }

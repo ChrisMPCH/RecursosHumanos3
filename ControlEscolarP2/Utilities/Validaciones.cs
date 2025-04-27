@@ -59,12 +59,6 @@ namespace RecursosHumanos.Utilities
             DateTime fechaConvertida;
             return DateTime.TryParse(fecha, out fechaConvertida);
         }
-        public static bool EsAlfanumericoValido(string valor)
-        {
-            string patron = @"^[a-zA-Z0-9]+$";
-            return Regex.IsMatch(valor, patron);
-        }
-
 
     }
 }

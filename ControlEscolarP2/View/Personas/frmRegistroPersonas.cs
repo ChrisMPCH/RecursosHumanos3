@@ -10,12 +10,16 @@ using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using Guna.UI2.WinForms.Suite;
 using RecursosHumanos.Bussines;
+using RecursosHumanos.Data;
+using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
+using RecursosHumanos.Controller;
 
 namespace RecursosHumanos.View
 {
     public partial class frmRegistroPersonas : Form
     {
+        public static int IdPersonaRegistrada { get; set; } = -1;//para usarlo en usuarios xd
 
         public frmRegistroPersonas()
         {
@@ -56,11 +60,7 @@ namespace RecursosHumanos.View
 
         private void btnRegistrarUsuario_Click(object sender, EventArgs e)
         {
-            if (GenerarPersona())
-            {
-                MessageBox.Show("Datos de persona capturados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                DesbloquearCampos(false);
-            }
+            GenerarPersona();
         }
 
         public static void DesbloquearCampos(bool accion)
@@ -78,15 +78,85 @@ namespace RecursosHumanos.View
 
         public static bool GenerarPersona()
         {
-            if (!DatosVaciosPersona())
+            try
             {
+                if (!DatosVaciosPersona())
+                {
+                    return false;
+                }
+                if (!DatosCorrectosPersona())
+                {
+                    return false;
+                }
+                
+                Persona persona = new Persona
+                {
+                    Nombre = txtNombre.Text.Trim(),
+                    Ap_Paterno = txtPaterno.Text.Trim(),
+                    Ap_Materno = txtMaterno.Text.Trim(),
+                    RFC = txtRFC.Text.Trim(),
+                    CURP = txtCURP.Text.Trim(),
+                    Direccion = txtDireccion.Text.Trim(),
+                    Telefono = txtTelefono.Text.Trim(),
+                    Email = txtCorreo.Text.Trim(),
+                    Fecha_Nacimiento = dtpFechaNacimiento.Value,
+                    Genero = cbGenero.Text,
+                    Estatus = 1
+                };
+
+                PersonasController personasController = new PersonasController();
+                var(exito, mensaje, idPersona) = personasController.RegistrarPersona(persona);
+                //Verificar el resultado
+                if (idPersona > 0)
+                {
+                    MessageBox.Show(mensaje, "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DesbloquearCampos(false); 
+                    MDIRecursosHumanos.BloquearBotonesMenu();
+                    IdPersonaRegistrada = idPersona;
+                }
+                else
+                {
+                    //Mostrar mensaje de error devuelto por el controlador
+                    MessageBox.Show(mensaje, "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    //Enfocar el campo apropiado basado en el codigo de error
+                    switch (idPersona)
+                    {
+                        case -1: // Error genérico
+                            MessageBox.Show("Ocurrió un error al registrar la persona. Intente nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
+                        case -2: // CURP duplicado
+                            MessageBox.Show("El CURP ingresado ya está registrado. Verifique la información.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            txtCURP.Focus();
+                            txtCURP.SelectAll();
+                            break;
+                        case -3: // RFC duplicado
+                            MessageBox.Show("El RFC ingresado ya está registrado. Verifique la información.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            txtRFC.Focus();
+                            txtRFC.SelectAll();
+                            break;
+                        case -4: // Teléfono duplicado
+                            MessageBox.Show("El número de teléfono ingresado ya está registrado. Verifique la información.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            txtTelefono.Focus();
+                            txtTelefono.SelectAll();
+                            break;
+                        case -5: // Correo duplicado
+                            MessageBox.Show("El correo electrónico ingresado ya está registrado. Verifique la información.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            txtCorreo.Focus();
+                            txtCorreo.SelectAll();
+                            break;
+                        default: // Otros errores no especificados
+                            MessageBox.Show("Ocurrió un error desconocido. Código de error: " + idPersona, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error inesperado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            if (!DatosCorrectosPersona())
-            {
-                return false;
-            }
-            return true;
         }
 
         public static bool DatosVaciosPersona()
@@ -187,7 +257,26 @@ namespace RecursosHumanos.View
 
         private void btnPersonaCancelar_Click(object sender, EventArgs e)
         {
+            if (IdPersonaRegistrada == -1)
+            {
+                InicializarCampos();
+                return;
+            }
+            PersonasController personasController = new PersonasController();
+            var exito = personasController.CancelarRegistroPersona(IdPersonaRegistrada);
+            if (!exito)
+            {
+                MessageBox.Show("No se canceló el registro, no se pudo eliminar la persona.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            IdPersonaRegistrada = -1;
+            MessageBox.Show("Se canceló el registro y se eliminó la persona.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             DesbloquearCampos(true);
+            InicializarCampos();
+            MDIRecursosHumanos.DesbloquearBotonesMenu();
         }
+
+        //--------------------------------------------------------------------------------Creacion de Persona
+
     }
 }

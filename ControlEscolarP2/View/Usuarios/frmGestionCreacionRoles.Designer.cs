@@ -40,10 +40,12 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
@@ -51,9 +53,9 @@
             separador1 = new Guna.UI2.WinForms.Guna2Separator();
             lblFechaNacimiento = new Label();
             dtpFechaIngreso = new Guna.UI2.WinForms.Guna2DateTimePicker();
-            lblRol = new Label();
+            lblRolCodigo = new Label();
             btnBuscar = new Guna.UI2.WinForms.Guna2Button();
-            txtRol = new Guna.UI2.WinForms.Guna2TextBox();
+            txtRolCodigo = new Guna.UI2.WinForms.Guna2TextBox();
             lblDescripcion = new Label();
             txtDescripcion = new Guna.UI2.WinForms.Guna2TextBox();
             lblInfo = new Label();
@@ -61,6 +63,8 @@
             btnGuardar = new Guna.UI2.WinForms.Guna2Button();
             btnCancelar = new Guna.UI2.WinForms.Guna2Button();
             pnlInfoUsuario = new Guna.UI2.WinForms.Guna2GradientPanel();
+            txtRolNombre = new Guna.UI2.WinForms.Guna2TextBox();
+            lblRolNombre = new Label();
             pnlTabla = new Guna.UI2.WinForms.Guna2Panel();
             dataGridPermisos = new Guna.UI2.WinForms.Guna2DataGridView();
             pnlInfoUsuario.SuspendLayout();
@@ -84,7 +88,7 @@
             // separador1
             // 
             separador1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            separador1.Location = new Point(10, 130);
+            separador1.Location = new Point(10, 181);
             separador1.Name = "separador1";
             separador1.Size = new Size(989, 10);
             separador1.TabIndex = 3;
@@ -120,16 +124,16 @@
             dtpFechaIngreso.TabIndex = 5;
             dtpFechaIngreso.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
             // 
-            // lblRol
+            // lblRolCodigo
             // 
-            lblRol.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lblRol.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblRol.ForeColor = Color.Black;
-            lblRol.Location = new Point(13, 59);
-            lblRol.Name = "lblRol";
-            lblRol.Size = new Size(163, 27);
-            lblRol.TabIndex = 48;
-            lblRol.Text = "Codigo:";
+            lblRolCodigo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblRolCodigo.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            lblRolCodigo.ForeColor = Color.Black;
+            lblRolCodigo.Location = new Point(10, 100);
+            lblRolCodigo.Name = "lblRolCodigo";
+            lblRolCodigo.Size = new Size(163, 27);
+            lblRolCodigo.TabIndex = 48;
+            lblRolCodigo.Text = "Codigo:";
             // 
             // btnBuscar
             // 
@@ -150,37 +154,37 @@
             btnBuscar.TabIndex = 51;
             btnBuscar.Text = "Buscar";
             // 
-            // txtRol
+            // txtRolCodigo
             // 
-            txtRol.Animated = true;
-            txtRol.BorderRadius = 5;
-            txtRol.CustomizableEdges = customizableEdges5;
-            txtRol.DefaultText = "Ingrese codigo del Rol";
-            txtRol.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtRol.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtRol.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtRol.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtRol.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtRol.Font = new Font("Segoe UI", 9.75F);
-            txtRol.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtRol.Location = new Point(201, 50);
-            txtRol.Margin = new Padding(3, 4, 3, 4);
-            txtRol.MaxLength = 20;
-            txtRol.Name = "txtRol";
-            txtRol.PlaceholderText = "";
-            txtRol.SelectedText = "";
-            txtRol.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            txtRol.Size = new Size(272, 36);
-            txtRol.TabIndex = 40;
+            txtRolCodigo.Animated = true;
+            txtRolCodigo.BorderRadius = 5;
+            txtRolCodigo.CustomizableEdges = customizableEdges5;
+            txtRolCodigo.DefaultText = "Ingrese codigo del Rol";
+            txtRolCodigo.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtRolCodigo.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtRolCodigo.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtRolCodigo.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtRolCodigo.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtRolCodigo.Font = new Font("Segoe UI", 9.75F);
+            txtRolCodigo.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtRolCodigo.Location = new Point(198, 91);
+            txtRolCodigo.Margin = new Padding(3, 4, 3, 4);
+            txtRolCodigo.MaxLength = 20;
+            txtRolCodigo.Name = "txtRolCodigo";
+            txtRolCodigo.PlaceholderText = "";
+            txtRolCodigo.SelectedText = "";
+            txtRolCodigo.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            txtRolCodigo.Size = new Size(272, 36);
+            txtRolCodigo.TabIndex = 40;
             // 
             // lblDescripcion
             // 
             lblDescripcion.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblDescripcion.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
             lblDescripcion.ForeColor = Color.Black;
-            lblDescripcion.Location = new Point(12, 100);
+            lblDescripcion.Location = new Point(9, 141);
             lblDescripcion.Name = "lblDescripcion";
-            lblDescripcion.Size = new Size(145, 27);
+            lblDescripcion.Size = new Size(164, 27);
             lblDescripcion.TabIndex = 54;
             lblDescripcion.Text = "Descripción:";
             // 
@@ -197,7 +201,7 @@
             txtDescripcion.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtDescripcion.Font = new Font("Segoe UI", 9.75F);
             txtDescripcion.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtDescripcion.Location = new Point(201, 94);
+            txtDescripcion.Location = new Point(198, 135);
             txtDescripcion.Margin = new Padding(3, 4, 3, 4);
             txtDescripcion.MaxLength = 100;
             txtDescripcion.Name = "txtDescripcion";
@@ -224,7 +228,7 @@
             lblInfPermisos.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblInfPermisos.Font = new Font("Century Gothic", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblInfPermisos.ForeColor = Color.DimGray;
-            lblInfPermisos.Location = new Point(12, 154);
+            lblInfPermisos.Location = new Point(12, 205);
             lblInfPermisos.Name = "lblInfPermisos";
             lblInfPermisos.Size = new Size(427, 37);
             lblInfPermisos.TabIndex = 57;
@@ -276,6 +280,8 @@
             // pnlInfoUsuario
             // 
             pnlInfoUsuario.BackColor = Color.White;
+            pnlInfoUsuario.Controls.Add(txtRolNombre);
+            pnlInfoUsuario.Controls.Add(lblRolNombre);
             pnlInfoUsuario.Controls.Add(pnlTabla);
             pnlInfoUsuario.Controls.Add(btnCancelar);
             pnlInfoUsuario.Controls.Add(btnGuardar);
@@ -283,33 +289,67 @@
             pnlInfoUsuario.Controls.Add(lblInfo);
             pnlInfoUsuario.Controls.Add(txtDescripcion);
             pnlInfoUsuario.Controls.Add(lblDescripcion);
-            pnlInfoUsuario.Controls.Add(txtRol);
+            pnlInfoUsuario.Controls.Add(txtRolCodigo);
             pnlInfoUsuario.Controls.Add(btnBuscar);
-            pnlInfoUsuario.Controls.Add(lblRol);
+            pnlInfoUsuario.Controls.Add(lblRolCodigo);
             pnlInfoUsuario.Controls.Add(dtpFechaIngreso);
             pnlInfoUsuario.Controls.Add(lblFechaNacimiento);
             pnlInfoUsuario.Controls.Add(separador1);
-            pnlInfoUsuario.CustomizableEdges = customizableEdges15;
+            pnlInfoUsuario.CustomizableEdges = customizableEdges17;
             pnlInfoUsuario.Dock = DockStyle.Fill;
             pnlInfoUsuario.Font = new Font("Microsoft Sans Serif", 8.25F);
             pnlInfoUsuario.Location = new Point(0, 64);
             pnlInfoUsuario.Name = "pnlInfoUsuario";
-            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges18;
             pnlInfoUsuario.Size = new Size(1011, 739);
             pnlInfoUsuario.TabIndex = 28;
+            // 
+            // txtRolNombre
+            // 
+            txtRolNombre.Animated = true;
+            txtRolNombre.BorderRadius = 5;
+            txtRolNombre.CustomizableEdges = customizableEdges13;
+            txtRolNombre.DefaultText = "Ingrese nombre del Rol";
+            txtRolNombre.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtRolNombre.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtRolNombre.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtRolNombre.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtRolNombre.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtRolNombre.Font = new Font("Segoe UI", 9.75F);
+            txtRolNombre.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtRolNombre.Location = new Point(198, 47);
+            txtRolNombre.Margin = new Padding(3, 4, 3, 4);
+            txtRolNombre.MaxLength = 20;
+            txtRolNombre.Name = "txtRolNombre";
+            txtRolNombre.PlaceholderText = "";
+            txtRolNombre.SelectedText = "";
+            txtRolNombre.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            txtRolNombre.Size = new Size(272, 36);
+            txtRolNombre.TabIndex = 61;
+            // 
+            // lblRolNombre
+            // 
+            lblRolNombre.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblRolNombre.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            lblRolNombre.ForeColor = Color.Black;
+            lblRolNombre.Location = new Point(10, 56);
+            lblRolNombre.Name = "lblRolNombre";
+            lblRolNombre.Size = new Size(163, 27);
+            lblRolNombre.TabIndex = 62;
+            lblRolNombre.Text = "Nombre:";
             // 
             // pnlTabla
             // 
             pnlTabla.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlTabla.Controls.Add(dataGridPermisos);
-            pnlTabla.CustomizableEdges = customizableEdges13;
-            pnlTabla.Location = new Point(13, 194);
+            pnlTabla.CustomizableEdges = customizableEdges15;
+            pnlTabla.Location = new Point(13, 245);
             pnlTabla.Name = "pnlTabla";
-            pnlTabla.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            pnlTabla.Size = new Size(985, 517);
+            pnlTabla.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            pnlTabla.Size = new Size(981, 482);
             pnlTabla.TabIndex = 60;
             // 
-            // dataGridRoles
+            // dataGridPermisos
             // 
             dataGridPermisos.AllowUserToAddRows = false;
             dataGridPermisos.AllowUserToDeleteRows = false;
@@ -335,10 +375,10 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             dataGridPermisos.DefaultCellStyle = dataGridViewCellStyle3;
             dataGridPermisos.GridColor = Color.FromArgb(231, 229, 255);
-            dataGridPermisos.Location = new Point(0, 2);
-            dataGridPermisos.Name = "dataGridRoles";
+            dataGridPermisos.Location = new Point(-1, 3);
+            dataGridPermisos.Name = "dataGridPermisos";
             dataGridPermisos.RowHeadersVisible = false;
-            dataGridPermisos.Size = new Size(985, 517);
+            dataGridPermisos.Size = new Size(981, 482);
             dataGridPermisos.TabIndex = 0;
             dataGridPermisos.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             dataGridPermisos.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -383,9 +423,9 @@
         private Guna.UI2.WinForms.Guna2Separator separador1;
         private Label lblFechaNacimiento;
         private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaIngreso;
-        private Label lblRol;
+        private Label lblRolCodigo;
         private Guna.UI2.WinForms.Guna2Button btnBuscar;
-        private Guna.UI2.WinForms.Guna2TextBox txtRol;
+        private Guna.UI2.WinForms.Guna2TextBox txtRolCodigo;
         private Label lblDescripcion;
         private Guna.UI2.WinForms.Guna2TextBox txtDescripcion;
         private Label lblInfo;
@@ -395,5 +435,7 @@
         private Guna.UI2.WinForms.Guna2GradientPanel pnlInfoUsuario;
         private Guna.UI2.WinForms.Guna2Panel pnlTabla;
         private Guna.UI2.WinForms.Guna2DataGridView dataGridPermisos;
+        private Guna.UI2.WinForms.Guna2TextBox txtRolNombre;
+        private Label lblRolNombre;
     }
 }
