@@ -1,4 +1,4 @@
-﻿namespace RecursosHumanos.View
+namespace RecursosHumanos.View
 {
     partial class frmAgregarPuesto
     {
