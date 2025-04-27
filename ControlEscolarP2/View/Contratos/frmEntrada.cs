@@ -26,10 +26,9 @@ namespace RecursosHumanos.View
 
         }
 
-        public static void InicializarCampos()
+        public void InicializarCampos()
         {
             Formas.ConfigurarTextBox(txtMatricula1, "Ingresa tu matricula");
-
         }
 
         private bool HoraEntrada()
@@ -91,6 +90,11 @@ namespace RecursosHumanos.View
         }
 
         private void pnlDatos_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void txtMatricula1_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -128,9 +128,9 @@ namespace RecursosHumanos.View
         }
         private bool GuardarEmpleado()
         {
-            if (!frmRegistroPersonas.GenerarPersona())
+            if (frmRegistroPersonas.IdPersonaRegistrada <= 0)
             {
-                MessageBox.Show("Faltan los datos de la persona.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Primero debe registrar a una persona.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
@@ -149,22 +149,23 @@ namespace RecursosHumanos.View
             {
                 Empleado nuevoEmpleado = new Empleado
                 {
-                    //DatosPersonales = frmRegistroPersonas.PersonaGenerada, // cuando se genere una persona
+                    Id_Persona = frmRegistroPersonas.IdPersonaRegistrada, // usar la persona registrada
                     Matricula = txtMatricula.Text.Trim(),
                     Fecha_Ingreso = dtpFechaIngreso.Value,
                     Fecha_Baja = null,
                     Id_Departamento = Convert.ToInt32(cbxDepartamento.SelectedValue),
                     Id_Puesto = Convert.ToInt32(cbxPuesto.SelectedValue),
-                    Motivo = null,
                     Estatus = Convert.ToInt16(cbxEstatus.SelectedValue)
+
                 };
 
-                var controlador = new EmpleadosController();
-                var (exito, idEmpleado, mensaje) = controlador.RegistrarEmpleado(nuevoEmpleado);
+                EmpleadosController empleadosController = new EmpleadosController();
+                var (exito, idEmpleado, mensaje) = empleadosController.RegistrarEmpleado(nuevoEmpleado);
+
 
                 if (!exito)
                 {
-                    MessageBox.Show(mensaje, "Error al registrar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(mensaje, "Error al guardar", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
 
@@ -172,10 +173,11 @@ namespace RecursosHumanos.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error inesperado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error inesperado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
+
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {

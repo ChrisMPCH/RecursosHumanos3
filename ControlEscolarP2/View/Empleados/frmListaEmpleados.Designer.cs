@@ -98,7 +98,7 @@
             // separador1
             // 
             separador1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            separador1.Location = new Point(26, 128);
+            separador1.Location = new Point(12, 134);
             separador1.Name = "separador1";
             separador1.Size = new Size(971, 10);
             separador1.TabIndex = 3;
@@ -378,7 +378,7 @@
             lblNombre.ForeColor = Color.Black;
             lblNombre.Location = new Point(14, 98);
             lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(105, 27);
+            lblNombre.Size = new Size(107, 27);
             lblNombre.TabIndex = 59;
             lblNombre.Text = "Nombre:";
             // 
@@ -395,7 +395,7 @@
             txtNombre.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtNombre.Font = new Font("Segoe UI", 9.75F);
             txtNombre.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtNombre.Location = new Point(115, 94);
+            txtNombre.Location = new Point(127, 97);
             txtNombre.MaxLength = 20;
             txtNombre.Name = "txtNombre";
             txtNombre.PlaceholderText = "";
