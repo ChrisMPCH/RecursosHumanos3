@@ -189,6 +189,9 @@ namespace RecursosHumanos.View
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            InicializarCampos();
+            MDIRecursosHumanos.DesbloquearBotonesMenu();
+
             Form frmGuardarInf = new frmGuardarInformacion();
             Formas.abrirPanelForm(frmGuardarInf, frmRegistroPersonas.pnlCambiante);
         }
