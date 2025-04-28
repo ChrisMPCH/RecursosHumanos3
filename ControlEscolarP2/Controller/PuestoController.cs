@@ -68,6 +68,7 @@ namespace RecursosHumanos.Controller
             }
         }
 
+
         public (bool exito, string mensaje) ActualizarPuesto(Puesto puesto)
         {
             try

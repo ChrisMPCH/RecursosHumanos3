@@ -12,11 +12,15 @@ using RecursosHumanos.Bussines;
 using RecursosHumanos.Controller;
 using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
+using RecursosHumanos.Data;
+using RecursosHumanos.Models;
 
 namespace RecursosHumanos.View
 {
     public partial class frmRegistroEmpleado : Form
     {
+        private DepartamentoDataAccess _departamentoDataAccess = new DepartamentoDataAccess();
+        private PuestoDataAccess _puestoDataAccess = new PuestoDataAccess();
         public frmRegistroEmpleado()
         {
             InitializeComponent();
@@ -57,42 +61,68 @@ namespace RecursosHumanos.View
             cbxEstatus.SelectedIndex = 1;
         }
 
+        // Método para poblar el ComboBox de Departamentos
         private void PoblaComboDepartamento()
         {
-            //Crear un diccionario con los valores
-            Dictionary<int, string> list_departamentos = new Dictionary<int, string>
+            // Crear un diccionario para almacenar los departamentos obtenidos de la base de datos
+            Dictionary<int, string> list_departamentos = new Dictionary<int, string>();
+
+            // Obtener los departamentos desde la base de datos
+            List<Departamento> departamentos = _departamentoDataAccess.ObtenerTodosLosDepartamentos();
+
+            // Rellenar el diccionario con los resultados de la base de datos
+            foreach (var departamento in departamentos)
             {
-                { 1, "Departamento 1" },
-                { 2, "Departamento 2" },
-                { 3, "Departamento 3" }
-            };
+                list_departamentos.Add(departamento.IdDepartamento, departamento.NombreDepartamento);
+            }
 
-            //Asignar los valores al comboBox
-            cbxDepartamento.DataSource = new BindingSource(list_departamentos, null);
-            cbxDepartamento.DisplayMember = "Value"; //lo que se mestra
-            cbxDepartamento.ValueMember = "Key"; //lo que se guarda como SelectedValue
-
-            cbxDepartamento.SelectedIndex = 1;
-
+            // Verificar si existen departamentos antes de continuar
+            if (list_departamentos.Count > 0)
+            {
+                // Asignar los valores al ComboBox
+                cbxDepartamento.DataSource = new BindingSource(list_departamentos, null);
+                cbxDepartamento.DisplayMember = "Value"; // Lo que se muestra
+                cbxDepartamento.ValueMember = "Key"; // Lo que se guarda como SelectedValue
+                cbxDepartamento.SelectedIndex = 0; // Seleccionar el primer elemento
+            }
+            else
+            {
+                MessageBox.Show("No se encontraron departamentos.");
+                // Puedes deshabilitar el ComboBox si no hay departamentos
+                cbxDepartamento.Enabled = false;
+            }
         }
 
+        // Método para poblar el ComboBox de Puestos
         private void PoblaComboPuesto()
         {
-            //Crear un diccionario con los valores
-            Dictionary<int, string> list_puestos = new Dictionary<int, string>
+            // Crear un diccionario para almacenar los puestos obtenidos de la base de datos
+            Dictionary<int, string> list_puestos = new Dictionary<int, string>();
+
+            // Obtener los puestos desde la base de datos
+            List<Puesto> puestos = _puestoDataAccess.ObtenerTodosLosPuestos(); // Suponiendo que tienes un método similar para obtener puestos
+
+            // Rellenar el diccionario con los resultados de la base de datos
+            foreach (var puesto in puestos)
             {
-                { 1, "Puesto 1" },
-                { 2, "Puesto 2" },
-                { 3, "Puesto 3" }
-            };
+                list_puestos.Add(puesto.IdPuesto, puesto.NombrePuesto);
+            }
 
-            //Asignar los valores al comboBox
-            cbxPuesto.DataSource = new BindingSource(list_puestos, null);
-            cbxPuesto.DisplayMember = "Value"; //lo que se mestra
-            cbxPuesto.ValueMember = "Key"; //lo que se guarda como SelectedValue
-
-            cbxPuesto.SelectedIndex = 1;
-
+            // Verificar si existen puestos antes de continuar
+            if (list_puestos.Count > 0)
+            {
+                // Asignar los valores al ComboBox
+                cbxPuesto.DataSource = new BindingSource(list_puestos, null);
+                cbxPuesto.DisplayMember = "Value"; // Lo que se muestra
+                cbxPuesto.ValueMember = "Key"; // Lo que se guarda como SelectedValue
+                cbxPuesto.SelectedIndex = 0; // Seleccionar el primer elemento
+            }
+            else
+            {
+                MessageBox.Show("No se encontraron puestos.");
+                // Puedes deshabilitar el ComboBox si no hay puestos
+                cbxPuesto.Enabled = false;
+            }
         }
 
         private bool DatosValidos()
@@ -121,11 +151,23 @@ namespace RecursosHumanos.View
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (GuardarEmpleado())
+            if (GuardarEmpleado())  // Si el guardado es exitoso
             {
-                MessageBox.Show("Datos guardados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Empleado guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Llamar al método que desbloquea el menú desde el formulario principal (MDI)
+                MDIRecursosHumanos.DesbloquearBotonesMenu();
+
+                // Cerrar el formulario actual (si lo deseas)
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Hubo un error al guardar al empleado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
         private bool GuardarEmpleado()
         {
             if (frmRegistroPersonas.IdPersonaRegistrada <= 0)

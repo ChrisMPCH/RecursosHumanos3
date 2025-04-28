@@ -105,8 +105,7 @@ namespace RecursosHumanos.View
             if (idDepartamento > 0)
             {
                 MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                MDIRecursosHumanos mid = new MDIRecursosHumanos();
-                mid.BloquearBotonesMenu();
+                MDIRecursosHumanos.BloquearBotonesMenu();
                 InicializarCampos();
                 DesbloquearCampos(true);
                 Form frmGuardarInf = new frmGuardarInformacion();

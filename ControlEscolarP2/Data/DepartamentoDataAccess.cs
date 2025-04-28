@@ -10,13 +10,14 @@ using RecursosHumanos.Model;
 using RecursosHumanos.Models;
 using RecursosHumanos.Utilities;
 
+
 namespace RecursosHumanos.Data
 {
     public class DepartamentoDataAccess
     {
         private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Data.DepartamentoDataAccess");
         private readonly PostgreSQLDataAccess _dbAccess = null;
-
+        
         public DepartamentoDataAccess()
         {
             try
