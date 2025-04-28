@@ -108,7 +108,7 @@ namespace RecursosHumanos.Data
                 // Crear los parámetros para la inserción en la tabla "empleado"
                 var parametrosEmpleado = new[]
                 {
-                    _dbAccess.CreateParameter("@IdPersona", empleado.DatosPersonales.Id_Persona),
+                    _dbAccess.CreateParameter("@IdPersona", empleado.Id_Persona),
                     _dbAccess.CreateParameter("@FechaIngreso", empleado.Fecha_Ingreso),
                     _dbAccess.CreateParameter("@FechaBaja", empleado.Fecha_Baja.HasValue ? (object)empleado.Fecha_Baja.Value : DBNull.Value), // Permitir NULL si no tiene fecha de baja
                     _dbAccess.CreateParameter("@IdDepartamento", empleado.Id_Departamento),

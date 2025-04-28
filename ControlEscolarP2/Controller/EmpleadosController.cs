@@ -33,16 +33,6 @@ namespace RecursosHumanos.Controller
                     return (false, "La matrícula ya existe.");
                 }
 
-                // Insertar primero la persona asociada al empleado
-                int idPersona = _personasAccess.InsertarPersona(empleado.DatosPersonales);
-                if (idPersona <= 0)
-                {
-                    return (false, "Error al insertar la persona asociada.");
-                }
-
-                // Asignar el ID de la persona al empleado
-                empleado.DatosPersonales.Id_Persona = idPersona;
-
                 // Insertar el empleado con la persona asociada
                 int idGenerado = _empleadosAccess.InsertarEmpleado(empleado);
                 return idGenerado > 0

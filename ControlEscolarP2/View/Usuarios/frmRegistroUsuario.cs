@@ -154,17 +154,19 @@ namespace RecursosHumanos.View
 
         private void btnCancelar_Click_1(object sender, EventArgs e)
         {
-            PersonasController personasController = new PersonasController();
-            var exito = personasController.CancelarRegistroPersona(frmRegistroPersonas.IdPersonaRegistrada);
-            if (!exito)
+            if (frmRegistroPersonas.IdPersonaRegistrada > 0)
             {
-                MessageBox.Show("No se canceló el registro, no se pudo eliminar la persona.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                PersonasController personasController = new PersonasController();
+                var exito = personasController.CancelarRegistroPersona(frmRegistroPersonas.IdPersonaRegistrada);
+                if (!exito)
+                {
+                    MessageBox.Show("No se canceló el registro, no se pudo eliminar la persona.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                frmRegistroPersonas.IdPersonaRegistrada = 0;
+                frmRegistroPersonas.DesbloquearCampos(true);
+                MessageBox.Show("Se canceló el registro y se eliminó la persona.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            frmRegistroPersonas.IdPersonaRegistrada = 0;
-            frmRegistroPersonas.DesbloquearCampos(true);
-            MessageBox.Show("Se canceló el registro y se eliminó la persona.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
             InicializarCampos();
             MDIRecursosHumanos.DesbloquearBotonesMenu();
 
