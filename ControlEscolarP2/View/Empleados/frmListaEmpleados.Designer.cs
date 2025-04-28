@@ -40,20 +40,15 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             lblTitulo = new Label();
             separador1 = new Guna.UI2.WinForms.Guna2Separator();
             lblFechaNacimiento = new Label();
@@ -64,19 +59,14 @@
             guna2ContainerControl1 = new Guna.UI2.WinForms.Guna2ContainerControl();
             pnlTabla = new Guna.UI2.WinForms.Guna2Panel();
             dgvEmpleados = new Guna.UI2.WinForms.Guna2DataGridView();
-            Matricula = new DataGridViewTextBoxColumn();
-            Nombre = new DataGridViewTextBoxColumn();
-            Departamento = new DataGridViewTextBoxColumn();
-            Puesto = new DataGridViewTextBoxColumn();
-            Estatus = new DataGridViewTextBoxColumn();
             pnlInfoUsuario = new Guna.UI2.WinForms.Guna2GradientPanel();
             btnLimpiar = new Guna.UI2.WinForms.Guna2Button();
-            lblNombre = new Label();
-            txtNombre = new Guna.UI2.WinForms.Guna2TextBox();
             cmbEstatus = new Guna.UI2.WinForms.Guna2ComboBox();
             lblEstatus = new Label();
             Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             lblInfo = new Label();
+            txtNombre = new Guna.UI2.WinForms.Guna2TextBox();
+            lblNombre = new Label();
             pnlTabla.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEmpleados).BeginInit();
             pnlInfoUsuario.SuspendLayout();
@@ -210,26 +200,24 @@
             dgvEmpleados.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = Color.White;
             dgvEmpleados.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(100, 88, 255);
             dataGridViewCellStyle2.Font = new Font("Microsoft Sans Serif", 8.25F);
             dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.Padding = new Padding(1);
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dgvEmpleados.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvEmpleados.ColumnHeadersHeight = 15;
             dgvEmpleados.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-            dgvEmpleados.Columns.AddRange(new DataGridViewColumn[] { Matricula, Nombre, Departamento, Puesto, Estatus });
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.White;
-            dataGridViewCellStyle8.Font = new Font("Microsoft Sans Serif", 8.25F);
-            dataGridViewCellStyle8.ForeColor = Color.FromArgb(71, 69, 94);
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(231, 229, 255);
-            dataGridViewCellStyle8.SelectionForeColor = Color.FromArgb(71, 69, 94);
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            dgvEmpleados.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(71, 69, 94);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(231, 229, 255);
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(71, 69, 94);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvEmpleados.DefaultCellStyle = dataGridViewCellStyle3;
             dgvEmpleados.Dock = DockStyle.Fill;
             dgvEmpleados.GridColor = Color.FromArgb(231, 229, 255);
             dgvEmpleados.Location = new Point(0, 0);
@@ -237,7 +225,7 @@
             dgvEmpleados.ReadOnly = true;
             dgvEmpleados.RowHeadersVisible = false;
             dgvEmpleados.Size = new Size(985, 585);
-            dgvEmpleados.TabIndex = 0;
+            dgvEmpleados.TabIndex = 1;
             dgvEmpleados.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             dgvEmpleados.ThemeStyle.AlternatingRowsStyle.Font = null;
             dgvEmpleados.ThemeStyle.AlternatingRowsStyle.ForeColor = Color.Empty;
@@ -259,70 +247,6 @@
             dgvEmpleados.ThemeStyle.RowsStyle.Height = 25;
             dgvEmpleados.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
             dgvEmpleados.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
-            
-            // 
-            // Matricula
-            // 
-            Matricula.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            Matricula.DefaultCellStyle = dataGridViewCellStyle3;
-            Matricula.FillWeight = 63.45178F;
-            Matricula.HeaderText = "Matricula";
-            Matricula.MaxInputLength = 20;
-            Matricula.Name = "Matricula";
-            Matricula.ReadOnly = true;
-            Matricula.Resizable = DataGridViewTriState.True;
-            Matricula.Width = 200;
-            // 
-            // Nombre
-            // 
-            Nombre.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            Nombre.DefaultCellStyle = dataGridViewCellStyle4;
-            Nombre.FillWeight = 182.057571F;
-            Nombre.HeaderText = "Nombre";
-            Nombre.MaxInputLength = 60;
-            Nombre.Name = "Nombre";
-            Nombre.ReadOnly = true;
-            Nombre.Width = 200;
-            // 
-            // Departamento
-            // 
-            Departamento.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            Departamento.DefaultCellStyle = dataGridViewCellStyle5;
-            Departamento.FillWeight = 108.153435F;
-            Departamento.HeaderText = "Departamento";
-            Departamento.MaxInputLength = 50;
-            Departamento.Name = "Departamento";
-            Departamento.ReadOnly = true;
-            Departamento.Resizable = DataGridViewTriState.False;
-            Departamento.Width = 200;
-            // 
-            // Puesto
-            // 
-            Puesto.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            Puesto.DefaultCellStyle = dataGridViewCellStyle6;
-            Puesto.FillWeight = 94.41109F;
-            Puesto.HeaderText = "Puesto";
-            Puesto.MaxInputLength = 100;
-            Puesto.Name = "Puesto";
-            Puesto.ReadOnly = true;
-            Puesto.SortMode = DataGridViewColumnSortMode.Programmatic;
-            Puesto.Width = 200;
-            // 
-            // Estatus
-            // 
-            Estatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            Estatus.DefaultCellStyle = dataGridViewCellStyle7;
-            Estatus.FillWeight = 51.9261055F;
-            Estatus.HeaderText = "Estatus";
-            Estatus.MaxInputLength = 100;
-            Estatus.Name = "Estatus";
-            Estatus.ReadOnly = true;
-            Estatus.Width = 200;
             // 
             // pnlInfoUsuario
             // 
@@ -370,39 +294,6 @@
             btnLimpiar.TabIndex = 61;
             btnLimpiar.Text = "Limpiar";
             btnLimpiar.Click += btnLimpiar_Click;
-            // 
-            // lblNombre
-            // 
-            lblNombre.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lblNombre.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblNombre.ForeColor = Color.Black;
-            lblNombre.Location = new Point(14, 98);
-            lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(107, 27);
-            lblNombre.TabIndex = 59;
-            lblNombre.Text = "Nombre:";
-            // 
-            // txtNombre
-            // 
-            txtNombre.Animated = true;
-            txtNombre.BorderRadius = 5;
-            txtNombre.CustomizableEdges = customizableEdges13;
-            txtNombre.DefaultText = "Ingrese nombre";
-            txtNombre.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtNombre.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtNombre.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtNombre.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtNombre.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtNombre.Font = new Font("Segoe UI", 9.75F);
-            txtNombre.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtNombre.Location = new Point(127, 97);
-            txtNombre.MaxLength = 20;
-            txtNombre.Name = "txtNombre";
-            txtNombre.PlaceholderText = "";
-            txtNombre.SelectedText = "";
-            txtNombre.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            txtNombre.Size = new Size(261, 28);
-            txtNombre.TabIndex = 58;
             // 
             // cmbEstatus
             // 
@@ -453,6 +344,39 @@
             lblInfo.Text = "Filtros";
             lblInfo.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // txtNombre
+            // 
+            txtNombre.Animated = true;
+            txtNombre.BorderRadius = 5;
+            txtNombre.CustomizableEdges = customizableEdges13;
+            txtNombre.DefaultText = "Ingrese nombre";
+            txtNombre.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtNombre.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtNombre.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtNombre.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtNombre.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtNombre.Font = new Font("Segoe UI", 9.75F);
+            txtNombre.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtNombre.Location = new Point(457, 97);
+            txtNombre.MaxLength = 20;
+            txtNombre.Name = "txtNombre";
+            txtNombre.PlaceholderText = "";
+            txtNombre.SelectedText = "";
+            txtNombre.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            txtNombre.Size = new Size(261, 28);
+            txtNombre.TabIndex = 58;
+            // 
+            // lblNombre
+            // 
+            lblNombre.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblNombre.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            lblNombre.ForeColor = Color.Black;
+            lblNombre.Location = new Point(356, 97);
+            lblNombre.Name = "lblNombre";
+            lblNombre.Size = new Size(107, 27);
+            lblNombre.TabIndex = 59;
+            lblNombre.Text = "Nombre:";
+            // 
             // frmListaEmpleados
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -480,19 +404,14 @@
         private Guna.UI2.WinForms.Guna2Button btnBuscar;
         private Guna.UI2.WinForms.Guna2ContainerControl guna2ContainerControl1;
         private Guna.UI2.WinForms.Guna2Panel pnlTabla;
-        private Guna.UI2.WinForms.Guna2DataGridView dgvEmpleados;
         private Guna.UI2.WinForms.Guna2GradientPanel pnlInfoUsuario;
         private Label lblInfo;
-        private DataGridViewTextBoxColumn Matricula;
-        private DataGridViewTextBoxColumn Nombre;
-        private DataGridViewTextBoxColumn Departamento;
-        private DataGridViewTextBoxColumn Puesto;
-        private DataGridViewTextBoxColumn Estatus;
         private Guna.UI2.WinForms.Guna2Separator Separator2;
         private Guna.UI2.WinForms.Guna2ComboBox cmbEstatus;
         private Label lblEstatus;
+        private Guna.UI2.WinForms.Guna2Button btnLimpiar;
+        private Guna.UI2.WinForms.Guna2DataGridView dgvEmpleados;
         private Label lblNombre;
         public Guna.UI2.WinForms.Guna2TextBox txtNombre;
-        private Guna.UI2.WinForms.Guna2Button btnLimpiar;
     }
 }

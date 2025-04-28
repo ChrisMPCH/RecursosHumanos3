@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,17 +25,15 @@ namespace RecursosHumanos.View
             InicializarVentana();
         }
 
-
         private void InicializarVentana()
         {
             PoblaComboDepartamento();
             PoblaComboPuesto();
             PoblaComboEstatus();
-            //fecha de hoy
+            // Fecha de hoy
             dtpFechaIngreso.Value = DateTime.Now;
             InicializarCampos();
         }
-
 
         public void InicializarCampos()
         {
@@ -46,88 +42,69 @@ namespace RecursosHumanos.View
 
         private void PoblaComboEstatus()
         {
-            //Crear un diccionario con los valores
             Dictionary<int, string> list_estatus = new Dictionary<int, string>
             {
                 { 1, "Activo" },
                 { 0, "Inactivo" }
             };
 
-            //Asignar los valores al comboBox
             cbxEstatus.DataSource = new BindingSource(list_estatus, null);
-            cbxEstatus.DisplayMember = "Value"; //lo que se mestra
-            cbxEstatus.ValueMember = "Key"; //lo que se guarda como SelectedValue
+            cbxEstatus.DisplayMember = "Value";
+            cbxEstatus.ValueMember = "Key";
 
             cbxEstatus.SelectedIndex = 1;
         }
 
-        // Método para poblar el ComboBox de Departamentos
         private void PoblaComboDepartamento()
         {
-            // Crear un diccionario para almacenar los departamentos obtenidos de la base de datos
             Dictionary<int, string> list_departamentos = new Dictionary<int, string>();
-
-            // Obtener los departamentos desde la base de datos
             List<Departamento> departamentos = _departamentoDataAccess.ObtenerTodosLosDepartamentos();
 
-            // Rellenar el diccionario con los resultados de la base de datos
             foreach (var departamento in departamentos)
             {
                 list_departamentos.Add(departamento.IdDepartamento, departamento.NombreDepartamento);
             }
 
-            // Verificar si existen departamentos antes de continuar
             if (list_departamentos.Count > 0)
             {
-                // Asignar los valores al ComboBox
                 cbxDepartamento.DataSource = new BindingSource(list_departamentos, null);
-                cbxDepartamento.DisplayMember = "Value"; // Lo que se muestra
-                cbxDepartamento.ValueMember = "Key"; // Lo que se guarda como SelectedValue
-                cbxDepartamento.SelectedIndex = 0; // Seleccionar el primer elemento
+                cbxDepartamento.DisplayMember = "Value";
+                cbxDepartamento.ValueMember = "Key";
+                cbxDepartamento.SelectedIndex = 0;
             }
             else
             {
                 MessageBox.Show("No se encontraron departamentos.");
-                // Puedes deshabilitar el ComboBox si no hay departamentos
                 cbxDepartamento.Enabled = false;
             }
         }
 
-        // Método para poblar el ComboBox de Puestos
         private void PoblaComboPuesto()
         {
-            // Crear un diccionario para almacenar los puestos obtenidos de la base de datos
             Dictionary<int, string> list_puestos = new Dictionary<int, string>();
+            List<Puesto> puestos = _puestoDataAccess.ObtenerTodosLosPuestos();
 
-            // Obtener los puestos desde la base de datos
-            List<Puesto> puestos = _puestoDataAccess.ObtenerTodosLosPuestos(); // Suponiendo que tienes un método similar para obtener puestos
-
-            // Rellenar el diccionario con los resultados de la base de datos
             foreach (var puesto in puestos)
             {
                 list_puestos.Add(puesto.IdPuesto, puesto.NombrePuesto);
             }
 
-            // Verificar si existen puestos antes de continuar
             if (list_puestos.Count > 0)
             {
-                // Asignar los valores al ComboBox
                 cbxPuesto.DataSource = new BindingSource(list_puestos, null);
-                cbxPuesto.DisplayMember = "Value"; // Lo que se muestra
-                cbxPuesto.ValueMember = "Key"; // Lo que se guarda como SelectedValue
-                cbxPuesto.SelectedIndex = 0; // Seleccionar el primer elemento
+                cbxPuesto.DisplayMember = "Value";
+                cbxPuesto.ValueMember = "Key";
+                cbxPuesto.SelectedIndex = 0;
             }
             else
             {
                 MessageBox.Show("No se encontraron puestos.");
-                // Puedes deshabilitar el ComboBox si no hay puestos
                 cbxPuesto.Enabled = false;
             }
         }
 
         private bool DatosValidos()
         {
-
             if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula.Text.Trim()))
             {
                 MessageBox.Show("Matrícula inválida.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -143,10 +120,7 @@ namespace RecursosHumanos.View
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -154,11 +128,7 @@ namespace RecursosHumanos.View
             if (GuardarEmpleado())  // Si el guardado es exitoso
             {
                 MessageBox.Show("Empleado guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Llamar al método que desbloquea el menú desde el formulario principal (MDI)
                 MDIRecursosHumanos.DesbloquearBotonesMenu();
-
-                // Cerrar el formulario actual (si lo deseas)
                 this.Close();
             }
             else
@@ -166,7 +136,6 @@ namespace RecursosHumanos.View
                 MessageBox.Show("Hubo un error al guardar al empleado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
 
         private bool GuardarEmpleado()
         {
@@ -191,19 +160,17 @@ namespace RecursosHumanos.View
             {
                 Empleado nuevoEmpleado = new Empleado
                 {
-                    Id_Persona = frmRegistroPersonas.IdPersonaRegistrada, // usar la persona registrada
+                    Id_Persona = frmRegistroPersonas.IdPersonaRegistrada, // Aquí usamos el ID de la persona registrada
                     Matricula = txtMatricula.Text.Trim(),
                     Fecha_Ingreso = dtpFechaIngreso.Value,
                     Fecha_Baja = null,
                     Id_Departamento = Convert.ToInt32(cbxDepartamento.SelectedValue),
                     Id_Puesto = Convert.ToInt32(cbxPuesto.SelectedValue),
                     Estatus = Convert.ToInt16(cbxEstatus.SelectedValue)
-
                 };
 
                 EmpleadosController empleadosController = new EmpleadosController();
-                var (exito, idEmpleado, mensaje) = empleadosController.RegistrarEmpleado(nuevoEmpleado);
-
+                var (exito, mensaje) = empleadosController.RegistrarEmpleado(nuevoEmpleado);
 
                 if (!exito)
                 {
@@ -220,7 +187,6 @@ namespace RecursosHumanos.View
             }
         }
 
-
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             Form frmGuardarInf = new frmGuardarInformacion();
@@ -232,10 +198,9 @@ namespace RecursosHumanos.View
             ofdArchivo.Title = "Seleccionar archivo de Excel";
             ofdArchivo.Filter = "Archivos de Excel (*.xlsx;*.xls)|*.xlsx;*.xls";
             ofdArchivo.InitialDirectory = "C:\\";//carpeta inicial
-            ofdArchivo.FilterIndex = 1; //selecciona el primer filtro por defecto
-            ofdArchivo.RestoreDirectory = true; //mantiene la ultima ruta utilizada
+            ofdArchivo.FilterIndex = 1;
+            ofdArchivo.RestoreDirectory = true;
 
-            //showdialog espera una respuesta
             if (ofdArchivo.ShowDialog() == DialogResult.OK)
             {
                 string filePath = ofdArchivo.FileName;

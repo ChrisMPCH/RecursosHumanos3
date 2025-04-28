@@ -14,7 +14,7 @@ public class Empleado
 
     // Propiedades adicionales para los detalles
     public Persona DatosPersonales { get; set; }
-    public string NombreCompleto { get; set; }
+    public string Nombre { get; set; }
     public string Departamento { get; set; } // Ahora propiedad pública
     public string Puesto { get; set; } // Ahora propiedad pública
     public string EstatusTexto { get; set; } // Para mostrar "Activo" o "Inactivo"
@@ -26,7 +26,7 @@ public class Empleado
         Fecha_Ingreso = DateTime.Now;
         Estatus = 1;
         DatosPersonales = new Persona();
-        NombreCompleto = string.Empty;
+        Nombre = string.Empty;
         Departamento = string.Empty;
         Puesto = string.Empty;
         EstatusTexto = "Activo"; // Establecer valor predeterminado
@@ -40,21 +40,12 @@ public class Empleado
         Fecha_Ingreso = DateTime.Now;
         Estatus = 1;
         DatosPersonales = datosPersonales;
-        NombreCompleto = $"{datosPersonales.Nombre} {datosPersonales.Ap_Paterno} {datosPersonales.Ap_Materno}";
+
+        // Aquí se asigna el nombre del empleado concatenando los valores de la clase Persona
+        Nombre = $"{datosPersonales.Nombre} {datosPersonales.Ap_Paterno} {datosPersonales.Ap_Materno}";
+
         Departamento = string.Empty;
         Puesto = string.Empty;
         EstatusTexto = "Activo";
-    }
-
-    // Método para obtener el nombre completo del empleado
-    public string ObtenerNombreCompleto()
-    {
-        return $"{DatosPersonales.Nombre} {DatosPersonales.Ap_Paterno} {DatosPersonales.Ap_Materno}";
-    }
-
-    // Método para obtener el texto del estatus (Activo/Inactivo)
-    public string ObtenerEstatusTexto()
-    {
-        return Estatus == 1 ? "Activo" : "Inactivo";
     }
 }
