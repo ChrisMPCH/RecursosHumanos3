@@ -102,7 +102,7 @@ namespace RecursosHumanos.Controller
                 }
 
                 // Luego actualiza los datos del empleado
-                bool empleadoActualizado = _empleadosAccess.ActualizarUsuario(empleado);
+                bool empleadoActualizado = _empleadosAccess.ActualizarEmpleado(empleado);
                 if (!empleadoActualizado)
                 {
                     _logger.Warn($"No se pudo actualizar el empleado con ID {empleado.Id_Empleado}");

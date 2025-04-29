@@ -75,6 +75,7 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges44 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmActualizarEmpleado));
             pnlInfoEsmpleado = new Guna.UI2.WinForms.Guna2GradientPanel();
+            guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             lblGenero = new Label();
             ptbInfoMatricula = new Guna.UI2.WinForms.Guna2PictureBox();
             cbxEstatus = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -116,7 +117,6 @@
             lblRegistroEmpleados = new Label();
             pnlFondo = new Guna.UI2.WinForms.Guna2Panel();
             InfoMatricula = new ToolTip(components);
-            guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             pnlInfoEsmpleado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ptbInfoMatricula).BeginInit();
             SuspendLayout();
@@ -171,6 +171,14 @@
             pnlInfoEsmpleado.ShadowDecoration.CustomizableEdges = customizableEdges42;
             pnlInfoEsmpleado.Size = new Size(1027, 766);
             pnlInfoEsmpleado.TabIndex = 4;
+            // 
+            // guna2Separator2
+            // 
+            guna2Separator2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            guna2Separator2.Location = new Point(8, 116);
+            guna2Separator2.Name = "guna2Separator2";
+            guna2Separator2.Size = new Size(1013, 10);
+            guna2Separator2.TabIndex = 72;
             // 
             // lblGenero
             // 
@@ -803,14 +811,6 @@
             pnlFondo.ShadowDecoration.CustomizableEdges = customizableEdges44;
             pnlFondo.Size = new Size(1027, 767);
             pnlFondo.TabIndex = 24;
-            // 
-            // guna2Separator2
-            // 
-            guna2Separator2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            guna2Separator2.Location = new Point(8, 116);
-            guna2Separator2.Name = "guna2Separator2";
-            guna2Separator2.Size = new Size(1013, 10);
-            guna2Separator2.TabIndex = 72;
             // 
             // frmActualizarEmpleado
             // 

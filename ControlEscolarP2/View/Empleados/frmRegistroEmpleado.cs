@@ -17,8 +17,8 @@ namespace RecursosHumanos.View
 {
     public partial class frmRegistroEmpleado : Form
     {
-        private DepartamentoDataAccess _departamentoDataAccess = new DepartamentoDataAccess();
-        private PuestoDataAccess _puestoDataAccess = new PuestoDataAccess();
+        private DepartamentoController _departamentoController = new DepartamentoController();
+        private PuestoController _puestoController = new PuestoController();
         public frmRegistroEmpleado()
         {
             InitializeComponent();
@@ -58,7 +58,7 @@ namespace RecursosHumanos.View
         private void PoblaComboDepartamento()
         {
             Dictionary<int, string> list_departamentos = new Dictionary<int, string>();
-            List<Departamento> departamentos = _departamentoDataAccess.ObtenerTodosLosDepartamentos();
+            List<Departamento> departamentos = _departamentoController.ObtenerTodosLosDepartamentos();
 
             foreach (var departamento in departamentos)
             {
@@ -82,7 +82,7 @@ namespace RecursosHumanos.View
         private void PoblaComboPuesto()
         {
             Dictionary<int, string> list_puestos = new Dictionary<int, string>();
-            List<Puesto> puestos = _puestoDataAccess.ObtenerTodosLosPuestos();
+            List<Puesto> puestos = _puestoController.ObtenerTodosLosPuestos();
 
             foreach (var puesto in puestos)
             {

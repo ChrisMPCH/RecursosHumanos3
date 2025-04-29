@@ -45,12 +45,29 @@ namespace RecursosHumanos.Data
             try
             {
                 string query = @"
-        SELECT e.id_empleado, e.matricula, p.nombre, d.nombre_departamento, pto.nombre_puesto, e.estatus AS estatus_empleado
-        FROM human_resours.empleado e
-        INNER JOIN human_resours.persona p ON e.id_persona = p.id_persona
-        INNER JOIN human_resours.departamento d ON e.id_departamento = d.id_departamento
-        INNER JOIN human_resours.puesto pto ON e.id_puesto = pto.id_puesto
-        ORDER BY e.id_empleado;
+            SELECT
+              e.id_empleado,
+              e.id_persona,
+              e.fecha_ingreso,
+              e.fecha_baja,
+              e.id_departamento,
+              e.id_puesto,
+              e.matricula,
+              e.motivo,
+              e.estatus,
+              p.nombre,
+              p.ap_paterno,
+              p.ap_materno,
+              d.nombre_departamento,
+              pu.nombre_puesto
+            FROM
+              human_resours.empleado e  
+            INNER JOIN
+              human_resours.persona p ON e.id_persona = p.id_persona
+            INNER JOIN
+              human_resours.departamento d ON e.id_departamento = d.id_departamento
+            INNER JOIN
+              human_resours.puesto pu ON e.id_puesto = pu.id_puesto;
         ";
 
                 _dbAccess.Connect();
@@ -58,16 +75,30 @@ namespace RecursosHumanos.Data
 
                 foreach (DataRow row in resultado.Rows)
                 {
-                    // Crear el objeto empleado con solo los campos necesarios
+                    Persona persona = new Persona
+                    {
+                        Id_Persona = Convert.ToInt32(row["id_persona"]),
+                        Nombre = row["nombre"]?.ToString() ?? "",
+                        Ap_Paterno = row["ap_paterno"]?.ToString() ?? "",
+                        Ap_Materno = row["ap_materno"]?.ToString() ?? ""
+                    };
+
                     Empleado empleado = new Empleado
                     {
                         Id_Empleado = Convert.ToInt32(row["id_empleado"]),
-                        Matricula = row["matricula"].ToString() ?? "",
-                        Estatus = Convert.ToInt16(row["estatus_empleado"]),
-                        // Solo agregamos los campos que queremos mostrar
-                        Nombre = row["nombre"].ToString() ?? "",
-                        Departamento = row["nombre_departamento"].ToString() ?? "",
-                        Puesto = row["nombre_puesto"].ToString() ?? "",
+                        Id_Persona = Convert.ToInt32(row["id_persona"]),
+                        Fecha_Ingreso = Convert.ToDateTime(row["fecha_ingreso"]),
+                        Fecha_Baja = row["fecha_baja"] != DBNull.Value ? Convert.ToDateTime(row["fecha_baja"]) : (DateTime?)null,
+                        Id_Departamento = Convert.ToInt32(row["id_departamento"]),
+                        Id_Puesto = Convert.ToInt32(row["id_puesto"]),
+                        Matricula = row["matricula"]?.ToString() ?? "",
+                        Motivo = row["motivo"]?.ToString() ?? "",
+                        Estatus = Convert.ToInt16(row["estatus"]),
+                        DatosPersonales = persona,
+                        Nombre = $"{persona.Nombre} {persona.Ap_Paterno} {persona.Ap_Materno}",
+                        Departamento = row["nombre_departamento"]?.ToString() ?? "",
+                        Puesto = row["nombre_puesto"]?.ToString() ?? "",
+                        EstatusTexto = Convert.ToInt16(row["estatus"]) == 1 ? "Activo" : "Inactivo"
                     };
 
                     empleados.Add(empleado);
@@ -86,6 +117,7 @@ namespace RecursosHumanos.Data
                 _dbAccess.Disconnect();
             }
         }
+
 
 
         /// <summary>
@@ -143,7 +175,7 @@ namespace RecursosHumanos.Data
         /// </summary>
         /// <param name="empleado">Objeto empleado con los datos actualizados</param>
         /// <returns>True si se actualizó correctamente</returns>
-        public bool ActualizarUsuario(Empleado empleado)
+        public bool ActualizarEmpleado(Empleado empleado)
         {
             try
             {
