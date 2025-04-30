@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
 using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View
@@ -32,14 +33,14 @@ namespace RecursosHumanos.View
 
         private void InicializarCampos()
         {
-            Formas.ConfigurarTextBox(txtDeprtamento, "Ingrese el departamento que desea eliminar");
+            Formas.ConfigurarTextBox(txtIdDepartamento, "Ingrese el departamento que desea eliminar");
         }
 
 
 
         private bool DatosVacios()
         {
-            if (txtDeprtamento.Text == "" || txtDeprtamento.Text == "Ingrese el departamento que desea eliminar")
+            if (txtIdDepartamento.Text == "" || txtIdDepartamento.Text == "Ingrese el departamento que desea eliminar")
             {
                 return true;
             }
@@ -57,58 +58,122 @@ namespace RecursosHumanos.View
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            string nombreDepartamento = txtDeprtamento.Text.Trim(); // Elimina espacios extras
-
-            // Validación 1: Verificar si el usuario ingresó texto
-            if (string.IsNullOrWhiteSpace(nombreDepartamento))
+            if (!BuscarDepartamento())
             {
-                MessageBox.Show("Ingrese un nombre de departamento.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            // Validación 2: Evitar números y caracteres especiales
-            if (!nombreDepartamento.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
-            {
-                MessageBox.Show("El nombre del departamento solo debe contener letras y espacios.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            MessageBox.Show("Departamento validado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            if (EliminarDepartamento())
+            if (!ValidarIdDepartamento())
             {
-                MessageBox.Show("Datos eliminados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DialogResult confirmacion = MessageBox.Show(
+                "¿Estás seguro de que deseas eliminar este departamento? Esto lo marcará como inactivo.",
+                "Confirmar Eliminación",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (confirmacion != DialogResult.Yes)
+            {
+                return;
+            }
+
+            try
+            {
+                DepartamentoController controller = new DepartamentoController();
+                var (exito, mensaje) = controller.EliminarDepartamentoLogico(int.Parse(txtIdDepartamento.Text.Trim()));
+
+                if (exito)
+                {
+                    MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    InicializarCampos();
+                    DesbloquearCampos(false);
+                }
+                else
+                {
+                    MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al eliminar el departamento: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private bool EliminarDepartamento()
+        private bool ValidarIdDepartamento()
         {
-            if (DatosVacios())
+            if (string.IsNullOrWhiteSpace(txtIdDepartamento.Text))
             {
-                MessageBox.Show("Por favor, llene todos los campos.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Ingrese un ID de departamento para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-
-            if (!BuscarDepartamento())
+            if (!int.TryParse(txtIdDepartamento.Text.Trim(), out int id) || id <= 0)
             {
-                MessageBox.Show("No se puede eliminar porque el departamento no existe.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("El ID del departamento debe ser un número entero positivo.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
             return true;
         }
 
+        private void DesbloquearCampos(bool desbloquear)
+        {
+            txtIdDepartamento.Enabled = desbloquear;
+        }
         private bool BuscarDepartamento()
         {
-            if (string.IsNullOrWhiteSpace(txtDeprtamento.Text))
+            if (!DatosVaciosDepartamento())
             {
-                MessageBox.Show("Ingrese un departamento para buscar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
+
+            if (!DatosCorrectosDepartamento())
+            {
+                return false;
+            }
+
+            DepartamentoController controller = new DepartamentoController();
+            var departamento = controller.ObtenerDetalleDepartamento(int.Parse(txtIdDepartamento.Text.Trim()));
+
+            if (departamento == null)
+            {
+                MessageBox.Show("Departamento no encontrado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Mostrar datos en los campos
+            lblNombreDepto.Text = departamento.NombreDepartamento;
+            lblUbicacionDepto.Text = departamento.Ubicacion;
+            lblTelefonoDepto.Text = departamento.TelefonoDepartamento;
+            lblCorreoDepto.Text = departamento.EmailDepartamento;
+            DesbloquearCampos(true);
+
+            return true;
+        }
+        private bool DatosVaciosDepartamento()
+        {
+            if (string.IsNullOrWhiteSpace(txtIdDepartamento.Text))
+            {
+                MessageBox.Show("Ingrese un ID de departamento para buscar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+        private bool DatosCorrectosDepartamento()
+        {
+            if (!int.TryParse(txtIdDepartamento.Text.Trim(), out int id) || id <= 0)
+            {
+                MessageBox.Show("El ID del departamento debe ser un número entero positivo.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
             return true;
         }
     }

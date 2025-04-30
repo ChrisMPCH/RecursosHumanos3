@@ -69,18 +69,28 @@ namespace RecursosHumanos.View
         {
             var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
 
-            if (permisosUsuario.Contains(46)) // Agregar puesto
+            if (permisosUsuario.Contains(46)) // Agregar puesto  
             {
-                frmPuestos.btnAgregar.Enabled = true;
+                btnAgregar.Enabled = true;
             }
-            if (permisosUsuario.Contains(47)) // Editar puesto
+            if (permisosUsuario.Contains(47)) // Editar puesto  
             {
-                frmPuestos.btnActualizar.Enabled = true;
+                btnActualizar.Enabled = true;
             }
-            if (permisosUsuario.Contains(48)) // Eliminar puesto
+            if (permisosUsuario.Contains(48)) // Eliminar puesto  
             {
-                frmPuestos.btnEliminar.Enabled = true;
+                btnEliminar.Enabled = true;
             }
+        }
+
+        private void pnFondo_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pnlCambiante_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -121,5 +121,42 @@ namespace RecursosHumanos.Controller
                 return (false, "Error inesperado al actualizar el departamento");
             }
         }
+        public (bool exito, string mensaje) EliminarDepartamentoLogico(int idDepartamento)
+        {
+            try
+            {
+                if (idDepartamento <= 0)
+                {
+                    return (false, "El ID del departamento debe ser un número positivo.");
+                }
+
+                Departamento? departamentoExistente = _departamentoDataAccess.ObtenerDepartamentoPorId(idDepartamento);
+                if (departamentoExistente == null)
+                {
+                    return (false, $"No se encontró el departamento con ID {idDepartamento}.");
+                }
+
+                if (!departamentoExistente.Estatus)
+                {
+                    return (false, "El departamento ya está inactivo.");
+                }
+
+                bool resultado = _departamentoDataAccess.EliminarDepartamentoLogico(idDepartamento);
+
+                if (!resultado)
+                {
+                    _logger.Error($"Error al eliminar lógicamente el departamento con ID {idDepartamento}");
+                    return (false, "Error al eliminar lógicamente el departamento en la base de datos.");
+                }
+
+                _logger.Info($"Departamento con ID {idDepartamento} eliminado lógicamente.");
+                return (true, "Departamento eliminado lógicamente con éxito.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error inesperado al eliminar lógicamente el departamento con ID: {idDepartamento}");
+                return (false, $"Error inesperado: {ex.Message}");
+            }
+        }
     }
 }

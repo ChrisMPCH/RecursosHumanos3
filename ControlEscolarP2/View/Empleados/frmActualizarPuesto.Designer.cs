@@ -45,6 +45,8 @@ namespace RecursosHumanos.View
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmActualizarPuesto));
             pnlInfoEsmpleado = new Guna.UI2.WinForms.Guna2GradientPanel();
+            cbxEstatus = new ComboBox();
+            label2 = new Label();
             guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             txtDescripcion = new Guna.UI2.WinForms.Guna2TextBox();
             btnBuacar = new Guna.UI2.WinForms.Guna2Button();
@@ -59,8 +61,6 @@ namespace RecursosHumanos.View
             lblBienvenida2 = new Label();
             ofdArchivo = new OpenFileDialog();
             InfoMatricula = new ToolTip(components);
-            label1 = new Label();
-            cbxEstatus = new ComboBox();
             pnlInfoEsmpleado.SuspendLayout();
             SuspendLayout();
             // 
@@ -70,7 +70,7 @@ namespace RecursosHumanos.View
             pnlInfoEsmpleado.BackColor = Color.White;
             pnlInfoEsmpleado.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             pnlInfoEsmpleado.Controls.Add(cbxEstatus);
-            pnlInfoEsmpleado.Controls.Add(label1);
+            pnlInfoEsmpleado.Controls.Add(label2);
             pnlInfoEsmpleado.Controls.Add(guna2Separator2);
             pnlInfoEsmpleado.Controls.Add(txtDescripcion);
             pnlInfoEsmpleado.Controls.Add(btnBuacar);
@@ -90,6 +90,25 @@ namespace RecursosHumanos.View
             pnlInfoEsmpleado.ShadowDecoration.CustomizableEdges = customizableEdges28;
             pnlInfoEsmpleado.Size = new Size(1144, 388);
             pnlInfoEsmpleado.TabIndex = 4;
+            // 
+            // cbxEstatus
+            // 
+            cbxEstatus.FormattingEnabled = true;
+            cbxEstatus.Location = new Point(214, 306);
+            cbxEstatus.Name = "cbxEstatus";
+            cbxEstatus.Size = new Size(151, 28);
+            cbxEstatus.TabIndex = 51;
+            // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label2.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            label2.ForeColor = Color.Black;
+            label2.Location = new Point(74, 301);
+            label2.Name = "label2";
+            label2.Size = new Size(113, 33);
+            label2.TabIndex = 50;
+            label2.Text = "Estatus:";
             // 
             // guna2Separator2
             // 
@@ -286,25 +305,6 @@ namespace RecursosHumanos.View
             // 
             ofdArchivo.FileName = "Carga masiva de Empleados";
             // 
-            // label1
-            // 
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            label1.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            label1.ForeColor = Color.Black;
-            label1.Location = new Point(27, 297);
-            label1.Name = "label1";
-            label1.Size = new Size(170, 33);
-            label1.TabIndex = 49;
-            label1.Text = "Estatus:";
-            // 
-            // cbxEstatus
-            // 
-            cbxEstatus.FormattingEnabled = true;
-            cbxEstatus.Location = new Point(214, 297);
-            cbxEstatus.Name = "cbxEstatus";
-            cbxEstatus.Size = new Size(151, 28);
-            cbxEstatus.TabIndex = 50;
-            // 
             // frmActualizarPuesto
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -339,6 +339,6 @@ namespace RecursosHumanos.View
         public Guna.UI2.WinForms.Guna2TextBox txtIdPuesto;
         private Label lblPuesto;
         private ComboBox cbxEstatus;
-        private Label label1;
+        private Label label2;
     }
 }
