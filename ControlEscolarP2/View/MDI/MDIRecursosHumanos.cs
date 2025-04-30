@@ -304,7 +304,6 @@ namespace RecursosHumanos.View
             if (permisosUsuario.Contains(23) || permisosUsuario.Contains(36)) // Agregar usuario y empleado
             {
                 subRegistroPersonas.Enabled = true;
-
             }
             if (permisosUsuario.Contains(24)) // Editar usuario
             {
@@ -387,13 +386,13 @@ namespace RecursosHumanos.View
             }
 
             // Ausencias
-            if (permisosUsuario.Contains(57)) // Gestionar ausencias
+            if (permisosUsuario.Contains(54)) // Gestionar ausencias
             {
                 btnSalidas.Enabled = true;
             }
 
             // Contar días trabajados
-            if (permisosUsuario.Contains(61)) // Gestionar días trabajados
+            if (permisosUsuario.Contains(55)) // Gestionar días trabajados
             {
                 btnContarDias.Enabled = true;
             }
