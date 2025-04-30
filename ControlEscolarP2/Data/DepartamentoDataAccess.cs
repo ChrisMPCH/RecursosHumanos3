@@ -242,5 +242,44 @@ WHERE id_departamento = @IdDepartamento";
                 _dbAccess.Disconnect();
             }
         }
+        public bool EliminarDepartamentoLogico(int idDepartamento)
+        {
+            try
+            {
+                _logger.Debug($"Eliminando lógicamente el departamento con ID {idDepartamento}");
+
+                string query = @"
+UPDATE human_resours.departamento
+SET estatus = 0
+WHERE id_departamento = @IdDepartamento";
+
+                NpgsqlParameter paramIdDepartamento = _dbAccess.CreateParameter("@IdDepartamento", idDepartamento);
+
+                _dbAccess.Connect();
+                int filasAfectadas = _dbAccess.ExecuteNonQuery(query, paramIdDepartamento);
+
+                bool exito = filasAfectadas > 0;
+
+                if (!exito)
+                {
+                    _logger.Warn($"No se pudo eliminar lógicamente el departamento con ID {idDepartamento}. No se encontró el registro.");
+                }
+                else
+                {
+                    _logger.Debug($"Departamento con ID {idDepartamento} eliminado lógicamente.");
+                }
+
+                return exito;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al eliminar lógicamente el departamento con ID {idDepartamento}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
     }
 }

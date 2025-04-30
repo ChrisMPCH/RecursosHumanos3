@@ -203,5 +203,44 @@ WHERE id_puesto = @IdPuesto";
                 _dbAccess.Disconnect();
             }
         }
+        public bool EliminarPuestoLogico(int idPuesto)
+        {
+            try
+            {
+                _logger.Debug($"Eliminando lógicamente el Puesto con ID {idPuesto}");
+
+                string query = @"
+UPDATE human_resours.puesto
+SET estatus = 0
+WHERE id_Puesto = @IdPuesto";
+
+                NpgsqlParameter paramIdDepartamento = _dbAccess.CreateParameter("@IdPuesto", idPuesto);
+
+                _dbAccess.Connect();
+                int filasAfectadas = _dbAccess.ExecuteNonQuery(query, paramIdDepartamento);
+
+                bool exito = filasAfectadas > 0;
+
+                if (!exito)
+                {
+                    _logger.Warn($"No se pudo eliminar lógicamente el puesto con ID {idPuesto}. No se encontró el registro.");
+                }
+                else
+                {
+                    _logger.Debug($"Puesto con ID {idPuesto} eliminado lógicamente.");
+                }
+
+                return exito;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al eliminar lógicamente el departamento con ID {idPuesto}");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
     }
 }

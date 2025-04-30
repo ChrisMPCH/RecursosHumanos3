@@ -122,5 +122,42 @@ namespace RecursosHumanos.Controller
                 throw;
             }
         }
+        public (bool exito, string mensaje) EliminarPuestoLogico(int idPuesto)
+        {
+            try
+            {
+                if (idPuesto <= 0)
+                {
+                    return (false, "El ID del departamento debe ser un número positivo.");
+                }
+
+                Puesto? PuestoExistente = _puestoDataAccess.ObtenerPuestoPorId(idPuesto);
+                if (PuestoExistente == null)
+                {
+                    return (false, $"No se encontró el Puesto con ID {idPuesto}.");
+                }
+
+                if (!PuestoExistente.Estatus)
+                {
+                    return (false, "El departamento ya está inactivo.");
+                }
+
+                bool resultado = _puestoDataAccess.EliminarPuestoLogico(idPuesto);
+
+                if (!resultado)
+                {
+                    _logger.Error($"Error al eliminar lógicamente el Puesto con ID {idPuesto}");
+                    return (false, "Error al eliminar lógicamente el Puesto en la base de datos.");
+                }
+
+                _logger.Info($"Departamento con ID {idPuesto} eliminado lógicamente.");
+                return (true, "Departamento eliminado lógicamente con éxito.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error inesperado al eliminar lógicamente el departamento con ID: {idPuesto}");
+                return (false, $"Error inesperado: {ex.Message}");
+            }
+        }
     }
 }

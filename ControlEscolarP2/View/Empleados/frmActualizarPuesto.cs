@@ -75,10 +75,10 @@ namespace RecursosHumanos.View
 
             Puesto puesto = new Puesto
             {
-                IdPuesto= int.Parse(txtIdPuesto.Text.Trim()),
+                IdPuesto = int.Parse(txtIdPuesto.Text.Trim()),
                 NombrePuesto = txtNombre.Text.Trim(),
                 DescripcionPuesto = txtDescripcion.Text.Trim(),
-                Estatus = (bool)cbxEstatus.SelectedValue
+                Estatus = (bool) cbxEstatus.SelectedValue
             };
 
             var (exito, mensaje) = controller.ActualizarPuesto(puesto);
@@ -111,24 +111,11 @@ namespace RecursosHumanos.View
                 return;
             }
         }
-        private void PoblarComboBoxEstatus()
-        {
-            var opcionesEstatus = new List<KeyValuePair<string, bool>>
-    {
-        new KeyValuePair<string, bool>("Activo", true),
-        new KeyValuePair<string, bool>("Inactivo", false)
-    };
 
-            cbxEstatus.DataSource = opcionesEstatus;
-            cbxEstatus.DisplayMember = "Key";
-            cbxEstatus.ValueMember = "Value";
-            cbxEstatus.SelectedIndex = 0; // Establecer "Activo" como predeterminado
-        }
         private void DesbloquearCampos(bool desbloquear)
         {
             txtNombre.Enabled = desbloquear;
             txtDescripcion.Enabled = desbloquear;
-            cbxEstatus.Enabled = desbloquear;
         }
         private bool BuscarPuesto()
         {
@@ -148,13 +135,23 @@ namespace RecursosHumanos.View
             // Mostrar datos en los campos
             txtNombre.Text = puesto.NombrePuesto;
             txtDescripcion.Text = puesto.DescripcionPuesto;
-            cbxEstatus.SelectedValue = puesto.Estatus;
-
             DesbloquearCampos(true);
 
             return true;
         }
+        private void PoblarComboBoxEstatus()
+        {
+            var opcionesEstatus = new List<KeyValuePair<string, bool>>
+    {
+        new KeyValuePair<string, bool>("Activo", true),
+        new KeyValuePair<string, bool>("Inactivo", false)
+    };
 
+            cbxEstatus.DataSource = opcionesEstatus;
+            cbxEstatus.DisplayMember = "Key";
+            cbxEstatus.ValueMember = "Value";
+            cbxEstatus.SelectedIndex = 0; // Establecer "Activo" como predeterminado
+        }
 
     }
 }
