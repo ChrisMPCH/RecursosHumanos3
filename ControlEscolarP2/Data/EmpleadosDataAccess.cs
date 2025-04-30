@@ -300,151 +300,87 @@ namespace RecursosHumanos.Data
             }
         }
 
-        public Empleado? ObtenerEmpleadoPorId(int idEmpleado)
-        {
-            try
-            {
-                // Consulta SQL para obtener un solo empleado por su ID
-                string query = @"
-        SELECT e.id_empleado, e.fecha_ingreso, e.fecha_baja, e.matricula, e.motivo, e.estatus AS estatus_empleado,
-             p.nombre, p.ap_paterno, p.ap_materno, p.rfc, p.curp, p.direccion, p.telefono, p.email, p.fecha_nacimiento, p.genero, p.estatus AS estatus_persona,
-             d.nombre_departamento, pto.nombre_puesto
-        FROM human_resours.empleado e
-        INNER JOIN human_resours.persona p ON e.id_persona = p.id_persona
-        INNER JOIN human_resours.departamento d ON e.id_departamento = d.id_departamento
-        INNER JOIN human_resours.puesto pto ON e.id_puesto = pto.id_puesto
-        WHERE e.id_empleado = @IdEmpleado;
-        ";
-
-                var parametro = new[] { _dbAccess.CreateParameter("@IdEmpleado", idEmpleado) };
-
-                _dbAccess.Connect();
-                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametro);
-
-                // Verificar si se obtuvo algún resultado
-                if (resultado.Rows.Count > 0)
-                {
-                    // Construir la persona
-                    DataRow row = resultado.Rows[0];
-                    Persona persona = new Persona
-                    {
-                        Id_Persona = Convert.ToInt32(row["id_persona"]),
-                        Nombre = row["nombre"].ToString() ?? "",
-                        Ap_Paterno = row["ap_paterno"].ToString() ?? "",
-                        Ap_Materno = row["ap_materno"].ToString() ?? "",
-                        RFC = row["rfc"].ToString() ?? "",
-                        CURP = row["curp"].ToString() ?? "",
-                        Direccion = row["direccion"].ToString() ?? "",
-                        Telefono = row["telefono"].ToString() ?? "",
-                        Email = row["email"].ToString() ?? "",
-                        Fecha_Nacimiento = Convert.ToDateTime(row["fecha_nacimiento"]),
-                        Genero = row["genero"].ToString() ?? "",
-                        Estatus = Convert.ToInt16(row["estatus_persona"])
-                    };
-
-                    // Construir el empleado
-                    Empleado empleado = new Empleado
-                    {
-                        Id_Empleado = Convert.ToInt32(row["id_empleado"]),
-                        Fecha_Ingreso = Convert.ToDateTime(row["fecha_ingreso"]),
-                        Fecha_Baja = row["fecha_baja"] != DBNull.Value ? Convert.ToDateTime(row["fecha_baja"]) : (DateTime?)null,
-                        Matricula = row["matricula"].ToString() ?? "",
-                        Motivo = row["motivo"].ToString() ?? "",
-                        Estatus = Convert.ToInt16(row["estatus_empleado"]),
-                        DatosPersonales = persona
-                    };
-
-                    return empleado;
-                }
-                else
-                {
-                    _logger.Warn($"No se encontró el empleado con ID {idEmpleado}.");
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, $"Error al obtener el empleado con ID {idEmpleado}");
-                return null;
-            }
-            finally
-            {
-                _dbAccess.Disconnect();
-            }
-        }
-
         /// <summary>
-        /// Obtiene un empleado por su matrícula.
+        /// Busca un empleado por su matrícula, incluyendo datos personales, departamento y puesto.
         /// </summary>
-        /// <param name="matricula">Matrícula del empleado</param>
-        /// <returns>Empleado con la matrícula proporcionada o null si no se encuentra</returns>
-        public Empleado? ObtenerEmpleadoPorMatricula(string matricula)
+        public Empleado ObtenerEmpleadoPorMatricula(string matricula)
         {
             try
             {
-                // Consulta SQL para obtener un solo empleado por su matrícula
-                string query = @"
-        SELECT e.id_empleado, e.fecha_ingreso, e.fecha_baja, e.matricula, e.motivo, e.estatus AS estatus_empleado,
-             p.nombre, p.ap_paterno, p.ap_materno, p.rfc, p.curp, p.direccion, p.telefono, p.email, p.fecha_nacimiento, p.genero, p.estatus AS estatus_persona,
-             d.nombre_departamento, pto.nombre_puesto
-        FROM human_resours.empleado e
-        INNER JOIN human_resours.persona p ON e.id_persona = p.id_persona
-        INNER JOIN human_resours.departamento d ON e.id_departamento = d.id_departamento
-        INNER JOIN human_resours.puesto pto ON e.id_puesto = pto.id_puesto
-        WHERE e.matricula = @Matricula;
-        ";
+                const string query = @"
+                    SELECT
+                        e.id_empleado,
+                        e.id_persona,
+                        e.fecha_ingreso,
+                        e.fecha_baja,
+                        e.id_departamento,
+                        e.id_puesto,
+                        e.matricula,
+                        e.estatus,
+                        p.nombre, p.ap_paterno, p.ap_materno, p.rfc, p.curp,
+                        p.direccion, p.telefono, p.email, p.fecha_nacimiento, p.genero,
+                        d.nombre_departamento,
+                        pu.nombre_puesto
+                    FROM human_resours.empleado e
+                    INNER JOIN human_resours.persona p ON e.id_persona = p.id_persona
+                    INNER JOIN human_resours.departamento d ON e.id_departamento = d.id_departamento
+                    INNER JOIN human_resours.puesto pu ON e.id_puesto = pu.id_puesto
+                    WHERE e.matricula = @matricula;
+                ";
 
-                // Parámetro para la matrícula
-                var parametro = new[] { _dbAccess.CreateParameter("@Matricula", matricula) };
+                var parametros = new[]
+                {
+                    new NpgsqlParameter("@matricula", matricula)
+                };
 
                 _dbAccess.Connect();
-                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, parametro);
+                DataTable dt = _dbAccess.ExecuteQuery_Reader(query, parametros);
 
-                // Verificar si se obtuvo algún resultado
-                if (resultado.Rows.Count > 0)
-                {
-                    // Construir la persona
-                    DataRow row = resultado.Rows[0];
-                    Persona persona = new Persona
-                    {
-                        Id_Persona = Convert.ToInt32(row["id_persona"]),
-                        Nombre = row["nombre"].ToString() ?? "",
-                        Ap_Paterno = row["ap_paterno"].ToString() ?? "",
-                        Ap_Materno = row["ap_materno"].ToString() ?? "",
-                        RFC = row["rfc"].ToString() ?? "",
-                        CURP = row["curp"].ToString() ?? "",
-                        Direccion = row["direccion"].ToString() ?? "",
-                        Telefono = row["telefono"].ToString() ?? "",
-                        Email = row["email"].ToString() ?? "",
-                        Fecha_Nacimiento = Convert.ToDateTime(row["fecha_nacimiento"]),
-                        Genero = row["genero"].ToString() ?? "",
-                        Estatus = Convert.ToInt16(row["estatus_persona"])
-                    };
-
-                    // Construir el empleado
-                    Empleado empleado = new Empleado
-                    {
-                        Id_Empleado = Convert.ToInt32(row["id_empleado"]),
-                        Fecha_Ingreso = Convert.ToDateTime(row["fecha_ingreso"]),
-                        Fecha_Baja = row["fecha_baja"] != DBNull.Value ? Convert.ToDateTime(row["fecha_baja"]) : (DateTime?)null,
-                        Matricula = row["matricula"].ToString() ?? "",
-                        Motivo = row["motivo"].ToString() ?? "",
-                        Estatus = Convert.ToInt16(row["estatus_empleado"]),
-                        DatosPersonales = persona
-                    };
-
-                    return empleado;
-                }
-                else
-                {
-                    _logger.Warn($"No se encontró el empleado con matrícula {matricula}.");
+                if (dt.Rows.Count == 0)
                     return null;
-                }
+
+                DataRow row = dt.Rows[0];
+
+                var persona = new Persona
+                {
+                    Id_Persona = Convert.ToInt32(row["id_persona"]),
+                    Nombre = row["nombre"]?.ToString() ?? "",
+                    Ap_Paterno = row["ap_paterno"]?.ToString() ?? "",
+                    Ap_Materno = row["ap_materno"]?.ToString() ?? "",
+                    RFC = row["rfc"]?.ToString() ?? "",
+                    CURP = row["curp"]?.ToString() ?? "",
+                    Direccion = row["direccion"]?.ToString() ?? "",
+                    Telefono = row["telefono"]?.ToString() ?? "",
+                    Email = row["email"]?.ToString() ?? "",
+                    Fecha_Nacimiento = Convert.ToDateTime(row["fecha_nacimiento"]),
+                    Genero = row["genero"]?.ToString() ?? ""
+                };
+
+                var empleado = new Empleado
+                {
+                    Id_Empleado = Convert.ToInt32(row["id_empleado"]),
+                    Id_Persona = persona.Id_Persona,
+                    Fecha_Ingreso = Convert.ToDateTime(row["fecha_ingreso"]),
+                    Fecha_Baja = row["fecha_baja"] != DBNull.Value
+                                      ? Convert.ToDateTime(row["fecha_baja"])
+                                      : (DateTime?)null,
+                    Id_Departamento = Convert.ToInt32(row["id_departamento"]),
+                    Id_Puesto = Convert.ToInt32(row["id_puesto"]),
+                    Matricula = row["matricula"]?.ToString() ?? "",
+                    Estatus = Convert.ToInt16(row["estatus"]),
+                    DatosPersonales = persona,
+                    Nombre = $"{persona.Nombre} {persona.Ap_Paterno} {persona.Ap_Materno}",
+                    Departamento = row["nombre_departamento"]?.ToString() ?? "",
+                    Puesto = row["nombre_puesto"]?.ToString() ?? "",
+                    EstatusTexto = Convert.ToInt16(row["estatus"]) == 1 ? "Activo" : "Inactivo"
+                };
+
+                return empleado;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Error al obtener el empleado con matrícula {matricula}");
-                return null;
+                _logger.Error(ex, "Error al obtener empleado por matrícula.");
+                throw;
             }
             finally
             {

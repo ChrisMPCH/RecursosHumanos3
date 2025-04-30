@@ -215,5 +215,10 @@ namespace RecursosHumanos.View
             cmbEstatus.SelectedIndex = 0; // Reseteamos a "Todos"
             CargarEmpleadosEnTabla(); // Recargamos todos los empleados
         }
+
+        private void cmbDepartamento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

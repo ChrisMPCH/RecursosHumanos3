@@ -16,6 +16,8 @@ namespace RecursosHumanos.View
 {
     public partial class frmActualizarUsuario : Form
     {
+        
+
         private int? idUsuario = null;
         private int? idPersona = null;
 
