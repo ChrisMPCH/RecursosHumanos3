@@ -1,20 +1,14 @@
 ﻿using RecursosHumanos.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using RecursosHumanos.Data;
-using RecursosHumanos.Model;
-using RecursosHumanos.Models;
+using RecursosHumanos.Controller;
 
 namespace RecursosHumanos.View
 {
     public partial class frmListaEmpleados : Form
     {
         private List<Empleado> empleados = new List<Empleado>();
-        private readonly EmpleadosDataAccess empleadosDataAccess = new EmpleadosDataAccess();
-        private readonly DepartamentoDataAccess _departamentoDataAccess = new DepartamentoDataAccess();
-        private readonly PuestoDataAccess _puestoDataAccess = new PuestoDataAccess();
+        private readonly EmpleadosController empleadosController = new EmpleadosController();
+        private readonly DepartamentoController _departamentoController = new DepartamentoController();
+        private readonly PuestoController _puestoController = new PuestoController();
 
         private Dictionary<int, string> departamentos = new Dictionary<int, string>();
         private Dictionary<int, string> puestos = new Dictionary<int, string>();
@@ -27,29 +21,31 @@ namespace RecursosHumanos.View
 
         private void InicializarVentana()
         {
-            CargarDepartamentosYPuestos();  // Llamamos al método para cargar departamentos y puestos
-            PoblarComboDepartamento();     // Rellenamos los combos de departamento
-            PoblarComboEstatus();          // Rellenamos los combos de estatus
-            IniciarTabla();                // Configuramos el DataGridView
-            CargarEmpleadosEnTabla();      // Cargamos los empleados en el DataGridView
+            CargarDepartamentos();  // Cargamos los departamentos
+            CargarPuestos();        // Cargamos los puestos
+            PoblarComboDepartamento();  // Rellenamos combo de departamentos
+            PoblarComboEstatus();     // Rellenamos combo de estatus
+            IniciarTabla();           // Configuramos el DataGridView
+            CargarEmpleadosEnTabla(); // Cargamos los empleados
         }
 
-
-        private void CargarDepartamentosYPuestos()
+        private void CargarDepartamentos()
         {
-            var departamentosList = _departamentoDataAccess.ObtenerTodosLosDepartamentos();
+            var departamentosList = _departamentoController.ObtenerTodosLosDepartamentos();
             foreach (var departamento in departamentosList)
             {
                 departamentos[departamento.IdDepartamento] = departamento.NombreDepartamento;
             }
+        }
 
-            var puestosList = _puestoDataAccess.ObtenerTodosLosPuestos();
+        private void CargarPuestos()
+        {
+            var puestosList = _puestoController.ObtenerTodosLosPuestos();
             foreach (var puesto in puestosList)
             {
                 puestos[puesto.IdPuesto] = puesto.NombrePuesto;
             }
         }
-
 
         private void IniciarTabla()
         {
@@ -95,24 +91,24 @@ namespace RecursosHumanos.View
             });
         }
 
-        private void ConfigurarAnchoColumnas(int ancho)
-        {
-            foreach (DataGridViewColumn columna in dgvEmpleados.Columns)
-            {
-                columna.Width = ancho;
-            }
-        }
-
-
-
         private void PoblarComboDepartamento()
         {
             if (departamentos.Count > 0)
             {
-                cmbDepartamento.DataSource = new BindingSource(departamentos, null);
+                // Insertar la opción "Todos" al principio de la lista de departamentos
+                var departamentosConTodos = new Dictionary<int, string> { { 0, "Todos" } };
+
+                // Agregar los departamentos a la nueva lista
+                foreach (var departamento in departamentos)
+                {
+                    departamentosConTodos.Add(departamento.Key, departamento.Value);
+                }
+
+                // Asignar la nueva lista al ComboBox
+                cmbDepartamento.DataSource = new BindingSource(departamentosConTodos, null);
                 cmbDepartamento.DisplayMember = "Value";
                 cmbDepartamento.ValueMember = "Key";
-                cmbDepartamento.SelectedIndex = 0;
+                cmbDepartamento.SelectedIndex = 0; // Selección por defecto es "Todos"
             }
             else
             {
@@ -121,21 +117,20 @@ namespace RecursosHumanos.View
             }
         }
 
+
         private void PoblarComboEstatus()
         {
-            List<string> estatus = new List<string> { "Activo", "Inactivo" };
+            // Agregar la opción "Todos" al combo de estatus
+            List<string> estatus = new List<string> { "Todos", "Activo", "Inactivo" };
             cmbEstatus.DataSource = estatus;
-            cmbEstatus.SelectedIndex = 0;
+            cmbEstatus.SelectedIndex = 0; // Selección por defecto es "Todos"
         }
-
-
 
         private void CargarEmpleadosEnTabla()
         {
             try
             {
-                // Obtener los empleados desde el acceso a datos
-                empleados = empleadosDataAccess.ObtenerTodosLosEmpleados();
+                empleados = empleadosController.ObtenerEmpleados();
 
                 if (empleados.Count == 0)
                 {
@@ -143,17 +138,15 @@ namespace RecursosHumanos.View
                     return;
                 }
 
-                // Transformar los datos para mostrarlos en el DataGridView
                 var empleadosMostrar = empleados.Select(e => new
                 {
                     Matricula = e.Matricula,
-                    Nombre = $"{e.DatosPersonales?.Nombre ?? "Desconocido"} {e.DatosPersonales?.Ap_Paterno ?? "Desconocido"}",
-                    Departamento = departamentos.ContainsKey(e.Id_Departamento) ? departamentos[e.Id_Departamento] : "Desconocido",
-                    Puesto = puestos.ContainsKey(e.Id_Puesto) ? puestos[e.Id_Puesto] : "Desconocido",
-                    Estatus = e.Estatus == 1 ? "Activo" : "Inactivo"
+                    Nombre = e.Nombre,
+                    Departamento = e.Departamento,
+                    Puesto = e.Puesto,
+                    Estatus = e.EstatusTexto
                 }).ToList();
 
-                // Asignar la lista transformada al DataGridView
                 dgvEmpleados.DataSource = empleadosMostrar;
             }
             catch (Exception ex)
@@ -162,7 +155,6 @@ namespace RecursosHumanos.View
             }
         }
 
-
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             CargarEmpleadosConFiltros();
@@ -170,42 +162,63 @@ namespace RecursosHumanos.View
 
         private void CargarEmpleadosConFiltros()
         {
-            string nombreFiltro = txtNombre.Text.Trim().ToLower();
-
-            int departamentoFiltro = 0;
-            if (cmbDepartamento.SelectedItem is KeyValuePair<int, string> selectedDepartamento)
+            try
             {
-                departamentoFiltro = selectedDepartamento.Key;
+                string nombreFiltro = txtNombre.Text.Trim().ToLower();
+
+                int departamentoFiltro = 0;
+                if (cmbDepartamento.SelectedItem is KeyValuePair<int, string> selectedDepartamento)
+                {
+                    departamentoFiltro = selectedDepartamento.Key;
+                }
+
+                string estatusFiltro = cmbEstatus.SelectedItem?.ToString()?.ToLower() ?? "";
+
+                var filtrados = empleados.Where(e =>
+                {
+                    var nombreCompleto = $"{e.DatosPersonales.Nombre} {e.DatosPersonales.Ap_Paterno} {e.DatosPersonales.Ap_Materno}".ToLower();
+
+                    return (string.IsNullOrEmpty(nombreFiltro) || nombreCompleto.Contains(nombreFiltro)) &&
+                           (departamentoFiltro == 0 || e.Id_Departamento == departamentoFiltro) &&
+                           (string.IsNullOrEmpty(estatusFiltro) ||
+                            (estatusFiltro == "activo" && e.Estatus == 1) ||
+                            (estatusFiltro == "inactivo" && e.Estatus == 0) ||
+                            (estatusFiltro == "todos"));
+                })
+                .Select(e => new
+                {
+                    Matricula = e.Matricula,
+                    Nombre = $"{e.DatosPersonales.Nombre} {e.DatosPersonales.Ap_Paterno} {e.DatosPersonales.Ap_Materno}",
+                    Departamento = departamentos.ContainsKey(e.Id_Departamento) ? departamentos[e.Id_Departamento] : "Desconocido",
+                    Puesto = puestos.ContainsKey(e.Id_Puesto) ? puestos[e.Id_Puesto] : "Desconocido",
+                    Estatus = e.Estatus == 1 ? "Activo" : "Inactivo"
+                })
+                .ToList();
+
+                if (filtrados.Count == 0)
+                {
+                    MessageBox.Show("No se encontraron empleados con los filtros aplicados.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                dgvEmpleados.DataSource = filtrados;
             }
-
-            string estatusFiltro = cmbEstatus.SelectedItem?.ToString()?.ToLower() ?? "";
-
-            var filtrados = empleados.Where(e =>
-                (string.IsNullOrEmpty(nombreFiltro) ||
-                 e.DatosPersonales.Nombre.ToLower().Contains(nombreFiltro) ||
-                 e.DatosPersonales.Ap_Paterno.ToLower().Contains(nombreFiltro)) &&
-                (departamentoFiltro == 0 || e.Id_Departamento == departamentoFiltro) &&
-                (string.IsNullOrEmpty(estatusFiltro) ||
-                 (e.Estatus == 1 && estatusFiltro == "activo") ||
-                 (e.Estatus == 0 && estatusFiltro == "inactivo"))
-            ).Select(e => new
+            catch (Exception ex)
             {
-                Matrícula = e.Matricula,
-                Nombre = $"{e.DatosPersonales.Nombre} {e.DatosPersonales.Ap_Paterno}",
-                Departamento = departamentos.ContainsKey(e.Id_Departamento) ? departamentos[e.Id_Departamento] : "Desconocido",
-                Puesto = puestos.ContainsKey(e.Id_Puesto) ? puestos[e.Id_Puesto] : "Desconocido",
-                Estatus = e.Estatus == 1 ? "Activo" : "Inactivo"
-            }).ToList();
-
-            dgvEmpleados.DataSource = filtrados;
+                MessageBox.Show("Error al aplicar filtros: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             txtNombre.Clear();
-            cmbDepartamento.SelectedIndex = 0;
-            cmbEstatus.SelectedIndex = 0;
-            CargarEmpleadosEnTabla();
+            cmbDepartamento.SelectedIndex = 0; // Reseteamos a "Todos"
+            cmbEstatus.SelectedIndex = 0; // Reseteamos a "Todos"
+            CargarEmpleadosEnTabla(); // Recargamos todos los empleados
+        }
+
+        private void cmbDepartamento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

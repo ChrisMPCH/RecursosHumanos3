@@ -93,48 +93,37 @@ namespace RecursosHumanos.Controller
         {
             try
             {
-                // Primero actualiza los datos de la persona asociada
-                bool personaActualizada = _personasAccess.ActualizarPersona(empleado.DatosPersonales);
-                if (!personaActualizada)
-                {
-                    _logger.Warn($"No se pudo actualizar la persona con ID {empleado.DatosPersonales.Id_Persona}");
-                    return false;
-                }
-
-                // Luego actualiza los datos del empleado
-                bool empleadoActualizado = _empleadosAccess.ActualizarUsuario(empleado);
-                if (!empleadoActualizado)
-                {
-                    _logger.Warn($"No se pudo actualizar el empleado con ID {empleado.Id_Empleado}");
-                    return false;
-                }
-
-                _logger.Info($"Empleado con ID {empleado.Id_Empleado} actualizado correctamente.");
-                return true;
+                return _empleadosAccess.ActualizarEmpleado(empleado);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Error al actualizar el empleado con ID {empleado.Id_Empleado}");
+                _logger.Error(ex, "Error inesperado al actualizar empleado.");
                 return false;
             }
         }
 
+
+
+
         /// <summary>
-        /// Obtiene un empleado por su ID.
+        /// Devuelve un empleado dado su número de matrícula
         /// </summary>
-        /// <param name="idEmpleado"></param>
-        /// <returns></returns>
-        public Empleado? ObtenerEmpleadoPorId(int idEmpleado)
+        /// <param name="matricula">Matrícula del empleado</param>
+        /// <returns>Empleado o null</returns>
+        public Empleado ObtenerEmpleadoPorMatricula(string matricula)
         {
             try
             {
-                return _empleadosAccess.ObtenerEmpleadoPorId(idEmpleado);
+                return _empleadosAccess.ObtenerEmpleadoPorMatricula(matricula);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Error al obtener el empleado con ID {idEmpleado}");
+                _logger.Error(ex, "Error en lógica de negocio al buscar empleado por matrícula");
                 return null;
             }
         }
+
+
+
     }
 }
