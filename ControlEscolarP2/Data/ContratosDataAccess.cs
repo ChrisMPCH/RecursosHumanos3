@@ -375,8 +375,20 @@ WHERE 1=1");
             {
                 _dbAccess.Disconnect();
             }
-
+            ValidarEstatusPorFecha(contratos);
             return contratos;
+
+        }
+
+        private void ValidarEstatusPorFecha(List<Contrato> contratos)
+        {
+            foreach (var contrato in contratos)
+            {
+                if (contrato.FechaFin < DateTime.Now.Date)
+                {
+                    contrato.Estatus = false;
+                }
+            }
         }
 
 
