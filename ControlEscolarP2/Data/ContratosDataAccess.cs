@@ -136,7 +136,7 @@ namespace RecursosHumanos.Data
                     };
 
                     contratos.Add(contrato);
-                }
+                } // no se hace objeto de empleado por que solo necitamos su id
 
                 return contratos;
             }
@@ -144,6 +144,39 @@ namespace RecursosHumanos.Data
             {
                 _logger.Error(ex, $"Error al obtener contratos por matrícula: {matricula}");
                 throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
+
+        //Metodo para verificar si un contrato existe
+        public bool ExisteContratoPorId(int idContrato)
+        {
+            try
+            {
+                string query = "SELECT COUNT(*) FROM human_resours.contrato WHERE id_contrato = @IdContrato";
+
+                // Crear el parámetro
+                NpgsqlParameter paramIdContrato = _dbAccess.CreateParameter("@IdContrato", idContrato);
+
+                // Conectar a la base de datos
+                _dbAccess.Connect();
+
+                // Ejecutar consulta
+                object? resultado = _dbAccess.ExecuteScalar(query, paramIdContrato);
+
+                int cantidad = Convert.ToInt32(resultado);
+                bool existe = cantidad > 0;
+
+                return existe;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al verificar la existencia del contrato con ID {idContrato}");
+                return false;
             }
             finally
             {
@@ -256,10 +289,15 @@ WHERE c.id_contrato = @IdContrato;";
                     paramHoraEntrada, paramHoraSalida, paramSalario, paramDescripcion, paramEstatus,
                     paramIdContrato);
 
-                if (filasAfectadas <= 0)
+                bool exito = filasAfectadas > 0;
+
+                if (!exito)
                 {
-                    _logger.Warn($"No se encontró el contrato con ID {contrato.Id_Contrato} para actualizar.");
-                    return false;
+                    _logger.Warn($"No se pudo actualizar el contrato con ID {contrato.Id_Contrato}. No se encontró el registro.");
+                }
+                else
+                {
+                    _logger.Debug($"Contrato con ID {contrato.Id_Contrato} actualizado correctamente.");
                 }
 
                 _logger.Info($"Contrato con ID {contrato.Id_Contrato} actualizado correctamente.");
@@ -282,26 +320,13 @@ WHERE c.id_contrato = @IdContrato;";
             try
             {
                 StringBuilder query = new StringBuilder(@"
-SELECT 
-    c.id_contrato,
-    e.matricula,
-    CONCAT(p.nombre, ' ', p.ap_paterno, ' ', p.ap_materno) AS nombre_empleado,
-    d.nombre_departamento,
-    tc.nombre AS nombre_tipo_contrato,
-    c.id_tipocontrato,
-    c.fecha_inicio,
-    c.fecha_fin,
-    c.hora_entrada,
-    c.hora_salida,
-    c.salario,
-    c.descripcion,
-    c.estatus AS estatus_contrato
-FROM human_resours.contrato c
-INNER JOIN human_resours.empleado e ON c.id_empleado = e.id_empleado
-INNER JOIN human_resours.persona p ON e.id_persona = p.id_persona
-INNER JOIN human_resours.departamento d ON e.id_departamento = d.id_departamento
-INNER JOIN human_resours.tipocontrato tc ON c.id_tipocontrato = tc.id_tipocontrato
-WHERE 1=1");
+            SELECT c.id_contrato, e.matricula, c.id_tipocontrato, c.fecha_inicio, c.fecha_fin,
+                   c.hora_entrada, c.hora_salida, c.salario, c.descripcion, c.estatus
+            FROM human_resours.contrato c
+            INNER JOIN human_resours.empleado e ON c.id_empleado = e.id_empleado
+            INNER JOIN human_resours.persona p ON e.id_persona = p.id_persona
+            INNER JOIN human_resours.departamento d ON e.id_departamento = d.id_departamento
+            WHERE 1=1");
 
                 List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
 
@@ -317,29 +342,21 @@ WHERE 1=1");
                     parametros.Add(_dbAccess.CreateParameter("@tipoContrato", tipoContrato));
                 }
 
-                // ✅ Solo se aplica si se seleccionó "Activo" (1) o "Inactivo" (0)
-                if (estatus == 0 || estatus == 1)
+                if (estatus != 0)
                 {
                     query.Append(" AND c.estatus = @estatus");
                     parametros.Add(_dbAccess.CreateParameter("@estatus", estatus));
                 }
 
-                if (departamento > 0)
+                if (departamento != 0)
                 {
                     query.Append(" AND d.id_departamento = @departamento");
                     parametros.Add(_dbAccess.CreateParameter("@departamento", departamento));
                 }
 
-                // Solo aplicar filtro si las fechas NO son iguales a DateTimePicker.MinDate
-                if (fechaInicio.HasValue && fechaFin.HasValue &&
-                    fechaInicio.Value != DateTimePicker.MinimumDateTime &&
-                    fechaFin.Value != DateTimePicker.MinimumDateTime)
-                {
-                    query.Append(" AND (c.fecha_inicio <= @fechaFin AND c.fecha_fin >= @fechaInicio)");
-                    parametros.Add(_dbAccess.CreateParameter("@fechaInicio", fechaInicio.Value));
-                    parametros.Add(_dbAccess.CreateParameter("@fechaFin", fechaFin.Value));
-                }
-
+                query.Append(" AND c.fecha_inicio BETWEEN @fechaInicio AND @fechaFin");
+                parametros.Add(_dbAccess.CreateParameter("@fechaInicio", fechaInicio));
+                parametros.Add(_dbAccess.CreateParameter("@fechaFin", fechaFin));
 
                 _dbAccess.Connect();
                 DataTable resultado = _dbAccess.ExecuteQuery_Reader(query.ToString(), parametros.ToArray());
@@ -359,8 +376,8 @@ WHERE 1=1");
                         HoraEntrada = TimeSpan.Parse(row["hora_entrada"].ToString()),
                         HoraSalida = TimeSpan.Parse(row["hora_salida"].ToString()),
                         Sueldo = Convert.ToDouble(row["salario"]),
-                        Descripcion = row["descripcion"]?.ToString() ?? "",
-                        Estatus = Convert.ToInt32(row["estatus_contrato"]) == 1
+                        Descripcion = row["descripcion"].ToString() ?? "",
+                        Estatus = Convert.ToInt32(row["estatus"]) == 1
                     };
 
                     contratos.Add(contrato);
@@ -391,9 +408,6 @@ WHERE 1=1");
             }
         }
 
-
-
-        //Obteniene si un contrato esta activo
         public bool TieneContratoActivo(string matricula)
         {
             try
