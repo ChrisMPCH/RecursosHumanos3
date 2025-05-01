@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using RecursosHumanos.Bussines;
+﻿using RecursosHumanos.Bussines;
 using RecursosHumanos.Controller;
 using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
@@ -17,7 +8,7 @@ namespace RecursosHumanos.View
     public partial class frmContratos : Form
     {
         private readonly ContratoController _contratosController = new ContratoController();
-       // private readonly EmpleadosController _empleadosController = new EmpleadosController();
+        // private readonly EmpleadosController _empleadosController = new EmpleadosController();
 
 
         public frmContratos()
@@ -76,7 +67,7 @@ namespace RecursosHumanos.View
             cbxTipoContrato1.SelectedValue = 1;
         }
 
-   
+
 
         // Método para verificar si hay campos vacíos
         private bool DatosVacios()
@@ -147,14 +138,7 @@ namespace RecursosHumanos.View
                     return;
                 }
 
-                // CONSTRUCCIÓN DE EMPLEADO
-                Empleado empleado = new Empleado
-                {
-                    Matricula = matricula,
-                    // Asegúrate que tenga Id_Persona si ya fue buscado antes
-                };
-
-                // CONSTRUCCIÓN DE CONTRATO
+                // CONSTRUCCIÓN DE CONTRATO 
                 Contrato contrato = new Contrato
                 {
                     Id_TipoContrato = tipoContratoSeleccionado.Key,
@@ -167,8 +151,8 @@ namespace RecursosHumanos.View
                     Estatus = true
                 };
 
-                // LLAMADA AL CONTROLLER
-                var resultado = _contratosController.RegistrarContrato(contrato, empleado);
+                // LLAMADA AL CONTROLLER con matrícula como parámetro
+                var resultado = _contratosController.RegistrarContrato(matricula, contrato);
 
                 if (resultado.id > 0)
                 {
@@ -185,6 +169,7 @@ namespace RecursosHumanos.View
                 MessageBox.Show($"Ocurrió un error inesperado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void LimpiarFormulario()
         {
@@ -225,19 +210,19 @@ namespace RecursosHumanos.View
                 return;
             }
 
-            // Verificar existencia y estatus del empleado
-            //var empleado = new EmpleadoController().ObtenerEmpleadoPorMatricula(matricula);
-            //if (empleado == null)
-            //{
-             //   MessageBox.Show("No se encontró un empleado con esa matrícula.", "Empleado no encontrado", MessageBoxButtons.OK, MessageBoxIcon.Error);
-             //   return;
-           // }
+            //Verificar existencia y estatus del empleado
+            var empleado = new EmpleadosController().ObtenerEmpleadoPorMatricula(matricula);
+            if (empleado == null)
+            {
+                MessageBox.Show("No se encontró un empleado con esa matrícula.", "Empleado no encontrado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-           // if (!empleado.Estatus)
-            //{
-               // MessageBox.Show("Este empleado está dado de baja.\nNo se puede asignar un nuevo contrato.", "Acción no permitida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-               // return;
-           // }
+            if (empleado.Estatus == 0)
+            {
+                MessageBox.Show("Este empleado está dado de baja.\nNo se puede asignar un nuevo contrato.", "Acción no permitida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             // Verificar si ya tiene un contrato activo
             bool yaTieneContrato = _contratosController.TieneContratoActivo(matricula);
@@ -246,6 +231,11 @@ namespace RecursosHumanos.View
                 MessageBox.Show("Este empleado ya tiene un contrato activo.\nNo se puede registrar uno nuevo hasta finalizar el anterior.", "Contrato existente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            // Aquí llenamos los campos
+            txtNombreCompleto.Text = $"{empleado.DatosPersonales.Nombre} {empleado.DatosPersonales.Ap_Paterno} {empleado.DatosPersonales.Ap_Materno}";
+            txtCurp1.Text = empleado.DatosPersonales.CURP;
+            txtTelefono1.Text = empleado.DatosPersonales.Telefono;
+            txtCorreo.Text = empleado.DatosPersonales.Email;
 
             // Todo bien, puede continuar
             MessageBox.Show("Empleado válido. Puede generarse un nuevo contrato.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -290,6 +280,6 @@ namespace RecursosHumanos.View
             this.Close();
         }
 
-      
+
     }
 }

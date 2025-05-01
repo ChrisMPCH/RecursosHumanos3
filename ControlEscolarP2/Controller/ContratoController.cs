@@ -33,58 +33,78 @@ namespace RecursosHumanos.Controller
           
         }
 
-        public List<Contrato> ObtenerTodosLosContratos(bool soloActivos = true, int tipoFecha = 0, DateTime? fechaInicio = null, DateTime? fechaFin = null)
+        public List<Contrato> ObtenerTodosLosContratosPorMatricula(string matricula)
         {
             try
             {
-                // Obtener los contratos desde la capa de acceso a datos
-                var contratos = _contratosDataAccess.ObtenerTodosLosContratos(soloActivos, tipoFecha, fechaInicio, fechaFin);
+                if (string.IsNullOrWhiteSpace(matricula))
+                {
+                    _logger.Warn("Matrícula vacía al intentar buscar contratos.");
+                    return new List<Contrato>();
+                }
 
-                _logger.Info($"Se obtuvieron {contratos.Count} contratos correctamente");
+                if (!EmpleadoNegocio.EsNoMatriculaValido(matricula))
+                {
+                    _logger.Warn($"Formato de matrícula inválido: {matricula}");
+                    return new List<Contrato>();
+                }
+
+                var contratos = _contratosDataAccess.ObtenerContratosPorMatricula(matricula); // ✅ usa el nuevo
+
+                if (contratos == null || contratos.Count == 0)
+                {
+                    _logger.Info($"No se encontraron contratos para la matrícula {matricula}.");
+                    return new List<Contrato>();
+                }
+
                 return contratos;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al obtener la lista de contratos");
-                throw; // Propagar la excepción para que la capa superior la maneje
+                _logger.Error(ex, $"Error al buscar contratos para la matrícula: {matricula}");
+                return new List<Contrato>();
             }
         }
-        public List<Contrato> ObtenerTodosLosContratosPorMatricula(string matricula)
-        {
-            return _contratosDataAccess.ObtenerContratosPorMatricula(matricula);
-        }
-
 
         //registrar un nuevo contrato
-        public (int id, string mensaje) RegistrarContrato(Contrato contrato, Empleado empleado)
+        public (int id, string mensaje) RegistrarContrato(string matricula, Contrato contrato) //FUNCIONA
         {
             try
             {
-                // Verificar si ya existe un contrato con el mismo ID (por seguridad, aunque lo normal es que no venga definido en inserción)
-                if (_contratosDataAccess.ExisteContratoPorId(contrato.Id_Contrato))
-                {
-                    _logger.Warn($"Intento de registrar contrato duplicado con ID: {contrato.Id_Contrato}");
-                    return (-3, $"El contrato con ID {contrato.Id_Contrato} ya existe en el sistema.");
-                }
+                if (string.IsNullOrWhiteSpace(matricula) || contrato == null)
+                    return (-1, "La matrícula o el contrato son inválidos.");
 
-                _logger.Info($"Registrando contrato para empleado ID: {empleado.Id_Persona}");
+                if (!EmpleadoNegocio.EsNoMatriculaValido(matricula))
+                    return (-2, "Formato de matrícula inválido.");
 
-                int idContrato = _contratosDataAccess.InsertarContrato(contrato, empleado);
+                //Obtener al empleado completo
+                Empleado empleado = _empleadosDataAccess.ObtenerEmpleadoPorMatricula(matricula);
+
+                if (empleado == null || empleado.Estatus == 0)
+                    return (-3, "No se encontró un empleado activo con esa matrícula.");
+
+                if (_contratosDataAccess.TieneContratoActivo(matricula))
+                    return (-4, "Este empleado ya tiene un contrato activo.");
+
+                contrato.Matricula = matricula;
+
+                // ✔️ Registrar usando directamente el ID ya obtenido
+                int idContrato = _contratosDataAccess.InsertarContrato(contrato, empleado.Id_Empleado);
 
                 if (idContrato <= 0)
-                {
-                    return (-4, "Error al registrar el contrato en la base de datos");
-                }
+                    return (-5, "Error al registrar el contrato en la base de datos.");
 
-                _logger.Info($"Contrato registrado exitosamente con ID: {idContrato}");
-                return (idContrato, "Contrato registrado exitosamente");
+                return (idContrato, "Contrato registrado exitosamente.");
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Error al registrar contrato para empleado ID: {empleado.Id_Persona}");
-                return (-5, $"Error inesperado: {ex.Message}");
+                _logger.Error(ex, $"Error al registrar contrato para matrícula: {matricula}");
+                return (-6, "Error inesperado: " + ex.Message);
             }
         }
+
+
+
 
         //Obtener detalles de un contrato
         public Contrato? ObtenerDetalleContrato(int idContrato)
@@ -100,11 +120,25 @@ namespace RecursosHumanos.Controller
                 throw;
             }
         }
-        public List<Contrato> ObtenerContratosFiltrados(string matricula, int tipoContrato, int estatus, int departamento, DateTime fechaInicio, DateTime fechaFin)
+        public List<Contrato> ObtenerContratosFiltrados(
+     string matricula,
+     int tipoContrato,
+     int estatus,
+     int departamento,
+     DateTime? fechaInicio,
+     DateTime? fechaFin)
         {
             try
             {
-                return _contratosDataAccess.ObtenerContratosFiltrados(matricula, tipoContrato, estatus, departamento, fechaInicio, fechaFin);
+                // Pasa los parámetros directamente al DataAccess (ajustado para nullables y -1)
+                return _contratosDataAccess.ObtenerContratosFiltrados(
+                    matricula,
+                    tipoContrato,
+                    estatus,
+                    departamento,
+                    fechaInicio,
+                    fechaFin
+                );
             }
             catch (Exception ex)
             {
@@ -112,23 +146,21 @@ namespace RecursosHumanos.Controller
                 return new List<Contrato>();
             }
         }
+
+
         public bool TieneContratoActivo(string matricula)
         {
             return _contratosDataAccess.TieneContratoActivo(matricula);
         }
-
-
-
 
         //actualizar un contrato
         public (bool exito, string mensaje) ActualizarContrato(Contrato contrato)
         {
             try
             {
-                // Validaciones básicas
                 if (contrato == null)
                 {
-                    return (false, "No se proporcionaron datos del contrato");
+                    return (false, "No se proporcionaron datos del contrato.");
                 }
 
                 if (!EmpleadoNegocio.EsNoMatriculaValido(contrato.Matricula))
@@ -136,33 +168,38 @@ namespace RecursosHumanos.Controller
                     return (false, "El formato de matrícula no es válido.");
                 }
 
-
                 // Verificar si el contrato existe
                 Contrato? contratoExistente = _contratosDataAccess.ObtenerContratoPorId(contrato.Id_Contrato);
-
                 if (contratoExistente == null)
                 {
-                    return (false, $"No se encontró el contrato con ID {contrato.Id_Contrato}");
+                    return (false, $"No se encontró el contrato con ID {contrato.Id_Contrato}.");
                 }
 
+                // Obtener el ID del empleado desde la matrícula
+                var empleado = _empleadosDataAccess.ObtenerEmpleadoPorMatricula(contrato.Matricula);
+                if (empleado == null)
+                {
+                    return (false, "No se encontró el empleado correspondiente a la matrícula.");
+                }
 
-                _logger.Info($"Actualizando contrato con ID: {contrato.Id_Contrato} para el empleado Matricula: {contrato.Matricula}");
+                _logger.Info($"Actualizando contrato con ID: {contrato.Id_Contrato} para el empleado ID: {empleado.Id_Empleado}");
 
-                bool resultado = _contratosDataAccess.ActualizarContrato(contrato);
+                // Llamar a ActualizarContrato con el ID correcto del empleado
+                bool resultado = _contratosDataAccess.ActualizarContrato(contrato, empleado.Id_Empleado);
 
                 if (!resultado)
                 {
-                    _logger.Error($"Error al actualizar el contrato con ID {contrato.Id_Contrato}");
-                    return (false, "Error al actualizar el contrato en la base de datos");
+                    _logger.Error($"Error al actualizar el contrato con ID {contrato.Id_Contrato}.");
+                    return (false, "Error al actualizar el contrato en la base de datos.");
                 }
 
-                _logger.Info($"Contrato con ID {contrato.Id_Contrato} actualizado exitosamente");
-                return (true, "Contrato actualizado exitosamente");
+                _logger.Info($"Contrato con ID {contrato.Id_Contrato} actualizado exitosamente.");
+                return (true, "Contrato actualizado exitosamente.");
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, $"Error inesperado al actualizar contrato con ID: {contrato.Id_Contrato}");
-                return (false, "Error inesperado al actualizar el contrato");
+                return (false, "Error inesperado al actualizar el contrato.");
             }
         }
 
