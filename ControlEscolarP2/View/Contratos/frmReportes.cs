@@ -14,12 +14,17 @@ using RecursosHumanos.Controller;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using static RecursosHumanos.View.frmListaUsuarios;
 using System.Windows.Forms;
+using RecursosHumanos.Models;
+using RecursosHumanos.Data;
 
 namespace RecursosHumanos.View
 {
     public partial class frmReportes : Form
     {
         private ContratoController _contratosController = new ContratoController();
+        private readonly DepartamentoController _departamentoController = new DepartamentoController();
+        private Dictionary<int, string> departamentos = new Dictionary<int, string>();
+
         public frmReportes()
         {
             InitializeComponent();
@@ -29,6 +34,7 @@ namespace RecursosHumanos.View
             InicializaVentanaReportes();
             IniciarTabla();
             InicializarCampos();
+            MostrarContratosSinFiltro();
 
 
         }
@@ -43,47 +49,54 @@ namespace RecursosHumanos.View
             Formas.ConfigurarTextBox(txtMatricula, "Ingresa la matricula");
         }
 
+
         private void ConfigurarColumnas()
         {
             dataGridUsuarios.Columns.Clear();
-            dataGridUsuarios.AutoGenerateColumns = false; // Desactiva la generación automática
+            dataGridUsuarios.AutoGenerateColumns = false;
 
-            // Las columnas deben coincidir EXACTAMENTE con los nombres de las propiedades de Usuario
+            dataGridUsuarios.Columns.Add("Id_Contrato", "ID Contrato");
             dataGridUsuarios.Columns.Add("Matricula", "Matrícula");
-            dataGridUsuarios.Columns.Add("Nombre", "Nombre");
-            dataGridUsuarios.Columns.Add("Departamento", "Departamento");
-            dataGridUsuarios.Columns.Add("Antiguedad", "Antigüedad");
-            dataGridUsuarios.Columns.Add("EstadoLaboral", "Estado Laboral");
-            dataGridUsuarios.Columns.Add("FechaIngreso", "Fecha de Ingreso");
+            dataGridUsuarios.Columns.Add("NombreEmpleado", "Empleado");
+            dataGridUsuarios.Columns.Add("NombreDepartamento", "Departamento");
+           
+            dataGridUsuarios.Columns.Add("FechaInicio", "Fecha Inicio");
+            dataGridUsuarios.Columns.Add("FechaFin", "Fecha Fin");
+            dataGridUsuarios.Columns.Add("HoraEntrada", "Hora Entrada");
+            dataGridUsuarios.Columns.Add("HoraSalida", "Hora Salida");
+            dataGridUsuarios.Columns.Add("Sueldo", "Salario");
+            dataGridUsuarios.Columns.Add("Descripcion", "Descripción");
+            dataGridUsuarios.Columns.Add("Estatus", "Estatus");
+            dataGridUsuarios.Columns.Add("NombreTipoContrato", "Tipo de Contrato");
 
             dataGridUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
+
+
+
         private void InicializaVentanaReportes()
         {
-            PoblaComboDepartamento();
+            CargarDepartamentosDesdeBD();
+            PoblarComboDepartamento();
             PoblaComboEstatus();
             PoblaComboTipoContrato();
             dtpFechaInicio.Value = DateTime.Now;
             dtpFechaFin.Value = DateTime.Now;
         }
-
-        private void PoblaComboDepartamento()
+        private void PoblarComboDepartamento()
         {
-            // Crear un diccionario con los valores
-            Dictionary<int, string> list_departamento = new Dictionary<int, string>
+            if (departamentos.Count > 0)
             {
-            { 1, "Asistio" },
-            { 0, "Null" },
-            { 2, "No asistio" }
-            };
-
-            // Asignar el diccionario al ComboBox
-            cbxDepartamento1.DataSource = new BindingSource(list_departamento, null);
-            cbxDepartamento1.DisplayMember = "Value";  // Lo que se muestra
-            cbxDepartamento1.ValueMember = "Key";      // Lo que se guarda como SelectedValue
-
-            cbxDepartamento1.SelectedValue = 1;
-
+                cbxDepartamento1.DataSource = new BindingSource(departamentos, null);
+                cbxDepartamento1.DisplayMember = "Value";
+                cbxDepartamento1.ValueMember = "Key";
+                cbxDepartamento1.SelectedIndex = -1;
+            }
+            else
+            {
+                MessageBox.Show("No se encontraron departamentos.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cbxDepartamento1.Enabled = false;
+            }
         }
         private void PoblaComboEstatus()
         {
@@ -91,8 +104,7 @@ namespace RecursosHumanos.View
             Dictionary<int, string> list_estadoL = new Dictionary<int, string>
             {
                 { 1, "Activo" },
-                { 0, "Null" },
-                { 2, "Inactivo" }
+                { 0, "Inactivo" }
             };
 
             // Asignar el diccionario al ComboBox
@@ -106,49 +118,84 @@ namespace RecursosHumanos.View
 
         private void PoblaComboTipoContrato()
         {
-            // Crear un diccionario con los valores
-            Dictionary<int, string> list_tipoC = new Dictionary<int, string>
+            Dictionary<int, string> list_tipoCon = new Dictionary<int, string>
             {
-                { 1, "Temporal" },
-                { 0, "Null" },
-                { 2, "Indifinido" }
+                { 1, "Fijo" },
+                { 2, "Temporal" }
             };
-            // Asignar el diccionario al ComboBox
-            cbxTipoContrato.DataSource = new BindingSource(list_tipoC, null);
-            cbxTipoContrato.DisplayMember = "Value";  // Lo que se muestra
-            cbxTipoContrato.ValueMember = "Key";      // Lo que se guarda como SelectedValue
+
+            cbxTipoContrato.DataSource = new BindingSource(list_tipoCon, null);
+            cbxTipoContrato.DisplayMember = "Value";
+            cbxTipoContrato.ValueMember = "Key";
+
             cbxTipoContrato.SelectedValue = 1;
         }
 
-
-        private bool BuscarTipoReporte()
+        private void MostrarContratosSinFiltro()
         {
-            if (DatosVacios())
+            try
             {
-                MessageBox.Show("Por favor, seleccione un tipo de reporte.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                // Obtener todos los contratos sin filtros (usando nullables)
+                List<Contrato> contratos = _contratosController.ObtenerContratosFiltrados(
+                    null,       // matrícula
+                    0,          // tipoContrato (0 = sin filtro)
+                    -1,         // estatus (-1 = sin filtro, lo debes manejar en tu controller también)
+                    0,          // departamento (0 = sin filtro)
+                    (DateTime?)null, // fechaInicio
+                    (DateTime?)null  // fechaFin
+                );
+
+                dataGridUsuarios.Rows.Clear();
+
+                foreach (var c in contratos)
+                {
+                    dataGridUsuarios.Rows.Add(
+                        c.Id_Contrato,
+                        c.Matricula,
+                        c.NombreEmpleado,
+                        c.NombreDepartamento,
+                        c.FechaInicio.ToShortDateString(),
+                        c.FechaFin.ToShortDateString(),
+                        c.HoraEntrada.ToString(@"hh\:mm"),
+                        c.HoraSalida.ToString(@"hh\:mm"),
+                        c.Sueldo.ToString("C2"),
+                        c.Descripcion,
+                        c.Estatus ? "Activo" : "Inactivo",
+                        c.NombreTipoContrato 
+                    );
+                }
             }
-            return true;
-        }
-        private bool DatosVacios()
-        {
-            if (cbxDepartamento1.Text == "" || cbxTipoContrato.Text == "" || cbxEstatus.Text == "" || dtpFechaInicio.Text == "")
+            catch (Exception ex)
             {
-                return true;
-            }
-            else
-            {
-                return false;
+                MessageBox.Show($"Error al mostrar contratos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-       
+
+
+
+
+        private void CargarDepartamentosDesdeBD()
+        {
+            try
+            {
+                var lista = _departamentoController.ObtenerTodosLosDepartamentos();
+
+                if (lista != null && lista.Count > 0)
+                {
+                    departamentos = lista.ToDictionary(d => d.IdDepartamento, d => d.NombreDepartamento);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar departamentos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void btnGenerar1_Click(object sender, EventArgs e)
         {
             string matricula = txtMatricula.Text.Trim();
 
-            // Validación correcta solo si se ingresó algo distinto del texto por defecto
             if (!string.IsNullOrEmpty(matricula) && matricula != "Ingresa la matricula")
             {
                 if (!EmpleadoNegocio.EsNoMatriculaValido(matricula))
@@ -159,29 +206,36 @@ namespace RecursosHumanos.View
             }
             else
             {
-                // Si el campo estaba vacío o con texto de ayuda, lo tratamos como filtro nulo
                 matricula = null;
             }
 
             int tipoContrato = cbxTipoContrato.SelectedValue != null ? (int)cbxTipoContrato.SelectedValue : 0;
-            int estatus = cbxEstatus.SelectedValue != null ? (int)cbxEstatus.SelectedValue : 0;
+            int estatus = cbxEstatus.SelectedValue != null ? (int)cbxEstatus.SelectedValue : -1;
             int departamento = cbxDepartamento1.SelectedValue != null ? (int)cbxDepartamento1.SelectedValue : 0;
             DateTime fechaInicio = dtpFechaInicio.Value.Date;
             DateTime fechaFin = dtpFechaFin.Value.Date;
 
-            List<Contrato> contratos = new ContratoController().ObtenerContratosFiltrados(
-                matricula, tipoContrato, estatus, departamento, fechaInicio, fechaFin);
+            List<Contrato> contratos = _contratosController.ObtenerContratosFiltrados(matricula, tipoContrato, estatus, departamento, fechaInicio, fechaFin);
 
             dataGridUsuarios.Rows.Clear();
+
             foreach (var c in contratos)
             {
                 dataGridUsuarios.Rows.Add(
-                    c.Matricula,
-                    (DateTime.Now - c.FechaInicio).Days / 30 + " meses",
-                    c.Estatus ? "Activo" : "Inactivo",
-                    c.FechaInicio.ToShortDateString(),
-                    c.FechaFin.ToShortDateString()
-                );
+       c.Id_Contrato,
+       c.Matricula,
+       c.NombreEmpleado,
+       c.NombreDepartamento,
+       c.FechaInicio.ToShortDateString(),
+       c.FechaFin.ToShortDateString(),
+       c.HoraEntrada.ToString(@"hh\:mm"),
+       c.HoraSalida.ToString(@"hh\:mm"),
+       c.Sueldo.ToString("C"),
+       c.Descripcion,
+       c.Estatus ? "Activo" : "Inactivo",
+        c.NombreTipoContrato
+   );
+
             }
 
             MessageBox.Show(
@@ -192,8 +246,7 @@ namespace RecursosHumanos.View
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
             );
-
-        } 
+        }
 
         private void cbxEstadoLaboral1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -209,11 +262,6 @@ namespace RecursosHumanos.View
                 }
             }
         }
-
-        
-        
-    
-
 
     }
 }

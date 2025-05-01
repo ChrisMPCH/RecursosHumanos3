@@ -30,12 +30,25 @@ namespace RecursosHumanos.View.Contratos
             dtpFechaInicio1.Value = DateTime.Now;
             dtpFechaFin.Value = DateTime.Now;
             txtSalario.KeyPress += txtSalario_KeyPress;
+            ConfigurarHoraEntradaSalida(); // Configura DateTimePicker para hora
+
         }
         private void IniciarTabla()
         {
             Formas.ConfigurarEstiloDataGridView(dataGridContratos); // Configurar el estilo del DataGridView
             ConfigurarColumnas(); // Agregar columnas personalizadas
         }
+        private void ConfigurarHoraEntradaSalida()
+        {
+            dtpHoraEntrada.Format = DateTimePickerFormat.Custom;
+            dtpHoraEntrada.CustomFormat = "HH:mm"; // 24 horas (Ejemplo: 14:30)
+            dtpHoraEntrada.ShowUpDown = true; // Solo permite cambiar la hora
+
+            dtpHoraSalida.Format = DateTimePickerFormat.Custom;
+            dtpHoraSalida.CustomFormat = "HH:mm";
+            dtpHoraSalida.ShowUpDown = true;
+        }
+
         public static void InicializarCampos()
         {
             Formas.ConfigurarTextBox(txtMatricula1, "Ingresa tu matricula");
@@ -76,13 +89,7 @@ namespace RecursosHumanos.View.Contratos
                 DataPropertyName = "Matricula"
             });
 
-            dataGridContratos.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "Nombre",
-                HeaderText = "Nombre",
-                DataPropertyName = "NombreEmpleado"
-            });
-
+          
             dataGridContratos.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "TipoContrato",
@@ -146,12 +153,15 @@ namespace RecursosHumanos.View.Contratos
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-            if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula1.Text.Trim()))
+            // Si ya está visible, oculta el panel y regresa
+            if (!splitContainer1.Panel1Collapsed)
             {
-                MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                splitContainer1.Panel1Collapsed = true;
+                btnActualizar.Text = "Actualizar";
                 return;
             }
 
+            // Validar que se haya seleccionado un contrato
             if (dataGridContratos.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Selecciona un contrato para actualizar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -160,8 +170,6 @@ namespace RecursosHumanos.View.Contratos
 
             // Obtener el ID del contrato seleccionado
             int idContrato = Convert.ToInt32(dataGridContratos.SelectedRows[0].Cells["Id_Contrato"].Value);
-
-            // Obtener los detalles desde el controller
             var contrato = _contratosController.ObtenerDetalleContrato(idContrato);
 
             if (contrato == null)
@@ -170,33 +178,32 @@ namespace RecursosHumanos.View.Contratos
                 return;
             }
 
-            // Validar que no esté finalizado o cancelado (inactivo)
-            if (!contrato.Estatus || contrato.FechaFin.Date < DateTime.Now.Date)
+            // Validar contrato activo
+            if (!contrato.Estatus || contrato.FechaFin < DateTime.Now.Date)
             {
-                MessageBox.Show("Este contrato está finalizado o cancelado y no puede ser editado.", "Acción no permitida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Este contrato ya finalizó o está inactivo.", "No editable", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Mostrar u ocultar el panel de actualización
-            if (splitContainer1.Panel1Collapsed)
-            {
-                splitContainer1.Panel1Collapsed = false;
-                btnActualizar.Text = "Ocultar Actualizar";
+            // Mostrar el panel y llenar los campos
+            splitContainer1.Panel1Collapsed = false;
+            btnActualizar.Text = "Ocultar Actualizar";
 
-                // Cargar nuevamente los contratos (opcional)
-                string matricula = txtMatricula1.Text.Trim();
-                if (!string.IsNullOrWhiteSpace(matricula) && matricula != "Ingresa tu matricula")
-                {
-                    CargarContratos(matricula);
-                }
-            }
-            else
-            {
-                splitContainer1.Panel1Collapsed = true;
-                btnActualizar.Text = "Actualizar";
-            }
-
+            txtMatriculaA.Text = contrato.Matricula;
+            txtMatricula1.ReadOnly = true;
+            txtDescripcion.Text = contrato.Descripcion;
+            txtSalario.Text = contrato.Sueldo.ToString("F2");
+            dtpFechaInicio1.Value = contrato.FechaInicio;
+            dtpFechaFin.Value = contrato.FechaFin;
+            dtpHoraEntrada.Value = DateTime.Today.Add(contrato.HoraEntrada);
+            dtpHoraSalida.Value = DateTime.Today.Add(contrato.HoraSalida);
+            cbxTipoContrato1.SelectedValue = contrato.Id_TipoContrato;
+            btnGuardar.Tag = contrato.Id_Contrato;
         }
+
+
+
+
 
         private void CargarContratos(string matricula)
         {
@@ -214,7 +221,7 @@ namespace RecursosHumanos.View.Contratos
                 DataTable dt = new DataTable();
                 dt.Columns.Add("Id_Contrato", typeof(int));
                 dt.Columns.Add("Matricula", typeof(string));
-                dt.Columns.Add("TipoContrato", typeof(string));
+                dt.Columns.Add("NombreTipoContrato", typeof(string)); 
                 dt.Columns.Add("FechaInicio", typeof(string));
                 dt.Columns.Add("FechaFin", typeof(string));
                 dt.Columns.Add("HoraEntrada", typeof(string));
@@ -228,7 +235,7 @@ namespace RecursosHumanos.View.Contratos
                     dt.Rows.Add(
                         contrato.Id_Contrato,
                         contrato.Matricula,
-                        contrato.Id_TipoContrato.ToString(), // podrías cambiarlo por el nombre si lo agregas después
+                        contrato.NombreTipoContrato, 
                         contrato.FechaInicio.ToString("dd/MM/yyyy"),
                         contrato.FechaFin.ToString("dd/MM/yyyy"),
                         contrato.HoraEntrada.ToString(@"hh\:mm"),
@@ -240,7 +247,7 @@ namespace RecursosHumanos.View.Contratos
                 }
 
                 dataGridContratos.DataSource = dt;
-                ConfigurarColumnas(); // Asegúrate de que esta coincida con las columnas de arriba
+                ConfigurarColumnas();
             }
             catch (Exception ex)
             {
@@ -248,25 +255,43 @@ namespace RecursosHumanos.View.Contratos
             }
         }
 
+
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             string matricula = txtMatricula1.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(matricula) )
+            if (string.IsNullOrWhiteSpace(matricula) || !EmpleadoNegocio.EsNoMatriculaValido(matricula))
             {
-                MessageBox.Show("Por favor, ingrese su matrícula.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Matrícula inválida.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula1.Text.Trim()))
+
+            if (!(btnGuardar.Tag is int idContrato))
             {
-                MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("No se ha seleccionado un contrato válido para actualizar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            // Validar sueldo y fechas
+            if (!double.TryParse(txtSalario.Text, out double sueldo) || sueldo <= 0)
+            {
+                MessageBox.Show("Salario inválido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (dtpFechaInicio1.Value.Date >= dtpFechaFin.Value.Date)
+            {
+                MessageBox.Show("La fecha de inicio debe ser anterior a la fecha de fin.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Crear objeto contrato con ID
             Contrato contratoActualizado = new Contrato
             {
-                Matricula = txtMatricula1.Text.Trim(),
+                Id_Contrato = idContrato, // <--- aquí está la clave
+                Matricula = matricula,
                 Id_TipoContrato = ((KeyValuePair<int, string>)cbxTipoContrato1.SelectedItem).Key,
-                Sueldo = double.TryParse(txtSalario.Text, out double sueldo) ? sueldo : 0,
+                Sueldo = sueldo,
                 FechaInicio = dtpFechaInicio1.Value.Date,
                 FechaFin = dtpFechaFin.Value.Date,
                 HoraEntrada = dtpHoraEntrada.Value.TimeOfDay,
@@ -282,7 +307,7 @@ namespace RecursosHumanos.View.Contratos
                 MessageBox.Show(resultado.mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 splitContainer1.Panel1Collapsed = true;
                 btnActualizar.Text = "Actualizar";
-                CargarContratos(txtMatricula1.Text.Trim());
+                CargarContratos(matricula); // refresca la tabla
             }
             else
             {
@@ -294,7 +319,8 @@ namespace RecursosHumanos.View.Contratos
         {
             if (BuscarMatricula())
             {
-                MessageBox.Show("Cargando datos.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string matricula = txtMatricula1.Text.Trim();
+                CargarContratos(matricula); 
             }
         }
 
