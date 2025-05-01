@@ -138,17 +138,29 @@ namespace RecursosHumanos.View
                     return;
                 }
 
+                // OBTENCIÓN DE FECHAS
+                DateTime fechaInicio = dtpFechaInicio1.Value.Date;
+                DateTime fechaFin = dtpFechaFin1.Value.Date;
+
+                // CÁLCULO DE ESTATUS AUTOMÁTICO
+                bool estatus = fechaFin >= DateTime.Now.Date;
+
+                if (!estatus)
+                {
+                    MessageBox.Show("Este contrato se registrará como INACTIVO porque la fecha de fin ya ha pasado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
                 // CONSTRUCCIÓN DE CONTRATO 
                 Contrato contrato = new Contrato
                 {
                     Id_TipoContrato = tipoContratoSeleccionado.Key,
-                    FechaInicio = dtpFechaInicio1.Value.Date,
-                    FechaFin = dtpFechaFin1.Value.Date,
+                    FechaInicio = fechaInicio,
+                    FechaFin = fechaFin,
                     HoraEntrada = dtpHoraEntrada.Value.TimeOfDay,
                     HoraSalida = dtpHoraSalida1.Value.TimeOfDay,
                     Sueldo = sueldo,
                     Descripcion = txtDescrpcion.Text.Trim(),
-                    Estatus = true
+                    Estatus = estatus
                 };
 
                 // LLAMADA AL CONTROLLER con matrícula como parámetro

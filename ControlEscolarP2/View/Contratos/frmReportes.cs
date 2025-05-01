@@ -87,10 +87,21 @@ namespace RecursosHumanos.View
         {
             if (departamentos.Count > 0)
             {
-                cbxDepartamento1.DataSource = new BindingSource(departamentos, null);
+                // Agregamos manualmente "Todos" con clave -1
+                var departamentosConTodos = new Dictionary<int, string>
+        {
+            { -1, "Todos" }
+        };
+
+                foreach (var item in departamentos)
+                {
+                    departamentosConTodos.Add(item.Key, item.Value);
+                }
+
+                cbxDepartamento1.DataSource = new BindingSource(departamentosConTodos, null);
                 cbxDepartamento1.DisplayMember = "Value";
                 cbxDepartamento1.ValueMember = "Key";
-                cbxDepartamento1.SelectedIndex = -1;
+                cbxDepartamento1.SelectedValue = -1; // "Todos" seleccionado por defecto
             }
             else
             {
@@ -98,37 +109,38 @@ namespace RecursosHumanos.View
                 cbxDepartamento1.Enabled = false;
             }
         }
+
         private void PoblaComboEstatus()
         {
-            // Crear un diccionario con los valores
             Dictionary<int, string> list_estadoL = new Dictionary<int, string>
-            {
-                { 1, "Activo" },
-                { 0, "Inactivo" }
-            };
+    {
+        { -1, "Todos" },    // Esta opción no aplica filtro
+        { 1, "Activo" },
+        { 0, "Inactivo" }
+    };
 
-            // Asignar el diccionario al ComboBox
             cbxEstatus.DataSource = new BindingSource(list_estadoL, null);
-            cbxEstatus.DisplayMember = "Value";  // Lo que se muestra
-            cbxEstatus.ValueMember = "Key";      // Lo que se guarda como SelectedValue
+            cbxEstatus.DisplayMember = "Value";
+            cbxEstatus.ValueMember = "Key";
 
-            cbxEstatus.SelectedValue = 1;
-
+            cbxEstatus.SelectedValue = -1; // Por defecto sin filtro
         }
+
 
         private void PoblaComboTipoContrato()
         {
             Dictionary<int, string> list_tipoCon = new Dictionary<int, string>
-            {
-                { 1, "Fijo" },
-                { 2, "Temporal" }
-            };
+    {
+        { -1, "Todos" },      // Clave -1 para no aplicar filtro
+        { 1, "Fijo" },
+        { 2, "Temporal" }
+    };
 
             cbxTipoContrato.DataSource = new BindingSource(list_tipoCon, null);
             cbxTipoContrato.DisplayMember = "Value";
             cbxTipoContrato.ValueMember = "Key";
 
-            cbxTipoContrato.SelectedValue = 1;
+            cbxTipoContrato.SelectedValue = -1; // Selecciona "Todos" por defecto
         }
 
         private void MostrarContratosSinFiltro()
@@ -139,7 +151,7 @@ namespace RecursosHumanos.View
                 List<Contrato> contratos = _contratosController.ObtenerContratosFiltrados(
                     null,       // matrícula
                     0,          // tipoContrato (0 = sin filtro)
-                    -1,         // estatus (-1 = sin filtro, lo debes manejar en tu controller también)
+                    -1,         // estatus (-1 = sin filtro)
                     0,          // departamento (0 = sin filtro)
                     (DateTime?)null, // fechaInicio
                     (DateTime?)null  // fechaFin
@@ -191,7 +203,6 @@ namespace RecursosHumanos.View
                 MessageBox.Show($"Error al cargar departamentos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void btnGenerar1_Click(object sender, EventArgs e)
         {
             string matricula = txtMatricula.Text.Trim();
@@ -209,33 +220,44 @@ namespace RecursosHumanos.View
                 matricula = null;
             }
 
-            int tipoContrato = cbxTipoContrato.SelectedValue != null ? (int)cbxTipoContrato.SelectedValue : 0;
+            // Validaciones de selección
+            int tipoContrato = cbxTipoContrato.SelectedValue != null ? (int)cbxTipoContrato.SelectedValue : -1;
             int estatus = cbxEstatus.SelectedValue != null ? (int)cbxEstatus.SelectedValue : -1;
-            int departamento = cbxDepartamento1.SelectedValue != null ? (int)cbxDepartamento1.SelectedValue : 0;
-            DateTime fechaInicio = dtpFechaInicio.Value.Date;
-            DateTime fechaFin = dtpFechaFin.Value.Date;
+            int departamento = cbxDepartamento1.SelectedValue != null ? (int)cbxDepartamento1.SelectedValue : -1;
 
+            // Evaluar si el filtro de fechas debe aplicarse
+            DateTime? fechaInicio = null;
+            DateTime? fechaFin = null;
+
+            if (!(dtpFechaInicio.Value.Date == DateTime.Today && dtpFechaFin.Value.Date == DateTime.Today))
+            {
+                fechaInicio = dtpFechaInicio.Value.Date;
+                fechaFin = dtpFechaFin.Value.Date;
+            }
+
+         
+            // Obtener contratos con los filtros
             List<Contrato> contratos = _contratosController.ObtenerContratosFiltrados(matricula, tipoContrato, estatus, departamento, fechaInicio, fechaFin);
 
+            // Mostrar en tabla
             dataGridUsuarios.Rows.Clear();
 
             foreach (var c in contratos)
             {
                 dataGridUsuarios.Rows.Add(
-       c.Id_Contrato,
-       c.Matricula,
-       c.NombreEmpleado,
-       c.NombreDepartamento,
-       c.FechaInicio.ToShortDateString(),
-       c.FechaFin.ToShortDateString(),
-       c.HoraEntrada.ToString(@"hh\:mm"),
-       c.HoraSalida.ToString(@"hh\:mm"),
-       c.Sueldo.ToString("C"),
-       c.Descripcion,
-       c.Estatus ? "Activo" : "Inactivo",
-        c.NombreTipoContrato
-   );
-
+                    c.Id_Contrato,
+                    c.Matricula,
+                    c.NombreEmpleado,
+                    c.NombreDepartamento,
+                    c.FechaInicio.ToShortDateString(),
+                    c.FechaFin.ToShortDateString(),
+                    c.HoraEntrada.ToString(@"hh\:mm"),
+                    c.HoraSalida.ToString(@"hh\:mm"),
+                    c.Sueldo.ToString("C"),
+                    c.Descripcion,
+                    c.Estatus ? "Activo" : "Inactivo",
+                    c.NombreTipoContrato
+                );
             }
 
             MessageBox.Show(
@@ -247,6 +269,7 @@ namespace RecursosHumanos.View
                 MessageBoxIcon.Information
             );
         }
+
 
         private void cbxEstadoLaboral1_SelectedIndexChanged(object sender, EventArgs e)
         {
