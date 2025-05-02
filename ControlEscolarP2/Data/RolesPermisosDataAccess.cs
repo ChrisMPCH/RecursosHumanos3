@@ -15,12 +15,6 @@ namespace RecursosHumanos.Data
         // Instancia del acceso a la base de datos PostgreSQL
         private readonly PostgreSQLDataAccess _dbAccess;
 
-        // Acceso a datos de Roles (para cargar la relación)
-        private readonly RolesDataAccess _rolesData;
-
-        // Acceso a datos de Permisos (para cargar la relación)
-        private readonly PermisosDataAccess _permisosData;
-
         // Constructor: inicializa la conexión a PostgreSQL
         public RolesPermisosDataAccess()
         {

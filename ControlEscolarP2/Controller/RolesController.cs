@@ -13,6 +13,8 @@ namespace RecursosHumanos.Controller
 
         private readonly RolesDataAccess _rolesData;
         private readonly RolesPermisosDataAccess _rolesPermisosData;
+        private static readonly AuditoriasController _auditoriasController = new AuditoriasController();
+
         public RolesController()
         {
             try
@@ -78,6 +80,7 @@ namespace RecursosHumanos.Controller
                         _rolesPermisosData.InsertarRolPermiso(relacion);
                     }
                 }
+                _auditoriasController.RegistrarAuditoriaGenerica(4,1, (short)idRol);
 
                 return (true, "Rol y permisos asignados correctamente.");
             }
@@ -150,6 +153,7 @@ namespace RecursosHumanos.Controller
                         _rolesPermisosData.InsertarRolPermiso(nuevaRelacion);
                     }
                 }
+                _auditoriasController.RegistrarAuditoriaGenerica(4, 3, (short)rol.Id_Rol);
 
                 return (true, "Rol actualizado correctamente con sus permisos.");
             }
@@ -175,6 +179,8 @@ namespace RecursosHumanos.Controller
                 }
 
                 bool permisosEliminados = _rolesPermisosData.EliminarPermisosDeRol(idRol);
+                _auditoriasController.RegistrarAuditoriaGenerica(4, 2, (short)idRol);
+
                 return (true, "Rol eliminado correctamente (soft delete).");
             }
             catch (Exception ex)

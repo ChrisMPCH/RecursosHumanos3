@@ -5,6 +5,7 @@ using Npgsql;
 using NLog;
 using RecursosHumanos.Utilities;
 using RecursosHumanos.Model;
+using RecursosHumanos.Controller;
 
 namespace RecursosHumanos.Data
 {

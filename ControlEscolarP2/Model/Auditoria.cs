@@ -9,9 +9,10 @@ namespace RecursosHumanos.Model
 {
     public class Auditoria
     {
+
         public int Id_Auditoria { get; set; }
-        public int Movimiento { get; set; }
         public short Id_Tipo { get; set; }
+        public short Movimiento { get; internal set; }
         public short Id_Accion { get; set; }
         public DateTime Fecha_Movimiento { get; set; }
         public string Ip_Equipo { get; set; }
@@ -47,9 +48,9 @@ namespace RecursosHumanos.Model
                          string detalle, int idUsuario, short estatus, Usuario usuario)
         {
             Id_Auditoria = idAuditoria;
-            Movimiento = movimiento;
             Id_Tipo = idTipo;
             Id_Accion = idAccion;
+            Movimiento = (short)movimiento;
             Fecha_Movimiento = fechaMovimiento;
             Ip_Equipo = ipEquipo;
             Nombre_Equipo = nombreEquipo;
@@ -58,6 +59,7 @@ namespace RecursosHumanos.Model
             Estatus = estatus;
             UsuarioResponsable = usuario;
         }
+
     }
 }
 

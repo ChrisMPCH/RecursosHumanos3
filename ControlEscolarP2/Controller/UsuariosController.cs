@@ -9,6 +9,7 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using RecursosHumanos.Utilities;
+using RecursosHumanos.View;
 
 namespace RecursosHumanos.Controller
 {
@@ -17,6 +18,7 @@ namespace RecursosHumanos.Controller
         private readonly PersonasDataAccess _personasAccess;
         private readonly UsuarioDataAccess _usuariosAccess;
         private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Controller.UsuariosController");
+        private static readonly AuditoriasController _auditoriasController = new AuditoriasController();
 
         public UsuariosController()
         {
@@ -39,9 +41,12 @@ namespace RecursosHumanos.Controller
                 }
 
                 int idGenerado = _usuariosAccess.InsertarUsuario(usuario);
-                return idGenerado > 0
-                    ? (true, "Usuario registrado correctamente.")
-                    : (false, "Error al insertar usuario.");
+                if (idGenerado > 0)
+                {
+                    _auditoriasController.RegistrarAuditoriaGenerica(3,1, (short)idGenerado);
+                    return (true, $"Usuario registrado correctamente con ID {idGenerado}.");
+                }
+                 return (false, "Error al insertar usuario.");
             }
             catch (Exception ex)
             {
@@ -74,6 +79,14 @@ namespace RecursosHumanos.Controller
             try
             {
                 bool eliminado = _usuariosAccess.EliminarUsuario(idUsuario);
+                if (eliminado)
+                {
+                    _auditoriasController.RegistrarAuditoriaGenerica(3, 0, (short)idUsuario);
+                }
+                else
+                {
+                    _logger.Warn($"No se pudo eliminar el usuario con ID {idUsuario}");
+                }
                 return eliminado
                     ? (true, "Usuario eliminado correctamente.")
                     : (false, "No se pudo eliminar el usuario.");
@@ -112,6 +125,8 @@ namespace RecursosHumanos.Controller
                 }
 
                 _logger.Info($"Usuario con ID {usuario.Id_Usuario} actualizado correctamente.");
+                _auditoriasController.RegistrarAuditoriaGenerica(3, 2, (short)usuario.Id_Usuario);
+
                 return true;
             }
             catch (Exception ex)
