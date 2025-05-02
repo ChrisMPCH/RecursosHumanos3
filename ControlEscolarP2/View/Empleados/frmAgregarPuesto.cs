@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Models;
 using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View
@@ -52,20 +54,48 @@ namespace RecursosHumanos.View
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (GuardarPuesto())
+            if (GenerarPuesto())
             {
                 MessageBox.Show("Datos guardados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private bool GuardarPuesto()
+        public bool GenerarPuesto()
         {
             if (DatosVacios())
             {
                 MessageBox.Show("Por favor, llene todos los campos.", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            return true;
+
+            PuestoController controller = new PuestoController();
+
+            Puesto nuevoPuesto = new Puesto
+            {
+                NombrePuesto = txtNombre.Text.Trim(),
+                DescripcionPuesto = txtDescripcion.Text.Trim(),
+                Estatus = true
+            };
+
+            var (idPuesto, mensaje) = controller.RegistrarPuesto(nuevoPuesto);
+            if (idPuesto > 0)
+            {
+                MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                MDIRecursosHumanos.BloquearBotonesMenu();
+
+
+                InicializarCampos();
+                DesbloquearCampos(true);
+                Form frmGuardarInf = new frmGuardarInformacion();
+                Formas.abrirPanelForm(frmGuardarInf, pnlCambiante);
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -96,6 +126,11 @@ namespace RecursosHumanos.View
                     MessageBox.Show("Por favor, selecciona un archivo de Excel válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
+        }
+        private void DesbloquearCampos(bool desbloquear)
+        {
+            txtNombre.Enabled = desbloquear;
+            txtDescripcion.Enabled = desbloquear;
         }
     }
 }

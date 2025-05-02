@@ -67,7 +67,7 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges34 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges35 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges36 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            lblDireccion = new Label();
+            lblNombreCompleto = new Label();
             lblEmail = new Label();
             lblTelefono = new Label();
             lblCurp = new Label();
@@ -84,7 +84,7 @@
             btnCargaMasiva = new Guna.UI2.WinForms.Guna2Button();
             ptbInfoMatricula = new Guna.UI2.WinForms.Guna2PictureBox();
             btnBuscar = new Guna.UI2.WinForms.Guna2Button();
-            txtDireccion = new Guna.UI2.WinForms.Guna2TextBox();
+            txtNombreCompleto = new Guna.UI2.WinForms.Guna2TextBox();
             txtCorreo = new Guna.UI2.WinForms.Guna2TextBox();
             txtTelefono1 = new Guna.UI2.WinForms.Guna2TextBox();
             txtCurp1 = new Guna.UI2.WinForms.Guna2TextBox();
@@ -116,23 +116,23 @@
             guna2GradientPanel2.SuspendLayout();
             SuspendLayout();
             // 
-            // lblDireccion
+            // lblNombreCompleto
             // 
-            lblDireccion.AutoSize = true;
-            lblDireccion.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblDireccion.Location = new Point(98, 227);
-            lblDireccion.Name = "lblDireccion";
-            lblDireccion.Size = new Size(124, 25);
-            lblDireccion.TabIndex = 11;
-            lblDireccion.Text = "Direccion *";
+            lblNombreCompleto.AutoSize = true;
+            lblNombreCompleto.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            lblNombreCompleto.Location = new Point(165, 167);
+            lblNombreCompleto.Name = "lblNombreCompleto";
+            lblNombreCompleto.Size = new Size(277, 32);
+            lblNombreCompleto.TabIndex = 11;
+            lblNombreCompleto.Text = "Nombre Completo *";
             // 
             // lblEmail
             // 
             lblEmail.AutoSize = true;
             lblEmail.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblEmail.Location = new Point(144, 186);
+            lblEmail.Location = new Point(165, 314);
             lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(82, 25);
+            lblEmail.Size = new Size(103, 32);
             lblEmail.TabIndex = 9;
             lblEmail.Text = "Email *";
             // 
@@ -140,9 +140,9 @@
             // 
             lblTelefono.AutoSize = true;
             lblTelefono.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblTelefono.Location = new Point(502, 122);
+            lblTelefono.Location = new Point(574, 229);
             lblTelefono.Name = "lblTelefono";
-            lblTelefono.Size = new Size(112, 25);
+            lblTelefono.Size = new Size(143, 32);
             lblTelefono.TabIndex = 3;
             lblTelefono.Text = "Telefono *";
             // 
@@ -150,9 +150,9 @@
             // 
             lblCurp.AutoSize = true;
             lblCurp.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblCurp.Location = new Point(144, 122);
+            lblCurp.Location = new Point(165, 229);
             lblCurp.Name = "lblCurp";
-            lblCurp.Size = new Size(81, 25);
+            lblCurp.Size = new Size(104, 32);
             lblCurp.TabIndex = 4;
             lblCurp.Text = "CURP *";
             // 
@@ -160,9 +160,9 @@
             // 
             lblNombre.AutoSize = true;
             lblNombre.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblNombre.Location = new Point(98, 60);
+            lblNombre.Location = new Point(112, 80);
             lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(123, 25);
+            lblNombre.Size = new Size(156, 32);
             lblNombre.TabIndex = 1;
             lblNombre.Text = "Matricula *";
             // 
@@ -174,7 +174,7 @@
             lblTitulo.ForeColor = Color.White;
             lblTitulo.Location = new Point(0, 0);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(1012, 64);
+            lblTitulo.Size = new Size(1157, 85);
             lblTitulo.TabIndex = 2;
             lblTitulo.Text = "Nuevo Contrato";
             lblTitulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -184,9 +184,9 @@
             lblDescripcion.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblDescripcion.AutoSize = true;
             lblDescripcion.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblDescripcion.Location = new Point(81, 285);
+            lblDescripcion.Location = new Point(93, 380);
             lblDescripcion.Name = "lblDescripcion";
-            lblDescripcion.Size = new Size(147, 25);
+            lblDescripcion.Size = new Size(188, 32);
             lblDescripcion.TabIndex = 13;
             lblDescripcion.Text = "Descripcion *";
             // 
@@ -195,9 +195,9 @@
             lblHoraSalida.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblHoraSalida.AutoSize = true;
             lblHoraSalida.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblHoraSalida.Location = new Point(556, 220);
+            lblHoraSalida.Location = new Point(635, 293);
             lblHoraSalida.Name = "lblHoraSalida";
-            lblHoraSalida.Size = new Size(175, 25);
+            lblHoraSalida.Size = new Size(225, 32);
             lblHoraSalida.TabIndex = 33;
             lblHoraSalida.Text = "Hora de salida *";
             // 
@@ -205,9 +205,9 @@
             // 
             lblHoraEntrada.AutoSize = true;
             lblHoraEntrada.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblHoraEntrada.Location = new Point(111, 220);
+            lblHoraEntrada.Location = new Point(127, 293);
             lblHoraEntrada.Name = "lblHoraEntrada";
-            lblHoraEntrada.Size = new Size(160, 25);
+            lblHoraEntrada.Size = new Size(205, 32);
             lblHoraEntrada.TabIndex = 32;
             lblHoraEntrada.Text = "Hora Entrada *";
             // 
@@ -216,9 +216,9 @@
             lblSalario.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblSalario.AutoSize = true;
             lblSalario.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblSalario.Location = new Point(635, 92);
+            lblSalario.Location = new Point(726, 123);
             lblSalario.Name = "lblSalario";
-            lblSalario.Size = new Size(96, 25);
+            lblSalario.Size = new Size(122, 32);
             lblSalario.TabIndex = 30;
             lblSalario.Text = "Salario *";
             // 
@@ -227,9 +227,9 @@
             lblFechaFin.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblFechaFin.AutoSize = true;
             lblFechaFin.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblFechaFin.Location = new Point(607, 154);
+            lblFechaFin.Location = new Point(694, 205);
             lblFechaFin.Name = "lblFechaFin";
-            lblFechaFin.Size = new Size(124, 25);
+            lblFechaFin.Size = new Size(158, 32);
             lblFechaFin.TabIndex = 27;
             lblFechaFin.Text = "Fecha Fin *";
             // 
@@ -237,9 +237,9 @@
             // 
             lblFechaInicio.AutoSize = true;
             lblFechaInicio.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblFechaInicio.Location = new Point(122, 160);
+            lblFechaInicio.Location = new Point(139, 213);
             lblFechaInicio.Name = "lblFechaInicio";
-            lblFechaInicio.Size = new Size(151, 25);
+            lblFechaInicio.Size = new Size(193, 32);
             lblFechaInicio.TabIndex = 26;
             lblFechaInicio.Text = "Fecha Inicio *";
             // 
@@ -247,9 +247,9 @@
             // 
             lblTipoContrato.AutoSize = true;
             lblTipoContrato.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblTipoContrato.Location = new Point(111, 103);
+            lblTipoContrato.Location = new Point(127, 137);
             lblTipoContrato.Name = "lblTipoContrato";
-            lblTipoContrato.Size = new Size(162, 25);
+            lblTipoContrato.Size = new Size(208, 32);
             lblTipoContrato.TabIndex = 13;
             lblTipoContrato.Text = "Tipo Contrato *";
             // 
@@ -260,7 +260,7 @@
             guna2GradientPanel1.Controls.Add(btnCargaMasiva);
             guna2GradientPanel1.Controls.Add(ptbInfoMatricula);
             guna2GradientPanel1.Controls.Add(btnBuscar);
-            guna2GradientPanel1.Controls.Add(txtDireccion);
+            guna2GradientPanel1.Controls.Add(txtNombreCompleto);
             guna2GradientPanel1.Controls.Add(txtCorreo);
             guna2GradientPanel1.Controls.Add(txtTelefono1);
             guna2GradientPanel1.Controls.Add(txtCurp1);
@@ -268,16 +268,15 @@
             guna2GradientPanel1.Controls.Add(separador1);
             guna2GradientPanel1.Controls.Add(lblNombre);
             guna2GradientPanel1.Controls.Add(lblInfoUsuario);
-            guna2GradientPanel1.Controls.Add(lblDireccion);
+            guna2GradientPanel1.Controls.Add(lblNombreCompleto);
             guna2GradientPanel1.Controls.Add(lblCurp);
             guna2GradientPanel1.Controls.Add(lblTelefono);
             guna2GradientPanel1.Controls.Add(lblEmail);
             guna2GradientPanel1.CustomizableEdges = customizableEdges17;
-            guna2GradientPanel1.Location = new Point(0, 61);
-            guna2GradientPanel1.Margin = new Padding(3, 2, 3, 2);
+            guna2GradientPanel1.Location = new Point(0, 81);
             guna2GradientPanel1.Name = "guna2GradientPanel1";
             guna2GradientPanel1.ShadowDecoration.CustomizableEdges = customizableEdges18;
-            guna2GradientPanel1.Size = new Size(1011, 275);
+            guna2GradientPanel1.Size = new Size(1155, 367);
             guna2GradientPanel1.TabIndex = 38;
             // 
             // btnCargaMasiva
@@ -291,10 +290,11 @@
             btnCargaMasiva.FillColor = Color.DimGray;
             btnCargaMasiva.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnCargaMasiva.ForeColor = Color.White;
-            btnCargaMasiva.Location = new Point(792, 56);
+            btnCargaMasiva.Location = new Point(905, 75);
+            btnCargaMasiva.Margin = new Padding(3, 4, 3, 4);
             btnCargaMasiva.Name = "btnCargaMasiva";
             btnCargaMasiva.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            btnCargaMasiva.Size = new Size(188, 43);
+            btnCargaMasiva.Size = new Size(215, 57);
             btnCargaMasiva.TabIndex = 70;
             btnCargaMasiva.Text = "Carga Masiva";
             btnCargaMasiva.Click += btnCargaMasiva_Click;
@@ -304,11 +304,10 @@
             ptbInfoMatricula.CustomizableEdges = customizableEdges3;
             ptbInfoMatricula.Image = Properties.Resources._40796_help___icon;
             ptbInfoMatricula.ImageRotate = 0F;
-            ptbInfoMatricula.Location = new Point(416, 64);
-            ptbInfoMatricula.Margin = new Padding(3, 2, 3, 2);
+            ptbInfoMatricula.Location = new Point(475, 85);
             ptbInfoMatricula.Name = "ptbInfoMatricula";
             ptbInfoMatricula.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            ptbInfoMatricula.Size = new Size(23, 24);
+            ptbInfoMatricula.Size = new Size(26, 32);
             ptbInfoMatricula.SizeMode = PictureBoxSizeMode.Zoom;
             ptbInfoMatricula.TabIndex = 69;
             ptbInfoMatricula.TabStop = false;
@@ -326,37 +325,38 @@
             btnBuscar.FillColor = Color.DimGray;
             btnBuscar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnBuscar.ForeColor = Color.White;
-            btnBuscar.Location = new Point(565, 56);
+            btnBuscar.Location = new Point(646, 75);
+            btnBuscar.Margin = new Padding(3, 4, 3, 4);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            btnBuscar.Size = new Size(188, 43);
+            btnBuscar.Size = new Size(215, 57);
             btnBuscar.TabIndex = 41;
             btnBuscar.Text = "Buscar";
             btnBuscar.Click += btnBuscar_Click_1;
             // 
-            // txtDireccion
+            // txtNombreCompleto
             // 
-            txtDireccion.Animated = true;
-            txtDireccion.BorderRadius = 5;
-            txtDireccion.CustomizableEdges = customizableEdges7;
-            txtDireccion.DefaultText = "";
-            txtDireccion.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtDireccion.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtDireccion.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtDireccion.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtDireccion.Enabled = false;
-            txtDireccion.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtDireccion.Font = new Font("Segoe UI", 9.75F);
-            txtDireccion.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtDireccion.Location = new Point(240, 227);
-            txtDireccion.Margin = new Padding(3, 4, 3, 4);
-            txtDireccion.MaxLength = 250;
-            txtDireccion.Name = "txtDireccion";
-            txtDireccion.PlaceholderText = "";
-            txtDireccion.SelectedText = "";
-            txtDireccion.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            txtDireccion.Size = new Size(642, 34);
-            txtDireccion.TabIndex = 53;
+            txtNombreCompleto.Animated = true;
+            txtNombreCompleto.BorderRadius = 5;
+            txtNombreCompleto.CustomizableEdges = customizableEdges7;
+            txtNombreCompleto.DefaultText = "";
+            txtNombreCompleto.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtNombreCompleto.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtNombreCompleto.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtNombreCompleto.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtNombreCompleto.Enabled = false;
+            txtNombreCompleto.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtNombreCompleto.Font = new Font("Segoe UI", 9.75F);
+            txtNombreCompleto.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtNombreCompleto.Location = new Point(440, 154);
+            txtNombreCompleto.Margin = new Padding(3, 5, 3, 5);
+            txtNombreCompleto.MaxLength = 250;
+            txtNombreCompleto.Name = "txtNombreCompleto";
+            txtNombreCompleto.PlaceholderText = "";
+            txtNombreCompleto.SelectedText = "";
+            txtNombreCompleto.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            txtNombreCompleto.Size = new Size(568, 45);
+            txtNombreCompleto.TabIndex = 53;
             // 
             // txtCorreo
             // 
@@ -372,14 +372,14 @@
             txtCorreo.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtCorreo.Font = new Font("Segoe UI", 9.75F);
             txtCorreo.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCorreo.Location = new Point(240, 176);
-            txtCorreo.Margin = new Padding(3, 4, 3, 4);
+            txtCorreo.Location = new Point(274, 301);
+            txtCorreo.Margin = new Padding(3, 5, 3, 5);
             txtCorreo.MaxLength = 250;
             txtCorreo.Name = "txtCorreo";
             txtCorreo.PlaceholderText = "";
             txtCorreo.SelectedText = "";
             txtCorreo.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            txtCorreo.Size = new Size(642, 34);
+            txtCorreo.Size = new Size(734, 45);
             txtCorreo.TabIndex = 52;
             // 
             // txtTelefono1
@@ -396,14 +396,14 @@
             txtTelefono1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtTelefono1.Font = new Font("Segoe UI", 9.75F);
             txtTelefono1.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtTelefono1.Location = new Point(647, 122);
-            txtTelefono1.Margin = new Padding(3, 4, 3, 4);
+            txtTelefono1.Location = new Point(739, 229);
+            txtTelefono1.Margin = new Padding(3, 5, 3, 5);
             txtTelefono1.MaxLength = 10;
             txtTelefono1.Name = "txtTelefono1";
             txtTelefono1.PlaceholderText = "";
             txtTelefono1.SelectedText = "";
             txtTelefono1.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            txtTelefono1.Size = new Size(235, 34);
+            txtTelefono1.Size = new Size(269, 45);
             txtTelefono1.TabIndex = 51;
             // 
             // txtCurp1
@@ -420,14 +420,14 @@
             txtCurp1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtCurp1.Font = new Font("Segoe UI", 9.75F);
             txtCurp1.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCurp1.Location = new Point(240, 122);
-            txtCurp1.Margin = new Padding(3, 4, 3, 4);
+            txtCurp1.Location = new Point(274, 229);
+            txtCurp1.Margin = new Padding(3, 5, 3, 5);
             txtCurp1.MaxLength = 18;
             txtCurp1.Name = "txtCurp1";
             txtCurp1.PlaceholderText = "";
             txtCurp1.SelectedText = "";
             txtCurp1.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            txtCurp1.Size = new Size(235, 34);
+            txtCurp1.Size = new Size(269, 45);
             txtCurp1.TabIndex = 50;
             // 
             // txtMatricula1
@@ -443,22 +443,23 @@
             txtMatricula1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtMatricula1.Font = new Font("Segoe UI", 9.75F);
             txtMatricula1.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtMatricula1.Location = new Point(240, 60);
-            txtMatricula1.Margin = new Padding(3, 4, 3, 4);
+            txtMatricula1.Location = new Point(274, 80);
+            txtMatricula1.Margin = new Padding(3, 5, 3, 5);
             txtMatricula1.MaxLength = 15;
             txtMatricula1.Name = "txtMatricula1";
             txtMatricula1.PlaceholderText = "";
             txtMatricula1.SelectedText = "";
             txtMatricula1.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            txtMatricula1.Size = new Size(167, 34);
+            txtMatricula1.Size = new Size(191, 45);
             txtMatricula1.TabIndex = 49;
             // 
             // separador1
             // 
             separador1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            separador1.Location = new Point(5, 43);
+            separador1.Location = new Point(6, 57);
+            separador1.Margin = new Padding(3, 4, 3, 4);
             separador1.Name = "separador1";
-            separador1.Size = new Size(997, 10);
+            separador1.Size = new Size(1139, 13);
             separador1.TabIndex = 39;
             // 
             // lblInfoUsuario
@@ -466,9 +467,9 @@
             lblInfoUsuario.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblInfoUsuario.Font = new Font("Century Gothic", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblInfoUsuario.ForeColor = Color.DimGray;
-            lblInfoUsuario.Location = new Point(30, 5);
+            lblInfoUsuario.Location = new Point(34, 7);
             lblInfoUsuario.Name = "lblInfoUsuario";
-            lblInfoUsuario.Size = new Size(726, 37);
+            lblInfoUsuario.Size = new Size(830, 49);
             lblInfoUsuario.TabIndex = 39;
             lblInfoUsuario.Text = "Información de la persona";
             lblInfoUsuario.TextAlign = ContentAlignment.MiddleLeft;
@@ -496,11 +497,10 @@
             guna2GradientPanel2.Controls.Add(lblSalario);
             guna2GradientPanel2.Controls.Add(lblFechaFin);
             guna2GradientPanel2.CustomizableEdges = customizableEdges37;
-            guna2GradientPanel2.Location = new Point(1, 340);
-            guna2GradientPanel2.Margin = new Padding(3, 2, 3, 2);
+            guna2GradientPanel2.Location = new Point(1, 453);
             guna2GradientPanel2.Name = "guna2GradientPanel2";
             guna2GradientPanel2.ShadowDecoration.CustomizableEdges = customizableEdges38;
-            guna2GradientPanel2.Size = new Size(1011, 463);
+            guna2GradientPanel2.Size = new Size(1155, 617);
             guna2GradientPanel2.TabIndex = 39;
             // 
             // txtSalario
@@ -517,13 +517,13 @@
             txtSalario.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtSalario.Font = new Font("Segoe UI", 9.75F);
             txtSalario.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtSalario.Location = new Point(737, 85);
-            txtSalario.Margin = new Padding(3, 4, 3, 4);
+            txtSalario.Location = new Point(842, 113);
+            txtSalario.Margin = new Padding(3, 5, 3, 5);
             txtSalario.Name = "txtSalario";
             txtSalario.PlaceholderText = "";
             txtSalario.SelectedText = "";
             txtSalario.ShadowDecoration.CustomizableEdges = customizableEdges20;
-            txtSalario.Size = new Size(216, 34);
+            txtSalario.Size = new Size(247, 45);
             txtSalario.TabIndex = 54;
             // 
             // btnCancelar1
@@ -538,10 +538,11 @@
             btnCancelar1.FillColor = Color.DimGray;
             btnCancelar1.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnCancelar1.ForeColor = Color.White;
-            btnCancelar1.Location = new Point(565, 374);
+            btnCancelar1.Location = new Point(646, 499);
+            btnCancelar1.Margin = new Padding(3, 4, 3, 4);
             btnCancelar1.Name = "btnCancelar1";
             btnCancelar1.ShadowDecoration.CustomizableEdges = customizableEdges22;
-            btnCancelar1.Size = new Size(188, 43);
+            btnCancelar1.Size = new Size(215, 57);
             btnCancelar1.TabIndex = 66;
             btnCancelar1.Text = "Cancelar";
             btnCancelar1.Click += btnCancelar1_Click;
@@ -557,10 +558,11 @@
             btnGenerar1.FillColor = Color.DimGray;
             btnGenerar1.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnGenerar1.ForeColor = Color.White;
-            btnGenerar1.Location = new Point(312, 374);
+            btnGenerar1.Location = new Point(357, 499);
+            btnGenerar1.Margin = new Padding(3, 4, 3, 4);
             btnGenerar1.Name = "btnGenerar1";
             btnGenerar1.ShadowDecoration.CustomizableEdges = customizableEdges24;
-            btnGenerar1.Size = new Size(188, 43);
+            btnGenerar1.Size = new Size(215, 57);
             btnGenerar1.TabIndex = 54;
             btnGenerar1.Text = "Generar Contrato";
             btnGenerar1.Click += btnGenerar1_Click;
@@ -579,14 +581,14 @@
             txtDescrpcion.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtDescrpcion.Font = new Font("Segoe UI", 9.75F);
             txtDescrpcion.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtDescrpcion.Location = new Point(240, 285);
-            txtDescrpcion.Margin = new Padding(3, 4, 3, 4);
+            txtDescrpcion.Location = new Point(274, 380);
+            txtDescrpcion.Margin = new Padding(3, 5, 3, 5);
             txtDescrpcion.MaxLength = 250;
             txtDescrpcion.Name = "txtDescrpcion";
             txtDescrpcion.PlaceholderText = "";
             txtDescrpcion.SelectedText = "";
             txtDescrpcion.ShadowDecoration.CustomizableEdges = customizableEdges26;
-            txtDescrpcion.Size = new Size(713, 34);
+            txtDescrpcion.Size = new Size(815, 45);
             txtDescrpcion.TabIndex = 65;
             // 
             // dtpHoraSalida1
@@ -599,13 +601,14 @@
             dtpHoraSalida1.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dtpHoraSalida1.Format = DateTimePickerFormat.Time;
             dtpHoraSalida1.ImeMode = ImeMode.NoControl;
-            dtpHoraSalida1.Location = new Point(737, 220);
+            dtpHoraSalida1.Location = new Point(842, 293);
+            dtpHoraSalida1.Margin = new Padding(3, 4, 3, 4);
             dtpHoraSalida1.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
             dtpHoraSalida1.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
             dtpHoraSalida1.Name = "dtpHoraSalida1";
             dtpHoraSalida1.RightToLeft = RightToLeft.No;
             dtpHoraSalida1.ShadowDecoration.CustomizableEdges = customizableEdges28;
-            dtpHoraSalida1.Size = new Size(216, 31);
+            dtpHoraSalida1.Size = new Size(247, 41);
             dtpHoraSalida1.TabIndex = 64;
             dtpHoraSalida1.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
             // 
@@ -618,13 +621,14 @@
             dtpHoraEntrada.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dtpHoraEntrada.Format = DateTimePickerFormat.Time;
             dtpHoraEntrada.ImeMode = ImeMode.NoControl;
-            dtpHoraEntrada.Location = new Point(285, 220);
+            dtpHoraEntrada.Location = new Point(326, 293);
+            dtpHoraEntrada.Margin = new Padding(3, 4, 3, 4);
             dtpHoraEntrada.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
             dtpHoraEntrada.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
             dtpHoraEntrada.Name = "dtpHoraEntrada";
             dtpHoraEntrada.RightToLeft = RightToLeft.No;
             dtpHoraEntrada.ShadowDecoration.CustomizableEdges = customizableEdges30;
-            dtpHoraEntrada.Size = new Size(240, 31);
+            dtpHoraEntrada.Size = new Size(274, 41);
             dtpHoraEntrada.TabIndex = 63;
             dtpHoraEntrada.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
             // 
@@ -638,13 +642,14 @@
             dtpFechaFin1.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dtpFechaFin1.Format = DateTimePickerFormat.Short;
             dtpFechaFin1.ImeMode = ImeMode.NoControl;
-            dtpFechaFin1.Location = new Point(737, 147);
+            dtpFechaFin1.Location = new Point(842, 196);
+            dtpFechaFin1.Margin = new Padding(3, 4, 3, 4);
             dtpFechaFin1.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
             dtpFechaFin1.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
             dtpFechaFin1.Name = "dtpFechaFin1";
             dtpFechaFin1.RightToLeft = RightToLeft.No;
             dtpFechaFin1.ShadowDecoration.CustomizableEdges = customizableEdges32;
-            dtpFechaFin1.Size = new Size(216, 31);
+            dtpFechaFin1.Size = new Size(247, 41);
             dtpFechaFin1.TabIndex = 62;
             dtpFechaFin1.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
             // 
@@ -657,13 +662,14 @@
             dtpFechaInicio1.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dtpFechaInicio1.Format = DateTimePickerFormat.Short;
             dtpFechaInicio1.ImeMode = ImeMode.NoControl;
-            dtpFechaInicio1.Location = new Point(285, 154);
+            dtpFechaInicio1.Location = new Point(326, 205);
+            dtpFechaInicio1.Margin = new Padding(3, 4, 3, 4);
             dtpFechaInicio1.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
             dtpFechaInicio1.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
             dtpFechaInicio1.Name = "dtpFechaInicio1";
             dtpFechaInicio1.RightToLeft = RightToLeft.No;
             dtpFechaInicio1.ShadowDecoration.CustomizableEdges = customizableEdges34;
-            dtpFechaInicio1.Size = new Size(240, 31);
+            dtpFechaInicio1.Size = new Size(274, 41);
             dtpFechaInicio1.TabIndex = 61;
             dtpFechaInicio1.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
             // 
@@ -678,28 +684,28 @@
             cbxTipoContrato1.Font = new Font("Segoe UI", 10F);
             cbxTipoContrato1.ForeColor = Color.FromArgb(68, 88, 112);
             cbxTipoContrato1.ItemHeight = 30;
-            cbxTipoContrato1.Location = new Point(285, 92);
-            cbxTipoContrato1.Margin = new Padding(3, 2, 3, 2);
+            cbxTipoContrato1.Location = new Point(326, 123);
             cbxTipoContrato1.Name = "cbxTipoContrato1";
             cbxTipoContrato1.ShadowDecoration.CustomizableEdges = customizableEdges36;
-            cbxTipoContrato1.Size = new Size(240, 36);
+            cbxTipoContrato1.Size = new Size(274, 36);
             cbxTipoContrato1.TabIndex = 41;
             // 
             // guna2Separator1
             // 
             guna2Separator1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            guna2Separator1.Location = new Point(5, 47);
+            guna2Separator1.Location = new Point(6, 63);
+            guna2Separator1.Margin = new Padding(3, 4, 3, 4);
             guna2Separator1.Name = "guna2Separator1";
-            guna2Separator1.Size = new Size(997, 10);
+            guna2Separator1.Size = new Size(1139, 13);
             guna2Separator1.TabIndex = 40;
             // 
             // label1
             // 
             label1.Font = new Font("Century Gothic", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.DimGray;
-            label1.Location = new Point(35, 8);
+            label1.Location = new Point(40, 11);
             label1.Name = "label1";
-            label1.Size = new Size(566, 37);
+            label1.Size = new Size(647, 49);
             label1.TabIndex = 40;
             label1.Text = "Información del contrato";
             label1.TextAlign = ContentAlignment.MiddleLeft;
@@ -734,13 +740,12 @@
             // 
             // frmContratos
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1012, 796);
+            ClientSize = new Size(1157, 1061);
             Controls.Add(guna2GradientPanel2);
             Controls.Add(guna2GradientPanel1);
             Controls.Add(lblTitulo);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "frmContratos";
             Text = "frmContratos";
             Load += frmContratos_Load;
@@ -758,7 +763,7 @@
         private Label lblNombre;
         private Label lblEmail;
         private Label lblTelefono;
-        private Label lblDireccion;
+        private Label lblNombreCompleto;
         private Label lblSalario;
         private Label lblFechaFin;
         private Label lblFechaInicio;
@@ -772,7 +777,7 @@
         private Guna.UI2.WinForms.Guna2GradientPanel guna2GradientPanel2;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         private Label label1;
-        public Guna.UI2.WinForms.Guna2TextBox txtDireccion;
+        public Guna.UI2.WinForms.Guna2TextBox txtNombreCompleto;
         public Guna.UI2.WinForms.Guna2TextBox txtCorreo;
         public Guna.UI2.WinForms.Guna2TextBox txtTelefono1;
         public Guna.UI2.WinForms.Guna2TextBox txtCurp1;

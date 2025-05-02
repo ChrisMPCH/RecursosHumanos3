@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,12 +9,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Data;
+using RecursosHumanos.Model;
+using RecursosHumanos.Models;
 using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View
 {
     public partial class frmAgregarDepartamento : Form
     {
+        public static int IdDepartamento { get; set; } //para usarlo en usuarios xd
+        public static Departamento? departamentoGenerado;
         private Guna2GradientPanel pnlCambiante; // Variable para almacenar el panel
 
         // Constructor que recibe la referencia del panel para poder limpiarlo
@@ -70,24 +76,47 @@ namespace RecursosHumanos.View
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (GuardarDepartamento())
+            if (GenerarDepartamento())
             {
                 MessageBox.Show("Datos guardados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private bool GuardarDepartamento()
+        public bool GenerarDepartamento()
         {
             if (DatosVacios())
             {
                 MessageBox.Show("Por favor, llene todos los campos.", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            if (!DatosValidos())
+
+            DepartamentoController controller = new DepartamentoController();
+
+            Departamento nuevoDepartamento = new Departamento
             {
+                NombreDepartamento = txtNombre.Text.Trim(),
+                Ubicacion = txtUbicacion.Text.Trim(),
+                TelefonoDepartamento = txtTelefono.Text.Trim(),
+                EmailDepartamento = txtCorreo.Text.Trim(),
+                Estatus = true
+            };
+
+            var (idDepartamento, mensaje) = controller.RegistrarDepartamento(nuevoDepartamento);
+            if (idDepartamento > 0)
+            {
+                MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MDIRecursosHumanos.BloquearBotonesMenu();
+                InicializarCampos();
+                DesbloquearCampos(true);
+                Form frmGuardarInf = new frmGuardarInformacion();
+                Formas.abrirPanelForm(frmGuardarInf, pnlCambiante);
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            return true;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -123,6 +152,13 @@ namespace RecursosHumanos.View
         private void pnlInfoEsmpleado_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+        private void DesbloquearCampos(bool desbloquear)
+        {
+            txtNombre.Enabled = desbloquear;
+            txtUbicacion.Enabled = desbloquear;
+            txtTelefono.Enabled = desbloquear;
+            txtCorreo.Enabled = desbloquear;
         }
     }
 }

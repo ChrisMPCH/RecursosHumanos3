@@ -1,0 +1,129 @@
+﻿using System;
+using System.Collections.Generic;
+using RecursosHumanos.Data;
+using RecursosHumanos.Model;
+using NLog;
+using RecursosHumanos.Utilities;
+
+namespace RecursosHumanos.Controller
+{
+    public class EmpleadosController
+    {
+        private readonly EmpleadosDataAccess _empleadosAccess;
+        private readonly PersonasDataAccess _personasAccess;
+        private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Controller.EmpleadosController");
+
+        public EmpleadosController()
+        {
+            _empleadosAccess = new EmpleadosDataAccess();
+            _personasAccess = new PersonasDataAccess();
+        }
+
+        /// <summary>
+        /// Registra un nuevo empleado en la base de datos.
+        /// </summary>
+        /// <param name="empleado"></param>
+        /// <returns></returns>
+        public (bool exito, string mensaje) RegistrarEmpleado(Empleado empleado)
+        {
+            try
+            {
+                if (_empleadosAccess.ExisteEmpleadoPorMatricula(empleado.Matricula))
+                {
+                    return (false, "La matrícula ya existe.");
+                }
+
+                // Insertar el empleado con la persona asociada
+                int idGenerado = _empleadosAccess.InsertarEmpleado(empleado);
+                return idGenerado > 0
+                    ? (true, "Empleado registrado correctamente.")
+                    : (false, "Error al insertar empleado.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error inesperado al registrar empleado.");
+                return (false, "Error inesperado: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene la lista de todos los empleados registrados en la base de datos.
+        /// </summary>
+        /// <returns></returns>
+        public List<Empleado> ObtenerEmpleados()
+        {
+            try
+            {
+                return _empleadosAccess.ObtenerTodosLosEmpleados();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener la lista de empleados.");
+                return new List<Empleado>();
+            }
+        }
+
+        /// <summary>
+        /// Elimina un empleado de la base de datos.
+        /// </summary>
+        /// <param name="idEmpleado"></param>
+        /// <returns></returns>
+        public (bool exito, string mensaje) EliminarEmpleado(int idEmpleado)
+        {
+            try
+            {
+                bool eliminado = _empleadosAccess.EliminarUsuario(idEmpleado);
+                return eliminado
+                    ? (true, "Empleado eliminado correctamente.")
+                    : (false, "No se pudo eliminar el empleado.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al eliminar empleado con ID {idEmpleado}");
+                return (false, "Error inesperado al eliminar empleado.");
+            }
+        }
+
+        /// <summary>
+        /// Actualiza los datos del empleado y su persona asociada.
+        /// </summary>
+        /// <param name="empleado">Objeto empleado con los datos actualizados</param>
+        /// <returns>True si se actualizó correctamente</returns>
+        public bool ActualizarEmpleado(Empleado empleado)
+        {
+            try
+            {
+                return _empleadosAccess.ActualizarEmpleado(empleado);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error inesperado al actualizar empleado.");
+                return false;
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// Devuelve un empleado dado su número de matrícula
+        /// </summary>
+        /// <param name="matricula">Matrícula del empleado</param>
+        /// <returns>Empleado o null</returns>
+        public Empleado ObtenerEmpleadoPorMatricula(string matricula)
+        {
+            try
+            {
+                return _empleadosAccess.ObtenerEmpleadoPorMatricula(matricula);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error en lógica de negocio al buscar empleado por matrícula");
+                return null;
+            }
+        }
+
+
+
+    }
+}

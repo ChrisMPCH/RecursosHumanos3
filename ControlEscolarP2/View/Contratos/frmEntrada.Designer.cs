@@ -132,7 +132,7 @@
             lblNombre.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
             lblNombre.Location = new Point(75, 71);
             lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(123, 25);
+            lblNombre.Size = new Size(101, 25);
             lblNombre.TabIndex = 0;
             lblNombre.Text = "Nombre:";
             // 
@@ -684,6 +684,7 @@
             txtMatricula1.ShadowDecoration.CustomizableEdges = customizableEdges34;
             txtMatricula1.Size = new Size(216, 34);
             txtMatricula1.TabIndex = 1;
+            txtMatricula1.TextChanged += txtMatricula1_TextChanged;
             // 
             // btnAceptar
             // 
@@ -787,6 +788,6 @@
         private Label lblHoraS;
         private Guna.UI2.WinForms.Guna2Separator spdSalida;
         private Label label4;
-        public static Guna.UI2.WinForms.Guna2TextBox txtMatricula1;
+        public Guna.UI2.WinForms.Guna2TextBox txtMatricula1;
     }
 }

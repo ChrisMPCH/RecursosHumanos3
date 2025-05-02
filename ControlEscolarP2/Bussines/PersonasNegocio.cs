@@ -14,10 +14,6 @@ namespace RecursosHumanos.Bussines
         {
            return Validaciones.EsNombreValido(nombre);
         }
-        internal static bool EsApellidoValido(String nombre)
-        {
-            return Validaciones.EsNombreValido(nombre);
-        }
         internal static bool EsRFCValido(String rfc)
         {
             return Validaciones.EsRFCValido(rfc);
@@ -33,10 +29,6 @@ namespace RecursosHumanos.Bussines
         internal static bool EsEmailValido(String email)
         {
             return Validaciones.EsCorreoValido(email);
-        }
-        internal static bool EsFechaNacimientoValido(String fecha)
-        {
-            return Validaciones.EsFechaValida(fecha);
         }
         internal static bool EsGeneroValido(int genero)
         {

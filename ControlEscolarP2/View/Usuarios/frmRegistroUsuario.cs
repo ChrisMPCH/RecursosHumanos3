@@ -1,4 +1,6 @@
 ﻿using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -31,22 +33,23 @@ namespace RecursosHumanos.View
 
         private void PoblaComboRol()
         {
-            // Crear un diccionario con los valores
-            Dictionary<int, string> list_roles = new Dictionary<int, string>
+            try
             {
-                {0, "Seleccione" },
-                { 1, "ADMIN" },
-                { 2, "RH_MANAGER" },
-                { 3, "RH_ANALYST" },
-                { 4, "SUPERVISOR" }
-            };
+                RolesController controller = new RolesController();
+                var roles = controller.ObtenerRolesActivos();
 
-            // Asignar el diccionario al ComboBox
-            cbRoles.DataSource = new BindingSource(list_roles, null);
-            cbRoles.DisplayMember = "Value";  // Lo que se muestra
-            cbRoles.ValueMember = "Key";      // Lo que se guarda como SelectedValue
+                // Agrega opción por defecto
+                roles.Insert(0, new Rol { Id_Rol = 0, Nombre = "Seleccione" });
 
-            cbRoles.SelectedValue = 0;
+                cbRoles.DataSource = roles;
+                cbRoles.DisplayMember = "Nombre";
+                cbRoles.ValueMember = "Id_Rol";
+                cbRoles.SelectedValue = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los roles: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public bool DatosVaciosUsuario()
@@ -94,9 +97,11 @@ namespace RecursosHumanos.View
             return true;
         }
 
-        private bool GenerarUsuario()
+        public bool GenerarUsuario()
         {
-            if (!frmRegistroPersonas.GenerarPersona())
+            var idPersona = frmRegistroPersonas.IdPersonaRegistrada!;
+
+            if (idPersona <= 0)
             {
                 MessageBox.Show("Faltan los datos de la persona.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -109,26 +114,70 @@ namespace RecursosHumanos.View
             {
                 return false;
             }
-            return true;
+
+            UsuariosController controller = new UsuariosController();
+
+            Usuario nuevoUsuario = new Usuario
+            {
+                UsuarioNombre = txtNombre.Text.Trim(),
+                Contrasenia = txtContrasenia.Text.Trim(),
+                Id_Persona = idPersona,
+                Id_Rol = (int)cbRoles.SelectedValue,
+                Fecha_Creacion = DateTime.Now,
+                Fecha_Ultimo_Acceso = DateTime.Now,
+                Estatus = 1
+            };
+
+            var (exito, mensaje) = controller.RegistrarUsuario(nuevoUsuario);
+            if (exito)
+            {
+                MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Limpiar y volver a panel anterior
+                frmRegistroPersonas.InicializarCampos();
+                frmRegistroPersonas.DesbloquearCampos(true);
+
+                InicializarCampos();
+
+                MDIRecursosHumanos.DesbloquearBotonesMenu();
+
+                Form frmGuardarInf = new frmGuardarInformacion();
+                Formas.abrirPanelForm(frmGuardarInf, frmRegistroPersonas.pnlCambiante);
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
         }
 
         private void btnCancelar_Click_1(object sender, EventArgs e)
         {
+            if (frmRegistroPersonas.IdPersonaRegistrada > 0)
+            {
+                PersonasController personasController = new PersonasController();
+                var exito = personasController.CancelarRegistroPersona(frmRegistroPersonas.IdPersonaRegistrada);
+                if (!exito)
+                {
+                    MessageBox.Show("No se canceló el registro, no se pudo eliminar la persona.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                frmRegistroPersonas.IdPersonaRegistrada = 0;
+                frmRegistroPersonas.DesbloquearCampos(true);
+                MessageBox.Show("Se canceló el registro y se eliminó la persona.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            InicializarCampos();
+            MDIRecursosHumanos.DesbloquearBotonesMenu();
+
             Form frmGuardarInf = new frmGuardarInformacion();
             Formas.abrirPanelForm(frmGuardarInf, frmRegistroPersonas.pnlCambiante);
         }
 
         private void btnUsuario_Click_1(object sender, EventArgs e)
         {
-            if (GenerarUsuario())
-            {
-                MessageBox.Show("Datos guardados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                frmRegistroPersonas.InicializarCampos();
-                frmRegistroPersonas.DesbloquearCampos(true);
-                Form frmGuardarInf = new frmGuardarInformacion();
-                Formas.abrirPanelForm(frmGuardarInf, frmRegistroPersonas.pnlCambiante);
-            }
-        }
+            GenerarUsuario();
+        }   
 
         private void pcVerContraseña_Click(object sender, EventArgs e)
         {

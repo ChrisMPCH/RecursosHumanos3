@@ -1,36 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
+using RecursosHumanos.Data;
+using RecursosHumanos.Models;
 
 namespace RecursosHumanos.View
 {
     public partial class frmRegistroEmpleado : Form
     {
+        private DepartamentoController _departamentoController = new DepartamentoController();
+        private PuestoController _puestoController = new PuestoController();
         public frmRegistroEmpleado()
         {
             InitializeComponent();
             InicializarVentana();
         }
 
-
         private void InicializarVentana()
         {
             PoblaComboDepartamento();
             PoblaComboPuesto();
             PoblaComboEstatus();
-            //fecha de hoy
+            // Fecha de hoy
             dtpFechaIngreso.Value = DateTime.Now;
             InicializarCampos();
         }
-
 
         public void InicializarCampos()
         {
@@ -39,62 +42,69 @@ namespace RecursosHumanos.View
 
         private void PoblaComboEstatus()
         {
-            //Crear un diccionario con los valores
             Dictionary<int, string> list_estatus = new Dictionary<int, string>
             {
                 { 1, "Activo" },
                 { 0, "Inactivo" }
             };
 
-            //Asignar los valores al comboBox
             cbxEstatus.DataSource = new BindingSource(list_estatus, null);
-            cbxEstatus.DisplayMember = "Value"; //lo que se mestra
-            cbxEstatus.ValueMember = "Key"; //lo que se guarda como SelectedValue
+            cbxEstatus.DisplayMember = "Value";
+            cbxEstatus.ValueMember = "Key";
 
             cbxEstatus.SelectedIndex = 1;
         }
 
         private void PoblaComboDepartamento()
         {
-            //Crear un diccionario con los valores
-            Dictionary<int, string> list_departamentos = new Dictionary<int, string>
+            Dictionary<int, string> list_departamentos = new Dictionary<int, string>();
+            List<Departamento> departamentos = _departamentoController.ObtenerTodosLosDepartamentos();
+
+            foreach (var departamento in departamentos)
             {
-                { 1, "Departamento 1" },
-                { 2, "Departamento 2" },
-                { 3, "Departamento 3" }
-            };
+                list_departamentos.Add(departamento.IdDepartamento, departamento.NombreDepartamento);
+            }
 
-            //Asignar los valores al comboBox
-            cbxDepartamento.DataSource = new BindingSource(list_departamentos, null);
-            cbxDepartamento.DisplayMember = "Value"; //lo que se mestra
-            cbxDepartamento.ValueMember = "Key"; //lo que se guarda como SelectedValue
-
-            cbxDepartamento.SelectedIndex = 1;
-
+            if (list_departamentos.Count > 0)
+            {
+                cbxDepartamento.DataSource = new BindingSource(list_departamentos, null);
+                cbxDepartamento.DisplayMember = "Value";
+                cbxDepartamento.ValueMember = "Key";
+                cbxDepartamento.SelectedIndex = 0;
+            }
+            else
+            {
+                MessageBox.Show("No se encontraron departamentos.");
+                cbxDepartamento.Enabled = false;
+            }
         }
 
         private void PoblaComboPuesto()
         {
-            //Crear un diccionario con los valores
-            Dictionary<int, string> list_puestos = new Dictionary<int, string>
+            Dictionary<int, string> list_puestos = new Dictionary<int, string>();
+            List<Puesto> puestos = _puestoController.ObtenerTodosLosPuestos();
+
+            foreach (var puesto in puestos)
             {
-                { 1, "Puesto 1" },
-                { 2, "Puesto 2" },
-                { 3, "Puesto 3" }
-            };
+                list_puestos.Add(puesto.IdPuesto, puesto.NombrePuesto);
+            }
 
-            //Asignar los valores al comboBox
-            cbxPuesto.DataSource = new BindingSource(list_puestos, null);
-            cbxPuesto.DisplayMember = "Value"; //lo que se mestra
-            cbxPuesto.ValueMember = "Key"; //lo que se guarda como SelectedValue
-
-            cbxPuesto.SelectedIndex = 1;
-
+            if (list_puestos.Count > 0)
+            {
+                cbxPuesto.DataSource = new BindingSource(list_puestos, null);
+                cbxPuesto.DisplayMember = "Value";
+                cbxPuesto.ValueMember = "Key";
+                cbxPuesto.SelectedIndex = 0;
+            }
+            else
+            {
+                MessageBox.Show("No se encontraron puestos.");
+                cbxPuesto.Enabled = false;
+            }
         }
 
         private bool DatosValidos()
         {
-
             if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula.Text.Trim()))
             {
                 MessageBox.Show("Matrícula inválida.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -110,40 +120,78 @@ namespace RecursosHumanos.View
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (GuardarEmpleado())
+            if (GuardarEmpleado())  // Si el guardado es exitoso
             {
-                MessageBox.Show("Datos guardados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Empleado guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MDIRecursosHumanos.DesbloquearBotonesMenu();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Hubo un error al guardar al empleado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private bool GuardarEmpleado()
         {
-            if (!frmRegistroPersonas.GenerarPersona())
+            if (frmRegistroPersonas.IdPersonaRegistrada <= 0)
             {
-                MessageBox.Show("Faltan los datos de la persona.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Primero debe registrar a una persona.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
+
             if (DatosVacios())
             {
-                MessageBox.Show("Por favor, llene todos los campos.", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, llene todos los campos.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
+
             if (!DatosValidos())
             {
                 return false;
             }
-            return true;
+
+            try
+            {
+                Empleado nuevoEmpleado = new Empleado
+                {
+                    Id_Persona = frmRegistroPersonas.IdPersonaRegistrada, // Aquí usamos el ID de la persona registrada
+                    Matricula = txtMatricula.Text.Trim(),
+                    Fecha_Ingreso = dtpFechaIngreso.Value,
+                    Fecha_Baja = null,
+                    Id_Departamento = Convert.ToInt32(cbxDepartamento.SelectedValue),
+                    Id_Puesto = Convert.ToInt32(cbxPuesto.SelectedValue),
+                    Estatus = Convert.ToInt16(cbxEstatus.SelectedValue)
+                };
+
+                EmpleadosController empleadosController = new EmpleadosController();
+                var (exito, mensaje) = empleadosController.RegistrarEmpleado(nuevoEmpleado);
+
+                if (!exito)
+                {
+                    MessageBox.Show(mensaje, "Error al guardar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error inesperado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            InicializarCampos();
+            MDIRecursosHumanos.DesbloquearBotonesMenu();
+
             Form frmGuardarInf = new frmGuardarInformacion();
             Formas.abrirPanelForm(frmGuardarInf, frmRegistroPersonas.pnlCambiante);
         }
@@ -153,10 +201,9 @@ namespace RecursosHumanos.View
             ofdArchivo.Title = "Seleccionar archivo de Excel";
             ofdArchivo.Filter = "Archivos de Excel (*.xlsx;*.xls)|*.xlsx;*.xls";
             ofdArchivo.InitialDirectory = "C:\\";//carpeta inicial
-            ofdArchivo.FilterIndex = 1; //selecciona el primer filtro por defecto
-            ofdArchivo.RestoreDirectory = true; //mantiene la ultima ruta utilizada
+            ofdArchivo.FilterIndex = 1;
+            ofdArchivo.RestoreDirectory = true;
 
-            //showdialog espera una respuesta
             if (ofdArchivo.ShowDialog() == DialogResult.OK)
             {
                 string filePath = ofdArchivo.FileName;
@@ -171,16 +218,6 @@ namespace RecursosHumanos.View
                     MessageBox.Show("Por favor, selecciona un archivo de Excel válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-        }
-
-        private void pnlInfoEsmpleado_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void lblMatricula_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

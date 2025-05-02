@@ -78,7 +78,6 @@ namespace RecursosHumanos.Utilities
                 //Error
                 //Fatal(el más severo)
 
-
                 // Aplicar la configuración
                 LogManager.Configuration = config;
 

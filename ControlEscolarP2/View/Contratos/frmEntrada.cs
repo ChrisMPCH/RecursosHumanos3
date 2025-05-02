@@ -26,10 +26,9 @@ namespace RecursosHumanos.View
 
         }
 
-        public static void InicializarCampos()
+        public void InicializarCampos()
         {
             Formas.ConfigurarTextBox(txtMatricula1, "Ingresa tu matricula");
-
         }
 
         private bool HoraEntrada()
@@ -63,10 +62,12 @@ namespace RecursosHumanos.View
 
         private void btnAceptar_Click_1(object sender, EventArgs e)
         {
-            if (HoraEntrada())
-            {
-                MessageBox.Show("Datos cargados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            //if (HoraEntrada())
+            //{
+            //    MessageBox.Show("Datos cargados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+            string mensaje = AsistenciaNegocio.RegistrarEntrada(txtMatricula1.Text.Trim());
+            MessageBox.Show(mensaje, "Registro de entrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void guna2Button1_Click(object sender, EventArgs e)
@@ -80,13 +81,20 @@ namespace RecursosHumanos.View
         private void btnAceptarSalida_Click(object sender, EventArgs e)
         {
 
-            if (HoraEntrada())
-            {
-                MessageBox.Show("Registro guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            //if (HoraEntrada())
+            //{
+            //    MessageBox.Show("Registro guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+            string mensaje = AsistenciaNegocio.RegistrarSalida(txtMatricula1.Text.Trim());
+            MessageBox.Show(mensaje, "Registro de salida", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void pnlDatos_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void txtMatricula1_TextChanged(object sender, EventArgs e)
         {
 
         }

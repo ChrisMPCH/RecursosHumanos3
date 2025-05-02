@@ -1,4 +1,6 @@
 ﻿using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,23 +16,29 @@ namespace RecursosHumanos.View
 {
     public partial class frmGestionCreacionRoles : Form
     {
+        private PermisosController _permisosController;
+
         public frmGestionCreacionRoles()
         {
             InitializeComponent();
+            _permisosController = new PermisosController();
             InicializarVentana();
+            VerificarPermisos();
         }
 
         private void InicializarVentana()
         {
             InicializarCampos();
             IniciarTabla();
+            // Configurar el modo de edición del DataGridView
+            dataGridPermisos.EditMode = DataGridViewEditMode.EditOnEnter;
         }
 
         private void IniciarTabla()
         {
-            Formas.ConfigurarEstiloDataGridView(dataGridPermisos);
             ConfigurarAnchoColumnas(300);
             FormLoad();
+            Formas.ConfigurarEstiloDataGridView(dataGridPermisos);
         }
 
         private void ConfigurarAnchoColumnas(int ancho)
@@ -43,28 +51,75 @@ namespace RecursosHumanos.View
 
         private bool GenerarRol()
         {
-            if (!DatosVaciosRoles())
+            try
             {
+                if (!DatosVaciosRoles())
+                {
+                    return false;
+                }
+                if (!DatosCorrectosRoles())
+                {
+                    return false;
+                }
+
+                // Crear objeto Rol con datos del formulario
+                Rol nuevoRol = new Rol
+                {
+                    Codigo = txtRolCodigo.Text.Trim(),
+                    Nombre = txtRolNombre.Text.Trim(),
+                    Descripcion = txtDescripcion.Text.Trim(),
+                    Estatus = 1 // Activo por defecto
+                };
+
+                // Obtener permisos seleccionados del DataGridView
+                List<int> permisosSeleccionados = ObtenerPermisosSeleccionados();
+
+                if (permisosSeleccionados.Count == 0)
+                {
+                    MessageBox.Show("Seleccione al menos un permiso para el rol.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+
+                // Llamar al controlador para guardar el rol y asignar permisos
+                RolesController rolesController = new RolesController();
+                var (exito, mensaje) = rolesController.CrearRolConPermisos(nuevoRol, permisosSeleccionados);
+
+                // Mostrar el resultado
+                if (exito)
+                {
+                    MessageBox.Show(mensaje, "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    InicializarCampos();
+                }
+                else
+                {
+                    MessageBox.Show(mensaje, "Error al crear rol", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                return exito;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error inesperado al intentar guardar el rol. Por favor, intente nuevamente o contacte al administrador.", "Error del sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            if (!DatosCorrectosRoles())
-            {
-                return false;
-            }
-            return true;
         }
 
         public void InicializarCampos()
         {
-            Formas.ConfigurarTextBox(txtRol, "Ingrese codigo del Rol");
+            Formas.ConfigurarTextBox(txtRolNombre, "Ingrese nombre del Rol");
+            Formas.ConfigurarTextBox(txtRolCodigo, "Ingrese codigo del Rol");
             Formas.ConfigurarTextBox(txtDescripcion, "Describa lo que realizara el rol");
         }
 
         public bool DatosVaciosRoles()
         {
-            if (txtRol.Text == "Ingrese nombre del Rol" || txtRol.Text == "")
+            if (txtRolNombre.Text == "Ingrese nombre del Rol" || txtRolCodigo.Text == "")
             {
-                MessageBox.Show("Ingrese el nombre del Rol", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Ingrese nombre del Rol", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            if (txtRolCodigo.Text == "Ingrese codigo del Rol" || txtRolCodigo.Text == "")
+            {
+                MessageBox.Show("Ingrese codigo del Rol", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             if (txtDescripcion.Text == "Describa lo que realizara el rol" || txtDescripcion.Text == "")
@@ -77,9 +132,14 @@ namespace RecursosHumanos.View
 
         public bool DatosCorrectosRoles()
         {
-            if (!RolesNegocio.EsRolValido(txtRol.Text.Trim()))
+            if (!RolesNegocio.EsRolNombreValido(txtRolNombre.Text.Trim()))
             {
-                MessageBox.Show("Rol inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nombre del Rol inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            if (!RolesNegocio.EsRolCodigoValido(txtRolCodigo.Text.Trim()))
+            {
+                MessageBox.Show("Codigo del Rol inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             if (!RolesNegocio.EsDescripcionValida(txtDescripcion.Text.Trim()))
@@ -99,35 +159,103 @@ namespace RecursosHumanos.View
         {
             if (GenerarRol())
             {
-                MessageBox.Show("Rol generado correctamente", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 InicializarCampos();
             }
         }
 
-
         //--------------------------------------------------------------------------------Llenado tabla
         private void FormLoad()
         {
-            // Lista de usuarios con datos simulados
-            List<Permiso> listaPermisos = new List<Permiso>
-            {
-                new Permiso { Codigo = "1ddd", Descripcion = "Altas", Estatus = "Activo", Check = false },
-                new Permiso { Codigo = "2ddd", Descripcion = "Bajas", Estatus = "Activo", Check = false },
-                new Permiso { Codigo = "3ddd", Descripcion = "Consultas", Estatus = "Activo", Check = false },
-                new Permiso { Codigo = "4ddd", Descripcion = "Actualizaciones", Estatus = "Activo", Check = false }
-            };
-
-            // Asignar la lista al DataGridView
-            dataGridPermisos.DataSource = listaPermisos;
+            CargarPermisosEnTabla();
+            AgregarCheckBoxColumna();
         }
 
-        public class Permiso
+        private void CargarPermisosEnTabla()
         {
-            public string Codigo { get; set; }
-            public string Descripcion { get; set; }
-            public string Estatus { get; set; }
-            public bool Check { get; set; }
+            try
+            {
+                var listaPermisos = _permisosController.ObtenerPermisos();
+                dataGridPermisos.DataSource = listaPermisos;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los permisos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        /// <summary>
+        /// Agrega una columna de tipo CheckBox al DataGridView para seleccionar permisos
+        /// </summary>
+        private void AgregarCheckBoxColumna()
+        {
+            if (!dataGridPermisos.Columns.Contains("Seleccionar"))
+            {
+                DataGridViewCheckBoxColumn checkBoxCol = new DataGridViewCheckBoxColumn
+                {
+                    Name = "Seleccionar",
+                    HeaderText = "Seleccionar",
+                    Width = 50,
+                    FlatStyle = FlatStyle.Standard,
+                    TrueValue = true,
+                    FalseValue = false,
+                    IndeterminateValue = false
+                };
+                // Aplicar estilos al checkbox desde código
+                checkBoxCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                checkBoxCol.DefaultCellStyle.BackColor = Color.White;
+                checkBoxCol.DefaultCellStyle.ForeColor = Color.Black;
+
+                checkBoxCol.ReadOnly = false;
+
+                dataGridPermisos.Columns.Insert(0, checkBoxCol);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene la lista de IDs de permisos seleccionados en el DataGridView
+        /// </summary>
+        /// <returns>Lista de IDs de permisos</returns>
+        private List<int> ObtenerPermisosSeleccionados()
+        {
+            List<int> permisosIds = new List<int>();
+
+            try
+            {
+                foreach (DataGridViewRow fila in dataGridPermisos.Rows)
+                {
+                    // Validar si la fila no está vacía ni nueva
+                    if (!fila.IsNewRow)
+                    {
+                        // Verifica si la columna "Seleccionar" está marcada
+                        bool seleccionado = Convert.ToBoolean(fila.Cells["Seleccionar"].Value ?? false);
+
+                        if (seleccionado)
+                        {
+                            // Obtener el ID del permiso
+                            int idPermiso = Convert.ToInt32(fila.Cells["Id_Permiso"].Value);
+                            permisosIds.Add(idPermiso);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al obtener los permisos seleccionados: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return permisosIds;
+        }
+
+        /// <summary>
+        /// Verifica los permisos del usuario para habilitar o deshabilitar los botones de registro.
+        /// </summary>
+        private void VerificarPermisos()
+        {
+            var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
+
+            if (!permisosUsuario.Contains(27)) // CreaR rol
+            {
+                btnGuardar.Enabled = false;
+            }
+        }
     }
 }

@@ -1,4 +1,7 @@
-﻿using Guna.UI2.WinForms;
+using Guna.UI2.WinForms;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Model;
+using RecursosHumanos.Models;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -25,22 +28,22 @@ namespace RecursosHumanos.View
             this.pnlCambiante = pnlCambiante; // Guardamos la referencia del panel
             InicializarVentana();
         }
-        
+
         public void InicializarVentana()
         {
 
             IniciarTabla();
+            FormLoad();
         }
 
         private void IniciarTabla()
         {
-            Formas.ConfigurarEstiloDataGridView(dataGridEmpleados);
-            ConfigurarAnchoColumnas(300);
+            Formas.ConfigurarEstiloDataGridView(dgvDepartamentos);
         }
 
         private void ConfigurarAnchoColumnas(int ancho)
         {
-            foreach (DataGridViewColumn columna in dataGridEmpleados.Columns)
+            foreach (DataGridViewColumn columna in dgvDepartamentos.Columns)
             {
                 columna.Width = ancho; // Asignar un ancho fijo a todas las columnas
             }
@@ -50,6 +53,37 @@ namespace RecursosHumanos.View
         {
             // Limpiar el panel de frmDepartamentos al hacer clic en Cancelar
             Formas.limpiarPanel(pnlCambiante);
+        }
+        List<Departamento> listaDepartamentos;
+        private void FormLoad()
+        {
+            CargarDepartamentosEnTabla();
+        }
+
+        private void CargarDepartamentosEnTabla()
+        {
+            try
+            {
+                DepartamentoController controller = new DepartamentoController();
+                listaDepartamentos = controller.ObtenerTodosLosDepartamentos(); // Mostrar todos, activos e inactivos
+
+                // Transformar la lista para personalizar cómo se muestran los datos
+                var datosMostrar = listaDepartamentos.Select(d => new
+                {
+                    ID = d.IdDepartamento,
+                    Nombre = d.NombreDepartamento,
+                    Ubicacion = d.Ubicacion,
+                    Telefono = d.TelefonoDepartamento,
+                    Correo = d.EmailDepartamento,
+                    Estatus = d.Estatus ? "Activo" : "Inactivo"
+                }).ToList();
+
+                dgvDepartamentos.DataSource = datosMostrar;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar departamentos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

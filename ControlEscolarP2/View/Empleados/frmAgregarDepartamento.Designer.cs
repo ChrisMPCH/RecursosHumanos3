@@ -1,11 +1,7 @@
-﻿namespace RecursosHumanos.View
+namespace RecursosHumanos.View
 {
     partial class frmAgregarDepartamento
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        public static System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -67,7 +63,7 @@
             // 
             // pnlInfoEsmpleado
             // 
-            pnlInfoEsmpleado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlInfoEsmpleado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlInfoEsmpleado.BackColor = Color.White;
             pnlInfoEsmpleado.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             pnlInfoEsmpleado.Controls.Add(txtCorreo);
@@ -85,9 +81,10 @@
             pnlInfoEsmpleado.Controls.Add(lblBienvenida2);
             pnlInfoEsmpleado.CustomizableEdges = customizableEdges15;
             pnlInfoEsmpleado.Location = new Point(0, 0);
+            pnlInfoEsmpleado.Margin = new Padding(3, 4, 3, 4);
             pnlInfoEsmpleado.Name = "pnlInfoEsmpleado";
             pnlInfoEsmpleado.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            pnlInfoEsmpleado.Size = new Size(1001, 291);
+            pnlInfoEsmpleado.Size = new Size(1144, 388);
             pnlInfoEsmpleado.TabIndex = 4;
             pnlInfoEsmpleado.Paint += pnlInfoEsmpleado_Paint;
             // 
@@ -104,14 +101,14 @@
             txtCorreo.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtCorreo.Font = new Font("Segoe UI", 9.75F);
             txtCorreo.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCorreo.Location = new Point(157, 202);
-            txtCorreo.Margin = new Padding(3, 4, 3, 4);
+            txtCorreo.Location = new Point(179, 269);
+            txtCorreo.Margin = new Padding(3, 5, 3, 5);
             txtCorreo.MaxLength = 100;
             txtCorreo.Name = "txtCorreo";
             txtCorreo.PlaceholderText = "";
             txtCorreo.SelectedText = "";
             txtCorreo.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            txtCorreo.Size = new Size(434, 34);
+            txtCorreo.Size = new Size(496, 45);
             txtCorreo.TabIndex = 40;
             // 
             // txtTelefono
@@ -127,16 +124,15 @@
             txtTelefono.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtTelefono.Font = new Font("Segoe UI", 9.75F);
             txtTelefono.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtTelefono.Location = new Point(157, 160);
-            txtTelefono.Margin = new Padding(3, 4, 3, 4);
+            txtTelefono.Location = new Point(179, 213);
+            txtTelefono.Margin = new Padding(3, 5, 3, 5);
             txtTelefono.MaxLength = 20;
             txtTelefono.Name = "txtTelefono";
             txtTelefono.PlaceholderText = "";
             txtTelefono.SelectedText = "";
             txtTelefono.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            txtTelefono.Size = new Size(434, 34);
+            txtTelefono.Size = new Size(496, 45);
             txtTelefono.TabIndex = 39;
-            //txtTelefono.TextChanged += this.txtTelefono_TextChanged;
             // 
             // txtUbicacion
             // 
@@ -151,16 +147,15 @@
             txtUbicacion.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtUbicacion.Font = new Font("Segoe UI", 9.75F);
             txtUbicacion.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtUbicacion.Location = new Point(157, 120);
-            txtUbicacion.Margin = new Padding(3, 4, 3, 4);
+            txtUbicacion.Location = new Point(179, 160);
+            txtUbicacion.Margin = new Padding(3, 5, 3, 5);
             txtUbicacion.MaxLength = 100;
             txtUbicacion.Name = "txtUbicacion";
             txtUbicacion.PlaceholderText = "";
             txtUbicacion.SelectedText = "";
             txtUbicacion.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            txtUbicacion.Size = new Size(434, 34);
+            txtUbicacion.Size = new Size(496, 45);
             txtUbicacion.TabIndex = 38;
-            //txtUbicacion.TextChanged += this.txtUbicacion_TextChanged;
             // 
             // txtNombre
             // 
@@ -175,16 +170,15 @@
             txtNombre.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtNombre.Font = new Font("Segoe UI", 9.75F);
             txtNombre.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtNombre.Location = new Point(157, 76);
-            txtNombre.Margin = new Padding(3, 4, 3, 4);
+            txtNombre.Location = new Point(179, 101);
+            txtNombre.Margin = new Padding(3, 5, 3, 5);
             txtNombre.MaxLength = 100;
             txtNombre.Name = "txtNombre";
             txtNombre.PlaceholderText = "";
             txtNombre.SelectedText = "";
             txtNombre.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            txtNombre.Size = new Size(434, 34);
+            txtNombre.Size = new Size(496, 45);
             txtNombre.TabIndex = 37;
-            //txtNombre.TextChanged += this.txtNombre_TextChanged;
             // 
             // btnCargaMasiva
             // 
@@ -196,10 +190,11 @@
             btnCargaMasiva.FillColor = Color.DimGray;
             btnCargaMasiva.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnCargaMasiva.ForeColor = Color.White;
-            btnCargaMasiva.Location = new Point(791, 160);
+            btnCargaMasiva.Location = new Point(904, 175);
+            btnCargaMasiva.Margin = new Padding(3, 4, 3, 4);
             btnCargaMasiva.Name = "btnCargaMasiva";
             btnCargaMasiva.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            btnCargaMasiva.Size = new Size(188, 43);
+            btnCargaMasiva.Size = new Size(215, 57);
             btnCargaMasiva.TabIndex = 29;
             btnCargaMasiva.Text = "Carga Masiva";
             btnCargaMasiva.Click += btnCargaMasiva_Click;
@@ -214,10 +209,11 @@
             btnGuardar.FillColor = Color.DimGray;
             btnGuardar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnGuardar.ForeColor = Color.White;
-            btnGuardar.Location = new Point(791, 101);
+            btnGuardar.Location = new Point(904, 97);
+            btnGuardar.Margin = new Padding(3, 4, 3, 4);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            btnGuardar.Size = new Size(188, 43);
+            btnGuardar.Size = new Size(215, 57);
             btnGuardar.TabIndex = 25;
             btnGuardar.Text = "Guardar";
             btnGuardar.Click += btnGuardar_Click;
@@ -227,9 +223,9 @@
             lblNombre.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblNombre.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
             lblNombre.ForeColor = Color.Black;
-            lblNombre.Location = new Point(46, 79);
+            lblNombre.Location = new Point(53, 105);
             lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(105, 25);
+            lblNombre.Size = new Size(120, 33);
             lblNombre.TabIndex = 23;
             lblNombre.Text = "Nombre: ";
             // 
@@ -246,10 +242,11 @@
             btnCancelar.FillColor = Color.White;
             btnCancelar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnCancelar.ForeColor = Color.Black;
-            btnCancelar.Location = new Point(791, 221);
+            btnCancelar.Location = new Point(904, 257);
+            btnCancelar.Margin = new Padding(3, 4, 3, 4);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            btnCancelar.Size = new Size(188, 43);
+            btnCancelar.Size = new Size(215, 57);
             btnCancelar.TabIndex = 22;
             btnCancelar.Text = "Cancelar";
             btnCancelar.Click += btnCancelar_Click;
@@ -259,9 +256,9 @@
             lblCorreo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblCorreo.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
             lblCorreo.ForeColor = Color.Black;
-            lblCorreo.Location = new Point(60, 202);
+            lblCorreo.Location = new Point(69, 269);
             lblCorreo.Name = "lblCorreo";
-            lblCorreo.Size = new Size(91, 25);
+            lblCorreo.Size = new Size(104, 33);
             lblCorreo.TabIndex = 9;
             lblCorreo.Text = "Correo:";
             // 
@@ -270,9 +267,9 @@
             lblTelefono.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblTelefono.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
             lblTelefono.ForeColor = Color.Black;
-            lblTelefono.Location = new Point(45, 160);
+            lblTelefono.Location = new Point(51, 213);
             lblTelefono.Name = "lblTelefono";
-            lblTelefono.Size = new Size(106, 25);
+            lblTelefono.Size = new Size(121, 33);
             lblTelefono.TabIndex = 6;
             lblTelefono.Text = "Teléfono:";
             // 
@@ -281,18 +278,19 @@
             lblUbicacion.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblUbicacion.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
             lblUbicacion.ForeColor = Color.Black;
-            lblUbicacion.Location = new Point(23, 119);
+            lblUbicacion.Location = new Point(26, 159);
             lblUbicacion.Name = "lblUbicacion";
-            lblUbicacion.Size = new Size(128, 25);
+            lblUbicacion.Size = new Size(146, 33);
             lblUbicacion.TabIndex = 5;
             lblUbicacion.Text = "Ubicación:";
             // 
             // guna2Separator1
             // 
             guna2Separator1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            guna2Separator1.Location = new Point(7, 47);
+            guna2Separator1.Location = new Point(8, 63);
+            guna2Separator1.Margin = new Padding(3, 4, 3, 4);
             guna2Separator1.Name = "guna2Separator1";
-            guna2Separator1.Size = new Size(986, 10);
+            guna2Separator1.Size = new Size(1127, 13);
             guna2Separator1.TabIndex = 3;
             // 
             // lblBienvenida2
@@ -300,9 +298,9 @@
             lblBienvenida2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblBienvenida2.Font = new Font("Century Gothic", 20.25F, FontStyle.Bold);
             lblBienvenida2.ForeColor = Color.DimGray;
-            lblBienvenida2.Location = new Point(18, 13);
+            lblBienvenida2.Location = new Point(21, 17);
             lblBienvenida2.Name = "lblBienvenida2";
-            lblBienvenida2.Size = new Size(995, 37);
+            lblBienvenida2.Size = new Size(1137, 49);
             lblBienvenida2.TabIndex = 2;
             lblBienvenida2.Text = "Informacion del departamento";
             // 
@@ -312,13 +310,14 @@
             // 
             // frmAgregarDepartamento
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(1001, 291);
+            ClientSize = new Size(1144, 388);
             Controls.Add(pnlInfoEsmpleado);
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
             Name = "frmAgregarDepartamento";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmPrueba";
@@ -327,21 +326,23 @@
         }
 
         #endregion
-        public static Guna.UI2.WinForms.Guna2GradientPanel pnlInfoEsmpleado;
-        public static Label lblBienvenida2;
-        public static Guna.UI2.WinForms.Guna2Separator guna2Separator1;
-        public static Label lblCorreo;
-        public static Label lblTelefono;
-        public static Label lblUbicacion;
-        public static Guna.UI2.WinForms.Guna2Button btnCancelar;
-        public static Label lblNombre;
-        public static Guna.UI2.WinForms.Guna2Button btnGuardar;
-        public static Guna.UI2.WinForms.Guna2Button btnCargaMasiva;
-        public static OpenFileDialog ofdArchivo;
-        public static ToolTip InfoMatricula;
-        public static Guna.UI2.WinForms.Guna2TextBox txtNombre;
-        public static Guna.UI2.WinForms.Guna2TextBox txtCorreo;
-        public static Guna.UI2.WinForms.Guna2TextBox txtTelefono;
-        public static Guna.UI2.WinForms.Guna2TextBox txtUbicacion;
+
+        private System.ComponentModel.IContainer components;
+        public Guna.UI2.WinForms.Guna2GradientPanel pnlInfoEsmpleado;
+        public Label lblBienvenida2;
+        public Guna.UI2.WinForms.Guna2Separator guna2Separator1;
+        public Label lblCorreo;
+        public Label lblTelefono;
+        public Label lblUbicacion;
+        public Guna.UI2.WinForms.Guna2Button btnCancelar;
+        public Label lblNombre;
+        public Guna.UI2.WinForms.Guna2Button btnGuardar;
+        public Guna.UI2.WinForms.Guna2Button btnCargaMasiva;
+        public OpenFileDialog ofdArchivo;
+        public ToolTip InfoMatricula;
+        public Guna.UI2.WinForms.Guna2TextBox txtNombre;
+        public Guna.UI2.WinForms.Guna2TextBox txtCorreo;
+        public Guna.UI2.WinForms.Guna2TextBox txtTelefono;
+        public Guna.UI2.WinForms.Guna2TextBox txtUbicacion;
     }
 }

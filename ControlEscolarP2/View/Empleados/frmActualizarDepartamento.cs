@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Models;
 using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View
@@ -28,11 +30,13 @@ namespace RecursosHumanos.View
         private void InicializarVentana()
         {
             InicializarCampos();
+            PoblarComboBoxEstatus();
+
         }
 
         private void InicializarCampos()
         {
-            Formas.ConfigurarTextBox(txtDeprtamento, "Ingrese el departamento que desea actualizar");
+            Formas.ConfigurarTextBox(txtIdDepartamento, "Ingrese el departamento que desea actualizar");
             Formas.ConfigurarTextBox(txtNombre, "Ingrese nombre");
             Formas.ConfigurarTextBox(txtUbicacion, "Ingrese ubicacion");
             Formas.ConfigurarTextBox(txtTelefono, "Ingrese telefono");
@@ -56,7 +60,7 @@ namespace RecursosHumanos.View
 
         private bool DatosVacios()
         {
-            if (txtDeprtamento.Text == "" || txtDeprtamento.Text == "Ingrese el departamento que desea actualizar" ||
+            if (txtIdDepartamento.Text == "" || txtIdDepartamento.Text == "Ingrese el departamento que desea actualizar" ||
             txtNombre.Text == "" || txtNombre.Text == "Ingrese nombre" ||
             txtUbicacion.Text == "" || txtUbicacion.Text == "Ingrese ubicacion" ||
             txtTelefono.Text == "" || txtTelefono.Text == "Ingrese telefono" ||
@@ -82,14 +86,40 @@ namespace RecursosHumanos.View
         {
             if (DatosVacios())
             {
-                MessageBox.Show("Por favor, llene todos los campos.", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
+
             if (!DatosValidos())
             {
                 return false;
             }
-            return true;
+
+            DepartamentoController controller = new DepartamentoController();
+
+            Departamento departamento = new Departamento
+            {
+                IdDepartamento = int.Parse(txtIdDepartamento.Text.Trim()),
+                NombreDepartamento = txtNombre.Text.Trim(),
+                Ubicacion = txtUbicacion.Text.Trim(),
+                TelefonoDepartamento = txtTelefono.Text.Trim(),
+                EmailDepartamento = txtCorreo.Text.Trim(),
+                Estatus= (bool) cbxEstatus.SelectedValue
+            };
+
+            var (exito, mensaje) = controller.ActualizarDepartamento(departamento);
+
+            if (exito)
+            {
+                MessageBox.Show("Departamento actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                InicializarCampos();
+                DesbloquearCampos(false);
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -124,26 +154,87 @@ namespace RecursosHumanos.View
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-
+            if (!BuscarDepartamento())
             {
-                string nombreDepartamento = txtDeprtamento.Text.Trim(); // Elimina espacios extras
-
-                // Validación 1: Verificar si el usuario ingresó texto
-                if (string.IsNullOrWhiteSpace(nombreDepartamento))
-                {
-                    MessageBox.Show("Ingrese un nombre de departamento.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Validación 2: Evitar números y caracteres especiales
-                if (!nombreDepartamento.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
-                {
-                    MessageBox.Show("El nombre del departamento solo debe contener letras y espacios.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                MessageBox.Show("Departamento validado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
+        }
+
+
+        private bool BuscarDepartamento()
+        {
+            if (!DatosVaciosDepartamento())
+            {
+                return false;
+            }
+
+            if (!DatosCorrectosDepartamento())
+            {
+                return false;
+            }
+
+            DepartamentoController controller = new DepartamentoController();
+            var departamento = controller.ObtenerDetalleDepartamento(int.Parse(txtIdDepartamento.Text.Trim()));
+
+            if (departamento == null)
+            {
+                MessageBox.Show("Departamento no encontrado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Mostrar datos en los campos
+            txtNombre.Text = departamento.NombreDepartamento;
+            txtUbicacion.Text = departamento.Ubicacion;
+            txtTelefono.Text = departamento.TelefonoDepartamento;
+            txtCorreo.Text = departamento.EmailDepartamento;
+            cbxEstatus.SelectedValue = departamento.Estatus;
+
+            DesbloquearCampos(true);
+
+            return true;
+        }
+
+        private bool DatosVaciosDepartamento()
+        {
+            if (string.IsNullOrWhiteSpace(txtIdDepartamento.Text))
+            {
+                MessageBox.Show("Ingrese un ID de departamento para buscar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool DatosCorrectosDepartamento()
+        {
+            if (!int.TryParse(txtIdDepartamento.Text.Trim(), out int id) || id <= 0)
+            {
+                MessageBox.Show("El ID del departamento debe ser un número entero positivo.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+        private void DesbloquearCampos(bool desbloquear)
+        {
+            txtNombre.Enabled = desbloquear;
+            txtUbicacion.Enabled = desbloquear;
+            txtTelefono.Enabled = desbloquear;
+            txtCorreo.Enabled = desbloquear;
+            cbxEstatus.Enabled = desbloquear;
+        }
+        private void PoblarComboBoxEstatus()
+        {
+            var opcionesEstatus = new List<KeyValuePair<string, bool>>
+    {
+        new KeyValuePair<string, bool>("Activo", true),
+        new KeyValuePair<string, bool>("Inactivo", false)
+    };
+
+            cbxEstatus.DataSource = opcionesEstatus;
+            cbxEstatus.DisplayMember = "Key";
+            cbxEstatus.ValueMember = "Value";
+            cbxEstatus.SelectedIndex = 0; // Establecer "Activo" como predeterminado
         }
 
 

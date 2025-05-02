@@ -1,4 +1,7 @@
-﻿using RecursosHumanos.Bussines;
+﻿using Guna.UI2.AnimatorNS;
+using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Model;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,6 +17,10 @@ namespace RecursosHumanos.View
 {
     public partial class frmLogin : Form
     {
+        public static List<int> permisosUsuario = new List<int>();
+        public static LoginController controller = new LoginController();
+        public static Usuario? usuarioLogueado = null;
+
         public frmLogin()
         {
             InitializeComponent();
@@ -27,7 +34,7 @@ namespace RecursosHumanos.View
             txtContrasenia.UseSystemPasswordChar = true; // Oculta la contraseña por defecto
         }
 
-        private bool GenerarUsuario()
+        private bool VerificarUsuario()
         {
             if (!DatosVaciosLogin())
             {
@@ -37,7 +44,31 @@ namespace RecursosHumanos.View
             {
                 return false;
             }
-            return true;
+
+            string usuario = txtUsuario.Text.Trim();
+            string contrasenia = txtContrasenia.Text.Trim();
+
+            usuarioLogueado = controller.Login(usuario, contrasenia);
+
+            if (usuarioLogueado != null)
+            {
+                MessageBox.Show($"Bienvenido, {usuarioLogueado.DatosPersonales.Nombre}", "Login exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+                // Obtener los permisos del usuario
+                List<int> idPermisosUsuario = controller.ObtenerPermisosUsuario(usuarioLogueado.Id_Usuario);
+
+                // Pasar los permisos para ternerlos en la interfaz principal
+                permisosUsuario = idPermisosUsuario;
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Usuario o contraseña incorrectos.", "Error de autenticación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
         }
 
         private bool DatosVaciosLogin()
@@ -72,20 +103,26 @@ namespace RecursosHumanos.View
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (GenerarUsuario())
+            if (VerificarUsuario())
             {
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                // Actualizar fecha de acceso del usuario logueado
+                if (usuarioLogueado != null)
+                {
+                    usuarioLogueado.Fecha_Ultimo_Acceso = DateTime.Now;
+                    controller.ActualizarFechaUltimoAcceso(usuarioLogueado);
+                }
             }
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void pcVerContraseña_Click(object sender, EventArgs e)
         { 
             txtContrasenia.UseSystemPasswordChar = !txtContrasenia.UseSystemPasswordChar;
         }
+
+        //-------------------------------------------------------------------------------Permisos
+        
     }
 }

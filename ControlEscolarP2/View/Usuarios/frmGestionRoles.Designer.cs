@@ -74,7 +74,7 @@
             btnGuardar = new Guna.UI2.WinForms.Guna2Button();
             lblInfPermisos = new Label();
             lblInfo1 = new Label();
-            txtRol = new Guna.UI2.WinForms.Guna2TextBox();
+            txtRolCodigo = new Guna.UI2.WinForms.Guna2TextBox();
             lblRol = new Label();
             dtpFechaIngreso = new Guna.UI2.WinForms.Guna2DateTimePicker();
             lblFechaNacimiento = new Label();
@@ -96,7 +96,7 @@
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Size = new Size(1011, 64);
             lblTitulo.TabIndex = 27;
-            lblTitulo.Text = "Consulta y edición de Roles";
+            lblTitulo.Text = "Consulta, Eliminación y Edición de Roles";
             lblTitulo.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // pnlInfoUsuario
@@ -116,7 +116,7 @@
             pnlInfoUsuario.Controls.Add(btnGuardar);
             pnlInfoUsuario.Controls.Add(lblInfPermisos);
             pnlInfoUsuario.Controls.Add(lblInfo1);
-            pnlInfoUsuario.Controls.Add(txtRol);
+            pnlInfoUsuario.Controls.Add(txtRolCodigo);
             pnlInfoUsuario.Controls.Add(lblRol);
             pnlInfoUsuario.Controls.Add(dtpFechaIngreso);
             pnlInfoUsuario.Controls.Add(lblFechaNacimiento);
@@ -236,7 +236,6 @@
             txtDescripcion.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
             txtDescripcion.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             txtDescripcion.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtDescripcion.Enabled = false;
             txtDescripcion.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtDescripcion.Font = new Font("Segoe UI", 9.75F);
             txtDescripcion.ForeColor = Color.Black;
@@ -312,7 +311,7 @@
             btnGuardarEdicion.ShadowDecoration.CustomizableEdges = customizableEdges10;
             btnGuardarEdicion.Size = new Size(210, 45);
             btnGuardarEdicion.TabIndex = 61;
-            btnGuardarEdicion.Text = "Guardar";
+            btnGuardarEdicion.Text = "Guardar edición";
             btnGuardarEdicion.Click += btnGuardarEdicion_Click;
             // 
             // pnlTabla
@@ -355,7 +354,7 @@
             dataGridPermisos.Location = new Point(0, 0);
             dataGridPermisos.Name = "dataGridPermisos";
             dataGridPermisos.RowHeadersVisible = false;
-            dataGridPermisos.Size = new Size(426, 375);
+            dataGridPermisos.Size = new Size(442, 375);
             dataGridPermisos.TabIndex = 0;
             dataGridPermisos.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             dataGridPermisos.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -445,28 +444,28 @@
             lblInfo1.Text = "Edición de Roles de usuario";
             lblInfo1.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // txtRol
+            // txtRolCodigo
             // 
-            txtRol.Animated = true;
-            txtRol.BorderRadius = 5;
-            txtRol.CustomizableEdges = customizableEdges17;
-            txtRol.DefaultText = "Ingrese codigo del Rol";
-            txtRol.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtRol.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtRol.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtRol.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtRol.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtRol.Font = new Font("Segoe UI", 9.75F);
-            txtRol.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtRol.Location = new Point(13, 90);
-            txtRol.Margin = new Padding(3, 4, 3, 4);
-            txtRol.MaxLength = 20;
-            txtRol.Name = "txtRol";
-            txtRol.PlaceholderText = "";
-            txtRol.SelectedText = "";
-            txtRol.ShadowDecoration.CustomizableEdges = customizableEdges18;
-            txtRol.Size = new Size(272, 36);
-            txtRol.TabIndex = 40;
+            txtRolCodigo.Animated = true;
+            txtRolCodigo.BorderRadius = 5;
+            txtRolCodigo.CustomizableEdges = customizableEdges17;
+            txtRolCodigo.DefaultText = "Ingrese codigo del Rol";
+            txtRolCodigo.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtRolCodigo.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtRolCodigo.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtRolCodigo.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtRolCodigo.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtRolCodigo.Font = new Font("Segoe UI", 9.75F);
+            txtRolCodigo.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtRolCodigo.Location = new Point(13, 90);
+            txtRolCodigo.Margin = new Padding(3, 4, 3, 4);
+            txtRolCodigo.MaxLength = 20;
+            txtRolCodigo.Name = "txtRolCodigo";
+            txtRolCodigo.PlaceholderText = "";
+            txtRolCodigo.SelectedText = "";
+            txtRolCodigo.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            txtRolCodigo.Size = new Size(272, 36);
+            txtRolCodigo.TabIndex = 40;
             // 
             // lblRol
             // 
@@ -541,23 +540,23 @@
         private Guna.UI2.WinForms.Guna2Panel pnlTabla;
         private Guna.UI2.WinForms.Guna2DataGridView dataGridPermisos;
         private Guna.UI2.WinForms.Guna2Button btnCancelar;
-        private Guna.UI2.WinForms.Guna2Button btnGuardar;
         private Label lblInfPermisos;
         private Label lblInfo1;
-        private Guna.UI2.WinForms.Guna2TextBox txtRol;
+        private Guna.UI2.WinForms.Guna2TextBox txtRolCodigo;
         private Label lblRol;
         private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaIngreso;
         private Label lblFechaNacimiento;
         private Guna.UI2.WinForms.Guna2Separator separador1;
-        private Guna.UI2.WinForms.Guna2Button btnGuardarEdicion;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         private Guna.UI2.WinForms.Guna2VSeparator guna2vSeparator1;
-        private Guna.UI2.WinForms.Guna2Button btnBuscar;
-        private Guna.UI2.WinForms.Guna2Button btnEliminar;
         private Guna.UI2.WinForms.Guna2TextBox txtDescripcion;
         private Label lblDescripcion;
         private Label lblInfo2;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
         private Guna.UI2.WinForms.Guna2DataGridView dataGridRolesU;
+        private Guna.UI2.WinForms.Guna2Button btnBuscar;
+        public static Guna.UI2.WinForms.Guna2Button btnGuardar;
+        public static Guna.UI2.WinForms.Guna2Button btnGuardarEdicion;
+        public static Guna.UI2.WinForms.Guna2Button btnEliminar;
     }
 }
