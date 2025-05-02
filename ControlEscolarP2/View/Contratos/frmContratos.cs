@@ -22,6 +22,10 @@ namespace RecursosHumanos.View
             InicializaVentanaContratos(); // Llama al método para inicializar la ventana
             ConfigurarHoraEntradaSalida(); // Configura DateTimePicker para hora
             txtSalario.KeyPress += txtSalario_KeyPress; // Evento para validar solo números en txtSalario
+            dtpFechaInicio1.Value = DateTime.Today;
+            dtpFechaFin1.Value = DateTime.Today;
+            dtpHoraEntrada.Value = DateTime.Now;
+            dtpHoraSalida1.Value = DateTime.Now;
         }
 
         // Método para configurar la ventana al inicio
@@ -185,21 +189,27 @@ namespace RecursosHumanos.View
 
         private void LimpiarFormulario()
         {
-            // TextBoxes
+            // TextBoxes del contrato
             txtMatricula1.Text = "Ingresa tu matricula";
             txtDescrpcion.Text = "Ingresa una descripcion";
             txtSalario.Text = "Ingresa el salario";
 
-            // ComboBox de tipo de contrato
+            // TextBoxes del empleado
+            txtNombreCompleto.Text = "";
+            txtCurp1.Text = "";
+            txtTelefono1.Text = "";
+            txtCorreo.Text = "";
+
+            // ComboBox
             cbxTipoContrato1.SelectedIndex = 0;
 
             // DateTimePickers
             dtpFechaInicio1.Value = DateTime.Today;
             dtpFechaFin1.Value = DateTime.Today;
-
             dtpHoraEntrada.Value = DateTime.Now;
             dtpHoraSalida1.Value = DateTime.Now;
         }
+
 
 
 

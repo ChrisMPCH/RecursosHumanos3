@@ -67,7 +67,8 @@ namespace RecursosHumanos.Controller
         }
 
         //registrar un nuevo contrato
-        public (int id, string mensaje) RegistrarContrato(string matricula, Contrato contrato) //FUNCIONA
+        //registrar un nuevo contrato
+        public (int id, string mensaje) RegistrarContrato(string matricula, Contrato contrato)
         {
             try
             {
@@ -77,7 +78,6 @@ namespace RecursosHumanos.Controller
                 if (!EmpleadoNegocio.EsNoMatriculaValido(matricula))
                     return (-2, "Formato de matrícula inválido.");
 
-                //Obtener al empleado completo
                 Empleado empleado = _empleadosDataAccess.ObtenerEmpleadoPorMatricula(matricula);
 
                 if (empleado == null || empleado.Estatus == 0)
@@ -88,11 +88,14 @@ namespace RecursosHumanos.Controller
 
                 contrato.Matricula = matricula;
 
-                // ✔️ Registrar usando directamente el ID ya obtenido
                 int idContrato = _contratosDataAccess.InsertarContrato(contrato, empleado.Id_Empleado);
 
                 if (idContrato <= 0)
                     return (-5, "Error al registrar el contrato en la base de datos.");
+
+                // REGISTRO DE AUDITORÍA
+                AuditoriasController auditoriasController = new AuditoriasController();
+                auditoriasController.RegistrarAuditoriaGenerica(2, 1, (short)idContrato); // 2 = Contrato, 1 = Alta
 
                 return (idContrato, "Contrato registrado exitosamente.");
             }
@@ -194,6 +197,8 @@ namespace RecursosHumanos.Controller
                 }
 
                 _logger.Info($"Contrato con ID {contrato.Id_Contrato} actualizado exitosamente.");
+                AuditoriasController auditoriasController = new AuditoriasController();
+                auditoriasController.RegistrarAuditoriaGenerica(2, 2, (short)contrato.Id_Contrato); // 2 = Contrato, 3 = Actualización
                 return (true, "Contrato actualizado exitosamente.");
             }
             catch (Exception ex)
