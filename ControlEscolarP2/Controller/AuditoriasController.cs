@@ -326,7 +326,18 @@ namespace RecursosHumanos.Controller
                 Console.WriteLine($"Error al obtener la información del equipo: {ex.Message}");
                 return (string.Empty, string.Empty);
             }
-
+        }
+        public List<(int idUsuario, string detalle, DateTime fechaMovimiento)> ObtenerUltimasAuditorias(int limite = 3)
+        {
+            try
+            {
+                return _bitacorasDataAccess.ObtenerUltimasAuditorias(limite);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener las auditorías recientes");
+                return new List<(int, string, DateTime)>();
+            }
         }
     }
 }

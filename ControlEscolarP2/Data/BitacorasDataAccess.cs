@@ -260,6 +260,46 @@ namespace RecursosHumanos.Data
                 _dbAccess.Disconnect();  // Always close the database connection in the finally block
             }
         }
+        public List<(int idUsuario, string detalle, DateTime fechaMovimiento)> ObtenerUltimasAuditorias(int limite = 3)
+        {
+            List<(int, string, DateTime)> auditorias = new List<(int, string, DateTime)>();
+
+            try
+            {
+                string query = @"
+            SELECT id_usuario, detalle, fecha_movimiento
+            FROM audits.auditoria
+            WHERE estatus = true
+            ORDER BY fecha_movimiento DESC
+            LIMIT @Limite";
+
+                NpgsqlParameter paramLimite = _dbAccess.CreateParameter("@Limite", limite);
+
+                _dbAccess.Connect();
+                DataTable result = _dbAccess.ExecuteQuery_Reader(query, paramLimite);
+
+                foreach (DataRow row in result.Rows)
+                {
+                    auditorias.Add((
+                        Convert.ToInt32(row["id_usuario"]),
+                        row["detalle"].ToString() ?? "",
+                        Convert.ToDateTime(row["fecha_movimiento"])
+                    ));
+                }
+
+                _logger.Debug($"Se obtuvieron {auditorias.Count} auditorías recientes.");
+                return auditorias;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener las auditorías recientes");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
 
     }
 }

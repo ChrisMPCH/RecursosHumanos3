@@ -1,4 +1,5 @@
-﻿using RecursosHumanos.Utilities;
+﻿using RecursosHumanos.Controller;
+using RecursosHumanos.Utilities;
 using RecursosHumanos.View.Contratos;
 using RecursosHumanos.View.Usuarios;
 using System;
@@ -29,6 +30,8 @@ namespace RecursosHumanos.View
 
         private void MDIRecursosHumanos_Load()
         {
+            ActualizarActividadReciente();
+            ActualizarEstadisticas(); // Llama a la función para actualizar las estadísticas al cargar el formulario
             horafecha_Tick(); // Llama a la función para mostrar la hora y fecha en el formulario
             inicioMenuMDI(); // Llama a la función para inicializar el estado del menú MDI
         }
@@ -397,6 +400,93 @@ namespace RecursosHumanos.View
                 btnContarDias.Enabled = true;
             }
 
+        }
+
+        private void ActualizarEstadisticas()
+        {
+            try
+            {
+                // Porcentaje de empleados activos
+                EmpleadosController empleadoController = new EmpleadosController();
+                double porcentajeEmpleadosActivos = empleadoController.ObtenerPorcentajeEmpleadosActivos();
+                lblEmpleadosActNumero.Text = $"{porcentajeEmpleadosActivos:F0}%"; // Formato sin decimales
+
+                // Porcentaje de asistencias hoy (ejemplo, necesitarás un método similar)
+                // Porcentaje de asistencias hoy
+               // AsistenciaController asistenciaController = new AsistenciaController();
+                //double porcentajeAsistenciasHoy = asistenciaController.ObtenerPorcentajeAsistenciasHoy();
+                //lblAsistenciaNumero.Text = $"{porcentajeAsistenciasHoy:F0}%";
+                // Porcentaje de cumpleaños (ejemplo, necesitarás un método similar)
+
+                // Porcentaje de contratos activos (ejemplo, necesitarás un método similar)
+                ContratoController contratoController = new ContratoController();
+                double porcentajeContratosActivos = contratoController.ObtenerPorcentajeContratosActivos();
+                lblContratosActNumero.Text = $"{porcentajeContratosActivos:F0}%";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al actualizar las estadísticas: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void ActualizarActividadReciente()
+        {
+            try
+            {
+                AuditoriasController auditoriasController = new AuditoriasController();
+                // Obtener las últimas 3 auditorías activas
+                var auditorias = auditoriasController.ObtenerAuditorias(estatus: 1)
+                    .OrderByDescending(a => a.Fecha_Movimiento)
+                    .Take(3)
+                    .ToList();
+
+                // Limpiar controles
+                lblUsuario1.Text = "";
+                lblAccion1.Text = "";
+                lblTempo1.Text = "";
+                lblUsuario2.Text = "";
+                lblAccion2.Text = "";
+                lblTempo2.Text = "";
+                lblUsuario3.Text = "";
+                lblAccion3.Text = "";
+                lblTempo3.Text = "";
+
+                // Mostrar las auditorías
+                if (auditorias.Count > 0)
+                {
+                    lblUsuario1.Text = auditorias[0].UsuarioResponsable?.UsuarioNombre ?? $"Usuario {auditorias[0].Id_Usuario}";
+                    lblAccion1.Text = auditorias[0].Detalle;
+                    lblTempo1.Text = CalcularTiempo(auditorias[0].Fecha_Movimiento);
+                }
+                if (auditorias.Count > 1)
+                {
+                    lblUsuario2.Text = auditorias[1].UsuarioResponsable?.UsuarioNombre ?? $"Usuario {auditorias[1].Id_Usuario}";
+                    lblAccion2.Text = auditorias[1].Detalle;
+                    lblTempo2.Text = CalcularTiempo(auditorias[1].Fecha_Movimiento);
+                }
+                if (auditorias.Count > 2)
+                {
+                    lblUsuario3.Text = auditorias[2].UsuarioResponsable?.UsuarioNombre ?? $"Usuario {auditorias[2].Id_Usuario}";
+                    lblAccion3.Text = auditorias[2].Detalle;
+                    lblTempo3.Text = CalcularTiempo(auditorias[2].Fecha_Movimiento);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar la actividad reciente: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private string CalcularTiempo(DateTime fechaHora)
+        {
+            TimeSpan diferencia = DateTime.Now - fechaHora;
+            if (diferencia.TotalMinutes < 1)
+                return "Hace menos de 1 min";
+            else if (diferencia.TotalMinutes < 60)
+                return $"Hace {(int)diferencia.TotalMinutes} min";
+            else if (diferencia.TotalHours < 24)
+                return $"Hace {(int)diferencia.TotalHours} horas";
+            else
+                return $"Hace {(int)diferencia.TotalDays} días";
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NLog;
 using RecursosHumanos.Data;
+using RecursosHumanos.Model;
 using RecursosHumanos.Models;
 
 namespace RecursosHumanos.Controller
@@ -13,6 +14,8 @@ namespace RecursosHumanos.Controller
     {
         private static readonly Logger _logger = LogManager.GetLogger("RecursosHumanos.Controller.DepartamentoController");
         private readonly DepartamentoDataAccess _departamentoDataAccess;
+        private static readonly AuditoriasController _auditoriasController= new AuditoriasController();
+
 
         public DepartamentoController()
         {
@@ -66,6 +69,7 @@ namespace RecursosHumanos.Controller
                 {
                     return (-4, "Error al registrar el departamento en la base de datos");
                 }
+                _auditoriasController.RegistrarAuditoriaGenerica(2, 1, (short)idDepartamento);
 
                 _logger.Info($"Departamento registrado exitosamente con ID: {idDepartamento}");
                 return (idDepartamento, "Departamento registrado exitosamente");

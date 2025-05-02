@@ -213,6 +213,27 @@ namespace RecursosHumanos.Controller
             var contratos = ObtenerTodosLosContratosPorMatricula(matricula);
             return contratos.FirstOrDefault(c => c.Estatus);
         }
+        public double ObtenerPorcentajeContratosActivos()
+        {
+            try
+            {
+                var (totalContratos, contratosActivos) = _contratosDataAccess.ContarContratos();
 
+                if (totalContratos == 0)
+                {
+                    _logger.Warn("No hay contratos registrados para calcular el porcentaje.");
+                    return 0.0;
+                }
+
+                double porcentaje = (double)contratosActivos / totalContratos * 100;
+                _logger.Info($"Porcentaje de contratos activos: {porcentaje}%");
+                return porcentaje;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener el porcentaje de contratos activos");
+                throw;
+            }
+        }
     }
 }

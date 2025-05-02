@@ -387,6 +387,43 @@ namespace RecursosHumanos.Data
                 _dbAccess.Disconnect();
             }
         }
+        public (int totalEmpleados, int empleadosActivos) ContarEmpleados()
+        {
+            try
+            {
+                string queryTotal = @"
+SELECT COUNT(*) 
+FROM human_resours.empleado
+WHERE 1=1";
+
+                string queryActivos = @"
+SELECT COUNT(*) 
+FROM human_resours.empleado
+WHERE estatus = 1";
+
+                _dbAccess.Connect();
+
+                // Contar total de empleados
+                object? totalResultado = _dbAccess.ExecuteScalar(queryTotal);
+                int totalEmpleados = Convert.ToInt32(totalResultado);
+
+                // Contar empleados activos
+                object? activosResultado = _dbAccess.ExecuteScalar(queryActivos);
+                int empleadosActivos = Convert.ToInt32(activosResultado);
+
+                _logger.Debug($"Se encontraron {totalEmpleados} empleados en total, de los cuales {empleadosActivos} están activos.");
+                return (totalEmpleados, empleadosActivos);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al contar los empleados");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
 
     }
 }

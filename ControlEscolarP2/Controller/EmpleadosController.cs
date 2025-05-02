@@ -122,6 +122,28 @@ namespace RecursosHumanos.Controller
                 return null;
             }
         }
+        public double ObtenerPorcentajeEmpleadosActivos()
+        {
+            try
+            {
+                var (totalEmpleados, empleadosActivos) = _empleadosAccess.ContarEmpleados();
+
+                if (totalEmpleados == 0)
+                {
+                    _logger.Warn("No hay empleados registrados para calcular el porcentaje.");
+                    return 0.0;
+                }
+
+                double porcentaje = (double)empleadosActivos / totalEmpleados * 100;
+                _logger.Info($"Porcentaje de empleados activos: {porcentaje}%");
+                return porcentaje;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener el porcentaje de empleados activos");
+                throw;
+            }
+        }
 
 
 

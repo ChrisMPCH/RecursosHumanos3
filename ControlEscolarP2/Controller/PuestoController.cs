@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NLog;
 using RecursosHumanos.Data;
+using RecursosHumanos.Model;
 using RecursosHumanos.Models;
 
 namespace RecursosHumanos.Controller
@@ -34,7 +35,8 @@ namespace RecursosHumanos.Controller
                 int idPuesto = _puestoDataAccess.InsertarPuesto(puesto);
                 if (idPuesto <= 0)
                     return (-4, "No se pudo registrar el puesto en la base de datos.");
-
+                AuditoriasController auditoriasController = new AuditoriasController();
+                auditoriasController.RegistrarAuditoriaGenerica(2, 1, (short)idPuesto);
                 _logger.Info($"Puesto registrado exitosamente con ID: {idPuesto}");
                 return (idPuesto, "Puesto registrado exitosamente");
             }

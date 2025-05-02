@@ -428,6 +428,45 @@ WHERE 1=1");
                 _dbAccess.Disconnect();
             }
         }
+        public (int totalContratos, int contratosActivos) ContarContratos()
+        {
+            try
+            {
+                // Contar total de contratos
+                string queryTotal = @"
+                SELECT COUNT(*) 
+                FROM human_resours.contrato
+                WHERE 1=1";
+
+                // Contar contratos activos
+                string queryActivos = @"
+                SELECT COUNT(*) 
+                FROM human_resours.contrato
+                WHERE estatus = 1";
+
+                _dbAccess.Connect();
+
+                // Contar total de contratos
+                object? totalResultado = _dbAccess.ExecuteScalar(queryTotal);
+                int totalContratos = Convert.ToInt32(totalResultado);
+
+                // Contar contratos activos
+                object? activosResultado = _dbAccess.ExecuteScalar(queryActivos);
+                int contratosActivos = Convert.ToInt32(activosResultado);
+
+                _logger.Debug($"Se encontraron {totalContratos} contratos en total, de los cuales {contratosActivos} están activos.");
+                return (totalContratos, contratosActivos);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al contar los contratos");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
 
 
 
