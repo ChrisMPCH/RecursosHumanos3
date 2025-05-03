@@ -56,7 +56,7 @@ namespace RecursosHumanos.Data
                                "a.ip_equipo, a.nombre_equipo, a.detalle, a.id_usuario, a.estatus, u.usuario " +
                                "FROM audits.auditoria a " +
                                "INNER JOIN administration.usuario u ON a.id_usuario = u.id_usuario " +
-                               "WHERE 1 = 1";  // Esto es para que sea más fácil agregar filtros dinámicos
+                               "WHERE 1 = 1";
 
                 // Lista de parámetros
                 var parametros = new List<NpgsqlParameter>();

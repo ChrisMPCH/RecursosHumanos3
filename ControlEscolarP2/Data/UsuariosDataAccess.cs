@@ -54,6 +54,7 @@ namespace RecursosHumanos.Data
             FROM administration.usuario u
             INNER JOIN administration.roles r ON u.id_rol = r.id_rol
             INNER JOIN human_resours.persona p ON u.id_persona = p.id_persona
+            WHERE u.estatus = 1
             ORDER BY u.id_usuario";
 
                 _dbAccess.Connect();
