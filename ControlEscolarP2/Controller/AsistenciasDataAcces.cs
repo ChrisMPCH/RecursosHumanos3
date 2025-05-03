@@ -46,4 +46,19 @@ public class AsistenciaController
             throw;
         }
     }
+
+    internal int ObtenerAsistenciasCompletas(int idEmpleado, DateTime fechaInicio, DateTime fechaFin)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal bool RegistrarEntrada(string matricula, out string mensaje)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal bool RegistrarSalida(string matricula, out string mensaje)
+    {
+        throw new NotImplementedException();
+    }
 }

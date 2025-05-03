@@ -122,6 +122,7 @@ namespace RecursosHumanos.Controller
                 return null;
             }
         }
+
         public double ObtenerPorcentajeEmpleadosActivos()
         {
             try

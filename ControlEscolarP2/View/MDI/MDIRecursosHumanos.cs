@@ -402,6 +402,7 @@ namespace RecursosHumanos.View
 
         }
 
+
         private void ActualizarEstadisticas()
         {
             try

@@ -392,14 +392,14 @@ namespace RecursosHumanos.Data
             try
             {
                 string queryTotal = @"
-SELECT COUNT(*) 
-FROM human_resours.empleado
-WHERE 1=1";
+                SELECT COUNT(*) 
+                FROM human_resours.empleado
+                WHERE 1=1";
 
-                string queryActivos = @"
-SELECT COUNT(*) 
-FROM human_resours.empleado
-WHERE estatus = 1";
+                        string queryActivos = @"
+                SELECT COUNT(*) 
+                FROM human_resours.empleado
+                WHERE estatus = 1";
 
                 _dbAccess.Connect();
 
