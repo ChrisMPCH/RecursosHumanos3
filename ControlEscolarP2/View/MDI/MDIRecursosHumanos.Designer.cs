@@ -171,9 +171,8 @@ namespace RecursosHumanos.View
             panelSideMenu.Controls.Add(panelLogo);
             panelSideMenu.Dock = DockStyle.Left;
             panelSideMenu.Location = new Point(0, 0);
-            panelSideMenu.Margin = new Padding(3, 4, 3, 4);
             panelSideMenu.Name = "panelSideMenu";
-            panelSideMenu.Size = new Size(318, 1055);
+            panelSideMenu.Size = new Size(278, 791);
             panelSideMenu.TabIndex = 3;
             // 
             // pnlSubRoles
@@ -182,9 +181,10 @@ namespace RecursosHumanos.View
             pnlSubRoles.Controls.Add(btnCreacionRoles);
             pnlSubRoles.Controls.Add(btnGestionRoles);
             pnlSubRoles.Dock = DockStyle.Top;
-            pnlSubRoles.Location = new Point(0, 1241);
+            pnlSubRoles.Location = new Point(0, 931);
+            pnlSubRoles.Margin = new Padding(3, 2, 3, 2);
             pnlSubRoles.Name = "pnlSubRoles";
-            pnlSubRoles.Size = new Size(297, 116);
+            pnlSubRoles.Size = new Size(261, 87);
             pnlSubRoles.TabIndex = 10;
             // 
             // btnCreacionRoles
@@ -195,11 +195,10 @@ namespace RecursosHumanos.View
             btnCreacionRoles.FlatStyle = FlatStyle.Flat;
             btnCreacionRoles.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnCreacionRoles.ForeColor = Color.Black;
-            btnCreacionRoles.Location = new Point(0, 53);
-            btnCreacionRoles.Margin = new Padding(3, 4, 3, 4);
+            btnCreacionRoles.Location = new Point(0, 40);
             btnCreacionRoles.Name = "btnCreacionRoles";
-            btnCreacionRoles.Padding = new Padding(40, 0, 0, 0);
-            btnCreacionRoles.Size = new Size(297, 53);
+            btnCreacionRoles.Padding = new Padding(35, 0, 0, 0);
+            btnCreacionRoles.Size = new Size(261, 40);
             btnCreacionRoles.TabIndex = 1;
             btnCreacionRoles.Text = "Creacion de Roles";
             btnCreacionRoles.TextAlign = ContentAlignment.MiddleLeft;
@@ -215,10 +214,9 @@ namespace RecursosHumanos.View
             btnGestionRoles.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnGestionRoles.ForeColor = Color.Black;
             btnGestionRoles.Location = new Point(0, 0);
-            btnGestionRoles.Margin = new Padding(3, 4, 3, 4);
             btnGestionRoles.Name = "btnGestionRoles";
-            btnGestionRoles.Padding = new Padding(40, 0, 0, 0);
-            btnGestionRoles.Size = new Size(297, 53);
+            btnGestionRoles.Padding = new Padding(35, 0, 0, 0);
+            btnGestionRoles.Size = new Size(261, 40);
             btnGestionRoles.TabIndex = 0;
             btnGestionRoles.Text = "Consulta y Edición de Roles";
             btnGestionRoles.TextAlign = ContentAlignment.MiddleLeft;
@@ -234,10 +232,11 @@ namespace RecursosHumanos.View
             btnRoles.Font = new Font("Century Gothic", 12F);
             btnRoles.ForeColor = Color.Black;
             btnRoles.ImageAlign = ContentAlignment.MiddleLeft;
-            btnRoles.Location = new Point(0, 1181);
+            btnRoles.Location = new Point(0, 886);
+            btnRoles.Margin = new Padding(3, 2, 3, 2);
             btnRoles.Name = "btnRoles";
-            btnRoles.Padding = new Padding(11, 0, 0, 0);
-            btnRoles.Size = new Size(297, 60);
+            btnRoles.Padding = new Padding(10, 0, 0, 0);
+            btnRoles.Size = new Size(261, 45);
             btnRoles.TabIndex = 9;
             btnRoles.Text = "Administración de Roles";
             btnRoles.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -252,10 +251,11 @@ namespace RecursosHumanos.View
             btmSalir.FlatStyle = FlatStyle.Flat;
             btmSalir.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btmSalir.ForeColor = Color.Black;
-            btmSalir.Location = new Point(0, 1357);
+            btmSalir.Location = new Point(0, 1018);
+            btmSalir.Margin = new Padding(3, 2, 3, 2);
             btmSalir.Name = "btmSalir";
-            btmSalir.Padding = new Padding(11, 0, 0, 0);
-            btmSalir.Size = new Size(297, 60);
+            btmSalir.Padding = new Padding(10, 0, 0, 0);
+            btmSalir.Size = new Size(261, 45);
             btmSalir.TabIndex = 8;
             btmSalir.Text = "Salir";
             btmSalir.TextAlign = ContentAlignment.MiddleLeft;
@@ -268,9 +268,10 @@ namespace RecursosHumanos.View
             subFridaPanel.Controls.Add(btnContarDias);
             subFridaPanel.Controls.Add(btnRegistroAuditorias);
             subFridaPanel.Dock = DockStyle.Top;
-            subFridaPanel.Location = new Point(0, 1070);
+            subFridaPanel.Location = new Point(0, 803);
+            subFridaPanel.Margin = new Padding(3, 2, 3, 2);
             subFridaPanel.Name = "subFridaPanel";
-            subFridaPanel.Size = new Size(297, 111);
+            subFridaPanel.Size = new Size(261, 83);
             subFridaPanel.TabIndex = 7;
             // 
             // btnContarDias
@@ -281,11 +282,10 @@ namespace RecursosHumanos.View
             btnContarDias.FlatStyle = FlatStyle.Flat;
             btnContarDias.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnContarDias.ForeColor = Color.Black;
-            btnContarDias.Location = new Point(0, 53);
-            btnContarDias.Margin = new Padding(3, 4, 3, 4);
+            btnContarDias.Location = new Point(0, 40);
             btnContarDias.Name = "btnContarDias";
-            btnContarDias.Padding = new Padding(40, 0, 0, 0);
-            btnContarDias.Size = new Size(297, 53);
+            btnContarDias.Padding = new Padding(35, 0, 0, 0);
+            btnContarDias.Size = new Size(261, 40);
             btnContarDias.TabIndex = 1;
             btnContarDias.Text = "Contar Dias";
             btnContarDias.TextAlign = ContentAlignment.MiddleLeft;
@@ -301,10 +301,9 @@ namespace RecursosHumanos.View
             btnRegistroAuditorias.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnRegistroAuditorias.ForeColor = Color.Black;
             btnRegistroAuditorias.Location = new Point(0, 0);
-            btnRegistroAuditorias.Margin = new Padding(3, 4, 3, 4);
             btnRegistroAuditorias.Name = "btnRegistroAuditorias";
-            btnRegistroAuditorias.Padding = new Padding(40, 0, 0, 0);
-            btnRegistroAuditorias.Size = new Size(297, 53);
+            btnRegistroAuditorias.Padding = new Padding(35, 0, 0, 0);
+            btnRegistroAuditorias.Size = new Size(261, 40);
             btnRegistroAuditorias.TabIndex = 0;
             btnRegistroAuditorias.Text = "Auditorias";
             btnRegistroAuditorias.TextAlign = ContentAlignment.MiddleLeft;
@@ -320,10 +319,11 @@ namespace RecursosHumanos.View
             btnFrida.Font = new Font("Century Gothic", 12F);
             btnFrida.ForeColor = Color.Black;
             btnFrida.ImageAlign = ContentAlignment.MiddleLeft;
-            btnFrida.Location = new Point(0, 1010);
+            btnFrida.Location = new Point(0, 758);
+            btnFrida.Margin = new Padding(3, 2, 3, 2);
             btnFrida.Name = "btnFrida";
-            btnFrida.Padding = new Padding(11, 0, 0, 0);
-            btnFrida.Size = new Size(297, 60);
+            btnFrida.Padding = new Padding(10, 0, 0, 0);
+            btnFrida.Size = new Size(261, 45);
             btnFrida.TabIndex = 6;
             btnFrida.Text = "Administración de Auditorias";
             btnFrida.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -337,9 +337,10 @@ namespace RecursosHumanos.View
             subNatalyPanel.Controls.Add(btnSalidas);
             subNatalyPanel.Controls.Add(btnEntradas);
             subNatalyPanel.Dock = DockStyle.Top;
-            subNatalyPanel.Location = new Point(0, 841);
+            subNatalyPanel.Location = new Point(0, 631);
+            subNatalyPanel.Margin = new Padding(3, 2, 3, 2);
             subNatalyPanel.Name = "subNatalyPanel";
-            subNatalyPanel.Size = new Size(297, 169);
+            subNatalyPanel.Size = new Size(261, 127);
             subNatalyPanel.TabIndex = 5;
             // 
             // btnReportes
@@ -350,11 +351,10 @@ namespace RecursosHumanos.View
             btnReportes.FlatStyle = FlatStyle.Flat;
             btnReportes.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnReportes.ForeColor = Color.Black;
-            btnReportes.Location = new Point(0, 106);
-            btnReportes.Margin = new Padding(3, 4, 3, 4);
+            btnReportes.Location = new Point(0, 80);
             btnReportes.Name = "btnReportes";
-            btnReportes.Padding = new Padding(40, 0, 0, 0);
-            btnReportes.Size = new Size(297, 53);
+            btnReportes.Padding = new Padding(35, 0, 0, 0);
+            btnReportes.Size = new Size(261, 40);
             btnReportes.TabIndex = 3;
             btnReportes.Text = "Reportes de Contratos";
             btnReportes.TextAlign = ContentAlignment.MiddleLeft;
@@ -369,11 +369,10 @@ namespace RecursosHumanos.View
             btnSalidas.FlatStyle = FlatStyle.Flat;
             btnSalidas.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnSalidas.ForeColor = Color.Black;
-            btnSalidas.Location = new Point(0, 53);
-            btnSalidas.Margin = new Padding(3, 4, 3, 4);
+            btnSalidas.Location = new Point(0, 40);
             btnSalidas.Name = "btnSalidas";
-            btnSalidas.Padding = new Padding(40, 0, 0, 0);
-            btnSalidas.Size = new Size(297, 53);
+            btnSalidas.Padding = new Padding(35, 0, 0, 0);
+            btnSalidas.Size = new Size(261, 40);
             btnSalidas.TabIndex = 1;
             btnSalidas.Text = "Ausencias";
             btnSalidas.TextAlign = ContentAlignment.MiddleLeft;
@@ -389,10 +388,9 @@ namespace RecursosHumanos.View
             btnEntradas.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnEntradas.ForeColor = Color.Black;
             btnEntradas.Location = new Point(0, 0);
-            btnEntradas.Margin = new Padding(3, 4, 3, 4);
             btnEntradas.Name = "btnEntradas";
-            btnEntradas.Padding = new Padding(40, 0, 0, 0);
-            btnEntradas.Size = new Size(297, 53);
+            btnEntradas.Padding = new Padding(35, 0, 0, 0);
+            btnEntradas.Size = new Size(261, 40);
             btnEntradas.TabIndex = 0;
             btnEntradas.Text = "Asistencias";
             btnEntradas.TextAlign = ContentAlignment.MiddleLeft;
@@ -407,10 +405,11 @@ namespace RecursosHumanos.View
             btnNataly.FlatStyle = FlatStyle.Flat;
             btnNataly.Font = new Font("Century Gothic", 12F);
             btnNataly.ForeColor = Color.Black;
-            btnNataly.Location = new Point(0, 781);
+            btnNataly.Location = new Point(0, 586);
+            btnNataly.Margin = new Padding(3, 2, 3, 2);
             btnNataly.Name = "btnNataly";
-            btnNataly.Padding = new Padding(11, 0, 0, 0);
-            btnNataly.Size = new Size(297, 60);
+            btnNataly.Padding = new Padding(10, 0, 0, 0);
+            btnNataly.Size = new Size(261, 45);
             btnNataly.TabIndex = 4;
             btnNataly.Text = "Reportes";
             btnNataly.UseVisualStyleBackColor = false;
@@ -427,9 +426,10 @@ namespace RecursosHumanos.View
             subVanessaPanel.Controls.Add(btnActualizarEmpleados);
             subVanessaPanel.Controls.Add(btnListaEmpleados);
             subVanessaPanel.Dock = DockStyle.Top;
-            subVanessaPanel.Location = new Point(0, 404);
+            subVanessaPanel.Location = new Point(0, 303);
+            subVanessaPanel.Margin = new Padding(3, 2, 3, 2);
             subVanessaPanel.Name = "subVanessaPanel";
-            subVanessaPanel.Size = new Size(297, 377);
+            subVanessaPanel.Size = new Size(261, 283);
             subVanessaPanel.TabIndex = 3;
             // 
             // btnListaContratos
@@ -440,11 +440,10 @@ namespace RecursosHumanos.View
             btnListaContratos.FlatStyle = FlatStyle.Flat;
             btnListaContratos.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnListaContratos.ForeColor = Color.Black;
-            btnListaContratos.Location = new Point(0, 318);
-            btnListaContratos.Margin = new Padding(3, 4, 3, 4);
+            btnListaContratos.Location = new Point(0, 240);
             btnListaContratos.Name = "btnListaContratos";
-            btnListaContratos.Padding = new Padding(40, 0, 0, 0);
-            btnListaContratos.Size = new Size(297, 53);
+            btnListaContratos.Padding = new Padding(35, 0, 0, 0);
+            btnListaContratos.Size = new Size(261, 40);
             btnListaContratos.TabIndex = 7;
             btnListaContratos.Text = "Actualizar Contratos";
             btnListaContratos.TextAlign = ContentAlignment.MiddleLeft;
@@ -459,11 +458,10 @@ namespace RecursosHumanos.View
             btnContratos.FlatStyle = FlatStyle.Flat;
             btnContratos.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnContratos.ForeColor = Color.Black;
-            btnContratos.Location = new Point(0, 265);
-            btnContratos.Margin = new Padding(3, 4, 3, 4);
+            btnContratos.Location = new Point(0, 200);
             btnContratos.Name = "btnContratos";
-            btnContratos.Padding = new Padding(40, 0, 0, 0);
-            btnContratos.Size = new Size(297, 53);
+            btnContratos.Padding = new Padding(35, 0, 0, 0);
+            btnContratos.Size = new Size(261, 40);
             btnContratos.TabIndex = 6;
             btnContratos.Text = "Contratos";
             btnContratos.TextAlign = ContentAlignment.MiddleLeft;
@@ -478,11 +476,10 @@ namespace RecursosHumanos.View
             btnPuestos.FlatStyle = FlatStyle.Flat;
             btnPuestos.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnPuestos.ForeColor = Color.Black;
-            btnPuestos.Location = new Point(0, 212);
-            btnPuestos.Margin = new Padding(3, 4, 3, 4);
+            btnPuestos.Location = new Point(0, 160);
             btnPuestos.Name = "btnPuestos";
-            btnPuestos.Padding = new Padding(40, 0, 0, 0);
-            btnPuestos.Size = new Size(297, 53);
+            btnPuestos.Padding = new Padding(35, 0, 0, 0);
+            btnPuestos.Size = new Size(261, 40);
             btnPuestos.TabIndex = 5;
             btnPuestos.Text = "Puestos";
             btnPuestos.TextAlign = ContentAlignment.MiddleLeft;
@@ -497,11 +494,10 @@ namespace RecursosHumanos.View
             btnDepartamentos.FlatStyle = FlatStyle.Flat;
             btnDepartamentos.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnDepartamentos.ForeColor = Color.Black;
-            btnDepartamentos.Location = new Point(0, 159);
-            btnDepartamentos.Margin = new Padding(3, 4, 3, 4);
+            btnDepartamentos.Location = new Point(0, 120);
             btnDepartamentos.Name = "btnDepartamentos";
-            btnDepartamentos.Padding = new Padding(40, 0, 0, 0);
-            btnDepartamentos.Size = new Size(297, 53);
+            btnDepartamentos.Padding = new Padding(35, 0, 0, 0);
+            btnDepartamentos.Size = new Size(261, 40);
             btnDepartamentos.TabIndex = 4;
             btnDepartamentos.Text = "Departamentos";
             btnDepartamentos.TextAlign = ContentAlignment.MiddleLeft;
@@ -516,11 +512,10 @@ namespace RecursosHumanos.View
             btnEliminarEmpleados.FlatStyle = FlatStyle.Flat;
             btnEliminarEmpleados.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnEliminarEmpleados.ForeColor = Color.Black;
-            btnEliminarEmpleados.Location = new Point(0, 106);
-            btnEliminarEmpleados.Margin = new Padding(3, 4, 3, 4);
+            btnEliminarEmpleados.Location = new Point(0, 80);
             btnEliminarEmpleados.Name = "btnEliminarEmpleados";
-            btnEliminarEmpleados.Padding = new Padding(40, 0, 0, 0);
-            btnEliminarEmpleados.Size = new Size(297, 53);
+            btnEliminarEmpleados.Padding = new Padding(35, 0, 0, 0);
+            btnEliminarEmpleados.Size = new Size(261, 40);
             btnEliminarEmpleados.TabIndex = 3;
             btnEliminarEmpleados.Text = "Eliminar Empleados";
             btnEliminarEmpleados.TextAlign = ContentAlignment.MiddleLeft;
@@ -535,10 +530,11 @@ namespace RecursosHumanos.View
             btnActualizarEmpleados.FlatStyle = FlatStyle.Flat;
             btnActualizarEmpleados.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnActualizarEmpleados.ForeColor = Color.Black;
-            btnActualizarEmpleados.Location = new Point(0, 53);
+            btnActualizarEmpleados.Location = new Point(0, 40);
+            btnActualizarEmpleados.Margin = new Padding(3, 2, 3, 2);
             btnActualizarEmpleados.Name = "btnActualizarEmpleados";
-            btnActualizarEmpleados.Padding = new Padding(35, 0, 0, 0);
-            btnActualizarEmpleados.Size = new Size(297, 53);
+            btnActualizarEmpleados.Padding = new Padding(31, 0, 0, 0);
+            btnActualizarEmpleados.Size = new Size(261, 40);
             btnActualizarEmpleados.TabIndex = 2;
             btnActualizarEmpleados.Text = "Actualizar Empleados";
             btnActualizarEmpleados.TextAlign = ContentAlignment.MiddleLeft;
@@ -554,9 +550,10 @@ namespace RecursosHumanos.View
             btnListaEmpleados.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnListaEmpleados.ForeColor = Color.Black;
             btnListaEmpleados.Location = new Point(0, 0);
+            btnListaEmpleados.Margin = new Padding(3, 2, 3, 2);
             btnListaEmpleados.Name = "btnListaEmpleados";
-            btnListaEmpleados.Padding = new Padding(35, 0, 0, 0);
-            btnListaEmpleados.Size = new Size(297, 53);
+            btnListaEmpleados.Padding = new Padding(31, 0, 0, 0);
+            btnListaEmpleados.Size = new Size(261, 40);
             btnListaEmpleados.TabIndex = 1;
             btnListaEmpleados.Text = "Lista de Empleados";
             btnListaEmpleados.TextAlign = ContentAlignment.MiddleLeft;
@@ -572,10 +569,11 @@ namespace RecursosHumanos.View
             btmVanessa.Font = new Font("Century Gothic", 12F);
             btmVanessa.ForeColor = Color.Black;
             btmVanessa.ImageAlign = ContentAlignment.BottomCenter;
-            btmVanessa.Location = new Point(0, 344);
+            btmVanessa.Location = new Point(0, 258);
+            btmVanessa.Margin = new Padding(3, 2, 3, 2);
             btmVanessa.Name = "btmVanessa";
-            btmVanessa.Padding = new Padding(10, 0, 0, 0);
-            btmVanessa.Size = new Size(297, 60);
+            btmVanessa.Padding = new Padding(9, 0, 0, 0);
+            btmVanessa.Size = new Size(261, 45);
             btmVanessa.TabIndex = 2;
             btmVanessa.Text = "Administración de Empleados";
             btmVanessa.UseVisualStyleBackColor = false;
@@ -589,9 +587,10 @@ namespace RecursosHumanos.View
             subChristopherPanel.Controls.Add(btnActualizarUsuarios);
             subChristopherPanel.Controls.Add(subRegistroPersonas);
             subChristopherPanel.Dock = DockStyle.Top;
-            subChristopherPanel.Location = new Point(0, 127);
+            subChristopherPanel.Location = new Point(0, 95);
+            subChristopherPanel.Margin = new Padding(3, 2, 3, 2);
             subChristopherPanel.Name = "subChristopherPanel";
-            subChristopherPanel.Size = new Size(297, 217);
+            subChristopherPanel.Size = new Size(261, 163);
             subChristopherPanel.TabIndex = 1;
             // 
             // btnLisUsuarios
@@ -602,10 +601,11 @@ namespace RecursosHumanos.View
             btnLisUsuarios.FlatStyle = FlatStyle.Flat;
             btnLisUsuarios.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnLisUsuarios.ForeColor = Color.Black;
-            btnLisUsuarios.Location = new Point(0, 159);
+            btnLisUsuarios.Location = new Point(0, 120);
+            btnLisUsuarios.Margin = new Padding(3, 2, 3, 2);
             btnLisUsuarios.Name = "btnLisUsuarios";
-            btnLisUsuarios.Padding = new Padding(35, 0, 0, 0);
-            btnLisUsuarios.Size = new Size(297, 53);
+            btnLisUsuarios.Padding = new Padding(31, 0, 0, 0);
+            btnLisUsuarios.Size = new Size(261, 40);
             btnLisUsuarios.TabIndex = 1;
             btnLisUsuarios.Text = "Consulta Usuarios";
             btnLisUsuarios.TextAlign = ContentAlignment.MiddleLeft;
@@ -620,10 +620,11 @@ namespace RecursosHumanos.View
             btnEliminarUsuarios.FlatStyle = FlatStyle.Flat;
             btnEliminarUsuarios.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnEliminarUsuarios.ForeColor = Color.Black;
-            btnEliminarUsuarios.Location = new Point(0, 106);
+            btnEliminarUsuarios.Location = new Point(0, 80);
+            btnEliminarUsuarios.Margin = new Padding(3, 2, 3, 2);
             btnEliminarUsuarios.Name = "btnEliminarUsuarios";
-            btnEliminarUsuarios.Padding = new Padding(35, 0, 0, 0);
-            btnEliminarUsuarios.Size = new Size(297, 53);
+            btnEliminarUsuarios.Padding = new Padding(31, 0, 0, 0);
+            btnEliminarUsuarios.Size = new Size(261, 40);
             btnEliminarUsuarios.TabIndex = 2;
             btnEliminarUsuarios.Text = "Eliminar Usuarios";
             btnEliminarUsuarios.TextAlign = ContentAlignment.MiddleLeft;
@@ -638,10 +639,11 @@ namespace RecursosHumanos.View
             btnActualizarUsuarios.FlatStyle = FlatStyle.Flat;
             btnActualizarUsuarios.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnActualizarUsuarios.ForeColor = Color.Black;
-            btnActualizarUsuarios.Location = new Point(0, 53);
+            btnActualizarUsuarios.Location = new Point(0, 40);
+            btnActualizarUsuarios.Margin = new Padding(3, 2, 3, 2);
             btnActualizarUsuarios.Name = "btnActualizarUsuarios";
-            btnActualizarUsuarios.Padding = new Padding(35, 0, 0, 0);
-            btnActualizarUsuarios.Size = new Size(297, 53);
+            btnActualizarUsuarios.Padding = new Padding(31, 0, 0, 0);
+            btnActualizarUsuarios.Size = new Size(261, 40);
             btnActualizarUsuarios.TabIndex = 1;
             btnActualizarUsuarios.Text = "Actualizar Usuarios";
             btnActualizarUsuarios.TextAlign = ContentAlignment.MiddleLeft;
@@ -657,10 +659,9 @@ namespace RecursosHumanos.View
             subRegistroPersonas.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             subRegistroPersonas.ForeColor = Color.Black;
             subRegistroPersonas.Location = new Point(0, 0);
-            subRegistroPersonas.Margin = new Padding(3, 4, 3, 4);
             subRegistroPersonas.Name = "subRegistroPersonas";
-            subRegistroPersonas.Padding = new Padding(40, 0, 0, 0);
-            subRegistroPersonas.Size = new Size(297, 53);
+            subRegistroPersonas.Padding = new Padding(35, 0, 0, 0);
+            subRegistroPersonas.Size = new Size(261, 40);
             subRegistroPersonas.TabIndex = 0;
             subRegistroPersonas.Text = "Registrar Usuarios/Empleados";
             subRegistroPersonas.TextAlign = ContentAlignment.MiddleLeft;
@@ -675,11 +676,10 @@ namespace RecursosHumanos.View
             btmUsuario.FlatStyle = FlatStyle.Flat;
             btmUsuario.Font = new Font("Century Gothic", 12F);
             btmUsuario.ForeColor = Color.Black;
-            btmUsuario.Location = new Point(0, 67);
-            btmUsuario.Margin = new Padding(3, 4, 3, 4);
+            btmUsuario.Location = new Point(0, 50);
             btmUsuario.Name = "btmUsuario";
-            btmUsuario.Padding = new Padding(11, 0, 0, 0);
-            btmUsuario.Size = new Size(297, 60);
+            btmUsuario.Padding = new Padding(10, 0, 0, 0);
+            btmUsuario.Size = new Size(261, 45);
             btmUsuario.TabIndex = 0;
             btmUsuario.Text = "Administración de Usuarios";
             btmUsuario.UseVisualStyleBackColor = false;
@@ -692,19 +692,17 @@ namespace RecursosHumanos.View
             panelLogo.Controls.Add(lblInicio);
             panelLogo.Dock = DockStyle.Top;
             panelLogo.Location = new Point(0, 0);
-            panelLogo.Margin = new Padding(3, 4, 3, 4);
             panelLogo.Name = "panelLogo";
-            panelLogo.Size = new Size(297, 67);
+            panelLogo.Size = new Size(261, 50);
             panelLogo.TabIndex = 0;
             // 
             // pictureBox3
             // 
             pictureBox3.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(14, 9);
-            pictureBox3.Margin = new Padding(3, 4, 3, 4);
+            pictureBox3.Location = new Point(12, 7);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(40, 45);
+            pictureBox3.Size = new Size(35, 34);
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 4;
             pictureBox3.TabStop = false;
@@ -714,9 +712,9 @@ namespace RecursosHumanos.View
             lblInicio.Cursor = Cursors.Hand;
             lblInicio.Font = new Font("Century Gothic", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblInicio.ForeColor = Color.Black;
-            lblInicio.Location = new Point(71, 12);
+            lblInicio.Location = new Point(62, 9);
             lblInicio.Name = "lblInicio";
-            lblInicio.Size = new Size(99, 40);
+            lblInicio.Size = new Size(87, 30);
             lblInicio.TabIndex = 2;
             lblInicio.Text = "Inicio";
             lblInicio.Click += lblInicio_Click;
@@ -727,47 +725,44 @@ namespace RecursosHumanos.View
             // 
             // pnlLogo
             // 
-            pnlLogo.Anchor = AnchorStyles.Top;
+            pnlLogo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlLogo.BackColor = Color.Transparent;
             pnlLogo.Controls.Add(picLogo);
             pnlLogo.FillColor = Color.FromArgb(254, 255, 254, 255);
             pnlLogo.ForeColor = Color.Black;
-            pnlLogo.Location = new Point(1042, 12);
-            pnlLogo.Margin = new Padding(3, 4, 3, 4);
+            pnlLogo.Location = new Point(912, 9);
             pnlLogo.Name = "pnlLogo";
             pnlLogo.Radius = 12;
             pnlLogo.RightToLeft = RightToLeft.No;
             pnlLogo.ShadowColor = Color.FromArgb(175, 159, 168);
             pnlLogo.ShadowShift = 3;
-            pnlLogo.Size = new Size(283, 304);
+            pnlLogo.Size = new Size(248, 228);
             pnlLogo.TabIndex = 6;
             // 
             // picLogo
             // 
             picLogo.Anchor = AnchorStyles.None;
             picLogo.Image = (Image)resources.GetObject("picLogo.Image");
-            picLogo.Location = new Point(29, 29);
-            picLogo.Margin = new Padding(3, 4, 3, 4);
+            picLogo.Location = new Point(25, 22);
             picLogo.Name = "picLogo";
-            picLogo.Size = new Size(227, 250);
+            picLogo.Size = new Size(199, 188);
             picLogo.SizeMode = PictureBoxSizeMode.Zoom;
             picLogo.TabIndex = 0;
             picLogo.TabStop = false;
             // 
             // pnlFechaHora
             // 
-            pnlFechaHora.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlFechaHora.BackColor = Color.Transparent;
             pnlFechaHora.Controls.Add(lblHoraActual);
             pnlFechaHora.Controls.Add(lblFecha);
+            pnlFechaHora.Dock = DockStyle.Bottom;
             pnlFechaHora.FillColor = Color.White;
-            pnlFechaHora.Location = new Point(6, 1006);
-            pnlFechaHora.Margin = new Padding(3, 4, 3, 4);
+            pnlFechaHora.Location = new Point(0, 754);
             pnlFechaHora.Name = "pnlFechaHora";
             pnlFechaHora.Radius = 2;
             pnlFechaHora.ShadowColor = Color.Empty;
             pnlFechaHora.ShadowShift = 2;
-            pnlFechaHora.Size = new Size(1341, 49);
+            pnlFechaHora.Size = new Size(1201, 37);
             pnlFechaHora.TabIndex = 8;
             // 
             // lblHoraActual
@@ -777,9 +772,9 @@ namespace RecursosHumanos.View
             lblHoraActual.BackColor = Color.White;
             lblHoraActual.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblHoraActual.ForeColor = SystemColors.ControlText;
-            lblHoraActual.Location = new Point(414, 9);
+            lblHoraActual.Location = new Point(362, 7);
             lblHoraActual.Name = "lblHoraActual";
-            lblHoraActual.Size = new Size(79, 28);
+            lblHoraActual.Size = new Size(63, 23);
             lblHoraActual.TabIndex = 4;
             lblHoraActual.Text = "fecha";
             // 
@@ -790,9 +785,9 @@ namespace RecursosHumanos.View
             lblFecha.BackColor = Color.White;
             lblFecha.Font = new Font("Century Gothic", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFecha.ForeColor = SystemColors.ControlText;
-            lblFecha.Location = new Point(830, 9);
+            lblFecha.Location = new Point(726, 7);
             lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(84, 30);
+            lblFecha.Size = new Size(65, 22);
             lblFecha.TabIndex = 3;
             lblFecha.Text = "fecha";
             // 
@@ -809,29 +804,28 @@ namespace RecursosHumanos.View
             panelChildForm.CustomizableEdges = customizableEdges1;
             panelChildForm.FillColor = Color.FromArgb(249, 250, 251, 255);
             panelChildForm.FillColor2 = Color.FromArgb(249, 250, 251, 255);
-            panelChildForm.Location = new Point(320, 0);
-            panelChildForm.Margin = new Padding(3, 4, 3, 4);
+            panelChildForm.Location = new Point(280, 0);
             panelChildForm.Name = "panelChildForm";
             panelChildForm.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            panelChildForm.Size = new Size(1373, 1055);
+            panelChildForm.Size = new Size(1201, 791);
             panelChildForm.TabIndex = 5;
             // 
             // pnlIntroduccion
             // 
+            pnlIntroduccion.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             pnlIntroduccion.AutoScroll = true;
             pnlIntroduccion.BackColor = Color.Transparent;
             pnlIntroduccion.Controls.Add(lblCaracteristicas);
             pnlIntroduccion.Controls.Add(lblCaracteristicas2);
             pnlIntroduccion.FillColor = Color.FromArgb(254, 255, 254, 255);
             pnlIntroduccion.ForeColor = Color.Black;
-            pnlIntroduccion.Location = new Point(17, 135);
-            pnlIntroduccion.Margin = new Padding(3, 4, 3, 4);
+            pnlIntroduccion.Location = new Point(15, 101);
             pnlIntroduccion.Name = "pnlIntroduccion";
             pnlIntroduccion.Radius = 12;
             pnlIntroduccion.RightToLeft = RightToLeft.No;
             pnlIntroduccion.ShadowColor = Color.FromArgb(175, 159, 168);
             pnlIntroduccion.ShadowShift = 3;
-            pnlIntroduccion.Size = new Size(991, 247);
+            pnlIntroduccion.Size = new Size(867, 185);
             pnlIntroduccion.TabIndex = 16;
             // 
             // lblCaracteristicas
@@ -840,10 +834,9 @@ namespace RecursosHumanos.View
             lblCaracteristicas.BackColor = Color.Transparent;
             lblCaracteristicas.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblCaracteristicas.ForeColor = Color.Black;
-            lblCaracteristicas.Location = new Point(14, 11);
-            lblCaracteristicas.Margin = new Padding(3, 4, 3, 4);
+            lblCaracteristicas.Location = new Point(12, 8);
             lblCaracteristicas.Name = "lblCaracteristicas";
-            lblCaracteristicas.Size = new Size(354, 25);
+            lblCaracteristicas.Size = new Size(276, 21);
             lblCaracteristicas.TabIndex = 0;
             lblCaracteristicas.Text = "Nuestras características principales:";
             // 
@@ -853,14 +846,15 @@ namespace RecursosHumanos.View
             lblCaracteristicas2.AutoSize = true;
             lblCaracteristicas2.Font = new Font("Century Gothic", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblCaracteristicas2.ForeColor = Color.DimGray;
-            lblCaracteristicas2.Location = new Point(56, 59);
+            lblCaracteristicas2.Location = new Point(49, 44);
             lblCaracteristicas2.Name = "lblCaracteristicas2";
-            lblCaracteristicas2.Size = new Size(513, 154);
+            lblCaracteristicas2.Size = new Size(429, 126);
             lblCaracteristicas2.TabIndex = 2;
             lblCaracteristicas2.Text = resources.GetString("lblCaracteristicas2.Text");
             // 
             // pnlActReciente
             // 
+            pnlActReciente.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlActReciente.BackColor = Color.Transparent;
             pnlActReciente.Controls.Add(Separador4);
             pnlActReciente.Controls.Add(Separador2);
@@ -878,41 +872,37 @@ namespace RecursosHumanos.View
             pnlActReciente.Controls.Add(lblActRecientes);
             pnlActReciente.FillColor = Color.FromArgb(254, 255, 254, 255);
             pnlActReciente.ForeColor = Color.Black;
-            pnlActReciente.Location = new Point(17, 591);
-            pnlActReciente.Margin = new Padding(3, 4, 3, 4);
+            pnlActReciente.Location = new Point(15, 443);
             pnlActReciente.Name = "pnlActReciente";
             pnlActReciente.Radius = 12;
             pnlActReciente.RightToLeft = RightToLeft.No;
             pnlActReciente.ShadowColor = Color.FromArgb(175, 159, 168);
             pnlActReciente.ShadowShift = 3;
-            pnlActReciente.Size = new Size(1349, 381);
+            pnlActReciente.Size = new Size(1180, 286);
             pnlActReciente.TabIndex = 14;
             // 
             // Separador4
             // 
             Separador4.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            Separador4.Location = new Point(24, 335);
-            Separador4.Margin = new Padding(3, 4, 3, 4);
+            Separador4.Location = new Point(21, 251);
             Separador4.Name = "Separador4";
-            Separador4.Size = new Size(1304, 25);
+            Separador4.Size = new Size(1141, 19);
             Separador4.TabIndex = 10;
             // 
             // Separador2
             // 
             Separador2.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            Separador2.Location = new Point(24, 155);
-            Separador2.Margin = new Padding(3, 4, 3, 4);
+            Separador2.Location = new Point(21, 116);
             Separador2.Name = "Separador2";
-            Separador2.Size = new Size(1304, 14);
+            Separador2.Size = new Size(1141, 10);
             Separador2.TabIndex = 4;
             // 
             // Separador3
             // 
             Separador3.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            Separador3.Location = new Point(24, 244);
-            Separador3.Margin = new Padding(3, 4, 3, 4);
+            Separador3.Location = new Point(21, 183);
             Separador3.Name = "Separador3";
-            Separador3.Size = new Size(1304, 16);
+            Separador3.Size = new Size(1141, 12);
             Separador3.TabIndex = 7;
             // 
             // lblTempo3
@@ -921,9 +911,9 @@ namespace RecursosHumanos.View
             lblTempo3.AutoSize = true;
             lblTempo3.Font = new Font("Century Gothic", 9F, FontStyle.Bold);
             lblTempo3.ForeColor = Color.DimGray;
-            lblTempo3.Location = new Point(1200, 313);
+            lblTempo3.Location = new Point(1050, 235);
             lblTempo3.Name = "lblTempo3";
-            lblTempo3.Size = new Size(128, 18);
+            lblTempo3.Size = new Size(103, 16);
             lblTempo3.TabIndex = 14;
             lblTempo3.Text = "Hace 10 minutos";
             lblTempo3.TextAlign = ContentAlignment.TopRight;
@@ -934,9 +924,9 @@ namespace RecursosHumanos.View
             lblTempo2.AutoSize = true;
             lblTempo2.Font = new Font("Century Gothic", 9F, FontStyle.Bold);
             lblTempo2.ForeColor = Color.DimGray;
-            lblTempo2.Location = new Point(1202, 224);
+            lblTempo2.Location = new Point(1052, 168);
             lblTempo2.Name = "lblTempo2";
-            lblTempo2.Size = new Size(128, 18);
+            lblTempo2.Size = new Size(103, 16);
             lblTempo2.TabIndex = 13;
             lblTempo2.Text = "Hace 10 minutos";
             lblTempo2.TextAlign = ContentAlignment.TopRight;
@@ -947,9 +937,9 @@ namespace RecursosHumanos.View
             lblTempo1.AutoSize = true;
             lblTempo1.Font = new Font("Century Gothic", 9F, FontStyle.Bold);
             lblTempo1.ForeColor = Color.DimGray;
-            lblTempo1.Location = new Point(1202, 123);
+            lblTempo1.Location = new Point(1052, 92);
             lblTempo1.Name = "lblTempo1";
-            lblTempo1.Size = new Size(128, 18);
+            lblTempo1.Size = new Size(103, 16);
             lblTempo1.TabIndex = 12;
             lblTempo1.Text = "Hace 10 minutos";
             lblTempo1.TextAlign = ContentAlignment.TopRight;
@@ -959,9 +949,9 @@ namespace RecursosHumanos.View
             lblAccion3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblAccion3.Font = new Font("Century Gothic", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblAccion3.ForeColor = Color.DimGray;
-            lblAccion3.Location = new Point(49, 316);
+            lblAccion3.Location = new Point(43, 237);
             lblAccion3.Name = "lblAccion3";
-            lblAccion3.Size = new Size(1111, 31);
+            lblAccion3.Size = new Size(972, 23);
             lblAccion3.TabIndex = 11;
             lblAccion3.Text = "Actualizó informacion de empleado1";
             // 
@@ -970,10 +960,9 @@ namespace RecursosHumanos.View
             lblUsuario3.BackColor = Color.Transparent;
             lblUsuario3.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblUsuario3.ForeColor = Color.Black;
-            lblUsuario3.Location = new Point(15, 268);
-            lblUsuario3.Margin = new Padding(3, 4, 3, 4);
+            lblUsuario3.Location = new Point(13, 201);
             lblUsuario3.Name = "lblUsuario3";
-            lblUsuario3.Size = new Size(85, 25);
+            lblUsuario3.Size = new Size(68, 21);
             lblUsuario3.TabIndex = 9;
             lblUsuario3.Text = "Usuario1";
             // 
@@ -982,9 +971,9 @@ namespace RecursosHumanos.View
             lblAccion2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblAccion2.Font = new Font("Century Gothic", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblAccion2.ForeColor = Color.DimGray;
-            lblAccion2.Location = new Point(46, 220);
+            lblAccion2.Location = new Point(40, 165);
             lblAccion2.Name = "lblAccion2";
-            lblAccion2.Size = new Size(1111, 29);
+            lblAccion2.Size = new Size(972, 22);
             lblAccion2.TabIndex = 8;
             lblAccion2.Text = "Actualizó informacion de empleado1";
             // 
@@ -993,10 +982,9 @@ namespace RecursosHumanos.View
             lblUsuario2.BackColor = Color.Transparent;
             lblUsuario2.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblUsuario2.ForeColor = Color.Black;
-            lblUsuario2.Location = new Point(18, 177);
-            lblUsuario2.Margin = new Padding(3, 4, 3, 4);
+            lblUsuario2.Location = new Point(16, 133);
             lblUsuario2.Name = "lblUsuario2";
-            lblUsuario2.Size = new Size(85, 25);
+            lblUsuario2.Size = new Size(68, 21);
             lblUsuario2.TabIndex = 6;
             lblUsuario2.Text = "Usuario1";
             // 
@@ -1005,9 +993,9 @@ namespace RecursosHumanos.View
             lblAccion1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblAccion1.Font = new Font("Century Gothic", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblAccion1.ForeColor = Color.DimGray;
-            lblAccion1.Location = new Point(46, 123);
+            lblAccion1.Location = new Point(40, 92);
             lblAccion1.Name = "lblAccion1";
-            lblAccion1.Size = new Size(1114, 28);
+            lblAccion1.Size = new Size(975, 21);
             lblAccion1.TabIndex = 5;
             lblAccion1.Text = "Actualizó informacion de empleado1";
             // 
@@ -1016,20 +1004,18 @@ namespace RecursosHumanos.View
             lblUsuario1.BackColor = Color.Transparent;
             lblUsuario1.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblUsuario1.ForeColor = Color.Black;
-            lblUsuario1.Location = new Point(24, 78);
-            lblUsuario1.Margin = new Padding(3, 4, 3, 4);
+            lblUsuario1.Location = new Point(21, 58);
             lblUsuario1.Name = "lblUsuario1";
-            lblUsuario1.Size = new Size(85, 25);
+            lblUsuario1.Size = new Size(68, 21);
             lblUsuario1.TabIndex = 3;
             lblUsuario1.Text = "Usuario1";
             // 
             // Separador1
             // 
             Separador1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Separador1.Location = new Point(14, 52);
-            Separador1.Margin = new Padding(3, 4, 3, 4);
+            Separador1.Location = new Point(12, 39);
             Separador1.Name = "Separador1";
-            Separador1.Size = new Size(1304, 19);
+            Separador1.Size = new Size(1141, 14);
             Separador1.TabIndex = 2;
             // 
             // lblActRecientes
@@ -1037,23 +1023,22 @@ namespace RecursosHumanos.View
             lblActRecientes.BackColor = Color.Transparent;
             lblActRecientes.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblActRecientes.ForeColor = Color.Black;
-            lblActRecientes.Location = new Point(18, 19);
-            lblActRecientes.Margin = new Padding(3, 4, 3, 4);
+            lblActRecientes.Location = new Point(16, 14);
             lblActRecientes.Name = "lblActRecientes";
-            lblActRecientes.Size = new Size(190, 25);
+            lblActRecientes.Size = new Size(150, 21);
             lblActRecientes.TabIndex = 1;
             lblActRecientes.Text = "Actividad Reciente";
             // 
             // pnlInfo
             // 
+            pnlInfo.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             pnlInfo.BackColor = Color.FromArgb(249, 250, 251, 255);
             pnlInfo.Controls.Add(pnlContractosAct);
             pnlInfo.Controls.Add(pnlAisitenciaHoy);
             pnlInfo.Controls.Add(pnlEmpleadosAct);
-            pnlInfo.Location = new Point(17, 390);
-            pnlInfo.Margin = new Padding(3, 4, 3, 4);
+            pnlInfo.Location = new Point(15, 292);
             pnlInfo.Name = "pnlInfo";
-            pnlInfo.Size = new Size(851, 193);
+            pnlInfo.Size = new Size(745, 145);
             pnlInfo.TabIndex = 13;
             // 
             // pnlContractosAct
@@ -1065,23 +1050,22 @@ namespace RecursosHumanos.View
             pnlContractosAct.Controls.Add(lblContratosAct);
             pnlContractosAct.FillColor = Color.FromArgb(254, 255, 254, 255);
             pnlContractosAct.ForeColor = Color.Black;
-            pnlContractosAct.Location = new Point(445, 20);
-            pnlContractosAct.Margin = new Padding(3, 4, 3, 4);
+            pnlContractosAct.Location = new Point(389, 15);
             pnlContractosAct.Name = "pnlContractosAct";
             pnlContractosAct.Radius = 12;
             pnlContractosAct.RightToLeft = RightToLeft.No;
             pnlContractosAct.ShadowColor = Color.FromArgb(175, 159, 168);
             pnlContractosAct.ShadowShift = 3;
-            pnlContractosAct.Size = new Size(168, 146);
+            pnlContractosAct.Size = new Size(147, 110);
             pnlContractosAct.TabIndex = 10;
             // 
             // lblContratosActNumero
             // 
             lblContratosActNumero.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblContratosActNumero.Font = new Font("Century Gothic", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblContratosActNumero.Location = new Point(10, 93);
+            lblContratosActNumero.Location = new Point(9, 70);
             lblContratosActNumero.Name = "lblContratosActNumero";
-            lblContratosActNumero.Size = new Size(144, 44);
+            lblContratosActNumero.Size = new Size(126, 33);
             lblContratosActNumero.TabIndex = 7;
             lblContratosActNumero.Text = "200";
             lblContratosActNumero.TextAlign = ContentAlignment.MiddleCenter;
@@ -1090,10 +1074,9 @@ namespace RecursosHumanos.View
             // 
             pictureBox2.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(10, 31);
-            pictureBox2.Margin = new Padding(3, 4, 3, 4);
+            pictureBox2.Location = new Point(9, 23);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(40, 45);
+            pictureBox2.Size = new Size(35, 34);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 6;
             pictureBox2.TabStop = false;
@@ -1103,9 +1086,9 @@ namespace RecursosHumanos.View
             lblContratosAct.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblContratosAct.Font = new Font("Century Gothic", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblContratosAct.ForeColor = Color.DimGray;
-            lblContratosAct.Location = new Point(56, 31);
+            lblContratosAct.Location = new Point(49, 23);
             lblContratosAct.Name = "lblContratosAct";
-            lblContratosAct.Size = new Size(109, 45);
+            lblContratosAct.Size = new Size(95, 34);
             lblContratosAct.TabIndex = 3;
             lblContratosAct.Text = "Contratos Activos";
             lblContratosAct.TextAlign = ContentAlignment.TopCenter;
@@ -1119,23 +1102,22 @@ namespace RecursosHumanos.View
             pnlAisitenciaHoy.Controls.Add(lblAsistencia);
             pnlAisitenciaHoy.FillColor = Color.FromArgb(254, 255, 254, 255);
             pnlAisitenciaHoy.ForeColor = Color.Black;
-            pnlAisitenciaHoy.Location = new Point(246, 20);
-            pnlAisitenciaHoy.Margin = new Padding(3, 4, 3, 4);
+            pnlAisitenciaHoy.Location = new Point(215, 15);
             pnlAisitenciaHoy.Name = "pnlAisitenciaHoy";
             pnlAisitenciaHoy.Radius = 12;
             pnlAisitenciaHoy.RightToLeft = RightToLeft.No;
             pnlAisitenciaHoy.ShadowColor = Color.FromArgb(175, 159, 168);
             pnlAisitenciaHoy.ShadowShift = 3;
-            pnlAisitenciaHoy.Size = new Size(167, 146);
+            pnlAisitenciaHoy.Size = new Size(146, 110);
             pnlAisitenciaHoy.TabIndex = 10;
             // 
             // lblAsistenciaNumero
             // 
             lblAsistenciaNumero.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblAsistenciaNumero.Font = new Font("Century Gothic", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblAsistenciaNumero.Location = new Point(38, 95);
+            lblAsistenciaNumero.Location = new Point(33, 71);
             lblAsistenciaNumero.Name = "lblAsistenciaNumero";
-            lblAsistenciaNumero.Size = new Size(103, 44);
+            lblAsistenciaNumero.Size = new Size(90, 33);
             lblAsistenciaNumero.TabIndex = 5;
             lblAsistenciaNumero.Text = "100%";
             // 
@@ -1143,10 +1125,9 @@ namespace RecursosHumanos.View
             // 
             picAsistencia.BackgroundImageLayout = ImageLayout.Zoom;
             picAsistencia.Image = (Image)resources.GetObject("picAsistencia.Image");
-            picAsistencia.Location = new Point(9, 31);
-            picAsistencia.Margin = new Padding(3, 4, 3, 4);
+            picAsistencia.Location = new Point(8, 23);
             picAsistencia.Name = "picAsistencia";
-            picAsistencia.Size = new Size(40, 45);
+            picAsistencia.Size = new Size(35, 34);
             picAsistencia.SizeMode = PictureBoxSizeMode.Zoom;
             picAsistencia.TabIndex = 4;
             picAsistencia.TabStop = false;
@@ -1156,9 +1137,9 @@ namespace RecursosHumanos.View
             lblAsistencia.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblAsistencia.Font = new Font("Century Gothic", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblAsistencia.ForeColor = Color.DimGray;
-            lblAsistencia.Location = new Point(55, 31);
+            lblAsistencia.Location = new Point(48, 23);
             lblAsistencia.Name = "lblAsistencia";
-            lblAsistencia.Size = new Size(107, 45);
+            lblAsistencia.Size = new Size(94, 34);
             lblAsistencia.TabIndex = 3;
             lblAsistencia.Text = "Asistencias hoy";
             lblAsistencia.TextAlign = ContentAlignment.TopCenter;
@@ -1172,23 +1153,22 @@ namespace RecursosHumanos.View
             pnlEmpleadosAct.Controls.Add(lblEmpleadosAct);
             pnlEmpleadosAct.FillColor = Color.FromArgb(254, 255, 254, 255);
             pnlEmpleadosAct.ForeColor = Color.Black;
-            pnlEmpleadosAct.Location = new Point(37, 20);
-            pnlEmpleadosAct.Margin = new Padding(3, 4, 3, 4);
+            pnlEmpleadosAct.Location = new Point(32, 15);
             pnlEmpleadosAct.Name = "pnlEmpleadosAct";
             pnlEmpleadosAct.Radius = 12;
             pnlEmpleadosAct.RightToLeft = RightToLeft.No;
             pnlEmpleadosAct.ShadowColor = Color.FromArgb(175, 159, 168);
             pnlEmpleadosAct.ShadowShift = 3;
-            pnlEmpleadosAct.Size = new Size(170, 146);
+            pnlEmpleadosAct.Size = new Size(149, 110);
             pnlEmpleadosAct.TabIndex = 9;
             // 
             // lblEmpleadosActNumero
             // 
             lblEmpleadosActNumero.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblEmpleadosActNumero.Font = new Font("Century Gothic", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblEmpleadosActNumero.Location = new Point(34, 93);
+            lblEmpleadosActNumero.Location = new Point(30, 70);
             lblEmpleadosActNumero.Name = "lblEmpleadosActNumero";
-            lblEmpleadosActNumero.Size = new Size(106, 44);
+            lblEmpleadosActNumero.Size = new Size(93, 33);
             lblEmpleadosActNumero.TabIndex = 6;
             lblEmpleadosActNumero.Text = "100%";
             // 
@@ -1196,10 +1176,9 @@ namespace RecursosHumanos.View
             // 
             picEmpleados.BackgroundImageLayout = ImageLayout.Zoom;
             picEmpleados.Image = (Image)resources.GetObject("picEmpleados.Image");
-            picEmpleados.Location = new Point(9, 31);
-            picEmpleados.Margin = new Padding(3, 4, 3, 4);
+            picEmpleados.Location = new Point(8, 23);
             picEmpleados.Name = "picEmpleados";
-            picEmpleados.Size = new Size(40, 45);
+            picEmpleados.Size = new Size(35, 34);
             picEmpleados.SizeMode = PictureBoxSizeMode.Zoom;
             picEmpleados.TabIndex = 3;
             picEmpleados.TabStop = false;
@@ -1209,28 +1188,28 @@ namespace RecursosHumanos.View
             lblEmpleadosAct.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblEmpleadosAct.Font = new Font("Century Gothic", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblEmpleadosAct.ForeColor = Color.DimGray;
-            lblEmpleadosAct.Location = new Point(55, 31);
+            lblEmpleadosAct.Location = new Point(48, 23);
             lblEmpleadosAct.Name = "lblEmpleadosAct";
-            lblEmpleadosAct.Size = new Size(112, 45);
+            lblEmpleadosAct.Size = new Size(98, 34);
             lblEmpleadosAct.TabIndex = 2;
             lblEmpleadosAct.Text = "Empleados Activos";
             lblEmpleadosAct.TextAlign = ContentAlignment.TopCenter;
             // 
             // pnlBienvenida
             // 
+            pnlBienvenida.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlBienvenida.BackColor = Color.Transparent;
             pnlBienvenida.Controls.Add(lblBienvenida2);
             pnlBienvenida.Controls.Add(lblBienvenida);
             pnlBienvenida.FillColor = Color.FromArgb(254, 255, 254, 255);
             pnlBienvenida.ForeColor = Color.Black;
-            pnlBienvenida.Location = new Point(17, 16);
-            pnlBienvenida.Margin = new Padding(3, 4, 3, 4);
+            pnlBienvenida.Location = new Point(15, 12);
             pnlBienvenida.Name = "pnlBienvenida";
             pnlBienvenida.Radius = 12;
             pnlBienvenida.RightToLeft = RightToLeft.No;
             pnlBienvenida.ShadowColor = Color.FromArgb(175, 159, 168);
             pnlBienvenida.ShadowShift = 1;
-            pnlBienvenida.Size = new Size(991, 122);
+            pnlBienvenida.Size = new Size(867, 92);
             pnlBienvenida.TabIndex = 5;
             // 
             // lblBienvenida2
@@ -1238,32 +1217,31 @@ namespace RecursosHumanos.View
             lblBienvenida2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblBienvenida2.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblBienvenida2.ForeColor = Color.DimGray;
-            lblBienvenida2.Location = new Point(15, 69);
+            lblBienvenida2.Location = new Point(13, 52);
             lblBienvenida2.Name = "lblBienvenida2";
-            lblBienvenida2.Size = new Size(951, 28);
+            lblBienvenida2.Size = new Size(832, 21);
             lblBienvenida2.TabIndex = 1;
             lblBienvenida2.Text = "La plataforma integral para la gestión de recursos humanos que simplifica todos sus procesos.";
             // 
             // lblBienvenida
             // 
             lblBienvenida.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblBienvenida.Location = new Point(15, 25);
+            lblBienvenida.Location = new Point(13, 19);
             lblBienvenida.Name = "lblBienvenida";
-            lblBienvenida.Size = new Size(951, 44);
+            lblBienvenida.Size = new Size(832, 33);
             lblBienvenida.TabIndex = 0;
             lblBienvenida.Text = "Bienvenido a Human Resarce";
             // 
             // MDIRecursosHumanos
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1696, 1055);
+            ClientSize = new Size(1484, 791);
             Controls.Add(panelSideMenu);
             Controls.Add(panelChildForm);
             Icon = (Icon)resources.GetObject("$this.Icon");
             IsMdiContainer = true;
-            Margin = new Padding(3, 4, 3, 4);
-            MinimumSize = new Size(1712, 1018);
+            MinimumSize = new Size(1500, 773);
             Name = "MDIRecursosHumanos";
             Text = "MDI";
             panelSideMenu.ResumeLayout(false);
