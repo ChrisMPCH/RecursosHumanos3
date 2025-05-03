@@ -230,6 +230,68 @@ namespace RecursosHumanos.DataAccess
                     return false;
                 }
 
+                // Paso 2: Buscar el registro de asistencia
+                string query = @"SELECT a.id_asistencia, a.hora_entrada, 
+                                c.hora_entrada AS hora_entrada_contrato, 
+                                c.hora_salida AS hora_salida_contrato
+                         FROM human_resours.asistencia a
+                         JOIN human_resours.contrato c ON a.id_empleado = c.id_empleado
+                         WHERE a.id_empleado = @idEmpleado AND a.fecha_asistencia = @fecha";
+                var row = tabla.Rows[0];
+                int idAsistencia = Convert.ToInt32(row["id_asistencia"]);
+
+                // Paso 3: Calcular si cumplió horario completo
+                TimeSpan horaEntradaAsistencia = (TimeSpan)row["hora_entrada"];
+                TimeSpan horaEntradaContrato = (TimeSpan)row["hora_entrada_contrato"];
+                TimeSpan horaSalidaContrato = (TimeSpan)row["hora_salida_contrato"];
+
+                TimeSpan horasTrabajadas = horaSalidaActual - horaEntradaAsistencia;
+                TimeSpan horasContratadas = horaSalidaContrato - horaEntradaContrato;
+
+                bool horarioCompleto = horasTrabajadas >= horasContratadas;
+
+                // Paso 4: Actualizar incluyendo horario_completo
+                string queryUpdate = @"UPDATE human_resours.asistencia 
+                               SET hora_salida = @salida, 
+                                   observaciones = @obs,
+                                   horario_completo = @horarioCompleto
+                               WHERE id_asistencia = @id";
+
+                var parametrosUpdate = new NpgsqlParameter[]
+                {
+            _dbAccess.CreateParameter("@salida", horaSalidaActual),
+            _dbAccess.CreateParameter("@obs", observaciones ?? ""),
+            _dbAccess.CreateParameter("@horarioCompleto", horarioCompleto),
+            _dbAccess.CreateParameter("@id", idAsistencia)
+                };
+
+                int filas = _dbAccess.ExecuteNonQuery(queryUpdate, parametrosUpdate);
+                var parametros = new NpgsqlParameter[]
+                {
+            _dbAccess.CreateParameter("@idEmpleado", idEmpleado),
+            _dbAccess.CreateParameter("@fecha", fecha.Date)
+                };
+
+                DataTable tabla = _dbAccess.ExecuteQuery_Reader(query, parametros);
+
+                return filas > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al registrar la salida.");
+                return false;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+                if (tabla.Rows.Count == 0)
+                {
+                    _logger.Warn($"No se encontró asistencia de entrada para {matricula} el {fecha.Date}");
+                    return false;
+                }
+
                 var row = tabla.Rows[0];
                 int idAsistencia = Convert.ToInt32(row["id_asistencia"]);
 
@@ -272,7 +334,26 @@ namespace RecursosHumanos.DataAccess
                 _dbAccess.Disconnect();
             }
         }
+        public int ContarDiasTrabajados(int idEmpleado, DateTime fechaInicio, DateTime fechaFin)
+        {
+            try
+            {
+                _dbAccess.Connect();
 
+                string query = @"
+            SELECT COUNT(DISTINCT fecha_asistencia) 
+            FROM human_resours.asistencia 
+            WHERE id_empleado = @idEmpleado 
+            AND fecha_asistencia BETWEEN @fechaInicio AND @fechaFin 
+            AND estatus = 1
+            AND horario_completo = TRUE";
+
+                var parametros = new NpgsqlParameter[]
+                {
+            _dbAccess.CreateParameter("@idEmpleado", idEmpleado),
+            _dbAccess.CreateParameter("@fechaInicio", fechaInicio.Date),
+            _dbAccess.CreateParameter("@fechaFin", fechaFin.Date)
+                };
         public int ContarDiasTrabajados(int idEmpleado, DateTime fechaInicio, DateTime fechaFin)
         {
             try
