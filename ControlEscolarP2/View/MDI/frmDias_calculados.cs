@@ -8,84 +8,143 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RecursosHumanos.Bussines;
+using RecursosHumanos.Controller;
+using RecursosHumanos.Controllers;
 using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View
 {
     public partial class frmDias_calculados : Form
     {
+        private readonly EmpleadosController _empleadosController = new EmpleadosController();
+        private readonly AsistenciaController _asistenciaController = new AsistenciaController();
+
+        private int _idEmpleado;
+        private int _idPersona;
 
         public frmDias_calculados()
         {
             InitializeComponent();
             InicializaVentana();
         }
-        // Método para configurar la ventana al inicio
+
         private void InicializaVentana()
         {
-            InicializarCampos(); // Inicializa los campos de texto
+            InicializarCampos();
+            // Configuramos el placeholder para el campo de matrícula
+            Formas.ConfigurarTextBox(txtMatricula, "Ingresa tu matricula");
         }
 
-        // Método para configurar los TextBox con texto predeterminado
-        public static void InicializarCampos()
+        private void InicializarCampos()
         {
-            Formas.ConfigurarTextBox(txtMatricula1, "Ingresa tu matricula");
+            txtNombreCompleto.Text = "";
+            txtCurp.Text = "";
+            txtTelefono.Text = "";
+            txtCorreo.Text = "";
+            txtHorasTrabajadas.Text = "";
         }
-
-
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtMatricula1.Text) || txtMatricula1.Text == "Ingresa tu matricula")
+            string matricula = txtMatricula.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(matricula) || matricula == "Ingresa tu matricula")
             {
-                MessageBox.Show("Por favor, ingrese su matrícula.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, ingrese una matrícula válida.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-
-            if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula1.Text.Trim()))
+            try
             {
-                MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+                Empleado empleado = _empleadosController.ObtenerEmpleadoPorMatricula(matricula);
 
-            MessageBox.Show("Cargando datos.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (empleado == null)
+                {
+                    MessageBox.Show("Empleado no encontrado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarCampos();
+                    return;
+                }
+
+                if (empleado.Estatus == 0) // 0 = Inactivo
+                {
+                    MessageBox.Show("El empleado está inactivo y no puede registrar asistencia.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    LimpiarCampos();
+                    return;
+                }
+
+                _idEmpleado = empleado.Id_Empleado;
+                _idPersona = empleado.DatosPersonales.Id_Persona;
+
+                txtNombreCompleto.Text = empleado.DatosPersonales.Nombre;
+                txtCurp.Text = empleado.DatosPersonales.RFC;
+                txtTelefono.Text = empleado.DatosPersonales.Telefono;
+                txtCorreo.Text = empleado.DatosPersonales.Email;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error al buscar al empleado:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-        
+
+        private void LimpiarCampos()
+        {
+            txtNombreCompleto.Text = "";
+            txtCurp.Text = "";
+            txtTelefono.Text = "";
+            txtCorreo.Text = "";
+
+            _idEmpleado = 0;
+            _idPersona = 0;
+        }
+
         private void btnCalcular_Click(object sender, EventArgs e)
         {
-            // Validar matrícula
-            if (string.IsNullOrWhiteSpace(txtMatricula1.Text) || txtMatricula1.Text == "Ingresa tu matricula")
+            if (string.IsNullOrWhiteSpace(txtMatricula.Text) || txtMatricula.Text == "Ingresa tu matricula")
             {
                 MessageBox.Show("Por favor, ingrese su matrícula.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula1.Text.Trim()))
+            if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula.Text.Trim()))
             {
                 MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Validar que todos los campos estén llenos
             if (DatosVacios())
             {
                 MessageBox.Show("Por favor, llene todos los campos.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Validar fechas
             if (!EmpleadoNegocio.ValidarFechas(dtpFechaInicio1.Value, dtpFechaFin1.Value))
             {
                 MessageBox.Show("La fecha de inicio debe ser menor que la fecha de fin.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            // Si todo es válido, generar contrato
-            MessageBox.Show("Se han calculado los dias trabajados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            try
+            {
+                DateTime fechaInicio = dtpFechaInicio1.Value;
+                DateTime fechaFin = dtpFechaFin1.Value;
+
+                int totalAsistencias = _asistenciaController.ObtenerAsistenciasCompletas(_idEmpleado, fechaInicio, fechaFin);
+
+                txtHorasTrabajadas.Text = totalAsistencias.ToString();
+
+                MessageBox.Show($"Se calcularon correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                string errorReal = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                MessageBox.Show($"Ocurrió un error al calcular las asistencias:\n\n{ex.Message}\n\nDetalles técnicos: {errorReal}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
         private bool DatosVacios()
         {
-            if (txtMatricula1.Text == "" || txtMatricula1.Text == "Ingresa tu matricula" || dtpFechaInicio1.Text == "" || dtpFechaFin1.Text == "" )
+            if (txtMatricula.Text == "" || txtMatricula.Text == "Ingresa tu matricula" || dtpFechaInicio1.Text == "" || dtpFechaFin1.Text == "")
             {
                 return true;
             }
@@ -96,7 +155,6 @@ namespace RecursosHumanos.View
         {
             this.Close();
         }
-
-        
     }
 }
+

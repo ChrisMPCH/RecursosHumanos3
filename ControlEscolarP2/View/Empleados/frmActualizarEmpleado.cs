@@ -155,7 +155,7 @@ namespace RecursosHumanos.View
                     return;
                 }
 
-                // NUEVO: Asignar IDs internos
+                // Asignar IDs internos
                 _idEmpleado = empleado.Id_Empleado;
                 _idPersona = empleado.DatosPersonales.Id_Persona;
 
@@ -203,7 +203,7 @@ namespace RecursosHumanos.View
             dtpFechaBaja.Value = DateTime.Today;
             cbxEstatus.Text = "";
 
-            // NUEVO: Limpiar los IDs
+            //Limpiar los IDs
             _idEmpleado = 0;
             _idPersona = 0;
         }
@@ -335,5 +335,6 @@ namespace RecursosHumanos.View
                 return false;
             }
         }
+
     }
 }

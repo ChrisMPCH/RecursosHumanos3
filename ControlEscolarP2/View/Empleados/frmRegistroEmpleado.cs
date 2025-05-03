@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using RecursosHumanos.Bussines;
+﻿using RecursosHumanos.Bussines;
 using RecursosHumanos.Controller;
-using RecursosHumanos.Model;
-using RecursosHumanos.Utilities;
-using RecursosHumanos.Data;
 using RecursosHumanos.Models;
+using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View
 {

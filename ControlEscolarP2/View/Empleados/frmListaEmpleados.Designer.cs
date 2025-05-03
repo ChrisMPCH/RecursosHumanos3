@@ -152,7 +152,6 @@
             cmbDepartamento.ShadowDecoration.CustomizableEdges = customizableEdges4;
             cmbDepartamento.Size = new Size(199, 36);
             cmbDepartamento.TabIndex = 50;
-            cmbDepartamento.SelectedIndexChanged += cmbDepartamento_SelectedIndexChanged;
             // 
             // btnBuscar
             // 

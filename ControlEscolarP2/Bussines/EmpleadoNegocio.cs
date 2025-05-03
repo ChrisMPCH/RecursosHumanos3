@@ -20,7 +20,7 @@ namespace RecursosHumanos.Bussines
         // Método para validar que la fecha de entrada es menor que la de salida
         internal static bool ValidarFechas(DateTime fechaEntrada, DateTime fechaSalida)
         {
-            return fechaEntrada < fechaSalida;
+            return fechaEntrada <= fechaSalida;
         }
 
         //Método para validar horario laboral
@@ -34,6 +34,14 @@ namespace RecursosHumanos.Bussines
             var empleadosData = new EmpleadosDataAccess();
             return empleadosData.ObtenerEmpleadoPorMatricula(matricula);
         }
+
+        // Método para validar si la hora de entrada está dentro del rango de tolerancia (30 minutos)
+        public static bool ValidarToleranciaEntrada(DateTime horaEsperadaEntrada, DateTime horaRealEntrada)
+        {
+            TimeSpan diferencia = horaRealEntrada - horaEsperadaEntrada;
+            return diferencia.TotalMinutes <= 30 && diferencia.TotalMinutes >= 0;
+        }
+
 
     }
 }
