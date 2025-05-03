@@ -225,14 +225,34 @@ namespace RecursosHumanos.Controller
                     return 0.0;
                 }
 
-                double porcentaje = (double)contratosActivos / totalContratos * 100;
-                _logger.Info($"Porcentaje de contratos activos: {porcentaje}%");
-                return porcentaje;
+        public (bool exito, string mensaje, TimeSpan? horaEntrada) ObtenerHoraEntradaPorMatricula(string matricula)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(matricula))
+                {
+                    return (false, "Matrícula vacía.", null);
+                }
+
+                if (!EmpleadoNegocio.EsNoMatriculaValido(matricula))
+                {
+                    return (false, "Formato de matrícula inválido.", null);
+                }
+
+                // 🚀 Ya usas el método que existe
+                var contratoActivo = ObtenerContratoActivoPorMatricula(matricula);
+
+                if (contratoActivo == null)
+                {
+                    return (false, "No se encontró un contrato activo para esta matrícula.", null);
+                }
+
+                return (true, "Hora de entrada obtenida correctamente.", contratoActivo.HoraEntrada);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al obtener el porcentaje de contratos activos");
-                throw;
+                _logger.Error(ex, $"Error al obtener la hora de entrada para matrícula: {matricula}");
+                return (false, "Error inesperado al obtener la hora de entrada.", null);
             }
         }
     }

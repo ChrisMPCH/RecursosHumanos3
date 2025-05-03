@@ -216,9 +216,6 @@ namespace RecursosHumanos.View
             CargarEmpleadosEnTabla(); // Recargamos todos los empleados
         }
 
-        private void cmbDepartamento_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

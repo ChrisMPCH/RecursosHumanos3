@@ -90,12 +90,12 @@
             guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             lblSalida = new Label();
             lblHoraSalida = new Label();
-            dtpDia = new Guna.UI2.WinForms.Guna2DateTimePicker();
+            dtpDiaEntrada = new Guna.UI2.WinForms.Guna2DateTimePicker();
             pnlDatos = new Guna.UI2.WinForms.Guna2Panel();
-            guna2TextBox3 = new Guna.UI2.WinForms.Guna2TextBox();
+            txtDireccion = new Guna.UI2.WinForms.Guna2TextBox();
             label10 = new Label();
-            guna2TextBox2 = new Guna.UI2.WinForms.Guna2TextBox();
-            guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
+            txtTelefono = new Guna.UI2.WinForms.Guna2TextBox();
+            txtRFC = new Guna.UI2.WinForms.Guna2TextBox();
             label9 = new Label();
             label8 = new Label();
             guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
@@ -105,7 +105,7 @@
             pnlBusqueda = new Guna.UI2.WinForms.Guna2Panel();
             ptbInfoMatricula = new Guna.UI2.WinForms.Guna2PictureBox();
             lblMatricula = new Label();
-            txtMatricula1 = new Guna.UI2.WinForms.Guna2TextBox();
+            txtMatricula = new Guna.UI2.WinForms.Guna2TextBox();
             btnAceptar = new Guna.UI2.WinForms.Guna2Button();
             separador1 = new Guna.UI2.WinForms.Guna2Separator();
             lblRegistro = new Label();
@@ -324,7 +324,7 @@
             pnlEntrada.Controls.Add(guna2Separator2);
             pnlEntrada.Controls.Add(lblSalida);
             pnlEntrada.Controls.Add(lblHoraSalida);
-            pnlEntrada.Controls.Add(dtpDia);
+            pnlEntrada.Controls.Add(dtpDiaEntrada);
             pnlEntrada.CustomizableEdges = customizableEdges17;
             pnlEntrada.Font = new Font("Microsoft Sans Serif", 8.25F);
             pnlEntrada.Location = new Point(2, 506);
@@ -351,7 +351,7 @@
             btnAceptarEntrada.Size = new Size(188, 43);
             btnAceptarEntrada.TabIndex = 63;
             btnAceptarEntrada.Text = "Aceptar";
-            btnAceptarEntrada.Click += guna2Button1_Click;
+            btnAceptarEntrada.Click += btnAceptarEntrada_Click;
             // 
             // lblHoraEntrada
             // 
@@ -409,32 +409,32 @@
             lblHoraSalida.TabIndex = 59;
             lblHoraSalida.Text = "Día:";
             // 
-            // dtpDia
+            // dtpDiaEntrada
             // 
-            dtpDia.Checked = true;
-            dtpDia.CustomizableEdges = customizableEdges15;
-            dtpDia.Enabled = false;
-            dtpDia.FillColor = Color.White;
-            dtpDia.Font = new Font("Segoe UI", 9F);
-            dtpDia.Format = DateTimePickerFormat.Short;
-            dtpDia.Location = new Point(161, 64);
-            dtpDia.Margin = new Padding(3, 2, 3, 2);
-            dtpDia.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
-            dtpDia.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
-            dtpDia.Name = "dtpDia";
-            dtpDia.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            dtpDia.Size = new Size(167, 34);
-            dtpDia.TabIndex = 50;
-            dtpDia.Value = new DateTime(2025, 3, 12, 11, 1, 56, 978);
+            dtpDiaEntrada.Checked = true;
+            dtpDiaEntrada.CustomizableEdges = customizableEdges15;
+            dtpDiaEntrada.Enabled = false;
+            dtpDiaEntrada.FillColor = Color.White;
+            dtpDiaEntrada.Font = new Font("Segoe UI", 9F);
+            dtpDiaEntrada.Format = DateTimePickerFormat.Short;
+            dtpDiaEntrada.Location = new Point(161, 64);
+            dtpDiaEntrada.Margin = new Padding(3, 2, 3, 2);
+            dtpDiaEntrada.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
+            dtpDiaEntrada.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
+            dtpDiaEntrada.Name = "dtpDiaEntrada";
+            dtpDiaEntrada.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            dtpDiaEntrada.Size = new Size(167, 34);
+            dtpDiaEntrada.TabIndex = 50;
+            dtpDiaEntrada.Value = new DateTime(2025, 3, 12, 11, 1, 56, 978);
             // 
             // pnlDatos
             // 
             pnlDatos.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlDatos.BackColor = Color.White;
-            pnlDatos.Controls.Add(guna2TextBox3);
+            pnlDatos.Controls.Add(txtDireccion);
             pnlDatos.Controls.Add(label10);
-            pnlDatos.Controls.Add(guna2TextBox2);
-            pnlDatos.Controls.Add(guna2TextBox1);
+            pnlDatos.Controls.Add(txtTelefono);
+            pnlDatos.Controls.Add(txtRFC);
             pnlDatos.Controls.Add(label9);
             pnlDatos.Controls.Add(label8);
             pnlDatos.Controls.Add(guna2Separator1);
@@ -450,31 +450,30 @@
             pnlDatos.ShadowDecoration.CustomizableEdges = customizableEdges30;
             pnlDatos.Size = new Size(1009, 276);
             pnlDatos.TabIndex = 38;
-            pnlDatos.Paint += pnlDatos_Paint;
             // 
-            // guna2TextBox3
+            // txtDireccion
             // 
-            guna2TextBox3.Animated = true;
-            guna2TextBox3.BorderRadius = 5;
-            guna2TextBox3.CustomizableEdges = customizableEdges19;
-            guna2TextBox3.DefaultText = "";
-            guna2TextBox3.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            guna2TextBox3.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            guna2TextBox3.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            guna2TextBox3.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            guna2TextBox3.Enabled = false;
-            guna2TextBox3.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox3.Font = new Font("Segoe UI", 9.75F);
-            guna2TextBox3.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox3.Location = new Point(182, 229);
-            guna2TextBox3.Margin = new Padding(3, 4, 3, 4);
-            guna2TextBox3.MaxLength = 250;
-            guna2TextBox3.Name = "guna2TextBox3";
-            guna2TextBox3.PlaceholderText = "";
-            guna2TextBox3.SelectedText = "";
-            guna2TextBox3.ShadowDecoration.CustomizableEdges = customizableEdges20;
-            guna2TextBox3.Size = new Size(520, 34);
-            guna2TextBox3.TabIndex = 47;
+            txtDireccion.Animated = true;
+            txtDireccion.BorderRadius = 5;
+            txtDireccion.CustomizableEdges = customizableEdges19;
+            txtDireccion.DefaultText = "";
+            txtDireccion.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtDireccion.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtDireccion.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtDireccion.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtDireccion.Enabled = false;
+            txtDireccion.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtDireccion.Font = new Font("Segoe UI", 9.75F);
+            txtDireccion.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtDireccion.Location = new Point(182, 229);
+            txtDireccion.Margin = new Padding(3, 4, 3, 4);
+            txtDireccion.MaxLength = 250;
+            txtDireccion.Name = "txtDireccion";
+            txtDireccion.PlaceholderText = "";
+            txtDireccion.SelectedText = "";
+            txtDireccion.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            txtDireccion.Size = new Size(520, 34);
+            txtDireccion.TabIndex = 47;
             // 
             // label10
             // 
@@ -485,53 +484,53 @@
             label10.TabIndex = 46;
             label10.Text = "Dirección:";
             // 
-            // guna2TextBox2
+            // txtTelefono
             // 
-            guna2TextBox2.Animated = true;
-            guna2TextBox2.BorderRadius = 5;
-            guna2TextBox2.CustomizableEdges = customizableEdges21;
-            guna2TextBox2.DefaultText = "";
-            guna2TextBox2.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            guna2TextBox2.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            guna2TextBox2.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            guna2TextBox2.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            guna2TextBox2.Enabled = false;
-            guna2TextBox2.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox2.Font = new Font("Segoe UI", 9.75F);
-            guna2TextBox2.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox2.Location = new Point(182, 189);
-            guna2TextBox2.Margin = new Padding(3, 4, 3, 4);
-            guna2TextBox2.MaxLength = 10;
-            guna2TextBox2.Name = "guna2TextBox2";
-            guna2TextBox2.PlaceholderText = "";
-            guna2TextBox2.SelectedText = "";
-            guna2TextBox2.ShadowDecoration.CustomizableEdges = customizableEdges22;
-            guna2TextBox2.Size = new Size(520, 34);
-            guna2TextBox2.TabIndex = 45;
+            txtTelefono.Animated = true;
+            txtTelefono.BorderRadius = 5;
+            txtTelefono.CustomizableEdges = customizableEdges21;
+            txtTelefono.DefaultText = "";
+            txtTelefono.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtTelefono.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtTelefono.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtTelefono.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtTelefono.Enabled = false;
+            txtTelefono.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtTelefono.Font = new Font("Segoe UI", 9.75F);
+            txtTelefono.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtTelefono.Location = new Point(182, 189);
+            txtTelefono.Margin = new Padding(3, 4, 3, 4);
+            txtTelefono.MaxLength = 10;
+            txtTelefono.Name = "txtTelefono";
+            txtTelefono.PlaceholderText = "";
+            txtTelefono.SelectedText = "";
+            txtTelefono.ShadowDecoration.CustomizableEdges = customizableEdges22;
+            txtTelefono.Size = new Size(520, 34);
+            txtTelefono.TabIndex = 45;
             // 
-            // guna2TextBox1
+            // txtRFC
             // 
-            guna2TextBox1.Animated = true;
-            guna2TextBox1.BorderRadius = 5;
-            guna2TextBox1.CustomizableEdges = customizableEdges23;
-            guna2TextBox1.DefaultText = "";
-            guna2TextBox1.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            guna2TextBox1.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            guna2TextBox1.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            guna2TextBox1.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            guna2TextBox1.Enabled = false;
-            guna2TextBox1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox1.Font = new Font("Segoe UI", 9.75F);
-            guna2TextBox1.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox1.Location = new Point(182, 147);
-            guna2TextBox1.Margin = new Padding(3, 4, 3, 4);
-            guna2TextBox1.MaxLength = 13;
-            guna2TextBox1.Name = "guna2TextBox1";
-            guna2TextBox1.PlaceholderText = "";
-            guna2TextBox1.SelectedText = "";
-            guna2TextBox1.ShadowDecoration.CustomizableEdges = customizableEdges24;
-            guna2TextBox1.Size = new Size(520, 34);
-            guna2TextBox1.TabIndex = 44;
+            txtRFC.Animated = true;
+            txtRFC.BorderRadius = 5;
+            txtRFC.CustomizableEdges = customizableEdges23;
+            txtRFC.DefaultText = "";
+            txtRFC.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtRFC.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtRFC.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtRFC.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtRFC.Enabled = false;
+            txtRFC.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtRFC.Font = new Font("Segoe UI", 9.75F);
+            txtRFC.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtRFC.Location = new Point(182, 147);
+            txtRFC.Margin = new Padding(3, 4, 3, 4);
+            txtRFC.MaxLength = 13;
+            txtRFC.Name = "txtRFC";
+            txtRFC.PlaceholderText = "";
+            txtRFC.SelectedText = "";
+            txtRFC.ShadowDecoration.CustomizableEdges = customizableEdges24;
+            txtRFC.Size = new Size(520, 34);
+            txtRFC.TabIndex = 44;
             // 
             // label9
             // 
@@ -626,7 +625,7 @@
             pnlBusqueda.BackColor = Color.White;
             pnlBusqueda.Controls.Add(ptbInfoMatricula);
             pnlBusqueda.Controls.Add(lblMatricula);
-            pnlBusqueda.Controls.Add(txtMatricula1);
+            pnlBusqueda.Controls.Add(txtMatricula);
             pnlBusqueda.Controls.Add(btnAceptar);
             pnlBusqueda.Controls.Add(separador1);
             pnlBusqueda.Controls.Add(lblRegistro);
@@ -662,29 +661,28 @@
             lblMatricula.TabIndex = 49;
             lblMatricula.Text = "Matricula:";
             // 
-            // txtMatricula1
+            // txtMatricula
             // 
-            txtMatricula1.Animated = true;
-            txtMatricula1.BorderRadius = 5;
-            txtMatricula1.CustomizableEdges = customizableEdges33;
-            txtMatricula1.DefaultText = "Ingresa tu matricula";
-            txtMatricula1.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtMatricula1.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtMatricula1.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtMatricula1.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtMatricula1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtMatricula1.Font = new Font("Segoe UI", 9.75F);
-            txtMatricula1.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtMatricula1.Location = new Point(188, 67);
-            txtMatricula1.Margin = new Padding(3, 4, 3, 4);
-            txtMatricula1.MaxLength = 15;
-            txtMatricula1.Name = "txtMatricula1";
-            txtMatricula1.PlaceholderText = "";
-            txtMatricula1.SelectedText = "";
-            txtMatricula1.ShadowDecoration.CustomizableEdges = customizableEdges34;
-            txtMatricula1.Size = new Size(216, 34);
-            txtMatricula1.TabIndex = 1;
-            txtMatricula1.TextChanged += txtMatricula1_TextChanged;
+            txtMatricula.Animated = true;
+            txtMatricula.BorderRadius = 5;
+            txtMatricula.CustomizableEdges = customizableEdges33;
+            txtMatricula.DefaultText = "Ingresa tu matricula";
+            txtMatricula.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtMatricula.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtMatricula.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtMatricula.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtMatricula.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtMatricula.Font = new Font("Segoe UI", 9.75F);
+            txtMatricula.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtMatricula.Location = new Point(188, 67);
+            txtMatricula.Margin = new Padding(3, 4, 3, 4);
+            txtMatricula.MaxLength = 15;
+            txtMatricula.Name = "txtMatricula";
+            txtMatricula.PlaceholderText = "";
+            txtMatricula.SelectedText = "";
+            txtMatricula.ShadowDecoration.CustomizableEdges = customizableEdges34;
+            txtMatricula.Size = new Size(216, 34);
+            txtMatricula.TabIndex = 1;
             // 
             // btnAceptar
             // 
@@ -697,7 +695,7 @@
             btnAceptar.FillColor = Color.DimGray;
             btnAceptar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnAceptar.ForeColor = Color.White;
-            btnAceptar.Location = new Point(747, 102);
+            btnAceptar.Location = new Point(738, 67);
             btnAceptar.Margin = new Padding(3, 2, 3, 2);
             btnAceptar.Name = "btnAceptar";
             btnAceptar.ShadowDecoration.CustomizableEdges = customizableEdges36;
@@ -761,11 +759,11 @@
         private Guna.UI2.WinForms.Guna2Separator separador1;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         private Label label1;
-        public Guna.UI2.WinForms.Guna2TextBox guna2TextBox2;
-        public Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
+        public Guna.UI2.WinForms.Guna2TextBox txtTelefono;
+        public Guna.UI2.WinForms.Guna2TextBox txtRFC;
         private Label label9;
         private Label label8;
-        public Guna.UI2.WinForms.Guna2TextBox guna2TextBox3;
+        public Guna.UI2.WinForms.Guna2TextBox txtDireccion;
         private Label label10;
         private Label lblMatricula;
         public Guna.UI2.WinForms.Guna2GradientPanel pnlEntrada;
@@ -778,7 +776,7 @@
         private Guna.UI2.WinForms.Guna2Separator guna2Separator2;
         private Label lblSalida;
         private Label lblHoraSalida;
-        private Guna.UI2.WinForms.Guna2DateTimePicker dtpDia;
+        private Guna.UI2.WinForms.Guna2DateTimePicker dtpDiaEntrada;
         private Guna.UI2.WinForms.Guna2Button btnAceptarSalida;
         public Guna.UI2.WinForms.Guna2TextBox txtObservaciones;
         private Label lblObservaciones;
@@ -788,6 +786,6 @@
         private Label lblHoraS;
         private Guna.UI2.WinForms.Guna2Separator spdSalida;
         private Label label4;
-        public Guna.UI2.WinForms.Guna2TextBox txtMatricula1;
+        public Guna.UI2.WinForms.Guna2TextBox txtMatricula;
     }
 }

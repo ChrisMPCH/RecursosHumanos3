@@ -12,7 +12,7 @@ using RecursosHumanos.Bussines;
 
 namespace RecursosHumanos.Data
 {
-     class ContratosDataAccess
+     public class ContratosDataAccess
     {
         private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Data.ContratoDataAccess");
         private readonly PostgreSQLDataAccess _dbAccess = null;
@@ -132,7 +132,7 @@ namespace RecursosHumanos.Data
                         Sueldo = Convert.ToDouble(row["salario"]),
                         Descripcion = row["descripcion"]?.ToString() ?? "",
                         Estatus = Convert.ToInt16(row["estatus"]) == 1,
-                        NombreTipoContrato = row["tipo_contrato"]?.ToString() ?? "" // ✅ Aquí está la clave
+                        NombreTipoContrato = row["tipo_contrato"]?.ToString() ?? ""
                     };
 
                     contratos.Add(contrato);

@@ -60,6 +60,14 @@ namespace RecursosHumanos.Model
             NombreEmpleado = "";
             NombreDepartamento = "";
         }
+
+        public int NumeroHoras
+        {
+            get
+            {
+                return (int)(HoraSalida - HoraEntrada).TotalHours;
+            }
+        }
     }
 
 
