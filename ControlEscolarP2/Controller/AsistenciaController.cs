@@ -14,6 +14,7 @@ namespace RecursosHumanos.Controllers
         private readonly ContratoController _contratosController = new ContratoController();
         private readonly AsistenciaDataAccess _asistenciaDataAccess = new AsistenciaDataAccess();
         private readonly AusenciaController _ausenciasController = new AusenciaController();
+        private static readonly AuditoriasController _auditoriasController = new AuditoriasController();
 
         private static readonly Logger _logger = LogManager.GetLogger("RecursosHumanos.Controller.AsistenciaController");
 
@@ -72,6 +73,7 @@ namespace RecursosHumanos.Controllers
 
             if (resultado)
             {
+                _auditoriasController.RegistrarAuditoriaGenerica(6, 1, (short)empleado.Id_Empleado);
                 mensaje = "Entrada registrada correctamente.";
                 return true;
             }
@@ -131,6 +133,7 @@ namespace RecursosHumanos.Controllers
 
             if (resultado)
             {
+                _auditoriasController.RegistrarAuditoriaGenerica(6, 2, (short)empleado.Id_Empleado);
                 mensaje = "Salida registrada correctamente.";
                 return true;
             }
