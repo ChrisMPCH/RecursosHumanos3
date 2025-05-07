@@ -29,12 +29,5 @@ namespace RecursosHumanos.Bussines
             return horaEntrada < horaSalida;
         }
 
-        // Método para validar si la hora de entrada está dentro del rango de tolerancia (30 minutos)
-        public static bool ValidarToleranciaEntrada(DateTime horaEsperadaEntrada, DateTime horaRealEntrada)
-        {
-            TimeSpan diferencia = horaRealEntrada - horaEsperadaEntrada;
-            return diferencia.TotalMinutes <= 30 && diferencia.TotalMinutes >= 0;
-        }
-
     }
 }

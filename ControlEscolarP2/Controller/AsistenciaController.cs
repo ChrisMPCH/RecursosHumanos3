@@ -5,6 +5,7 @@ using RecursosHumanos.Bussines;
 using NLog;
 using RecursosHumanos.DataAccess;
 using RecursosHumanos.Controller;
+using System.Configuration;
 
 namespace RecursosHumanos.Controllers
 {
@@ -17,6 +18,18 @@ namespace RecursosHumanos.Controllers
         private static readonly AuditoriasController _auditoriasController = new AuditoriasController();
 
         private static readonly Logger _logger = LogManager.GetLogger("RecursosHumanos.Controller.AsistenciaController");
+        public bool ValidarToleranciaEntrada(DateTime horaEsperadaEntrada, DateTime horaRealEntrada)
+        {
+            // Leer el valor de la tolerancia en minutos desde el app.config
+            int toleranciaMinutos = Convert.ToInt32(ConfigurationManager.AppSettings["ToleranciaMinutos"]);
+
+            // Calcular la diferencia de tiempo
+            TimeSpan diferencia = horaRealEntrada - horaEsperadaEntrada;
+
+            // Validar si la diferencia está dentro del rango de tolerancia
+            return diferencia.TotalMinutes <= toleranciaMinutos && diferencia.TotalMinutes >= 0;
+        }
+
         public bool RegistrarEntrada(string matricula, out string mensaje)
         {
             mensaje = "";
@@ -51,7 +64,7 @@ namespace RecursosHumanos.Controllers
             DateTime horaEsperada = DateTime.Today.Add(contrato.HoraEntrada);
             DateTime horaReal = DateTime.Now;
 
-            if (!EmpleadoNegocio.ValidarToleranciaEntrada(horaEsperada, horaReal))
+            if (!ValidarToleranciaEntrada(horaEsperada, horaReal))
             {
                 // Registrar ausencia solo si no existe ya
                 bool ausenciaRegistrada = _ausenciasController.RegistrarAusenciaPorRetardo(empleado.Id_Empleado, DateTime.Today, out string mensajeAusencia);
