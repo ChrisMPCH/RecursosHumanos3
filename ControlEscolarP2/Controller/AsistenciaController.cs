@@ -1,7 +1,7 @@
 ﻿using System;
 using RecursosHumanos.Models;
 using RecursosHumanos.Data;
-using RecursosHumanos.Bussines; // Suponiendo que aquí está tu ValidarToleranciaEntrada
+using RecursosHumanos.Bussines; 
 using NLog;
 using RecursosHumanos.DataAccess;
 using RecursosHumanos.Controller;

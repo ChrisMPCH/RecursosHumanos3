@@ -57,13 +57,13 @@ namespace RecursosHumanos.Controllers
 
         public bool TieneAusenciaRegistradaHoy(string matricula)
         {
-            // Buscar empleado por matrícula usando tu propio controller
+            // Buscar empleado por matrícula usando su controller
             Empleado empleado = _empleadosDataAccess.ObtenerEmpleadoPorMatricula(matricula);
 
             if (empleado == null)
                 return false;
 
-            // Validar si tiene ausencia hoy usando tu propia capa de DataAccess
+            // Validar si tiene ausencia hoy usando capa de DataAccess
             return _ausenciaDataAccess.ExisteAusenciaHoy(empleado.Id_Empleado, DateTime.Now);
         }
     }

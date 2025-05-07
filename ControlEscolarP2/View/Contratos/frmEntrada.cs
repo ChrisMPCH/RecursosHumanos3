@@ -40,34 +40,9 @@ namespace RecursosHumanos.View
         public void InicializarCampos()
         {
             Formas.ConfigurarTextBox(txtMatricula, "Ingresa tu matricula");
+            Formas.ConfigurarTextBox(txtObservaciones, "Ingresa tus observaciones");
         }
 
-        private bool HoraEntrada()
-        {
-            if (string.IsNullOrWhiteSpace(txtMatricula.Text) || txtMatricula.Text == "Ingresa tu matricula")
-            {
-                MessageBox.Show("Por favor, ingrese su matrícula.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            if (!EsMatriculaValida())
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool EsMatriculaValida()
-        {
-            if (!EmpleadoNegocio.EsNoMatriculaValido(txtMatricula.Text.Trim()))
-            {
-                MessageBox.Show("Número de matrícula inválido.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                LimpiarCampos();  // Limpiar los campos en caso de error
-                return false;
-            }
-            return true;
-        }
 
         private void btnAceptar_Click_1(object sender, EventArgs e)
         {
@@ -135,7 +110,7 @@ namespace RecursosHumanos.View
             txtRFC.Text = "";
             txtTelefono.Text = "";
             txtDireccion.Text = "";
-
+            txtObservaciones.Text = "";
             txtDepartamento.Text = "";
 
             //Limpiar los IDs
