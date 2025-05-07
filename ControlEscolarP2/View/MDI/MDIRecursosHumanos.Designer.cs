@@ -57,7 +57,6 @@ namespace RecursosHumanos.View
             btnFrida = new Button();
             subNatalyPanel = new Panel();
             btnReportes = new Button();
-            btnSalidas = new Button();
             btnEntradas = new Button();
             btnNataly = new Button();
             subVanessaPanel = new Panel();
@@ -181,7 +180,7 @@ namespace RecursosHumanos.View
             pnlSubRoles.Controls.Add(btnCreacionRoles);
             pnlSubRoles.Controls.Add(btnGestionRoles);
             pnlSubRoles.Dock = DockStyle.Top;
-            pnlSubRoles.Location = new Point(0, 931);
+            pnlSubRoles.Location = new Point(0, 886);
             pnlSubRoles.Margin = new Padding(3, 2, 3, 2);
             pnlSubRoles.Name = "pnlSubRoles";
             pnlSubRoles.Size = new Size(261, 87);
@@ -232,7 +231,7 @@ namespace RecursosHumanos.View
             btnRoles.Font = new Font("Century Gothic", 12F);
             btnRoles.ForeColor = Color.Black;
             btnRoles.ImageAlign = ContentAlignment.MiddleLeft;
-            btnRoles.Location = new Point(0, 886);
+            btnRoles.Location = new Point(0, 841);
             btnRoles.Margin = new Padding(3, 2, 3, 2);
             btnRoles.Name = "btnRoles";
             btnRoles.Padding = new Padding(10, 0, 0, 0);
@@ -251,7 +250,7 @@ namespace RecursosHumanos.View
             btmSalir.FlatStyle = FlatStyle.Flat;
             btmSalir.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btmSalir.ForeColor = Color.Black;
-            btmSalir.Location = new Point(0, 1018);
+            btmSalir.Location = new Point(0, 973);
             btmSalir.Margin = new Padding(3, 2, 3, 2);
             btmSalir.Name = "btmSalir";
             btmSalir.Padding = new Padding(10, 0, 0, 0);
@@ -268,7 +267,7 @@ namespace RecursosHumanos.View
             subFridaPanel.Controls.Add(btnContarDias);
             subFridaPanel.Controls.Add(btnRegistroAuditorias);
             subFridaPanel.Dock = DockStyle.Top;
-            subFridaPanel.Location = new Point(0, 803);
+            subFridaPanel.Location = new Point(0, 758);
             subFridaPanel.Margin = new Padding(3, 2, 3, 2);
             subFridaPanel.Name = "subFridaPanel";
             subFridaPanel.Size = new Size(261, 83);
@@ -319,7 +318,7 @@ namespace RecursosHumanos.View
             btnFrida.Font = new Font("Century Gothic", 12F);
             btnFrida.ForeColor = Color.Black;
             btnFrida.ImageAlign = ContentAlignment.MiddleLeft;
-            btnFrida.Location = new Point(0, 758);
+            btnFrida.Location = new Point(0, 713);
             btnFrida.Margin = new Padding(3, 2, 3, 2);
             btnFrida.Name = "btnFrida";
             btnFrida.Padding = new Padding(10, 0, 0, 0);
@@ -334,13 +333,12 @@ namespace RecursosHumanos.View
             // 
             subNatalyPanel.BackColor = Color.FromArgb(249, 250, 251, 255);
             subNatalyPanel.Controls.Add(btnReportes);
-            subNatalyPanel.Controls.Add(btnSalidas);
             subNatalyPanel.Controls.Add(btnEntradas);
             subNatalyPanel.Dock = DockStyle.Top;
             subNatalyPanel.Location = new Point(0, 631);
             subNatalyPanel.Margin = new Padding(3, 2, 3, 2);
             subNatalyPanel.Name = "subNatalyPanel";
-            subNatalyPanel.Size = new Size(261, 127);
+            subNatalyPanel.Size = new Size(261, 82);
             subNatalyPanel.TabIndex = 5;
             // 
             // btnReportes
@@ -351,7 +349,7 @@ namespace RecursosHumanos.View
             btnReportes.FlatStyle = FlatStyle.Flat;
             btnReportes.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnReportes.ForeColor = Color.Black;
-            btnReportes.Location = new Point(0, 80);
+            btnReportes.Location = new Point(0, 40);
             btnReportes.Name = "btnReportes";
             btnReportes.Padding = new Padding(35, 0, 0, 0);
             btnReportes.Size = new Size(261, 40);
@@ -360,24 +358,6 @@ namespace RecursosHumanos.View
             btnReportes.TextAlign = ContentAlignment.MiddleLeft;
             btnReportes.UseVisualStyleBackColor = true;
             btnReportes.Click += btnReportes_Click;
-            // 
-            // btnSalidas
-            // 
-            btnSalidas.Dock = DockStyle.Top;
-            btnSalidas.Enabled = false;
-            btnSalidas.FlatAppearance.BorderSize = 0;
-            btnSalidas.FlatStyle = FlatStyle.Flat;
-            btnSalidas.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnSalidas.ForeColor = Color.Black;
-            btnSalidas.Location = new Point(0, 40);
-            btnSalidas.Name = "btnSalidas";
-            btnSalidas.Padding = new Padding(35, 0, 0, 0);
-            btnSalidas.Size = new Size(261, 40);
-            btnSalidas.TabIndex = 1;
-            btnSalidas.Text = "Ausencias";
-            btnSalidas.TextAlign = ContentAlignment.MiddleLeft;
-            btnSalidas.UseVisualStyleBackColor = true;
-            btnSalidas.Click += btnSalidas_Click;
             // 
             // btnEntradas
             // 
@@ -1322,34 +1302,33 @@ namespace RecursosHumanos.View
         private Panel panelSideMenu;
         private Panel panelLogo;
         public Guna.UI2.WinForms.Guna2Separator Separador2;
-        public static Button btnContarDias;
-        public static Button btnRegistroAuditorias;
-        public static Button btnReportes;
-        public static Button btnSalidas;
-        public static Button btnEntradas;
-        public static Button btnEliminarEmpleados;
-        public static Button btnActualizarEmpleados;
-        public static Button btnListaEmpleados;
-        public static Button btnLisUsuarios;
-        public static Button btnEliminarUsuarios;
-        public static Button btnActualizarUsuarios;
-        public static Button subRegistroPersonas;
-        public static Button btnListaContratos;
-        public static Panel subChristopherPanel;
-        public static Panel subVanessaPanel;
-        public static Panel subFridaPanel;
-        public static Button btnFrida;
-        public static Panel subNatalyPanel;
-        public static Button btnNataly;
-        public static Button btmSalir;
-        public static Button btmVanessa;
-        public static Button btmUsuario;
-        public static Panel pnlSubRoles;
-        public static Button btnCreacionRoles;
-        public static Button btnGestionRoles;
-        public static Button btnRoles;
-        public static Button btnPuestos;
-        public static Button btnDepartamentos;
-        public static Button btnContratos;
+        public Button btnContarDias;
+        public Button btnRegistroAuditorias;
+        public Button btnReportes;
+        public Button btnEntradas;
+        public Button btnEliminarEmpleados;
+        public Button btnActualizarEmpleados;
+        public Button btnListaEmpleados;
+        public Button btnLisUsuarios;
+        public Button btnEliminarUsuarios;
+        public Button btnActualizarUsuarios;
+        public Button subRegistroPersonas;
+        public Button btnListaContratos;
+        public Panel subChristopherPanel;
+        public Panel subVanessaPanel;
+        public Panel subFridaPanel;
+        public Button btnFrida;
+        public Panel subNatalyPanel;
+        public Button btnNataly;
+        public Button btmSalir;
+        public Button btmVanessa;
+        public Button btmUsuario;
+        public Panel pnlSubRoles;
+        public Button btnCreacionRoles;
+        public Button btnGestionRoles;
+        public Button btnRoles;
+        public Button btnPuestos;
+        public Button btnDepartamentos;
+        public Button btnContratos;
     }
 }

@@ -14,7 +14,6 @@ namespace RecursosHumanos.View
     public partial class frmEntrada : Form
     {
         private readonly EmpleadosController _empleadosController = new EmpleadosController();
-        private readonly ContratoController _contratosController = new ContratoController();
         private readonly AsistenciaController _asistenciasController = new AsistenciaController();
         private readonly AusenciaController _ausenciasController = new AusenciaController();
 
