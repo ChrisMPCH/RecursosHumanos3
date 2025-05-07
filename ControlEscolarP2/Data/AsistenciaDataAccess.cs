@@ -106,7 +106,6 @@ namespace RecursosHumanos.DataAccess
             return Convert.ToInt32(result) > 0;
         }
 
-        // ✅ Corregido: Ahora primero busca el id_empleado por matrícula
         public bool ExisteRegistroDelDia(string matricula, DateTime fecha)
         {
             try

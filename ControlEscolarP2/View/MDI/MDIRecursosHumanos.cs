@@ -189,12 +189,6 @@ namespace RecursosHumanos.View
             Form frmEntrada = new frmEntrada();
             abrirChildFormMDI(frmEntrada);
         }
-
-        private void btnSalidas_Click(object sender, EventArgs e)
-        {
-            Form frmInasistencias = new frmInasistencias();
-            abrirChildFormMDI(frmInasistencias);
-        }
         private void btnListaContratos_Click(object sender, EventArgs e)
         {
             Form frmActualizarContratos = new frmActualizarContratos();
@@ -386,12 +380,6 @@ namespace RecursosHumanos.View
             if (permisosUsuario.Contains(53)) // Gestionar asistencias
             {
                 btnEntradas.Enabled = true;
-            }
-
-            // Ausencias
-            if (permisosUsuario.Contains(54)) // Gestionar ausencias
-            {
-                btnSalidas.Enabled = true;
             }
 
             // Contar días trabajados
