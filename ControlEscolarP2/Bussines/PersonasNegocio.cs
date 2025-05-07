@@ -10,10 +10,6 @@ namespace RecursosHumanos.Bussines
 {
     class PersonasNegocio
     {
-        internal static bool EsNombreValido(String nombre)
-        {
-           return Validaciones.EsNombreValido(nombre);
-        }
         internal static bool EsRFCValido(String rfc)
         {
             return Validaciones.EsRFCValido(rfc);
@@ -34,6 +30,5 @@ namespace RecursosHumanos.Bussines
         {
             return genero == 1 | genero == 2;
         }
-
     }
 }

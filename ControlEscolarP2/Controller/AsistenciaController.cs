@@ -16,7 +16,6 @@ namespace RecursosHumanos.Controllers
         private readonly AusenciaController _ausenciasController = new AusenciaController();
 
         private static readonly Logger _logger = LogManager.GetLogger("RecursosHumanos.Controller.AsistenciaController");
-
         public bool RegistrarEntrada(string matricula, out string mensaje)
         {
             mensaje = "";
@@ -175,8 +174,5 @@ namespace RecursosHumanos.Controllers
                 throw new ApplicationException("Hubo un error al obtener las asistencias completas. Por favor intente nuevamente más tarde.", ex);
             }
         }
-
-
     }
-
 }

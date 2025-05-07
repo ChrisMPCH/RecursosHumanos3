@@ -122,7 +122,6 @@ namespace RecursosHumanos.Controller
         ///{ 2, "Actualizacion" },
         ///{ 0, "Baja" }
         ///movimiento es el id del registro afectado
-
         public (bool exito, string mensaje) RegistrarAuditoriaGenerica(int idEntidad, int idAccion, short movimiento)
         {
             try
@@ -166,7 +165,6 @@ namespace RecursosHumanos.Controller
                 return (false, $"Error: {ex.Message}");
             }
         }
-
         internal static string generadorDetalle(int entidad, int accion)
         {
             string detalle = string.Empty;
@@ -325,18 +323,6 @@ namespace RecursosHumanos.Controller
                 // Manejar errores
                 Console.WriteLine($"Error al obtener la información del equipo: {ex.Message}");
                 return (string.Empty, string.Empty);
-            }
-        }
-        public List<(int idUsuario, string detalle, DateTime fechaMovimiento)> ObtenerUltimasAuditorias(int limite = 3)
-        {
-            try
-            {
-                return _bitacorasDataAccess.ObtenerUltimasAuditorias(limite);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, "Error al obtener las auditorías recientes");
-                return new List<(int, string, DateTime)>();
             }
         }
     }
