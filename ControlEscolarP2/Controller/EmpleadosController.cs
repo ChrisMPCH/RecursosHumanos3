@@ -12,6 +12,7 @@ namespace RecursosHumanos.Controller
         private readonly EmpleadosDataAccess _empleadosAccess;
         private readonly PersonasDataAccess _personasAccess;
         private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Controller.EmpleadosController");
+        private static readonly AuditoriasController _auditoriasController = new AuditoriasController(); 
 
         public EmpleadosController()
         {
@@ -35,9 +36,14 @@ namespace RecursosHumanos.Controller
 
                 // Insertar el empleado con la persona asociada
                 int idGenerado = _empleadosAccess.InsertarEmpleado(empleado);
-                return idGenerado > 0
-                    ? (true, "Empleado registrado correctamente.")
-                    : (false, "Error al insertar empleado.");
+
+                if (idGenerado > 0)
+                {
+                    _auditoriasController.RegistrarAuditoriaGenerica(1, 1, (short)idGenerado); // módulo 2 = Empleados, acción 1 = insertar
+                    return (true, "Empleado registrado correctamente.");
+                }
+
+                return (false, "Error al insertar empleado.");
             }
             catch (Exception ex)
             {
@@ -45,6 +51,7 @@ namespace RecursosHumanos.Controller
                 return (false, "Error inesperado: " + ex.Message);
             }
         }
+
 
         /// <summary>
         /// Obtiene la lista de todos los empleados registrados en la base de datos.
@@ -73,6 +80,12 @@ namespace RecursosHumanos.Controller
             try
             {
                 bool eliminado = _empleadosAccess.EliminarUsuario(idEmpleado);
+
+                if (eliminado)
+                {
+                    _auditoriasController.RegistrarAuditoriaGenerica(1, 0, (short)idEmpleado); // módulo 2 = empleados, acción 0 = eliminar
+                }
+
                 return eliminado
                     ? (true, "Empleado eliminado correctamente.")
                     : (false, "No se pudo eliminar el empleado.");
@@ -84,7 +97,6 @@ namespace RecursosHumanos.Controller
             }
         }
 
-        /// <summary>
         /// Actualiza los datos del empleado y su persona asociada.
         /// </summary>
         /// <param name="empleado">Objeto empleado con los datos actualizados</param>
@@ -93,7 +105,12 @@ namespace RecursosHumanos.Controller
         {
             try
             {
-                return _empleadosAccess.ActualizarEmpleado(empleado);
+                bool actualizado = _empleadosAccess.ActualizarEmpleado(empleado);
+                if (actualizado)
+                {
+                    _auditoriasController.RegistrarAuditoriaGenerica(1, 2, (short)empleado.Id_Empleado); // acción 2 = actualizar
+                }
+                return actualizado;
             }
             catch (Exception ex)
             {
@@ -101,9 +118,6 @@ namespace RecursosHumanos.Controller
                 return false;
             }
         }
-
-
-
 
         /// <summary>
         /// Devuelve un empleado dado su número de matrícula
@@ -145,8 +159,5 @@ namespace RecursosHumanos.Controller
                 throw;
             }
         }
-
-
-
     }
 }

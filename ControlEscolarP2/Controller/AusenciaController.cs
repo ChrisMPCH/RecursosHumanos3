@@ -11,11 +11,12 @@ namespace RecursosHumanos.Controllers
     {
         private readonly AusenciaDataAccess _ausenciaDataAccess;
         private readonly EmpleadosDataAccess _empleadosDataAccess;
+        private static readonly AuditoriasController _auditoriasController = new AuditoriasController();
 
         public AusenciaController()
         {
             _ausenciaDataAccess = new AusenciaDataAccess();
-            _empleadosDataAccess = new EmpleadosDataAccess(); // ✅ Inicializado aquí
+            _empleadosDataAccess = new EmpleadosDataAccess(); 
         }
 
         public bool RegistrarAusenciaPorRetardo(int idEmpleado, DateTime fecha, out string mensaje)
@@ -43,6 +44,7 @@ namespace RecursosHumanos.Controllers
 
             if (resultado)
             {
+                _auditoriasController.RegistrarAuditoriaGenerica(6, 1, (short)idEmpleado);
                 mensaje = "Ausencia registrada correctamente.";
                 return true;
             }

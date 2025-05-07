@@ -28,9 +28,13 @@ namespace RecursosHumanos.Utilities
         {
             if (string.IsNullOrWhiteSpace(rfc))
                 return false;
-
-            string patron = @"^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$";
-            return Regex.IsMatch(rfc, patron);
+            // Elimina los espacios en blanco y convierte a mayúsculas
+            rfc = rfc.Trim().ToUpper();
+            // Verificación de RFC de Persona Física
+            string patronPersonaFisica = @"^[A-ZÑ&]{4}\d{6}[A-Z0-9]{3}$";
+            // Verificación de RFC de Persona Moral
+            string patronPersonaMoral = @"^[A-ZÑ&]{3}\d{6}[A-Z0-9]{3}$";
+            return Regex.IsMatch(rfc, patronPersonaFisica) || Regex.IsMatch(rfc, patronPersonaMoral);
         }
         public static bool EsNombreValido(string nombre)
         {
