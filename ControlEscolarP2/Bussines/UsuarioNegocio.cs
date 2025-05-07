@@ -14,12 +14,10 @@ namespace RecursosHumanos.Bussines
         {
             return nombreUsuario.Length >= 5;
         }
-
         internal static bool EsContraseñaValido(string contraseña)
         {
             return contraseña.Length >= 8;
         }
-
         internal static bool EsConfirmarContraseñaValido(string contraseña, string confirmarContraseña)
         {
             return EsContraseñaValido(contraseña) && contraseña == confirmarContraseña;

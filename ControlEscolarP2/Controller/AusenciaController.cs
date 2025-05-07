@@ -54,7 +54,6 @@ namespace RecursosHumanos.Controllers
                 return false;
             }
         }
-
         public bool TieneAusenciaRegistradaHoy(string matricula)
         {
             // Buscar empleado por matrícula usando su controller

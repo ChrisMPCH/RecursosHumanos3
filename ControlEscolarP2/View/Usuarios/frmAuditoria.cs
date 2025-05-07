@@ -53,6 +53,10 @@ namespace RecursosHumanos.View.Usuarios
             txtIp.ReadOnly = true; // Deshabilitar el campo IP_Equipo
             txtNomEquipo.ReadOnly = true; // Deshabilitar el campo Nombre_Equipo
             txtDetalles.ReadOnly = true; // Deshabilitar el campo Detalle
+            dtpFechaInicio.Value = DateTime.Now; // Establecer la fecha de inicio como la fecha actual
+            dtpFechaFin.Value = DateTime.Now; // Establecer la fecha de fin como la fecha actual
+
+
         }
 
         private void frmAuditoria_Resize(object sender, EventArgs e)
@@ -155,7 +159,6 @@ namespace RecursosHumanos.View.Usuarios
         {
             llenarTabla(false);
         }
-
         private void IniciarTabla()
         {
             Formas.ConfigurarEstiloDataGridView(dataGridAuditorias); // Configurar el estilo del DataGridView
@@ -210,13 +213,14 @@ namespace RecursosHumanos.View.Usuarios
             }
 
             // IP de equipo (si no está vacío o con el valor predeterminado)
-            string ipEquipo = !string.IsNullOrWhiteSpace(txtIp.Text) && txtIp.Text != "Ingresa IP de equipo" ? txtIp.Text : null;
+            string? ipEquipo = !string.IsNullOrWhiteSpace(txtIpB.Text) && txtIpB.Text != "Ingresa IP de equipo" ? txtIpB.Text : null;
 
             // Nombre de equipo (si no está vacío o con el valor predeterminado)
-            string nombreEquipo = !string.IsNullOrWhiteSpace(txtNomEquipo.Text) && txtNomEquipo.Text != "Ingresa el nombre de equipo" ? txtNomEquipo.Text : null;
+            string? nombreEquipo = !string.IsNullOrWhiteSpace(txtNomEquipoB.Text) && txtNomEquipoB.Text != "Ingresa nombre de equipo" ? txtNomEquipoB.Text : null;
 
             // ID de usuario (si no está vacío o con el valor predeterminado)
-            int? idUsuario = !string.IsNullOrWhiteSpace(txtResponsable.Text) && txtResponsable.Text != "Ingresa nombre de usuario" ? (int?)Convert.ToInt32(txtResponsable.Text) : null;
+            int? idUsuario = !string.IsNullOrWhiteSpace(txtUsuario.Text) && txtUsuario.Text != "Ingrese nombre de usuario" &&
+                 int.TryParse(txtUsuario.Text, out int result) ? (int?)result : null;
 
             // Acción realizada por usuario (estatus)
             int? estatus = 1;

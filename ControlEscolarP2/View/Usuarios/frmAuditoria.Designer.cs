@@ -941,7 +941,7 @@
         private SplitContainer scAgregar;
         private Label lblBusquedaAuditoria;
         private Guna.UI2.WinForms.Guna2Separator separador1;
-        private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaInicio;
+        public static Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaInicio;
         private Guna.UI2.WinForms.Guna2ComboBox cbxAccion;
         private Guna.UI2.WinForms.Guna2ComboBox cbxMovimiento;
         private Label lblUsuario;
@@ -976,7 +976,7 @@
         private Guna.UI2.WinForms.Guna2Button btnGuardar;
         private Guna.UI2.WinForms.Guna2Button btnEditar;
         private Label lblEntidad;
-        private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaFin;
+        public static Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaFin;
         public static Label label1;
         public static Label label3;
         public static Guna.UI2.WinForms.Guna2ComboBox cbxAccionUsuario;

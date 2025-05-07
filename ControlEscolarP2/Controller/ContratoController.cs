@@ -106,9 +106,6 @@ namespace RecursosHumanos.Controller
             }
         }
 
-
-
-
         //Obtener detalles de un contrato
         public Contrato? ObtenerDetalleContrato(int idContrato)
         {
@@ -149,7 +146,6 @@ namespace RecursosHumanos.Controller
                 return new List<Contrato>();
             }
         }
-
 
         public bool TieneContratoActivo(string matricula)
         {
@@ -207,13 +203,11 @@ namespace RecursosHumanos.Controller
                 return (false, "Error inesperado al actualizar el contrato.");
             }
         }
-
         public Contrato? ObtenerContratoActivoPorMatricula(string matricula)
         {
             var contratos = ObtenerTodosLosContratosPorMatricula(matricula);
             return contratos.FirstOrDefault(c => c.Estatus);
         }
-
         public double ObtenerPorcentajeContratosActivos()
         {
             try
