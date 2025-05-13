@@ -166,7 +166,6 @@ namespace RecursosHumanos.View.Usuarios
 
             llenarTabla(true);
         }
-
         private void ConfigurarColumnasAuditoria()
         {
             dataGridAuditorias.Columns.Clear();

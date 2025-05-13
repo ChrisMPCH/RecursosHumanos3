@@ -73,15 +73,15 @@ namespace RecursosHumanos.View
             {
                 btnAgregar.Enabled = true;
             }
-            if (permisosUsuario.Contains(51)) // Editar departamento  
+            if (permisosUsuario.Contains(51) || permisosUsuario.Contains(56)) // Editar departamento  
             {
                 btnActualizar.Enabled = true;
             }
-            if (permisosUsuario.Contains(52)) // Eliminar departamento  
+            if (permisosUsuario.Contains(52) || permisosUsuario.Contains(56)) // Eliminar departamento  
             {
                 btnEliminar.Enabled = true;
             }
-            if (permisosUsuario.Contains(53)) // Consultar departamento  
+            if (permisosUsuario.Contains(53) || permisosUsuario.Contains(56)) // Consultar departamento  
             {
                 btnConsultar.Enabled = true;
             }

@@ -27,7 +27,6 @@ namespace RecursosHumanos.View
             MDIRecursosHumanos_Load();
             VerificarPermisos();
         }
-
         private void MDIRecursosHumanos_Load()
         {
             ActualizarActividadReciente();
@@ -35,7 +34,6 @@ namespace RecursosHumanos.View
             horafecha_Tick(); // Llama a la función para mostrar la hora y fecha en el formulario
             inicioMenuMDI(); // Llama a la función para inicializar el estado del menú MDI
         }
-
         //Elementos para la fecha y hora
         private void horafecha_Tick()
         {
@@ -308,7 +306,7 @@ namespace RecursosHumanos.View
             {
                 subRegistroPersonas.Enabled = true;
             }
-            if (permisosUsuario.Contains(24)) // Editar usuario
+            if (permisosUsuario.Contains(24) || permisosUsuario.Contains(56)) // Editar usuario
             {
             btnActualizarUsuarios.Enabled = true;
             }
@@ -339,7 +337,7 @@ namespace RecursosHumanos.View
             {
             btnListaEmpleados.Enabled = true;
             }
-            if (permisosUsuario.Contains(37)) // Editar empleados
+            if (permisosUsuario.Contains(37) || permisosUsuario.Contains(56)) // Editar empleados
             {
             btnActualizarEmpleados.Enabled = true;
             }
@@ -357,7 +355,7 @@ namespace RecursosHumanos.View
             {
             btnContratos.Enabled = true;
             }
-            if (permisosUsuario.Contains(41)) // Editar contrato
+            if (permisosUsuario.Contains(41) || permisosUsuario.Contains(56)) // Editar contrato
             {
             btnListaContratos.Enabled = true;
             }
@@ -379,7 +377,6 @@ namespace RecursosHumanos.View
             if (permisosUsuario.Contains(49)) // Ver departamentos
             {
                 btnDepartamentos.Enabled = true;
-
             }
             
             // Asistencias
