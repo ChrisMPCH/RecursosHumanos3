@@ -73,11 +73,11 @@ namespace RecursosHumanos.View
             {
                 btnAgregar.Enabled = true;
             }
-            if (permisosUsuario.Contains(47)) // Editar puesto  
+            if (permisosUsuario.Contains(47) || permisosUsuario.Contains(56)) // Editar puesto  
             {
                 btnActualizar.Enabled = true;
             }
-            if (permisosUsuario.Contains(48)) // Eliminar puesto  
+            if (permisosUsuario.Contains(48) || permisosUsuario.Contains(56)) // Eliminar puesto  
             {
                 btnEliminar.Enabled = true;
             }

@@ -63,7 +63,7 @@
             lblTitulo.ForeColor = Color.White;
             lblTitulo.Location = new Point(0, 0);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(1174, 85);
+            lblTitulo.Size = new Size(1027, 64);
             lblTitulo.TabIndex = 24;
             lblTitulo.Text = "Departamentos";
             lblTitulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -80,11 +80,10 @@
             pnlInfoUsuario.Controls.Add(lblInfoUsuario);
             pnlInfoUsuario.CustomizableEdges = customizableEdges9;
             pnlInfoUsuario.Font = new Font("Microsoft Sans Serif", 8.25F);
-            pnlInfoUsuario.Location = new Point(0, 89);
-            pnlInfoUsuario.Margin = new Padding(3, 4, 3, 4);
+            pnlInfoUsuario.Location = new Point(0, 67);
             pnlInfoUsuario.Name = "pnlInfoUsuario";
             pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            pnlInfoUsuario.Size = new Size(1174, 180);
+            pnlInfoUsuario.Size = new Size(1027, 135);
             pnlInfoUsuario.TabIndex = 26;
             // 
             // btnConsultar
@@ -95,15 +94,13 @@
             btnConsultar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnConsultar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnConsultar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnConsultar.Enabled = false;
             btnConsultar.FillColor = Color.DimGray;
             btnConsultar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnConsultar.ForeColor = Color.White;
-            btnConsultar.Location = new Point(915, 96);
-            btnConsultar.Margin = new Padding(3, 4, 3, 4);
+            btnConsultar.Location = new Point(801, 72);
             btnConsultar.Name = "btnConsultar";
             btnConsultar.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            btnConsultar.Size = new Size(241, 57);
+            btnConsultar.Size = new Size(211, 43);
             btnConsultar.TabIndex = 33;
             btnConsultar.Text = "Consultar";
             btnConsultar.Click += btnConsultar_Click;
@@ -120,11 +117,10 @@
             btnActualizar.FillColor = Color.DimGray;
             btnActualizar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnActualizar.ForeColor = Color.White;
-            btnActualizar.Location = new Point(629, 96);
-            btnActualizar.Margin = new Padding(3, 4, 3, 4);
+            btnActualizar.Location = new Point(550, 72);
             btnActualizar.Name = "btnActualizar";
             btnActualizar.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            btnActualizar.Size = new Size(241, 57);
+            btnActualizar.Size = new Size(211, 43);
             btnActualizar.TabIndex = 32;
             btnActualizar.Text = "Actualizar";
             btnActualizar.Click += btnActualizar_Click;
@@ -141,11 +137,10 @@
             btnEliminar.FillColor = Color.DimGray;
             btnEliminar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnEliminar.ForeColor = Color.White;
-            btnEliminar.Location = new Point(328, 96);
-            btnEliminar.Margin = new Padding(3, 4, 3, 4);
+            btnEliminar.Location = new Point(287, 72);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            btnEliminar.Size = new Size(241, 57);
+            btnEliminar.Size = new Size(211, 43);
             btnEliminar.TabIndex = 31;
             btnEliminar.Text = "Eliminar";
             btnEliminar.Click += btnEliminar_Click;
@@ -162,11 +157,10 @@
             btnAgregar.FillColor = Color.DimGray;
             btnAgregar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnAgregar.ForeColor = Color.White;
-            btnAgregar.Location = new Point(21, 96);
-            btnAgregar.Margin = new Padding(3, 4, 3, 4);
+            btnAgregar.Location = new Point(18, 72);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            btnAgregar.Size = new Size(241, 57);
+            btnAgregar.Size = new Size(211, 43);
             btnAgregar.TabIndex = 30;
             btnAgregar.Text = "Agregar";
             btnAgregar.Click += btnAgregar_Click;
@@ -174,10 +168,9 @@
             // separador1
             // 
             separador1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            separador1.Location = new Point(17, 75);
-            separador1.Margin = new Padding(3, 4, 3, 4);
+            separador1.Location = new Point(15, 56);
             separador1.Name = "separador1";
-            separador1.Size = new Size(1139, 13);
+            separador1.Size = new Size(997, 10);
             separador1.TabIndex = 3;
             // 
             // lblInfoUsuario
@@ -185,9 +178,9 @@
             lblInfoUsuario.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblInfoUsuario.Font = new Font("Century Gothic", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblInfoUsuario.ForeColor = Color.DimGray;
-            lblInfoUsuario.Location = new Point(21, 17);
+            lblInfoUsuario.Location = new Point(18, 13);
             lblInfoUsuario.Name = "lblInfoUsuario";
-            lblInfoUsuario.Size = new Size(1128, 49);
+            lblInfoUsuario.Size = new Size(987, 37);
             lblInfoUsuario.TabIndex = 2;
             lblInfoUsuario.Text = "Selecciona la opción deseada";
             lblInfoUsuario.TextAlign = ContentAlignment.MiddleLeft;
@@ -208,9 +201,8 @@
             pnFondo.Controls.Add(pnlCambiante);
             pnFondo.Dock = DockStyle.Fill;
             pnFondo.Location = new Point(0, 0);
-            pnFondo.Margin = new Padding(3, 4, 3, 4);
             pnFondo.Name = "pnFondo";
-            pnFondo.Size = new Size(1174, 745);
+            pnFondo.Size = new Size(1027, 559);
             pnFondo.TabIndex = 31;
             // 
             // pnlCambiante
@@ -219,25 +211,23 @@
             pnlCambiante.BackColor = Color.White;
             pnlCambiante.CustomizableEdges = customizableEdges11;
             pnlCambiante.Font = new Font("Microsoft Sans Serif", 8.25F);
-            pnlCambiante.Location = new Point(0, 277);
-            pnlCambiante.Margin = new Padding(3, 4, 3, 4);
+            pnlCambiante.Location = new Point(0, 208);
             pnlCambiante.Name = "pnlCambiante";
             pnlCambiante.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            pnlCambiante.Size = new Size(1174, 455);
+            pnlCambiante.Size = new Size(1027, 341);
             pnlCambiante.TabIndex = 30;
             // 
             // frmDepartamentos
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoValidate = AutoValidate.EnablePreventFocusChange;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(1174, 745);
+            ClientSize = new Size(1027, 559);
             Controls.Add(lblTitulo);
             Controls.Add(pnlInfoUsuario);
             Controls.Add(pnFondo);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(3, 4, 3, 4);
             Name = "frmDepartamentos";
             Text = "frmRegistroU";
             pnlInfoUsuario.ResumeLayout(false);
