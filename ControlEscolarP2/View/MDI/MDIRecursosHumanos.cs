@@ -296,11 +296,11 @@ namespace RecursosHumanos.View
             {
             btnLisUsuarios.Enabled = true;
             }
-            if (permisosUsuario.Contains(28) || permisosUsuario.Contains(15)) // Agregar usuario y empleado
+            if (permisosUsuario.Contains(28) || permisosUsuario.Contains(35)) // Agregar usuario y empleado
             {
                 subRegistroPersonas.Enabled = true;
             }
-            if (permisosUsuario.Contains(16) || permisosUsuario.Contains(56)) // Editar usuario
+            if (permisosUsuario.Contains(16) || permisosUsuario.Contains(35)) // Editar usuario
             {
             btnActualizarUsuarios.Enabled = true;
             }
@@ -314,7 +314,7 @@ namespace RecursosHumanos.View
             {
             btnGestionRoles.Enabled = true;
             }
-            if (permisosUsuario.Contains(23) || permisosUsuario.Contains(30)) // ver permisos de rol
+            if (permisosUsuario.Contains(23) || permisosUsuario.Contains(35)) // ver permisos de rol
             {
                 btnCreacionRoles.Enabled = true;
 
@@ -331,7 +331,7 @@ namespace RecursosHumanos.View
             {
             btnListaEmpleados.Enabled = true;
             }
-            if (permisosUsuario.Contains(29) || permisosUsuario.Contains(56)) // Editar empleados
+            if (permisosUsuario.Contains(29) || permisosUsuario.Contains(35)) // Editar empleados
             {
             btnActualizarEmpleados.Enabled = true;
             }
@@ -341,15 +341,15 @@ namespace RecursosHumanos.View
             }
 
             // Contratos
-            if (permisosUsuario.Contains(31)) // Ver contratos
+            if (permisosUsuario.Contains(31) || permisosUsuario.Contains(35)) // Ver contratos
             {
             btnReportes.Enabled = true;
             }
-            if (permisosUsuario.Contains(32)) // Agregar contrato
+            if (permisosUsuario.Contains(32) || permisosUsuario.Contains(35)) // Agregar contrato
             {
             btnContratos.Enabled = true;
             }
-            if (permisosUsuario.Contains(33) || permisosUsuario.Contains(56)) // Editar contrato
+            if (permisosUsuario.Contains(33) || permisosUsuario.Contains(35)) // Editar contrato
             {
             btnListaContratos.Enabled = true;
             }
@@ -361,32 +361,31 @@ namespace RecursosHumanos.View
             }
 
             // Puestos
-            if (permisosUsuario.Contains(3)) // Ver puestos
+            if (permisosUsuario.Contains(3) || permisosUsuario.Contains(35)) // Ver puestos
             {
                 btnPuestos.Enabled = true;
 
             }
 
             // Departamentos
-            if (permisosUsuario.Contains(7)) // Ver departamentos
+            if (permisosUsuario.Contains(7) || permisosUsuario.Contains(35)) // Ver departamentos
             {
                 btnDepartamentos.Enabled = true;
             }
             
             // Asistencias
-            if (permisosUsuario.Contains(11)) // Gestionar asistencias
+            if (permisosUsuario.Contains(11) || permisosUsuario.Contains(35)) // Gestionar asistencias
             {
                 btnEntradas.Enabled = true;
             }
 
             // Contar días trabajados
-            if (permisosUsuario.Contains(13)) // Gestionar días trabajados
+            if (permisosUsuario.Contains(13) || permisosUsuario.Contains(35)) // Gestionar días trabajados
             {
                 btnContarDias.Enabled = true;
             }
 
         }
-
 
         private void ActualizarEstadisticas()
         {
