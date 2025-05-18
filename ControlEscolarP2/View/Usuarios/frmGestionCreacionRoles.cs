@@ -257,5 +257,11 @@ namespace RecursosHumanos.View
                 btnGuardar.Enabled = false;
             }
         }
+
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            PermisosController permisosController = new PermisosController();
+            permisosController.ExportarPermisosExcel();
+        }
     }
 }

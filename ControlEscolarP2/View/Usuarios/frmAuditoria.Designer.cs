@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges35 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges36 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges37 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges38 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -49,17 +49,15 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges23 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges24 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges27 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges28 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges29 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -68,6 +66,10 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges32 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges33 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges34 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges35 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges36 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             lblTitulo = new Label();
             pnlFondo = new Guna.UI2.WinForms.Guna2Panel();
             scAgregar = new SplitContainer();
@@ -119,6 +121,7 @@
             separador1 = new Guna.UI2.WinForms.Guna2Separator();
             lblBusquedaAuditoria = new Label();
             guna2AnimateWindow1 = new Guna.UI2.WinForms.Guna2AnimateWindow(components);
+            btnExcel = new Guna.UI2.WinForms.Guna2Button();
             pnlFondo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)scAgregar).BeginInit();
             scAgregar.Panel1.SuspendLayout();
@@ -145,11 +148,11 @@
             pnlFondo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlFondo.BackColor = Color.White;
             pnlFondo.Controls.Add(scAgregar);
-            pnlFondo.CustomizableEdges = customizableEdges35;
+            pnlFondo.CustomizableEdges = customizableEdges37;
             pnlFondo.Location = new Point(0, 62);
             pnlFondo.Margin = new Padding(3, 2, 3, 2);
             pnlFondo.Name = "pnlFondo";
-            pnlFondo.ShadowDecoration.CustomizableEdges = customizableEdges36;
+            pnlFondo.ShadowDecoration.CustomizableEdges = customizableEdges38;
             pnlFondo.Size = new Size(1652, 817);
             pnlFondo.TabIndex = 4;
             // 
@@ -191,6 +194,7 @@
             // 
             // scAgregar.Panel2
             // 
+            scAgregar.Panel2.Controls.Add(btnExcel);
             scAgregar.Panel2.Controls.Add(txtNomEquipoB);
             scAgregar.Panel2.Controls.Add(label3);
             scAgregar.Panel2.Controls.Add(txtIpB);
@@ -580,7 +584,7 @@
             // 
             txtNomEquipoB.Animated = true;
             txtNomEquipoB.BorderRadius = 5;
-            txtNomEquipoB.CustomizableEdges = customizableEdges19;
+            txtNomEquipoB.CustomizableEdges = customizableEdges21;
             txtNomEquipoB.DefaultText = "Ingresa el nombre de equipo";
             txtNomEquipoB.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtNomEquipoB.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -595,7 +599,7 @@
             txtNomEquipoB.Name = "txtNomEquipoB";
             txtNomEquipoB.PlaceholderText = "";
             txtNomEquipoB.SelectedText = "";
-            txtNomEquipoB.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            txtNomEquipoB.ShadowDecoration.CustomizableEdges = customizableEdges22;
             txtNomEquipoB.Size = new Size(192, 34);
             txtNomEquipoB.TabIndex = 101;
             // 
@@ -613,7 +617,7 @@
             // 
             txtIpB.Animated = true;
             txtIpB.BorderRadius = 5;
-            txtIpB.CustomizableEdges = customizableEdges21;
+            txtIpB.CustomizableEdges = customizableEdges23;
             txtIpB.DefaultText = "Ingresa IP de equipo";
             txtIpB.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtIpB.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -628,7 +632,7 @@
             txtIpB.Name = "txtIpB";
             txtIpB.PlaceholderText = "";
             txtIpB.SelectedText = "";
-            txtIpB.ShadowDecoration.CustomizableEdges = customizableEdges22;
+            txtIpB.ShadowDecoration.CustomizableEdges = customizableEdges24;
             txtIpB.Size = new Size(192, 34);
             txtIpB.TabIndex = 99;
             // 
@@ -645,7 +649,7 @@
             // dtpFechaFin
             // 
             dtpFechaFin.Checked = true;
-            dtpFechaFin.CustomizableEdges = customizableEdges23;
+            dtpFechaFin.CustomizableEdges = customizableEdges25;
             dtpFechaFin.FillColor = Color.White;
             dtpFechaFin.Font = new Font("Segoe UI", 9F);
             dtpFechaFin.Format = DateTimePickerFormat.Short;
@@ -654,7 +658,7 @@
             dtpFechaFin.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
             dtpFechaFin.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
             dtpFechaFin.Name = "dtpFechaFin";
-            dtpFechaFin.ShadowDecoration.CustomizableEdges = customizableEdges24;
+            dtpFechaFin.ShadowDecoration.CustomizableEdges = customizableEdges26;
             dtpFechaFin.Size = new Size(186, 34);
             dtpFechaFin.TabIndex = 97;
             dtpFechaFin.Value = new DateTime(2025, 3, 20, 17, 19, 3, 948);
@@ -729,7 +733,7 @@
             // 
             btnBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnBuscar.Animated = true;
-            btnBuscar.CustomizableEdges = customizableEdges25;
+            btnBuscar.CustomizableEdges = customizableEdges27;
             btnBuscar.DisabledState.BorderColor = Color.DarkGray;
             btnBuscar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnBuscar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -739,7 +743,7 @@
             btnBuscar.ForeColor = Color.White;
             btnBuscar.Location = new Point(993, 173);
             btnBuscar.Name = "btnBuscar";
-            btnBuscar.ShadowDecoration.CustomizableEdges = customizableEdges26;
+            btnBuscar.ShadowDecoration.CustomizableEdges = customizableEdges28;
             btnBuscar.Size = new Size(153, 43);
             btnBuscar.TabIndex = 56;
             btnBuscar.Text = "Buscar";
@@ -777,7 +781,7 @@
             // 
             txtUsuario.Animated = true;
             txtUsuario.BorderRadius = 5;
-            txtUsuario.CustomizableEdges = customizableEdges27;
+            txtUsuario.CustomizableEdges = customizableEdges29;
             txtUsuario.DefaultText = "Ingrese IP de usuario";
             txtUsuario.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtUsuario.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -792,14 +796,14 @@
             txtUsuario.Name = "txtUsuario";
             txtUsuario.PlaceholderText = "";
             txtUsuario.SelectedText = "";
-            txtUsuario.ShadowDecoration.CustomizableEdges = customizableEdges28;
+            txtUsuario.ShadowDecoration.CustomizableEdges = customizableEdges30;
             txtUsuario.Size = new Size(186, 34);
             txtUsuario.TabIndex = 51;
             // 
             // dtpFechaInicio
             // 
             dtpFechaInicio.Checked = true;
-            dtpFechaInicio.CustomizableEdges = customizableEdges29;
+            dtpFechaInicio.CustomizableEdges = customizableEdges31;
             dtpFechaInicio.FillColor = Color.White;
             dtpFechaInicio.Font = new Font("Segoe UI", 9F);
             dtpFechaInicio.Format = DateTimePickerFormat.Short;
@@ -808,7 +812,7 @@
             dtpFechaInicio.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
             dtpFechaInicio.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
             dtpFechaInicio.Name = "dtpFechaInicio";
-            dtpFechaInicio.ShadowDecoration.CustomizableEdges = customizableEdges30;
+            dtpFechaInicio.ShadowDecoration.CustomizableEdges = customizableEdges32;
             dtpFechaInicio.Size = new Size(186, 34);
             dtpFechaInicio.TabIndex = 48;
             dtpFechaInicio.Value = new DateTime(2025, 3, 20, 17, 19, 3, 948);
@@ -817,7 +821,7 @@
             // 
             cbxAccion.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             cbxAccion.BackColor = Color.Transparent;
-            cbxAccion.CustomizableEdges = customizableEdges31;
+            cbxAccion.CustomizableEdges = customizableEdges33;
             cbxAccion.DrawMode = DrawMode.OwnerDrawFixed;
             cbxAccion.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxAccion.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -828,7 +832,7 @@
             cbxAccion.Location = new Point(993, 112);
             cbxAccion.Margin = new Padding(3, 2, 3, 2);
             cbxAccion.Name = "cbxAccion";
-            cbxAccion.ShadowDecoration.CustomizableEdges = customizableEdges32;
+            cbxAccion.ShadowDecoration.CustomizableEdges = customizableEdges34;
             cbxAccion.Size = new Size(154, 36);
             cbxAccion.TabIndex = 47;
             // 
@@ -836,7 +840,7 @@
             // 
             cbxMovimiento.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             cbxMovimiento.BackColor = Color.Transparent;
-            cbxMovimiento.CustomizableEdges = customizableEdges33;
+            cbxMovimiento.CustomizableEdges = customizableEdges35;
             cbxMovimiento.DrawMode = DrawMode.OwnerDrawFixed;
             cbxMovimiento.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxMovimiento.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -847,7 +851,7 @@
             cbxMovimiento.Location = new Point(993, 64);
             cbxMovimiento.Margin = new Padding(3, 2, 3, 2);
             cbxMovimiento.Name = "cbxMovimiento";
-            cbxMovimiento.ShadowDecoration.CustomizableEdges = customizableEdges34;
+            cbxMovimiento.ShadowDecoration.CustomizableEdges = customizableEdges36;
             cbxMovimiento.Size = new Size(154, 36);
             cbxMovimiento.TabIndex = 46;
             // 
@@ -913,6 +917,26 @@
             lblBusquedaAuditoria.Text = "Busqueda de auditoria";
             lblBusquedaAuditoria.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // btnExcel
+            // 
+            btnExcel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnExcel.Animated = true;
+            btnExcel.CustomizableEdges = customizableEdges19;
+            btnExcel.DisabledState.BorderColor = Color.DarkGray;
+            btnExcel.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnExcel.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnExcel.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnExcel.FillColor = Color.DimGray;
+            btnExcel.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
+            btnExcel.ForeColor = Color.White;
+            btnExcel.Location = new Point(814, 173);
+            btnExcel.Name = "btnExcel";
+            btnExcel.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            btnExcel.Size = new Size(153, 43);
+            btnExcel.TabIndex = 102;
+            btnExcel.Text = "Exportar a Excel";
+            btnExcel.Click += btnExcel_Click;
+            // 
             // frmAuditoria
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -941,7 +965,6 @@
         private SplitContainer scAgregar;
         private Label lblBusquedaAuditoria;
         private Guna.UI2.WinForms.Guna2Separator separador1;
-        public static Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaInicio;
         private Guna.UI2.WinForms.Guna2ComboBox cbxAccion;
         private Guna.UI2.WinForms.Guna2ComboBox cbxMovimiento;
         private Label lblUsuario;
@@ -976,16 +999,18 @@
         private Guna.UI2.WinForms.Guna2Button btnGuardar;
         private Guna.UI2.WinForms.Guna2Button btnEditar;
         private Label lblEntidad;
+        private Guna.UI2.WinForms.Guna2Button btnExcel;
+        public static Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaInicio;
         public static Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaFin;
-        public static Label label1;
-        public static Label label3;
+        public Label label1;
+        public Label label3;
         public static Guna.UI2.WinForms.Guna2ComboBox cbxAccionUsuario;
-        public static Guna.UI2.WinForms.Guna2TextBox txtIdAuditoria;
-        public static Guna.UI2.WinForms.Guna2DataGridView dataGridAuditorias;
+        public Guna.UI2.WinForms.Guna2TextBox txtIdAuditoria;
+        public Guna.UI2.WinForms.Guna2DataGridView dataGridAuditorias;
         public static Guna.UI2.WinForms.Guna2ComboBox cbxEntidad;
         public static Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaInicio1;
         public static Guna.UI2.WinForms.Guna2AnimateWindow guna2AnimateWindow1;
-        public static Label lblFechaFinal;
+        public Label lblFechaFinal;
         public static Guna.UI2.WinForms.Guna2TextBox txtResponsable;
         public static Guna.UI2.WinForms.Guna2TextBox txtIp;
         public static Guna.UI2.WinForms.Guna2TextBox txtNomEquipo;

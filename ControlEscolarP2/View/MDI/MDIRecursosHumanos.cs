@@ -292,95 +292,95 @@ namespace RecursosHumanos.View
             }
 
             // Usuarios
-            if (permisosUsuario.Contains(22)) // Ver usuarios
+            if (permisosUsuario.Contains(14)) // Ver usuarios
             {
             btnLisUsuarios.Enabled = true;
             }
-            if (permisosUsuario.Contains(23) || permisosUsuario.Contains(36)) // Agregar usuario y empleado
+            if (permisosUsuario.Contains(28) || permisosUsuario.Contains(15)) // Agregar usuario y empleado
             {
                 subRegistroPersonas.Enabled = true;
             }
-            if (permisosUsuario.Contains(24) || permisosUsuario.Contains(56)) // Editar usuario
+            if (permisosUsuario.Contains(16) || permisosUsuario.Contains(56)) // Editar usuario
             {
             btnActualizarUsuarios.Enabled = true;
             }
-            if (permisosUsuario.Contains(25)) // Eliminar usuario
+            if (permisosUsuario.Contains(27)) // Eliminar usuario
             {
             btnEliminarUsuarios.Enabled = true;
             }
 
             // Roles
-            if (permisosUsuario.Contains(26)) // Ver roles
+            if (permisosUsuario.Contains(18)) // Ver roles
             {
             btnGestionRoles.Enabled = true;
             }
-            if (permisosUsuario.Contains(27) || permisosUsuario.Contains(30)) // ver permisos de rol
+            if (permisosUsuario.Contains(23) || permisosUsuario.Contains(30)) // ver permisos de rol
             {
                 btnCreacionRoles.Enabled = true;
 
             }
 
             // Permisos
-            if (permisosUsuario.Contains(30)) // Ver permisos
+            if (permisosUsuario.Contains(22)) // Ver permisos
             {
             btnCreacionRoles.Enabled = true;
             }
 
             // Empleados
-            if (permisosUsuario.Contains(35)) // Ver empleados
+            if (permisosUsuario.Contains(27)) // Ver empleados
             {
             btnListaEmpleados.Enabled = true;
             }
-            if (permisosUsuario.Contains(37) || permisosUsuario.Contains(56)) // Editar empleados
+            if (permisosUsuario.Contains(29) || permisosUsuario.Contains(56)) // Editar empleados
             {
             btnActualizarEmpleados.Enabled = true;
             }
-            if (permisosUsuario.Contains(38)) // Eliminar empleados
+            if (permisosUsuario.Contains(30)) // Eliminar empleados
             {
             btnEliminarEmpleados.Enabled = true;
             }
 
             // Contratos
-            if (permisosUsuario.Contains(39)) // Ver contratos
+            if (permisosUsuario.Contains(31)) // Ver contratos
             {
             btnReportes.Enabled = true;
             }
-            if (permisosUsuario.Contains(40)) // Agregar contrato
+            if (permisosUsuario.Contains(32)) // Agregar contrato
             {
             btnContratos.Enabled = true;
             }
-            if (permisosUsuario.Contains(41) || permisosUsuario.Contains(56)) // Editar contrato
+            if (permisosUsuario.Contains(33) || permisosUsuario.Contains(56)) // Editar contrato
             {
             btnListaContratos.Enabled = true;
             }
 
             // Bitácora 
-            if (permisosUsuario.Contains(43)) // Ver bitácora
+            if (permisosUsuario.Contains(1)) // Ver bitácora
             {
             btnRegistroAuditorias.Enabled = true;
             }
 
             // Puestos
-            if (permisosUsuario.Contains(45)) // Ver puestos
+            if (permisosUsuario.Contains(3)) // Ver puestos
             {
                 btnPuestos.Enabled = true;
 
             }
 
             // Departamentos
-            if (permisosUsuario.Contains(49)) // Ver departamentos
+            if (permisosUsuario.Contains(7)) // Ver departamentos
             {
                 btnDepartamentos.Enabled = true;
             }
             
             // Asistencias
-            if (permisosUsuario.Contains(53)) // Gestionar asistencias
+            if (permisosUsuario.Contains(11)) // Gestionar asistencias
             {
                 btnEntradas.Enabled = true;
             }
 
             // Contar días trabajados
-            if (permisosUsuario.Contains(55)) // Gestionar días trabajados
+            if (permisosUsuario.Contains(13)) // Gestionar días trabajados
             {
                 btnContarDias.Enabled = true;
             }

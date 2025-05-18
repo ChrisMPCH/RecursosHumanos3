@@ -205,5 +205,51 @@ namespace RecursosHumanos.Controller
                 return new List<Rol>();
             }
         }
+
+        public bool ExportarRolesExcel()
+        {
+            try
+            {
+                var roles = ObtenerRoles();
+
+                if (roles == null || roles.Count == 0)
+                {
+                    _logger.Warn("No se encontraron roles para exportar.");
+                    MessageBox.Show("No se encontraron roles para exportar.", "Exportación Incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+
+                // Nombre y ruta del archivo Excel
+                var nombreArchivo = $"Roles_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                var rutaArchivo = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "exportados", nombreArchivo);
+
+                var carpetaDestino = Path.GetDirectoryName(rutaArchivo);
+                if (!Directory.Exists(carpetaDestino))
+                    Directory.CreateDirectory(carpetaDestino);
+
+                // Exportación genérica
+                bool resultado = ExcelExporter.ExportToExcel(roles, rutaArchivo, "Roles");
+
+                if (resultado)
+                {
+                    _logger.Info($"Archivo exportado correctamente a {rutaArchivo}");
+                    MessageBox.Show("La exportación a Excel se completó exitosamente.", "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return true;
+                }
+                else
+                {
+                    _logger.Warn("No se pudo exportar el archivo.");
+                    MessageBox.Show("No se pudo exportar el archivo.", "Exportación Fallida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al exportar roles a Excel.");
+                MessageBox.Show("Ocurrió un error inesperado durante la exportación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
     }
 }

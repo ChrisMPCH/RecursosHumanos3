@@ -264,7 +264,7 @@ namespace RecursosHumanos.View
 
         private void btnGuardarEdicion_Click(object sender, EventArgs e)
         {
-            if(EditarRol())
+            if (EditarRol())
             {
                 RestablecerTodo();
                 MDIRecursosHumanos.VerificarPermisos();
@@ -273,7 +273,7 @@ namespace RecursosHumanos.View
 
         private void btnCancelar_Click_1(object sender, EventArgs e)
         {
-            
+
             RestablecerTodo();
         }
 
@@ -493,6 +493,12 @@ namespace RecursosHumanos.View
             {
                 frmGestionRoles.btnEliminar.Enabled = false;
             }
+        }
+
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            RolesController controller = new RolesController();
+            controller.ExportarRolesExcel();
         }
     }
 }

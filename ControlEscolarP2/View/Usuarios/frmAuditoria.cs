@@ -347,5 +347,26 @@ namespace RecursosHumanos.View.Usuarios
                 }
             }
         }
+
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            AuditoriasController controller = new AuditoriasController();
+
+            int? idTipo = (int?)cbxMovimiento.SelectedValue != -1 ? (int?)cbxMovimiento.SelectedValue : null;
+            int? idAccion = (int?)cbxAccion.SelectedValue != -1 ? (int?)cbxAccion.SelectedValue : null;
+
+            DateTime? fechaInicio = dtpFechaInicio.Checked ? dtpFechaInicio.Value : null;
+            DateTime? fechaFin = dtpFechaFin.Checked ? dtpFechaFin.Value : null;
+
+            string? ipEquipo = !string.IsNullOrWhiteSpace(txtIpB.Text) && txtIpB.Text != "Ingresa IP de equipo" ? txtIpB.Text : null;
+            string? nombreEquipo = !string.IsNullOrWhiteSpace(txtNomEquipoB.Text) && txtNomEquipoB.Text != "Ingresa nombre de equipo" ? txtNomEquipoB.Text : null;
+
+            int? idUsuario = !string.IsNullOrWhiteSpace(txtUsuario.Text) && txtUsuario.Text != "Ingrese nombre de usuario" &&
+                int.TryParse(txtUsuario.Text, out int result) ? (int?)result : null;
+
+            int? estatus = 1; // Valor fijo o podría tomarse de otro control
+
+            controller.ExportarAuditoriasExcel(idTipo, idAccion, fechaInicio, fechaFin, ipEquipo, nombreEquipo, idUsuario, estatus);
+        }
     }
 }

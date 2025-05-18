@@ -89,7 +89,7 @@ namespace RecursosHumanos.View
             cargarUsuariosTabla();
         }
 
-        private void cargarUsuariosTabla() 
+        private void cargarUsuariosTabla()
         {
             try
             {
@@ -112,6 +112,14 @@ namespace RecursosHumanos.View
             {
                 MessageBox.Show("Error al cargar usuarios: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            UsuariosController controller = new UsuariosController();
+
+            // Exportar a Excel
+            controller.ExportarUsuariosExcel(cbRoles.SelectedIndex);
         }
     }
 }

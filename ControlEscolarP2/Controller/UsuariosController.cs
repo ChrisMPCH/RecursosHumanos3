@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using RecursosHumanos.Utilities;
 using RecursosHumanos.View;
+using System.IO.Packaging;
+using System.IO;
 
 namespace RecursosHumanos.Controller
 {
@@ -153,6 +155,49 @@ namespace RecursosHumanos.Controller
                 return null;
             }
         }
+
+        public bool ExportarUsuariosExcel(int rol)
+        {
+            try
+            {
+                var usuarios = ObtenerUsuarios();
+
+                // Filtro dinámico en función de los parámetros que llegan de la vista
+                Func< Usuario, bool> filtro = e => e.Id_Rol >= rol;
+
+                var nombre = $"Estudiantes_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+
+                // Ruta
+                string rutaArchivo = Path.Combine(Environment.GetFolderPath(
+                    Environment.SpecialFolder.Desktop), "exportados", nombre);
+
+                if (!Directory.Exists(Path.GetDirectoryName(rutaArchivo)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(rutaArchivo));
+
+                // Exportar
+                bool resultado = ExcelExporter.ExportToExcel(usuarios, rutaArchivo, "Usuarios", filtro);
+
+                if (resultado)
+                {
+                    _logger.Info($"Archivo exportado correctamente a {rutaArchivo}"); 
+                    MessageBox.Show("La exportación a Excel se completó exitosamente.", "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return true;
+                }
+                else
+                {
+                    _logger.Warn("No se pudo exportar el archivo.");
+                    MessageBox.Show("La exportación a Excel a fallado.", "Exportación incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al exportar usuarios a Excel");
+                return false;
+
+            }
+        }
+
 
     }
 }

@@ -325,5 +325,65 @@ namespace RecursosHumanos.Controller
                 return (string.Empty, string.Empty);
             }
         }
+
+        public bool ExportarAuditoriasExcel(int? idTipo = null, int? idAccion = null,
+                                     DateTime? fechaInicio = null, DateTime? fechaFin = null,
+                                     string ipEquipo = null, string nombreEquipo = null,
+                                     int? idUsuario = null, int? estatus = null)
+        {
+            try
+            {
+                var auditorias = ObtenerAuditorias(idTipo, idAccion, fechaInicio, fechaFin, ipEquipo, nombreEquipo, idUsuario, estatus);
+
+                // Validación
+                if (auditorias == null || auditorias.Count == 0)
+                {
+                    _logger.Warn("No se encontraron auditorías para exportar.");
+                    MessageBox.Show("No se encontraron auditorías para exportar.", "Exportación Incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+
+                // Filtro adicional si se quiere refinar más aún (ejemplo: exportar solo auditorías activas)
+                Func<Auditoria, bool> filtro = a =>
+                    (!idTipo.HasValue || a.Id_Tipo == idTipo.Value) &&
+                    (!idAccion.HasValue || a.Id_Accion == idAccion.Value) &&
+                    (!fechaInicio.HasValue || a.Fecha_Movimiento >= fechaInicio.Value) &&
+                    (!fechaFin.HasValue || a.Fecha_Movimiento <= fechaFin.Value) &&
+                    (string.IsNullOrEmpty(ipEquipo) || a.Ip_Equipo == ipEquipo) &&
+                    (string.IsNullOrEmpty(nombreEquipo) || a.Nombre_Equipo == nombreEquipo) &&
+                    (!idUsuario.HasValue || a.Id_Usuario == idUsuario.Value) &&
+                    (!estatus.HasValue || a.Estatus == estatus.Value);
+
+                // Ruta del archivo
+                var nombreArchivo = $"Auditorias_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                var rutaArchivo = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "exportados", nombreArchivo);
+
+                var carpetaDestino = Path.GetDirectoryName(rutaArchivo);
+                if (!Directory.Exists(carpetaDestino))
+                    Directory.CreateDirectory(carpetaDestino);
+
+                // Exportar
+                bool resultado = ExcelExporter.ExportToExcel(auditorias, rutaArchivo, "Auditorias", filtro);
+
+                if (resultado)
+                {
+                    _logger.Info($"Archivo exportado correctamente a {rutaArchivo}");
+                    MessageBox.Show("La exportación a Excel se completó exitosamente.", "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return true;
+                }
+                else
+                {
+                    _logger.Warn("No se pudo exportar el archivo.");
+                    MessageBox.Show("No se encontraron auditorías para exportar.", "Exportación Incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al exportar auditorías a Excel");
+                MessageBox.Show("Ocurrió un error inesperado durante la exportación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
     }
 }
