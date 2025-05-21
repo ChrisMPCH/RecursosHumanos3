@@ -148,5 +148,7 @@ namespace RecursosHumanos.View
             dtpFecha.Checked = false; // Si usas Checked para habilitar o no la fecha
             CargarAsistencias();
         }
+
+      
     }
 }

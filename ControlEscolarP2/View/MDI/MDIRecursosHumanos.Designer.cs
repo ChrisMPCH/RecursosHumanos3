@@ -1,13 +1,4 @@
-﻿
-
-
-
-
-
-
-
-
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 
 namespace RecursosHumanos.View
 {
@@ -56,6 +47,8 @@ namespace RecursosHumanos.View
             btnRegistroAuditorias = new Button();
             btnFrida = new Button();
             subNatalyPanel = new Panel();
+            btnListaAusencias = new Button();
+            btnListaAsistencias = new Button();
             btnReportes = new Button();
             btnEntradas = new Button();
             btnNataly = new Button();
@@ -180,7 +173,7 @@ namespace RecursosHumanos.View
             pnlSubRoles.Controls.Add(btnCreacionRoles);
             pnlSubRoles.Controls.Add(btnGestionRoles);
             pnlSubRoles.Dock = DockStyle.Top;
-            pnlSubRoles.Location = new Point(0, 886);
+            pnlSubRoles.Location = new Point(0, 965);
             pnlSubRoles.Margin = new Padding(3, 2, 3, 2);
             pnlSubRoles.Name = "pnlSubRoles";
             pnlSubRoles.Size = new Size(261, 87);
@@ -231,7 +224,7 @@ namespace RecursosHumanos.View
             btnRoles.Font = new Font("Century Gothic", 12F);
             btnRoles.ForeColor = Color.Black;
             btnRoles.ImageAlign = ContentAlignment.MiddleLeft;
-            btnRoles.Location = new Point(0, 841);
+            btnRoles.Location = new Point(0, 920);
             btnRoles.Margin = new Padding(3, 2, 3, 2);
             btnRoles.Name = "btnRoles";
             btnRoles.Padding = new Padding(10, 0, 0, 0);
@@ -250,7 +243,7 @@ namespace RecursosHumanos.View
             btmSalir.FlatStyle = FlatStyle.Flat;
             btmSalir.Font = new Font("Century Gothic", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btmSalir.ForeColor = Color.Black;
-            btmSalir.Location = new Point(0, 973);
+            btmSalir.Location = new Point(0, 1052);
             btmSalir.Margin = new Padding(3, 2, 3, 2);
             btmSalir.Name = "btmSalir";
             btmSalir.Padding = new Padding(10, 0, 0, 0);
@@ -267,7 +260,7 @@ namespace RecursosHumanos.View
             subFridaPanel.Controls.Add(btnContarDias);
             subFridaPanel.Controls.Add(btnRegistroAuditorias);
             subFridaPanel.Dock = DockStyle.Top;
-            subFridaPanel.Location = new Point(0, 758);
+            subFridaPanel.Location = new Point(0, 837);
             subFridaPanel.Margin = new Padding(3, 2, 3, 2);
             subFridaPanel.Name = "subFridaPanel";
             subFridaPanel.Size = new Size(261, 83);
@@ -318,7 +311,7 @@ namespace RecursosHumanos.View
             btnFrida.Font = new Font("Century Gothic", 12F);
             btnFrida.ForeColor = Color.Black;
             btnFrida.ImageAlign = ContentAlignment.MiddleLeft;
-            btnFrida.Location = new Point(0, 713);
+            btnFrida.Location = new Point(0, 792);
             btnFrida.Margin = new Padding(3, 2, 3, 2);
             btnFrida.Name = "btnFrida";
             btnFrida.Padding = new Padding(10, 0, 0, 0);
@@ -332,14 +325,52 @@ namespace RecursosHumanos.View
             // subNatalyPanel
             // 
             subNatalyPanel.BackColor = Color.FromArgb(249, 250, 251, 255);
+            subNatalyPanel.Controls.Add(btnListaAusencias);
+            subNatalyPanel.Controls.Add(btnListaAsistencias);
             subNatalyPanel.Controls.Add(btnReportes);
             subNatalyPanel.Controls.Add(btnEntradas);
             subNatalyPanel.Dock = DockStyle.Top;
             subNatalyPanel.Location = new Point(0, 631);
             subNatalyPanel.Margin = new Padding(3, 2, 3, 2);
             subNatalyPanel.Name = "subNatalyPanel";
-            subNatalyPanel.Size = new Size(261, 82);
+            subNatalyPanel.Size = new Size(261, 161);
             subNatalyPanel.TabIndex = 5;
+            // 
+            // btnListaAusencias
+            // 
+            btnListaAusencias.Dock = DockStyle.Top;
+            btnListaAusencias.Enabled = false;
+            btnListaAusencias.FlatAppearance.BorderSize = 0;
+            btnListaAusencias.FlatStyle = FlatStyle.Flat;
+            btnListaAusencias.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnListaAusencias.ForeColor = Color.Black;
+            btnListaAusencias.Location = new Point(0, 120);
+            btnListaAusencias.Name = "btnListaAusencias";
+            btnListaAusencias.Padding = new Padding(35, 0, 0, 0);
+            btnListaAusencias.Size = new Size(261, 40);
+            btnListaAusencias.TabIndex = 5;
+            btnListaAusencias.Text = "Lista de Ausencias";
+            btnListaAusencias.TextAlign = ContentAlignment.MiddleLeft;
+            btnListaAusencias.UseVisualStyleBackColor = true;
+            btnListaAusencias.Click += btnListaAusencias_Click;
+            // 
+            // btnListaAsistencias
+            // 
+            btnListaAsistencias.Dock = DockStyle.Top;
+            btnListaAsistencias.Enabled = false;
+            btnListaAsistencias.FlatAppearance.BorderSize = 0;
+            btnListaAsistencias.FlatStyle = FlatStyle.Flat;
+            btnListaAsistencias.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            btnListaAsistencias.ForeColor = Color.Black;
+            btnListaAsistencias.Location = new Point(0, 80);
+            btnListaAsistencias.Name = "btnListaAsistencias";
+            btnListaAsistencias.Padding = new Padding(35, 0, 0, 0);
+            btnListaAsistencias.Size = new Size(261, 40);
+            btnListaAsistencias.TabIndex = 4;
+            btnListaAsistencias.Text = "Lista de Asistencias";
+            btnListaAsistencias.TextAlign = ContentAlignment.MiddleLeft;
+            btnListaAsistencias.UseVisualStyleBackColor = true;
+            btnListaAsistencias.Click += btnListaAsistencias_Click;
             // 
             // btnReportes
             // 
@@ -1293,15 +1324,17 @@ namespace RecursosHumanos.View
         private Guna.UI2.WinForms.Guna2HtmlLabel lblCaracteristicas;
         private Label lblCaracteristicas2;
         private PictureBox pictureBox3;
-        public static Guna.UI2.WinForms.Guna2GradientPanel panelChildForm;
         private Label lblHoraActual;
         private Label lblEmpleadosActNumero;
-        public static Label lblTempo1;
-        public static Label lblAccion1;
-        public static Guna.UI2.WinForms.Guna2HtmlLabel lblUsuario1;
         private Panel panelSideMenu;
         private Panel panelLogo;
-        public static Guna.UI2.WinForms.Guna2Separator Separador2;
+        public static Button btnListaAusencias;
+        public static Button btnListaAsistencias;
+        public Guna.UI2.WinForms.Guna2GradientPanel panelChildForm;
+        public Label lblTempo1;
+        public Label lblAccion1;
+        public Guna.UI2.WinForms.Guna2HtmlLabel lblUsuario1;
+        public Guna.UI2.WinForms.Guna2Separator Separador2;
         public static Button btnContarDias;
         public static Button btnRegistroAuditorias;
         public static Button btnReportes;

@@ -69,7 +69,7 @@ namespace RecursosHumanos.View
                 subMenu.Visible = false; // Si ya está visible, lo ocultamos
             }
         }
-        
+
         // Función para esconder un submenú dependiendo de su estado actual
         public static void showNoSubMenu(Panel subMenu)
         {
@@ -182,6 +182,16 @@ namespace RecursosHumanos.View
             abrirChildFormMDI(fmrReporte);
         }
 
+        private void btnListaAsistencias_Click(object sender, EventArgs e)
+        {
+            Form fmrListaAsistencia = new frmListaAsistencias();
+            abrirChildFormMDI(fmrListaAsistencia);
+        }
+
+        private void btnListaAusencias_Click(object sender, EventArgs e)
+        {
+
+        }
         private void btnEntradas_Click(object sender, EventArgs e)
         {
             Form frmEntrada = new frmEntrada();
@@ -294,7 +304,7 @@ namespace RecursosHumanos.View
             // Usuarios
             if (permisosUsuario.Contains(14)) // Ver usuarios
             {
-            btnLisUsuarios.Enabled = true;
+                btnLisUsuarios.Enabled = true;
             }
             if (permisosUsuario.Contains(28) || permisosUsuario.Contains(35)) // Agregar usuario y empleado
             {
@@ -302,17 +312,17 @@ namespace RecursosHumanos.View
             }
             if (permisosUsuario.Contains(16) || permisosUsuario.Contains(35)) // Editar usuario
             {
-            btnActualizarUsuarios.Enabled = true;
+                btnActualizarUsuarios.Enabled = true;
             }
             if (permisosUsuario.Contains(27)) // Eliminar usuario
             {
-            btnEliminarUsuarios.Enabled = true;
+                btnEliminarUsuarios.Enabled = true;
             }
 
             // Roles
             if (permisosUsuario.Contains(18)) // Ver roles
             {
-            btnGestionRoles.Enabled = true;
+                btnGestionRoles.Enabled = true;
             }
             if (permisosUsuario.Contains(23) || permisosUsuario.Contains(35)) // ver permisos de rol
             {
@@ -320,44 +330,55 @@ namespace RecursosHumanos.View
 
             }
 
+            // Ausencias y Asistencias
+            if (permisosUsuario.Contains(36)) // Ver 
+            {
+                btnListaAsistencias.Enabled = true;
+            }
+            if (permisosUsuario.Contains(37)) // ver 
+            {
+                btnListaAusencias.Enabled = true;
+            }
+
+
             // Permisos
             if (permisosUsuario.Contains(22)) // Ver permisos
             {
-            btnCreacionRoles.Enabled = true;
+                btnCreacionRoles.Enabled = true;
             }
 
             // Empleados
             if (permisosUsuario.Contains(27)) // Ver empleados
             {
-            btnListaEmpleados.Enabled = true;
+                btnListaEmpleados.Enabled = true;
             }
             if (permisosUsuario.Contains(29) || permisosUsuario.Contains(35)) // Editar empleados
             {
-            btnActualizarEmpleados.Enabled = true;
+                btnActualizarEmpleados.Enabled = true;
             }
             if (permisosUsuario.Contains(30)) // Eliminar empleados
             {
-            btnEliminarEmpleados.Enabled = true;
+                btnEliminarEmpleados.Enabled = true;
             }
 
             // Contratos
             if (permisosUsuario.Contains(31) || permisosUsuario.Contains(35)) // Ver contratos
             {
-            btnReportes.Enabled = true;
+                btnReportes.Enabled = true;
             }
             if (permisosUsuario.Contains(32) || permisosUsuario.Contains(35)) // Agregar contrato
             {
-            btnContratos.Enabled = true;
+                btnContratos.Enabled = true;
             }
             if (permisosUsuario.Contains(33) || permisosUsuario.Contains(35)) // Editar contrato
             {
-            btnListaContratos.Enabled = true;
+                btnListaContratos.Enabled = true;
             }
 
             // Bitácora 
             if (permisosUsuario.Contains(1)) // Ver bitácora
             {
-            btnRegistroAuditorias.Enabled = true;
+                btnRegistroAuditorias.Enabled = true;
             }
 
             // Puestos
@@ -372,7 +393,7 @@ namespace RecursosHumanos.View
             {
                 btnDepartamentos.Enabled = true;
             }
-            
+
             // Asistencias
             if (permisosUsuario.Contains(11) || permisosUsuario.Contains(35)) // Gestionar asistencias
             {
@@ -398,7 +419,7 @@ namespace RecursosHumanos.View
 
                 // Porcentaje de asistencias hoy (ejemplo, necesitarás un método similar)
                 // Porcentaje de asistencias hoy
-               // AsistenciaController asistenciaController = new AsistenciaController();
+                // AsistenciaController asistenciaController = new AsistenciaController();
                 //double porcentajeAsistenciasHoy = asistenciaController.ObtenerPorcentajeAsistenciasHoy();
                 //lblAsistenciaNumero.Text = $"{porcentajeAsistenciasHoy:F0}%";
                 // Porcentaje de cumpleaños (ejemplo, necesitarás un método similar)
@@ -473,5 +494,7 @@ namespace RecursosHumanos.View
             else
                 return $"Hace {(int)diferencia.TotalDays} días";
         }
+
+        
     }
 }
