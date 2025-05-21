@@ -11,5 +11,12 @@
         public int HorasExtra { get; set; }
         public int IdEmpleado { get; set; }
         public short Estatus { get; set; }
+
+        // Asociación con el empleado
+        public Empleado DatosEmpleado { get; set; }
+
+        public string Matricula { get; set; }
+        public string NombreEmpleado { get; set; }
     }
 }
+

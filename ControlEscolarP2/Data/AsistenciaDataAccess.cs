@@ -2,6 +2,7 @@
 using NLog;
 using Npgsql;
 using RecursosHumanos.Data;
+using RecursosHumanos.Models;
 using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.DataAccess
@@ -353,5 +354,51 @@ namespace RecursosHumanos.DataAccess
                 _dbAccess.Disconnect();
             }
         }
+        public List<Asistencia> ObtenerAsistencias()
+        {
+            List<Asistencia> lista = new List<Asistencia>();
+
+            string query = @"
+        SELECT a.id_asistencia, a.fecha_asistencia, a.hora_entrada, a.hora_salida,
+               e.matricula,
+               p.nombre || ' ' || p.ap_paterno || ' ' || p.ap_materno AS nombre_empleado
+        FROM human_resours.asistencia a
+        INNER JOIN human_resours.empleado e ON a.id_empleado = e.id_empleado
+        INNER JOIN human_resours.persona p ON e.id_persona = p.id_persona
+        WHERE a.estatus = 1
+        ORDER BY a.fecha_asistencia DESC;";
+
+            try
+            {
+                _dbAccess.Connect();
+
+                DataTable tabla = _dbAccess.ExecuteQuery_Reader(query);
+
+                foreach (DataRow row in tabla.Rows)
+                {
+                    lista.Add(new Asistencia
+                    {
+                        IdAsistencia = Convert.ToInt32(row["id_asistencia"]),
+                        FechaAsistencia = Convert.ToDateTime(row["fecha_asistencia"]),
+                        HoraEntrada = (TimeSpan)row["hora_entrada"],
+                        HoraSalida = row["hora_salida"] == DBNull.Value ? (TimeSpan?)null : (TimeSpan)row["hora_salida"],
+                        Matricula = row["matricula"].ToString(),
+                        NombreEmpleado = row["nombre_empleado"].ToString()
+                    });
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener asistencias con datos del empleado");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
+
     }
 }

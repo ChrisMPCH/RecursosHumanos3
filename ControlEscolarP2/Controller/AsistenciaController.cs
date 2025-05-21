@@ -190,5 +190,19 @@ namespace RecursosHumanos.Controllers
                 throw new ApplicationException("Hubo un error al obtener las asistencias completas. Por favor intente nuevamente más tarde.", ex);
             }
         }
+
+        public List<Asistencia> ObtenerAsistenciasConEmpleado()
+        {
+            try
+            {
+                return _asistenciaDataAccess.ObtenerAsistencias();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener asistencias con datos del empleado");
+                throw;
+            }
+        }
+
     }
 }
