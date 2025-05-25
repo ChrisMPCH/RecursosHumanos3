@@ -216,6 +216,14 @@ namespace RecursosHumanos.View
             CargarEmpleadosEnTabla(); // Recargamos todos los empleados
         }
 
-        
+
+
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            EmpleadosController controller = new EmpleadosController();
+
+            // Exportar a Excel
+            controller.ExportarEmpleadosExcel();
+        }
     }
 }

@@ -159,5 +159,49 @@ namespace RecursosHumanos.Controller
                 throw;
             }
         }
+
+        public bool ExportarEmpleadosExcel()
+        {
+            try
+            {
+                // Obtener la lista de empleados (ajusta este método si es necesario)
+                var empleados = ObtenerEmpleados();
+
+                var nombre = $"Empleados_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+
+                // Ruta del archivo
+                string rutaArchivo = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                    "exportados",
+                    nombre
+                );
+
+                // Crear directorio si no existe
+                if (!Directory.Exists(Path.GetDirectoryName(rutaArchivo)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(rutaArchivo));
+
+                // Exportar sin filtro
+                bool resultado = ExcelExporter.ExportToExcel(empleados, rutaArchivo, "Empleados");
+
+                if (resultado)
+                {
+                    _logger.Info($"Archivo exportado correctamente a {rutaArchivo}");
+                    MessageBox.Show("La exportación a Excel se completó exitosamente.","Exportación Completada",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    return true;
+                }
+                else
+                {
+                    _logger.Warn("No se pudo exportar el archivo.");
+                    MessageBox.Show("La exportación a Excel ha fallado.","Exportación incompleta",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al exportar empleados a Excel");
+                return false;
+            }
+        }
+
     }
 }

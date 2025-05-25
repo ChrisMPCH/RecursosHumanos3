@@ -165,7 +165,7 @@ namespace RecursosHumanos.Controller
                 // Filtro dinámico en función de los parámetros que llegan de la vista
                 Func< Usuario, bool> filtro = e => e.Id_Rol >= rol;
 
-                var nombre = $"Estudiantes_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                var nombre = $"Usuarios_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
 
                 // Ruta
                 string rutaArchivo = Path.Combine(Environment.GetFolderPath(

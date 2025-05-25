@@ -41,14 +41,16 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             lblTitulo = new Label();
             separador1 = new Guna.UI2.WinForms.Guna2Separator();
             lblFechaNacimiento = new Label();
@@ -67,6 +69,7 @@
             lblEstatus = new Label();
             Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             lblInfo = new Label();
+            btnExcel = new Guna.UI2.WinForms.Guna2Button();
             pnlTabla.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEmpleados).BeginInit();
             pnlInfoUsuario.SuspendLayout();
@@ -165,7 +168,7 @@
             btnBuscar.FillColor = Color.DimGray;
             btnBuscar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnBuscar.ForeColor = Color.White;
-            btnBuscar.Location = new Point(789, 42);
+            btnBuscar.Location = new Point(678, 42);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnBuscar.Size = new Size(121, 40);
@@ -252,6 +255,7 @@
             // 
             pnlInfoUsuario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlInfoUsuario.BackColor = Color.White;
+            pnlInfoUsuario.Controls.Add(btnExcel);
             pnlInfoUsuario.Controls.Add(txtNombre);
             pnlInfoUsuario.Controls.Add(btnLimpiar);
             pnlInfoUsuario.Controls.Add(lblNombre);
@@ -267,11 +271,11 @@
             pnlInfoUsuario.Controls.Add(dtpFechaIngreso);
             pnlInfoUsuario.Controls.Add(lblFechaNacimiento);
             pnlInfoUsuario.Controls.Add(separador1);
-            pnlInfoUsuario.CustomizableEdges = customizableEdges17;
+            pnlInfoUsuario.CustomizableEdges = customizableEdges19;
             pnlInfoUsuario.Font = new Font("Microsoft Sans Serif", 8.25F);
             pnlInfoUsuario.Location = new Point(0, 54);
             pnlInfoUsuario.Name = "pnlInfoUsuario";
-            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges20;
             pnlInfoUsuario.Size = new Size(1011, 749);
             pnlInfoUsuario.TabIndex = 27;
             // 
@@ -279,7 +283,7 @@
             // 
             txtNombre.Animated = true;
             txtNombre.BorderRadius = 5;
-            txtNombre.CustomizableEdges = customizableEdges11;
+            txtNombre.CustomizableEdges = customizableEdges13;
             txtNombre.DefaultText = "";
             txtNombre.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtNombre.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -294,7 +298,7 @@
             txtNombre.Name = "txtNombre";
             txtNombre.PlaceholderText = "";
             txtNombre.SelectedText = "";
-            txtNombre.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            txtNombre.ShadowDecoration.CustomizableEdges = customizableEdges14;
             txtNombre.Size = new Size(170, 34);
             txtNombre.TabIndex = 62;
             // 
@@ -302,7 +306,7 @@
             // 
             btnLimpiar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnLimpiar.Animated = true;
-            btnLimpiar.CustomizableEdges = customizableEdges13;
+            btnLimpiar.CustomizableEdges = customizableEdges15;
             btnLimpiar.DisabledState.BorderColor = Color.DarkGray;
             btnLimpiar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnLimpiar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -310,9 +314,9 @@
             btnLimpiar.FillColor = Color.DimGray;
             btnLimpiar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnLimpiar.ForeColor = Color.White;
-            btnLimpiar.Location = new Point(789, 88);
+            btnLimpiar.Location = new Point(678, 88);
             btnLimpiar.Name = "btnLimpiar";
-            btnLimpiar.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            btnLimpiar.ShadowDecoration.CustomizableEdges = customizableEdges16;
             btnLimpiar.Size = new Size(121, 40);
             btnLimpiar.TabIndex = 61;
             btnLimpiar.Text = "Limpiar";
@@ -333,7 +337,7 @@
             // 
             cmbEstatus.BackColor = Color.Transparent;
             cmbEstatus.BorderRadius = 5;
-            cmbEstatus.CustomizableEdges = customizableEdges15;
+            cmbEstatus.CustomizableEdges = customizableEdges17;
             cmbEstatus.DrawMode = DrawMode.OwnerDrawFixed;
             cmbEstatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbEstatus.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -343,7 +347,7 @@
             cmbEstatus.ItemHeight = 30;
             cmbEstatus.Location = new Point(466, 46);
             cmbEstatus.Name = "cmbEstatus";
-            cmbEstatus.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            cmbEstatus.ShadowDecoration.CustomizableEdges = customizableEdges18;
             cmbEstatus.Size = new Size(179, 36);
             cmbEstatus.TabIndex = 57;
             // 
@@ -377,6 +381,26 @@
             lblInfo.TabIndex = 54;
             lblInfo.Text = "Filtros";
             lblInfo.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // btnExcel
+            // 
+            btnExcel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnExcel.Animated = true;
+            btnExcel.CustomizableEdges = customizableEdges11;
+            btnExcel.DisabledState.BorderColor = Color.DarkGray;
+            btnExcel.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnExcel.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnExcel.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnExcel.FillColor = Color.DimGray;
+            btnExcel.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
+            btnExcel.ForeColor = Color.White;
+            btnExcel.Location = new Point(821, 65);
+            btnExcel.Name = "btnExcel";
+            btnExcel.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            btnExcel.Size = new Size(162, 45);
+            btnExcel.TabIndex = 63;
+            btnExcel.Text = "Exportar a Excel";
+            btnExcel.Click += btnExcel_Click;
             // 
             // frmListaEmpleados
             // 
@@ -414,5 +438,6 @@
         private Guna.UI2.WinForms.Guna2DataGridView dgvEmpleados;
         private Label lblNombre;
         public Guna.UI2.WinForms.Guna2TextBox txtNombre;
+        private Guna.UI2.WinForms.Guna2Button btnExcel;
     }
 }
