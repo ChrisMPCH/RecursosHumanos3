@@ -33,6 +33,8 @@ namespace RecursosHumanos.View
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             separador1 = new Guna.UI2.WinForms.Guna2Separator();
@@ -41,6 +43,7 @@ namespace RecursosHumanos.View
             lblInfo = new Label();
             dgvPuestos = new Guna.UI2.WinForms.Guna2DataGridView();
             pnlInfoUsuario = new Guna.UI2.WinForms.Guna2GradientPanel();
+            btnExportarPuestos = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)dgvPuestos).BeginInit();
             pnlInfoUsuario.SuspendLayout();
             SuspendLayout();
@@ -155,19 +158,39 @@ namespace RecursosHumanos.View
             // 
             pnlInfoUsuario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlInfoUsuario.BackColor = Color.White;
+            pnlInfoUsuario.Controls.Add(btnExportarPuestos);
             pnlInfoUsuario.Controls.Add(dgvPuestos);
             pnlInfoUsuario.Controls.Add(lblInfo);
             pnlInfoUsuario.Controls.Add(dtpFechaIngreso);
             pnlInfoUsuario.Controls.Add(lblFechaNacimiento);
             pnlInfoUsuario.Controls.Add(separador1);
-            pnlInfoUsuario.CustomizableEdges = customizableEdges3;
+            pnlInfoUsuario.CustomizableEdges = customizableEdges5;
             pnlInfoUsuario.Font = new Font("Microsoft Sans Serif", 8.25F);
             pnlInfoUsuario.Location = new Point(0, -1);
             pnlInfoUsuario.Margin = new Padding(3, 4, 3, 4);
             pnlInfoUsuario.Name = "pnlInfoUsuario";
-            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges6;
             pnlInfoUsuario.Size = new Size(1155, 619);
             pnlInfoUsuario.TabIndex = 27;
+            // 
+            // btnExportarPuestos
+            // 
+            btnExportarPuestos.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnExportarPuestos.CustomizableEdges = customizableEdges3;
+            btnExportarPuestos.DisabledState.BorderColor = Color.DarkGray;
+            btnExportarPuestos.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnExportarPuestos.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnExportarPuestos.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnExportarPuestos.FillColor = Color.Gray;
+            btnExportarPuestos.Font = new Font("Century Gothic", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnExportarPuestos.ForeColor = Color.White;
+            btnExportarPuestos.Location = new Point(928, 13);
+            btnExportarPuestos.Name = "btnExportarPuestos";
+            btnExportarPuestos.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            btnExportarPuestos.Size = new Size(214, 51);
+            btnExportarPuestos.TabIndex = 56;
+            btnExportarPuestos.Text = "Exportar a Excel";
+            btnExportarPuestos.Click += btnExportarPuestos_Click;
             // 
             // frmListadoPuestos
             // 
@@ -192,5 +215,6 @@ namespace RecursosHumanos.View
         private Label lblInfo;
         private Guna.UI2.WinForms.Guna2DataGridView dgvPuestos;
         private Guna.UI2.WinForms.Guna2GradientPanel pnlInfoUsuario;
+        private Guna.UI2.WinForms.Guna2Button btnExportarPuestos;
     }
 }

@@ -7,6 +7,7 @@ using NLog;
 using RecursosHumanos.Data;
 using RecursosHumanos.Model;
 using RecursosHumanos.Models;
+using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.Controller
 {
@@ -162,5 +163,48 @@ namespace RecursosHumanos.Controller
                 return (false, $"Error inesperado: {ex.Message}");
             }
         }
+
+        public bool ExportarDepartamentosExcel(bool estatus)
+        {
+            try
+            {
+                var departamentos = _departamentoDataAccess.ObtenerTodosLosDepartamentos(); // Método para obtener la lista de departamentos
+
+                // Filtro dinámico en función del parámetro estatus
+                Func<Departamento, bool> filtro = d => d.Estatus == estatus;
+
+                var nombre = $"Departamentos_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+
+                // Ruta
+                string rutaArchivo = Path.Combine(Environment.GetFolderPath(
+                    Environment.SpecialFolder.Desktop), "exportados", nombre);
+
+                if (!Directory.Exists(Path.GetDirectoryName(rutaArchivo)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(rutaArchivo));
+
+                // Exportar
+                bool resultado = ExcelExporter.ExportToExcel(departamentos, rutaArchivo, "Departamentos", filtro);
+
+                if (resultado)
+                {
+                    _logger.Info($"Archivo exportado correctamente a {rutaArchivo}");
+                    MessageBox.Show("La exportación de departamentos a Excel se completó exitosamente.", "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return true;
+                }
+                else
+                {
+                    _logger.Warn("No se pudo exportar el archivo.");
+                    MessageBox.Show("La exportación de departamentos a Excel ha fallado.", "Exportación incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al exportar departamentos a Excel");
+                return false;
+            }
+        }
+
+
     }
 }
