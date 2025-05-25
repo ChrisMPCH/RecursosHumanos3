@@ -32,6 +32,8 @@ namespace RecursosHumanos.View
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
@@ -42,6 +44,7 @@ namespace RecursosHumanos.View
             dtpFechaIngreso = new Guna.UI2.WinForms.Guna2DateTimePicker();
             guna2ContainerControl1 = new Guna.UI2.WinForms.Guna2ContainerControl();
             pnlInfoUsuario = new Guna.UI2.WinForms.Guna2GradientPanel();
+            btnExportar = new Guna.UI2.WinForms.Guna2Button();
             dgvDepartamentos = new Guna.UI2.WinForms.Guna2DataGridView();
             lblInfo = new Label();
             pnlInfoUsuario.SuspendLayout();
@@ -103,21 +106,42 @@ namespace RecursosHumanos.View
             // pnlInfoUsuario
             // 
             pnlInfoUsuario.BackColor = Color.White;
+            pnlInfoUsuario.Controls.Add(btnExportar);
             pnlInfoUsuario.Controls.Add(dgvDepartamentos);
             pnlInfoUsuario.Controls.Add(lblInfo);
             pnlInfoUsuario.Controls.Add(guna2ContainerControl1);
             pnlInfoUsuario.Controls.Add(dtpFechaIngreso);
             pnlInfoUsuario.Controls.Add(lblFechaNacimiento);
             pnlInfoUsuario.Controls.Add(separador1);
-            pnlInfoUsuario.CustomizableEdges = customizableEdges5;
+            pnlInfoUsuario.CustomizableEdges = customizableEdges7;
             pnlInfoUsuario.Dock = DockStyle.Fill;
             pnlInfoUsuario.Font = new Font("Microsoft Sans Serif", 8.25F);
             pnlInfoUsuario.Location = new Point(0, 0);
             pnlInfoUsuario.Margin = new Padding(3, 4, 3, 4);
             pnlInfoUsuario.Name = "pnlInfoUsuario";
-            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges8;
             pnlInfoUsuario.Size = new Size(1155, 724);
             pnlInfoUsuario.TabIndex = 27;
+            // 
+            // btnExportar
+            // 
+            btnExportar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnExportar.BackColor = Color.Transparent;
+            btnExportar.CustomizableEdges = customizableEdges5;
+            btnExportar.DisabledState.BorderColor = Color.DarkGray;
+            btnExportar.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnExportar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnExportar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnExportar.FillColor = Color.Gray;
+            btnExportar.Font = new Font("Century Gothic", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnExportar.ForeColor = Color.White;
+            btnExportar.Location = new Point(918, 19);
+            btnExportar.Name = "btnExportar";
+            btnExportar.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            btnExportar.Size = new Size(225, 45);
+            btnExportar.TabIndex = 56;
+            btnExportar.Text = "Exportar a exel";
+            btnExportar.Click += btnExportar_Click;
             // 
             // dgvDepartamentos
             // 
@@ -206,5 +230,6 @@ namespace RecursosHumanos.View
         private Guna.UI2.WinForms.Guna2GradientPanel pnlInfoUsuario;
         private Label lblInfo;
         private Guna.UI2.WinForms.Guna2DataGridView dgvDepartamentos;
+        private Guna.UI2.WinForms.Guna2Button btnExportar;
     }
 }

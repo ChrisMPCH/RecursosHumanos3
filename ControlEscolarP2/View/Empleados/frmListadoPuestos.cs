@@ -38,7 +38,7 @@ namespace RecursosHumanos.View
         {
             Formas.ConfigurarEstiloDataGridView(dgvPuestos);
         }
-        
+
 
         private void btnRegresar_Click(object sender, EventArgs e)
         {
@@ -80,6 +80,14 @@ namespace RecursosHumanos.View
         private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnExportarPuestos_Click(object sender, EventArgs e)
+        {
+            PuestoController controller = new PuestoController();
+
+            // Exportar a Excel
+            controller.ExportarPuestosExcel(true);
         }
     }
 }

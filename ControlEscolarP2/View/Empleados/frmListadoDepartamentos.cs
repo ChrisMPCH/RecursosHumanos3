@@ -85,5 +85,13 @@ namespace RecursosHumanos.View
                 MessageBox.Show("Error al cargar departamentos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnExportar_Click(object sender, EventArgs e)
+        {
+           DepartamentoController controller = new DepartamentoController();
+
+            // Exportar a Excel
+            controller.ExportarDepartamentosExcel(true);
+        }
     }
 }

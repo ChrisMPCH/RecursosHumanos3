@@ -7,6 +7,7 @@ using NLog;
 using RecursosHumanos.Data;
 using RecursosHumanos.Model;
 using RecursosHumanos.Models;
+using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.Controller
 {
@@ -161,5 +162,48 @@ namespace RecursosHumanos.Controller
                 return (false, $"Error inesperado: {ex.Message}");
             }
         }
+
+
+        public bool ExportarPuestosExcel(bool estatus)
+        {
+            try
+            {
+                var puestos = _puestoDataAccess.ObtenerTodosLosPuestos(); // Método para obtener la lista de puestos
+
+                // Filtro dinámico en función del parámetro estatus
+                Func<Puesto, bool> filtro = p => p.Estatus == estatus;
+
+                var nombre = $"Puestos_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+
+                // Ruta
+                string rutaArchivo = Path.Combine(Environment.GetFolderPath(
+                    Environment.SpecialFolder.Desktop), "exportados", nombre);
+
+                if (!Directory.Exists(Path.GetDirectoryName(rutaArchivo)))
+                    Directory.CreateDirectory(Path.GetDirectoryName(rutaArchivo));
+
+                // Exportar
+                bool resultado = ExcelExporter.ExportToExcel(puestos, rutaArchivo, "Puestos", filtro);
+
+                if (resultado)
+                {
+                    _logger.Info($"Archivo exportado correctamente a {rutaArchivo}");
+                    MessageBox.Show("La exportación de puestos a Excel se completó exitosamente.", "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return true;
+                }
+                else
+                {
+                    _logger.Warn("No se pudo exportar el archivo.");
+                    MessageBox.Show("La exportación de puestos a Excel ha fallado.", "Exportación incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al exportar puestos a Excel");
+                return false;
+            }
+        }
+
     }
 }
