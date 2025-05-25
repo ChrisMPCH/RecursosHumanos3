@@ -26,9 +26,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="View\Contratos\frmListaAsistencias.cs">
+    <Compile Update="View\Contratos\frmListaAusencias.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="View\Contratos\frmListaAsistencias.cs" />
     <Compile Update="View\Empleados\frmListaEmpleados.cs" />
   </ItemGroup>
 

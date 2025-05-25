@@ -13,6 +13,9 @@ namespace RecursosHumanos.Models
         public string MotivoAusencia { get; set; }
         public int IdEmpleado { get; set; }
         public short Estatus { get; set; }
+
+        public string Matricula { get; set; }
+        public string Nombre { get; set; }
     }
 }
 

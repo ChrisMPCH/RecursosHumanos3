@@ -190,7 +190,8 @@ namespace RecursosHumanos.View
 
         private void btnListaAusencias_Click(object sender, EventArgs e)
         {
-
+            Form fmrListaAusencia = new frmListaAusencias();
+            abrirChildFormMDI(fmrListaAusencia);
         }
         private void btnEntradas_Click(object sender, EventArgs e)
         {
@@ -494,7 +495,5 @@ namespace RecursosHumanos.View
             else
                 return $"Hace {(int)diferencia.TotalDays} días";
         }
-
-        
     }
 }

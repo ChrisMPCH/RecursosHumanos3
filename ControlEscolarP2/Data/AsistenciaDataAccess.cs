@@ -359,14 +359,21 @@ namespace RecursosHumanos.DataAccess
             List<Asistencia> lista = new List<Asistencia>();
 
             string query = @"
-        SELECT a.id_asistencia, a.fecha_asistencia, a.hora_entrada, a.hora_salida,
-               e.matricula,
-               p.nombre || ' ' || p.ap_paterno || ' ' || p.ap_materno AS nombre_empleado
-        FROM human_resours.asistencia a
-        INNER JOIN human_resours.empleado e ON a.id_empleado = e.id_empleado
-        INNER JOIN human_resours.persona p ON e.id_persona = p.id_persona
-        WHERE a.estatus = 1
-        ORDER BY a.fecha_asistencia DESC;";
+            SELECT 
+                e.matricula,
+                p.nombre || ' ' || p.ap_paterno || ' ' || p.ap_materno AS nombre_empleado,
+                a.id_asistencia,
+                a.fecha_asistencia,
+                a.hora_entrada,
+                a.hora_salida
+            FROM 
+                human_resours.asistencia a
+            INNER JOIN 
+                human_resours.empleado e ON a.id_empleado = e.id_empleado
+            INNER JOIN 
+                human_resours.persona p ON e.id_persona = p.id_persona
+            WHERE 
+                a.estatus = 1;";
 
             try
             {

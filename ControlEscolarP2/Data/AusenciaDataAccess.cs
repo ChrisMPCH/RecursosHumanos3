@@ -4,6 +4,7 @@ using NLog;
 using RecursosHumanos.Data;
 using RecursosHumanos.Models;
 using RecursosHumanos.Utilities;
+using System.Data;
 
 namespace RecursosHumanos.DataAccess
 {
@@ -86,6 +87,59 @@ namespace RecursosHumanos.DataAccess
                 _dbAccess.Disconnect();
             }
         }
+        public List<Ausencia> ObtenerAusencias()
+        {
+            List<Ausencia> ausencias = new List<Ausencia>();
 
+            string query = @"
+            SELECT 
+        e.matricula,
+        p.nombre || ' ' || p.ap_paterno || ' ' || p.ap_materno AS nombre_empleado,
+        a.id_ausencias,
+        a.fecha_ausencias,
+        a.motivo_ausencia,
+        a.id_empleado,
+        a.estatus
+            FROM human_resours.ausencias a
+            INNER JOIN human_resours.empleado e ON e.id_empleado = a.id_empleado
+            INNER JOIN human_resours.persona p ON p.id_persona = e.id_persona
+            WHERE a.estatus = 1
+            ORDER BY a.fecha_ausencias DESC;";
+
+            try
+            {
+                _dbAccess.Connect();
+
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query);
+
+                foreach (DataRow row in resultado.Rows)
+                {
+                    Ausencia ausencia = new Ausencia
+                    {
+                        IdAusencias = Convert.ToInt32(row["id_ausencias"]),
+                        FechaAusencias = Convert.ToDateTime(row["fecha_ausencias"]),
+                        MotivoAusencia = row["motivo_ausencia"].ToString() ?? string.Empty,
+                        IdEmpleado = Convert.ToInt32(row["id_empleado"]),
+                        Estatus = Convert.ToInt16(row["estatus"]),
+                        Matricula = row["matricula"].ToString() ?? string.Empty,
+                        Nombre = row["nombre_empleado"].ToString() ?? string.Empty
+                    };
+
+                    ausencias.Add(ausencia);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Aquí podrías usar NLog también
+                Console.WriteLine($"Error al obtener las ausencias: {ex.Message}");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+
+            return ausencias;
+        }
     }
 }

@@ -58,14 +58,13 @@ namespace RecursosHumanos.View
                 HeaderText = "Hora Entrada",
                 DataPropertyName = "HoraEntrada",
                 Width = 120,
-                DefaultCellStyle = new DataGridViewCellStyle { Format = "HH:mm:ss" }
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "hh\\:mm\\:ss" }
             });
             dgvAsistencias.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Hora Salida",
                 DataPropertyName = "HoraSalida",
-                Width = 120,
-                DefaultCellStyle = new DataGridViewCellStyle { Format = "HH:mm:ss" }
+                Width = 120 // Sin formato aquí, ya lo hacemos en el Select
             });
         }
 
@@ -81,8 +80,8 @@ namespace RecursosHumanos.View
                     Matricula = a.Matricula,
                     Nombre = a.NombreEmpleado,
                     FechaAsistencia = a.FechaAsistencia,
-                    HoraEntrada = a.HoraEntrada,
-                    HoraSalida = a.HoraSalida.HasValue ? a.HoraSalida.Value : (TimeSpan?)null
+                    HoraEntrada = a.HoraEntrada.ToString(@"hh\:mm\:ss"),
+                    HoraSalida = a.HoraSalida.HasValue ? a.HoraSalida.Value.ToString(@"hh\:mm\:ss") : "—"
                 }).ToList();
 
                 dgvAsistencias.DataSource = listaMostrar;
@@ -121,8 +120,8 @@ namespace RecursosHumanos.View
                     Matricula = a.Matricula,
                     Nombre = a.NombreEmpleado,
                     FechaAsistencia = a.FechaAsistencia,
-                    HoraEntrada = a.HoraEntrada,
-                    HoraSalida = a.HoraSalida.HasValue ? a.HoraSalida.Value : (TimeSpan?)null
+                    HoraEntrada = a.HoraEntrada.ToString(@"hh\:mm\:ss"),
+                    HoraSalida = a.HoraSalida.HasValue ? a.HoraSalida.Value.ToString(@"hh\:mm\:ss") : "—"
                 }).ToList();
 
                 dgvAsistencias.DataSource = filtradas;
@@ -148,7 +147,5 @@ namespace RecursosHumanos.View
             dtpFecha.Checked = false; // Si usas Checked para habilitar o no la fecha
             CargarAsistencias();
         }
-
-      
     }
 }

@@ -4,6 +4,7 @@ using RecursosHumanos.Data;
 using RecursosHumanos.DataAccess;
 using NLog;
 using RecursosHumanos.Controller;
+using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.Controllers
 {
@@ -12,6 +13,8 @@ namespace RecursosHumanos.Controllers
         private readonly AusenciaDataAccess _ausenciaDataAccess;
         private readonly EmpleadosDataAccess _empleadosDataAccess;
         private static readonly AuditoriasController _auditoriasController = new AuditoriasController();
+        private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Controller.AusenciaController");
+
 
         public AusenciaController()
         {
@@ -64,6 +67,20 @@ namespace RecursosHumanos.Controllers
 
             // Validar si tiene ausencia hoy usando capa de DataAccess
             return _ausenciaDataAccess.ExisteAusenciaHoy(empleado.Id_Empleado, DateTime.Now);
+        }
+
+        public List<Ausencia> ObtenerAusencias()
+        {
+            try
+            {
+                return _ausenciaDataAccess.ObtenerAusencias();
+            }
+            catch (Exception ex)
+            {
+                // Aquí puedes usar NLog o el logger que tengas configurado
+                _logger.Error(ex, "Error al obtener la lista de ausencias.");
+                return new List<Ausencia>();
+            }
         }
     }
 }
