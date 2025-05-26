@@ -143,7 +143,7 @@ namespace RecursosHumanos.View
             cbPermiso.DataSource = new BindingSource(list_puestos, null);
             cbPermiso.DisplayMember = "Value"; //lo que se mestra
             cbPermiso.ValueMember = "Key"; //lo que se guarda como SelectedValue
-            cbPermiso.SelectedIndex = 2;
+            cbPermiso.SelectedIndex = 1;
         }
 
         private bool GuardarUsuario()
