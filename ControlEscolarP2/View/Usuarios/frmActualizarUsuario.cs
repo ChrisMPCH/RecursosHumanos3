@@ -43,10 +43,7 @@ namespace RecursosHumanos.View
             PoblarCombos();
             InicializarCampos();
 
-            if (cbPermiso.SelectedItem?.ToString() == "2")
-            {
-                MessageBox.Show("NO PUEDES EDITAR ESTE USUARIO", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            
         }
         public void PoblarCombos()
         {
@@ -444,6 +441,11 @@ namespace RecursosHumanos.View
 
         private void btnGuardarCambios_Click(object sender, EventArgs e)
         {
+            if (cbPermiso.SelectedIndex.ToString() == "1")
+            {
+                MessageBox.Show("NO PUEDES EDITAR ESTE USUARIO", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             GuardarUsuario();
         }
 

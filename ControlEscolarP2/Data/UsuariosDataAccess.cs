@@ -189,26 +189,26 @@ namespace RecursosHumanos.Data
 
                 // Actualiza la tabla usuario
                 string query = @"
-                UPDATE administration.usuario
-                SET usuario = @Usuario,
-                    contrasenia = @Contrasenia,
-                    id_rol = @IdRol,
-                    fecha_ultimo_acceso = @FechaUltimoAcceso,
-                    estatus = @Estatus,
-                    estatus_persmiso = @EstatusPermiso
-                WHERE id_usuario = @IdUsuario";
+                    UPDATE administration.usuario
+                    SET usuario = @Usuario,
+                        contrasenia = @Contrasenia,
+                        id_rol = @IdRol,
+                        fecha_ultimo_acceso = @FechaUltimoAcceso,
+                        estatus = @Estatus,
+                        estatus_permiso = @EstatusPermiso
+                    WHERE id_usuario = @IdUsuario";
 
-                // Parámetros para la consulta
-                var parametros = new[]
-                {
-                    _dbAccess.CreateParameter("@IdUsuario", usuario.Id_Usuario),
-                    _dbAccess.CreateParameter("@Usuario", usuario.UsuarioNombre),
-                    _dbAccess.CreateParameter("@Contrasenia", usuario.Contrasenia),
-                    _dbAccess.CreateParameter("@IdRol", usuario.Id_Rol),
-                    _dbAccess.CreateParameter("@FechaUltimoAcceso", usuario.Fecha_Ultimo_Acceso),
-                    _dbAccess.CreateParameter("@Estatus", usuario.Estatus),
-                    _dbAccess.CreateParameter("@Estatus", usuario.EstatusPermiso)
-                };
+                                    var parametros = new[]
+                                    {
+                        _dbAccess.CreateParameter("@IdUsuario", usuario.Id_Usuario),
+                        _dbAccess.CreateParameter("@Usuario", usuario.UsuarioNombre),
+                        _dbAccess.CreateParameter("@Contrasenia", usuario.Contrasenia),
+                        _dbAccess.CreateParameter("@IdRol", usuario.Id_Rol),
+                        _dbAccess.CreateParameter("@FechaUltimoAcceso", usuario.Fecha_Ultimo_Acceso),
+                        _dbAccess.CreateParameter("@Estatus", usuario.Estatus),
+                        _dbAccess.CreateParameter("@EstatusPermiso", usuario.EstatusPermiso)
+                    };
+
 
                 _dbAccess.Connect();
                 int filasAfectadas = _dbAccess.ExecuteNonQuery(query, parametros);
