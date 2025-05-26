@@ -8,6 +8,7 @@ using Npgsql;
 using RecursosHumanos.Model;
 using RecursosHumanos.Data;
 using RecursosHumanos.Bussines;
+using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.Controller
 {
@@ -245,7 +246,6 @@ namespace RecursosHumanos.Controller
                     return (false, "Formato de matrícula inválido.", null);
                 }
 
-                // 🚀 Ya usas el método que existe
                 var contratoActivo = ObtenerContratoActivoPorMatricula(matricula);
 
                 if (contratoActivo == null)
@@ -261,5 +261,66 @@ namespace RecursosHumanos.Controller
                 return (false, "Error inesperado al obtener la hora de entrada.", null);
             }
         }
+
+        public List<Contrato> ObtenerTodosLosContratos()
+        {
+            try
+            {
+                return _contratosDataAccess.ObtenerTodosLosContratos();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener todos los contratos.");
+                return new List<Contrato>();
+            }
+        }
+
+        public bool ExportarContratosExcel()
+        {
+            try
+            {
+                var contratos = ObtenerTodosLosContratos();
+
+                if (contratos == null || contratos.Count == 0)
+                {
+                    MessageBox.Show("No hay contratos para exportar.", "Sin datos", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
+                }
+
+                var nombreArchivo = $"Contratos_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+
+                string rutaArchivo = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                    "exportados",
+                    nombreArchivo
+                );
+
+                string dir = Path.GetDirectoryName(rutaArchivo);
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
+
+                bool resultado = ExcelExporter.ExportToExcel(contratos, rutaArchivo, "Contratos");
+
+                if (resultado)
+                {
+                    _logger.Info($"Archivo exportado correctamente a {rutaArchivo}");
+                    MessageBox.Show("La exportación a Excel se completó exitosamente.", "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return true;
+                }
+                else
+                {
+                    _logger.Warn("No se pudo exportar el archivo.");
+                    MessageBox.Show("La exportación a Excel ha fallado.", "Exportación incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al exportar contratos a Excel");
+                MessageBox.Show("Ocurrió un error inesperado durante la exportación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
     }
 }

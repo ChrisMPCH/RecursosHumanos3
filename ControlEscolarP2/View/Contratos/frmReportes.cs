@@ -59,7 +59,7 @@ namespace RecursosHumanos.View
             dataGridUsuarios.Columns.Add("Matricula", "Matrícula");
             dataGridUsuarios.Columns.Add("NombreEmpleado", "Empleado");
             dataGridUsuarios.Columns.Add("NombreDepartamento", "Departamento");
-           
+
             dataGridUsuarios.Columns.Add("FechaInicio", "Fecha Inicio");
             dataGridUsuarios.Columns.Add("FechaFin", "Fecha Fin");
             dataGridUsuarios.Columns.Add("HoraEntrada", "Hora Entrada");
@@ -173,7 +173,7 @@ namespace RecursosHumanos.View
                         c.Sueldo.ToString("C2"),
                         c.Descripcion,
                         c.Estatus ? "Activo" : "Inactivo",
-                        c.NombreTipoContrato 
+                        c.NombreTipoContrato
                     );
                 }
             }
@@ -182,10 +182,6 @@ namespace RecursosHumanos.View
                 MessageBox.Show($"Error al mostrar contratos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-
-
 
         private void CargarDepartamentosDesdeBD()
         {
@@ -235,7 +231,7 @@ namespace RecursosHumanos.View
                 fechaFin = dtpFechaFin.Value.Date;
             }
 
-         
+
             // Obtener contratos con los filtros
             List<Contrato> contratos = _contratosController.ObtenerContratosFiltrados(matricula, tipoContrato, estatus, departamento, fechaInicio, fechaFin);
 
@@ -286,6 +282,13 @@ namespace RecursosHumanos.View
             }
         }
 
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            ContratoController controller = new ContratoController();
+
+            // Exportar a Excel
+            controller.ExportarContratosExcel();
+        }
     }
 }
 

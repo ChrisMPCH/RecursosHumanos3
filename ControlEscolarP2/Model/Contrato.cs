@@ -19,6 +19,8 @@ namespace RecursosHumanos.Model
         public string Descripcion { get; set; }
         public bool Estatus { get; set; }
 
+
+
         // Propiedades adicionales solo para reportes
         public string NombreTipoContrato { get; set; }
         public string NombreEmpleado { get; set; }           // Solo reportes

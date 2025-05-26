@@ -21,6 +21,7 @@ namespace RecursosHumanos.View
         {
             IniciarTabla();           // Configuramos el DataGridView
             CargarAusencias();      // Cargamos todas las ausencias sin filtro
+            dtpFecha.Value = DateTime.Today;
         }
 
         private void IniciarTabla()
@@ -133,6 +134,12 @@ namespace RecursosHumanos.View
             CargarAusencias();
         }
 
-      
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            AusenciaController controller = new AusenciaController();
+
+            // Exportar a Excel
+            controller.ExportarAusenciasExcel();
+        }
     }
 }

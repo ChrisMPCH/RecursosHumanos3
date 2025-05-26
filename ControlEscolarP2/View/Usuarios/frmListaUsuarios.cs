@@ -120,6 +120,6 @@ namespace RecursosHumanos.View
 
             // Exportar a Excel
             controller.ExportarUsuariosExcel(cbRoles.SelectedIndex);
+}
         }
     }
-}

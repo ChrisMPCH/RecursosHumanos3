@@ -225,5 +225,7 @@ namespace RecursosHumanos.View
             // Exportar a Excel
             controller.ExportarEmpleadosExcel();
         }
+
+
     }
 }

@@ -43,14 +43,14 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             lblTitulo = new Label();
             separador1 = new Guna.UI2.WinForms.Guna2Separator();
             lblFechaNacimiento = new Label();
@@ -62,6 +62,7 @@
             pnlTabla = new Guna.UI2.WinForms.Guna2Panel();
             dgvEmpleados = new Guna.UI2.WinForms.Guna2DataGridView();
             pnlInfoUsuario = new Guna.UI2.WinForms.Guna2GradientPanel();
+            btnExcel = new Guna.UI2.WinForms.Guna2Button();
             txtNombre = new Guna.UI2.WinForms.Guna2TextBox();
             btnLimpiar = new Guna.UI2.WinForms.Guna2Button();
             lblNombre = new Label();
@@ -69,7 +70,6 @@
             lblEstatus = new Label();
             Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             lblInfo = new Label();
-            btnExcel = new Guna.UI2.WinForms.Guna2Button();
             pnlTabla.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEmpleados).BeginInit();
             pnlInfoUsuario.SuspendLayout();
@@ -279,6 +279,26 @@
             pnlInfoUsuario.Size = new Size(1011, 749);
             pnlInfoUsuario.TabIndex = 27;
             // 
+            // btnExcel
+            // 
+            btnExcel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnExcel.Animated = true;
+            btnExcel.CustomizableEdges = customizableEdges11;
+            btnExcel.DisabledState.BorderColor = Color.DarkGray;
+            btnExcel.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnExcel.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnExcel.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnExcel.FillColor = Color.DimGray;
+            btnExcel.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
+            btnExcel.ForeColor = Color.White;
+            btnExcel.Location = new Point(821, 65);
+            btnExcel.Name = "btnExcel";
+            btnExcel.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            btnExcel.Size = new Size(162, 45);
+            btnExcel.TabIndex = 63;
+            btnExcel.Text = "Exportar a Excel";
+            btnExcel.Click += btnExcel_Click;
+            // 
             // txtNombre
             // 
             txtNombre.Animated = true;
@@ -381,26 +401,6 @@
             lblInfo.TabIndex = 54;
             lblInfo.Text = "Filtros";
             lblInfo.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // btnExcel
-            // 
-            btnExcel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnExcel.Animated = true;
-            btnExcel.CustomizableEdges = customizableEdges11;
-            btnExcel.DisabledState.BorderColor = Color.DarkGray;
-            btnExcel.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnExcel.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnExcel.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnExcel.FillColor = Color.DimGray;
-            btnExcel.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
-            btnExcel.ForeColor = Color.White;
-            btnExcel.Location = new Point(821, 65);
-            btnExcel.Name = "btnExcel";
-            btnExcel.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            btnExcel.Size = new Size(162, 45);
-            btnExcel.TabIndex = 63;
-            btnExcel.Text = "Exportar a Excel";
-            btnExcel.Click += btnExcel_Click;
             // 
             // frmListaEmpleados
             // 

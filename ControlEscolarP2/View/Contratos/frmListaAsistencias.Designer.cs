@@ -39,14 +39,16 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             lblTitulo = new Label();
             separador1 = new Guna.UI2.WinForms.Guna2Separator();
             lblFechaNacimiento = new Label();
@@ -56,6 +58,7 @@
             pnlTabla = new Guna.UI2.WinForms.Guna2Panel();
             dgvAsistencias = new Guna.UI2.WinForms.Guna2DataGridView();
             pnlInfoUsuario = new Guna.UI2.WinForms.Guna2GradientPanel();
+            btnExcel = new Guna.UI2.WinForms.Guna2Button();
             dtpFecha = new Guna.UI2.WinForms.Guna2DateTimePicker();
             lblFecha = new Label();
             txtMatricula = new Guna.UI2.WinForms.Guna2TextBox();
@@ -219,6 +222,7 @@
             // 
             pnlInfoUsuario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlInfoUsuario.BackColor = Color.White;
+            pnlInfoUsuario.Controls.Add(btnExcel);
             pnlInfoUsuario.Controls.Add(dtpFecha);
             pnlInfoUsuario.Controls.Add(lblFecha);
             pnlInfoUsuario.Controls.Add(txtMatricula);
@@ -232,19 +236,39 @@
             pnlInfoUsuario.Controls.Add(dtpFechaIngreso);
             pnlInfoUsuario.Controls.Add(lblFechaNacimiento);
             pnlInfoUsuario.Controls.Add(separador1);
-            pnlInfoUsuario.CustomizableEdges = customizableEdges15;
+            pnlInfoUsuario.CustomizableEdges = customizableEdges17;
             pnlInfoUsuario.Font = new Font("Microsoft Sans Serif", 8.25F);
             pnlInfoUsuario.Location = new Point(0, 54);
             pnlInfoUsuario.Name = "pnlInfoUsuario";
-            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges18;
             pnlInfoUsuario.Size = new Size(1011, 749);
             pnlInfoUsuario.TabIndex = 27;
+            // 
+            // btnExcel
+            // 
+            btnExcel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnExcel.Animated = true;
+            btnExcel.CustomizableEdges = customizableEdges9;
+            btnExcel.DisabledState.BorderColor = Color.DarkGray;
+            btnExcel.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnExcel.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnExcel.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnExcel.FillColor = Color.DimGray;
+            btnExcel.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
+            btnExcel.ForeColor = Color.White;
+            btnExcel.Location = new Point(797, 66);
+            btnExcel.Name = "btnExcel";
+            btnExcel.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            btnExcel.Size = new Size(162, 45);
+            btnExcel.TabIndex = 56;
+            btnExcel.Text = "Exportar a Excel";
+            btnExcel.Click += btnExcel_Click;
             // 
             // dtpFecha
             // 
             dtpFecha.BackColor = Color.Transparent;
             dtpFecha.Checked = true;
-            dtpFecha.CustomizableEdges = customizableEdges9;
+            dtpFecha.CustomizableEdges = customizableEdges11;
             dtpFecha.FillColor = Color.FromArgb(220, 232, 255);
             dtpFecha.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dtpFecha.Format = DateTimePickerFormat.Short;
@@ -254,10 +278,10 @@
             dtpFecha.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
             dtpFecha.Name = "dtpFecha";
             dtpFecha.RightToLeft = RightToLeft.No;
-            dtpFecha.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            dtpFecha.ShadowDecoration.CustomizableEdges = customizableEdges12;
             dtpFecha.Size = new Size(121, 31);
             dtpFecha.TabIndex = 63;
-            dtpFecha.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
+            dtpFecha.Value = new DateTime(2025, 5, 1, 0, 3, 0, 0);
             // 
             // lblFecha
             // 
@@ -274,7 +298,7 @@
             // 
             txtMatricula.Animated = true;
             txtMatricula.BorderRadius = 5;
-            txtMatricula.CustomizableEdges = customizableEdges11;
+            txtMatricula.CustomizableEdges = customizableEdges13;
             txtMatricula.DefaultText = "";
             txtMatricula.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtMatricula.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -289,7 +313,7 @@
             txtMatricula.Name = "txtMatricula";
             txtMatricula.PlaceholderText = "";
             txtMatricula.SelectedText = "";
-            txtMatricula.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            txtMatricula.ShadowDecoration.CustomizableEdges = customizableEdges14;
             txtMatricula.Size = new Size(170, 34);
             txtMatricula.TabIndex = 62;
             // 
@@ -297,7 +321,7 @@
             // 
             btnLimpiar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnLimpiar.Animated = true;
-            btnLimpiar.CustomizableEdges = customizableEdges13;
+            btnLimpiar.CustomizableEdges = customizableEdges15;
             btnLimpiar.DisabledState.BorderColor = Color.DarkGray;
             btnLimpiar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnLimpiar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -307,7 +331,7 @@
             btnLimpiar.ForeColor = Color.White;
             btnLimpiar.Location = new Point(626, 88);
             btnLimpiar.Name = "btnLimpiar";
-            btnLimpiar.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            btnLimpiar.ShadowDecoration.CustomizableEdges = customizableEdges16;
             btnLimpiar.Size = new Size(121, 40);
             btnLimpiar.TabIndex = 61;
             btnLimpiar.Text = "Limpiar";
@@ -382,5 +406,6 @@
         public Guna.UI2.WinForms.Guna2TextBox txtMatricula;
         private Label lblFecha;
         private Guna.UI2.WinForms.Guna2DateTimePicker dtpFecha;
+        private Guna.UI2.WinForms.Guna2Button btnExcel;
     }
 }

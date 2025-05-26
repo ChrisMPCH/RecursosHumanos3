@@ -467,9 +467,64 @@ WHERE 1=1");
                 _dbAccess.Disconnect();
             }
         }
+        public List<Contrato> ObtenerTodosLosContratos()
+        {
+            List<Contrato> contratos = new List<Contrato>();
 
+            try
+            {
+                const string query = @"
+            SELECT
+                c.id_contrato,
+                e.matricula,
+                c.id_tipocontrato,
+                c.fecha_inicio,
+                c.fecha_fin,
+                c.hora_entrada,
+                c.hora_salida,
+                c.salario,
+                c.descripcion,
+                c.estatus,
+                tc.nombre AS tipo_contrato
+            FROM human_resours.contrato c
+            INNER JOIN human_resours.empleado e ON c.id_empleado = e.id_empleado
+            INNER JOIN human_resours.tipocontrato tc ON c.id_tipocontrato = tc.id_tipocontrato
+            ORDER BY c.fecha_inicio DESC;";
 
+                _dbAccess.Connect();
+                DataTable result = _dbAccess.ExecuteQuery_Reader(query);
 
+                foreach (DataRow row in result.Rows)
+                {
+                    Contrato contrato = new Contrato
+                    {
+                        Id_Contrato = Convert.ToInt32(row["id_contrato"]),
+                        Matricula = row["matricula"]?.ToString() ?? "",
+                        Id_TipoContrato = Convert.ToInt32(row["id_tipocontrato"]),
+                        FechaInicio = Convert.ToDateTime(row["fecha_inicio"]),
+                        FechaFin = Convert.ToDateTime(row["fecha_fin"]),
+                        HoraEntrada = TimeSpan.Parse(row["hora_entrada"].ToString()),
+                        HoraSalida = TimeSpan.Parse(row["hora_salida"].ToString()),
+                        Sueldo = Convert.ToDouble(row["salario"]),
+                        Descripcion = row["descripcion"]?.ToString() ?? "",
+                        Estatus = Convert.ToInt16(row["estatus"]) == 1,
+                        NombreTipoContrato = row["tipo_contrato"]?.ToString() ?? ""
+                    };
 
+                    contratos.Add(contrato);
+                }
+
+                return contratos;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener todos los contratos");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
     }
 }

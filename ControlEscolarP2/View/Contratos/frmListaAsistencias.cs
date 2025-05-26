@@ -20,6 +20,7 @@ namespace RecursosHumanos.View
         {
             IniciarTabla();           // Configuramos el DataGridView
             CargarAsistencias();      // Cargamos todas las asistencias sin filtro
+            dtpFecha.Value = DateTime.Today;
         }
 
         private void IniciarTabla()
@@ -144,8 +145,16 @@ namespace RecursosHumanos.View
         {
             txtMatricula.Clear();
             dtpFecha.Value = DateTime.Today;
-            dtpFecha.Checked = false; // Si usas Checked para habilitar o no la fecha
+            dtpFecha.Checked = false;
             CargarAsistencias();
+        }
+
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            AsistenciaController controller = new AsistenciaController();
+
+            // Exportar a Excel
+            controller.ExportarAsistenciaExcel();
         }
     }
 }
