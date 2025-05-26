@@ -32,7 +32,7 @@ namespace RecursosHumanos.View
         {
             var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
 
-            if (permisosUsuario.Contains(39))
+            if (permisosUsuario.Contains(39) || cbPermiso.)
             {
                 cbPermiso.Enabled = true;
             }
@@ -87,6 +87,7 @@ namespace RecursosHumanos.View
             cbxEstatus.SelectedIndex = 1;
         }
 
+
         private void PoblaComboRol()
         {
             try
@@ -123,6 +124,8 @@ namespace RecursosHumanos.View
             cbxGenero.ValueMember = "Key"; //lo que se guarda como SelectedValue
             cbxGenero.SelectedIndex = 1;
         }
+
+
         private void PoblaComboPermiso()
         {
             //Crear un diccionario con los valores
@@ -177,7 +180,7 @@ namespace RecursosHumanos.View
                 Id_Rol = (int)cbRoles.SelectedValue,      // ← Ya actualiza el rol
                 Fecha_Ultimo_Acceso = DateTime.Now,
                 Estatus = (short)(cbxEstatus.SelectedIndex == 0 ? 1 : 0),
-                DatosPersonales = persona
+                DatosPersonales = persona,
                 EstatusPermiso = Convert.ToInt16(cbPermiso.SelectedValue) // Fix: Convert SelectedValue to short
             };
 
