@@ -133,12 +133,12 @@ namespace RecursosHumanos.View.Usuarios
             {
             { -1, "Seleccione" },
             { 1, "Empleado" },
-        { 2, "Contrato" },
-        { 3, "Usuario" },
-        { 4, "Roles" },
-        { 5, "Perisos" },
-        { 6, "Otros" }
-            };
+            { 2, "Contrato" },
+            { 3, "Usuario" },
+            { 4, "Roles" },
+            { 5, "Perisos" },
+            { 6, "Otros" }
+                };
 
             // Asignar el diccionario al ComboBox
             cbxEntidad.DataSource = new BindingSource(list_Entidad, null);

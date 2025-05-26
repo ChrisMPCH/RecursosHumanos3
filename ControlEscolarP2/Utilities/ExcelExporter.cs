@@ -14,7 +14,7 @@ namespace RecursosHumanos.Utilities
         public static bool ExportToExcel<T>(
     List<T> data,
     string rutaArchivo,
-    string nombreHoja = "Datos",
+    string nombreHoja,
     Func<T, bool> filtro = null
 )
         {

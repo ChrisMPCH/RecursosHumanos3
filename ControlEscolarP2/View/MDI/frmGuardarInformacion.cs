@@ -62,11 +62,11 @@ namespace RecursosHumanos.View
         {
             var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
 
-            if (permisosUsuario.Contains(23)) // Agregar usuario
+            if (permisosUsuario.Contains(15)) // Agregar usuario
             {
                 frmGuardarInformacion.btnRegistrarUsuario.Enabled = true;
             }
-            if (permisosUsuario.Contains(36)) // Agregar empleado
+            if (permisosUsuario.Contains(39)) // Agregar empleado
             {
                 frmGuardarInformacion.btnRegitrarEmpleado.Enabled = true;
             }

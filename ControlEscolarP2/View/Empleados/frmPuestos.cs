@@ -69,15 +69,15 @@ namespace RecursosHumanos.View
         {
             var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
 
-            if (permisosUsuario.Contains(4) || permisosUsuario.Contains(35)) // Agregar puesto  
+            if (permisosUsuario.Contains(4)) // Agregar puesto  
             {
                 btnAgregar.Enabled = true;
             }
-            if (permisosUsuario.Contains(5) || permisosUsuario.Contains(35)) // Editar puesto  
+            if (permisosUsuario.Contains(5)) // Editar puesto  
             {
                 btnActualizar.Enabled = true;
             }
-            if (permisosUsuario.Contains(6) || permisosUsuario.Contains(35)) // Eliminar puesto  
+            if (permisosUsuario.Contains(6)) // Eliminar puesto  
             {
                 btnEliminar.Enabled = true;
             }
