@@ -26,10 +26,7 @@ namespace RecursosHumanos.View
             InitializeComponent();
             InicializarVentana();
             VerificarPermisos();
-            if (cbPermiso.SelectedItem?.ToString() == "2")
-            {
-                MessageBox.Show("NO PUEDES EDITAR ESTE USUARIO", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+
         }
 
         private void VerificarPermisos()
@@ -45,6 +42,11 @@ namespace RecursosHumanos.View
         {
             PoblarCombos();
             InicializarCampos();
+
+            if (cbPermiso.SelectedItem?.ToString() == "2")
+            {
+                MessageBox.Show("NO PUEDES EDITAR ESTE USUARIO", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
         public void PoblarCombos()
         {
