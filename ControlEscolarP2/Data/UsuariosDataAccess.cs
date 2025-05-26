@@ -194,7 +194,8 @@ namespace RecursosHumanos.Data
                     contrasenia = @Contrasenia,
                     id_rol = @IdRol,
                     fecha_ultimo_acceso = @FechaUltimoAcceso,
-                    estatus = @Estatus
+                    estatus = @Estatus,
+                    estatus_persmiso = @EstatusPermiso
                 WHERE id_usuario = @IdUsuario";
 
                 // Parámetros para la consulta
@@ -205,7 +206,8 @@ namespace RecursosHumanos.Data
                     _dbAccess.CreateParameter("@Contrasenia", usuario.Contrasenia),
                     _dbAccess.CreateParameter("@IdRol", usuario.Id_Rol),
                     _dbAccess.CreateParameter("@FechaUltimoAcceso", usuario.Fecha_Ultimo_Acceso),
-                    _dbAccess.CreateParameter("@Estatus", usuario.Estatus)
+                    _dbAccess.CreateParameter("@Estatus", usuario.Estatus),
+                    _dbAccess.CreateParameter("@Estatus", usuario.EstatusPermiso)
                 };
 
                 _dbAccess.Connect();

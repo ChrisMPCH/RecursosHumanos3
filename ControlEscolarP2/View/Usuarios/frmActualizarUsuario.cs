@@ -16,7 +16,7 @@ namespace RecursosHumanos.View
 {
     public partial class frmActualizarUsuario : Form
     {
-        
+
 
         private int? idUsuario = null;
         private int? idPersona = null;
@@ -25,6 +25,17 @@ namespace RecursosHumanos.View
         {
             InitializeComponent();
             InicializarVentana();
+            VerificarPermisos();
+        }
+
+        private void VerificarPermisos()
+        {
+            var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
+
+            if (permisosUsuario.Contains(39))
+            {
+                cbPermiso.Enabled = true;
+            }
         }
 
         public void InicializarVentana()
@@ -64,7 +75,8 @@ namespace RecursosHumanos.View
             Dictionary<int, string> list_estatus = new Dictionary<int, string>
             {
                 { 1, "Activo" },
-                { 0, "Inactivo" }
+                { 0, "Inactivo" },
+                { 4, "Autorizado" }
             };
 
             //Asignar los valores al comboBox
@@ -111,7 +123,21 @@ namespace RecursosHumanos.View
             cbxGenero.ValueMember = "Key"; //lo que se guarda como SelectedValue
             cbxGenero.SelectedIndex = 1;
         }
+        private void PoblaComboPermiso()
+        {
+            //Crear un diccionario con los valores
+            Dictionary<int, string> list_puestos = new Dictionary<int, string>
+            {
+                { 1, "Autorizado" },
+                { 2, "No Autorizado" }
+            };
 
+            //Asignar los valores al comboBox
+            cbPermiso.DataSource = new BindingSource(list_puestos, null);
+            cbPermiso.DisplayMember = "Value"; //lo que se mestra
+            cbPermiso.ValueMember = "Key"; //lo que se guarda como SelectedValue
+            cbPermiso.SelectedIndex = 2;
+        }
 
         private bool GuardarUsuario()
         {
@@ -152,6 +178,7 @@ namespace RecursosHumanos.View
                 Fecha_Ultimo_Acceso = DateTime.Now,
                 Estatus = (short)(cbxEstatus.SelectedIndex == 0 ? 1 : 0),
                 DatosPersonales = persona
+                EstatusPermiso = Convert.ToInt16(cbPermiso.SelectedValue) // Fix: Convert SelectedValue to short
             };
 
             var resultado = controller.ActualizarUsuario(usuario);
@@ -420,6 +447,11 @@ namespace RecursosHumanos.View
         private void pcVerContraseña_Click(object sender, EventArgs e)
         {
             txtContrasenia.UseSystemPasswordChar = !txtContrasenia.UseSystemPasswordChar;
+        }
+
+        private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -85,6 +85,7 @@ namespace RecursosHumanos.View
             {
                 btnConsultar.Enabled = true;
             }
+            
         }
 
     }

@@ -21,6 +21,8 @@ namespace RecursosHumanos.Model
         public Persona DatosPersonales { get; set; }
         public Rol Rol { get; internal set; }
 
+        public int EstatusPermiso { get; set; }
+
         public Usuario()
         {
             UsuarioNombre = string.Empty;
@@ -31,7 +33,7 @@ namespace RecursosHumanos.Model
             DatosPersonales = new Persona();
         }
 
-        public Usuario(string usuario, string contrasenia, Persona persona)
+        public Usuario(string usuario, string contrasenia, Persona persona, int estatusPermiso)
         {
             UsuarioNombre = usuario;
             Contrasenia = contrasenia;
@@ -39,10 +41,11 @@ namespace RecursosHumanos.Model
             Fecha_Ultimo_Acceso = DateTime.Now;
             Estatus = 1;
             DatosPersonales = persona;
+            EstatusPermiso = estatusPermiso;
         }
 
         public Usuario(int idUsuario, int idPersona, int idRol, string usuario, string contrasenia,
-                       DateTime fechaCreacion, DateTime fechaUltimoAcceso, short estatus, Persona persona)
+                       DateTime fechaCreacion, DateTime fechaUltimoAcceso, short estatus, Persona persona, int estatusPermiso)
         {
             Id_Usuario = idUsuario;
             Id_Persona = idPersona;
@@ -53,6 +56,7 @@ namespace RecursosHumanos.Model
             Fecha_Ultimo_Acceso = fechaUltimoAcceso;
             Estatus = estatus;
             DatosPersonales = persona;
+            EstatusPermiso = estatusPermiso;
         }
     }
 }
