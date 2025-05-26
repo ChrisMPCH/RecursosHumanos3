@@ -31,8 +31,20 @@ namespace RecursosHumanos.View.Contratos
             dtpFechaFin.Value = DateTime.Now;
             txtSalario.KeyPress += txtSalario_KeyPress;
             ConfigurarHoraEntradaSalida(); // Configura DateTimePicker para hora
-
+            VerificarPermisos();
         }
+
+        private void VerificarPermisos()
+        {
+            var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
+
+            if (permisosUsuario.Contains(38)) // Agregar usuario
+            {
+                btnActualizar.Enabled = true;
+            }
+            btnActualizar.Enabled = false;
+        }
+
         private void IniciarTabla()
         {
             Formas.ConfigurarEstiloDataGridView(dataGridContratos); // Configurar el estilo del DataGridView

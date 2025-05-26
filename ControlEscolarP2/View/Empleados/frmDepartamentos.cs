@@ -69,19 +69,19 @@ namespace RecursosHumanos.View
         {
             var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
 
-            if (permisosUsuario.Contains(8) || permisosUsuario.Contains(35)) // Agregar departamento  
+            if (permisosUsuario.Contains(8)) // Agregar departamento  
             {
                 btnAgregar.Enabled = true;
             }
-            if (permisosUsuario.Contains(9) || permisosUsuario.Contains(35)) // Editar departamento  
+            if (permisosUsuario.Contains(9)) // Editar departamento  
             {
                 btnActualizar.Enabled = true;
             }
-            if (permisosUsuario.Contains(10) || permisosUsuario.Contains(35)) // Eliminar departamento  
+            if (permisosUsuario.Contains(10)) // Eliminar departamento  
             {
                 btnEliminar.Enabled = true;
             }
-            if (permisosUsuario.Contains(7) || permisosUsuario.Contains(35)) // Consultar departamento  
+            if (permisosUsuario.Contains(7)) // Consultar departamento  
             {
                 btnConsultar.Enabled = true;
             }
