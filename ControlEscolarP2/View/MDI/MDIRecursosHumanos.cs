@@ -311,11 +311,11 @@ namespace RecursosHumanos.View
             {
                 subRegistroPersonas.Enabled = true;
             }
-            if (permisosUsuario.Contains(38)) // Editar usuario
+            if (permisosUsuario.Contains(38) || permisosUsuario.Contains(40)) // Editar usuario
             {
                 btnActualizarUsuarios.Enabled = true;
             }
-            if (permisosUsuario.Contains(38)) // Eliminar usuario
+            if (permisosUsuario.Contains(38) || permisosUsuario.Contains(17)) // Eliminar usuario
             {
                 btnEliminarUsuarios.Enabled = true;
             }

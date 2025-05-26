@@ -26,13 +26,16 @@ namespace RecursosHumanos.View
             InitializeComponent();
             InicializarVentana();
             VerificarPermisos();
+            if (cbPermiso.SelectedItem?.ToString() == "2")
+            {
+                MessageBox.Show("NO PUEDES EDITAR ESTE USUARIO", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void VerificarPermisos()
         {
             var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
-
-            if (permisosUsuario.Contains(39) || cbPermiso.)
+            if (permisosUsuario.Contains(39))
             {
                 cbPermiso.Enabled = true;
             }
@@ -48,6 +51,7 @@ namespace RecursosHumanos.View
             PoblaComboEstatus();
             PoblaComboGenero();
             PoblaComboRol();
+            PoblaComboPermiso();
         }
 
         public void InicializarCampos()
