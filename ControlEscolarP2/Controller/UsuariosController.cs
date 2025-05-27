@@ -163,7 +163,7 @@ namespace RecursosHumanos.Controller
                 var usuarios = ObtenerUsuarios();
 
                 // Filtro dinámico en función de los parámetros que llegan de la vista
-                Func< Usuario, bool> filtro = e => e.Id_Rol >= rol;
+                Func<dynamic, bool> filtro = e => e.Id_Rol >= rol;
 
                 var nombre = $"Usuarios_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
 
@@ -174,27 +174,50 @@ namespace RecursosHumanos.Controller
                 if (!Directory.Exists(Path.GetDirectoryName(rutaArchivo)))
                     Directory.CreateDirectory(Path.GetDirectoryName(rutaArchivo));
 
+                // Crear una lista de objetos anónimos con los campos que queremos exportar
+                var usuariosParaExportar = usuarios.Select(u => new
+                {
+                    ID_Usuario = u.Id_Usuario,
+                    Nombre_Usuario = u.UsuarioNombre,
+                    ID_Persona = u.Id_Persona,
+                    Nombre = u.DatosPersonales.Nombre,
+                    Apellido_Paterno = u.DatosPersonales.Ap_Paterno,
+                    Apellido_Materno = u.DatosPersonales.Ap_Materno,
+                    Nombre_Completo = $"{u.DatosPersonales.Nombre} {u.DatosPersonales.Ap_Paterno} {u.DatosPersonales.Ap_Materno}",
+                    Email = u.DatosPersonales.Email,
+                    Telefono = u.DatosPersonales.Telefono,
+                    Direccion = u.DatosPersonales.Direccion,
+                    Fecha_Nacimiento = u.DatosPersonales.Fecha_Nacimiento,
+                    Genero = u.DatosPersonales.Genero,
+                    ID_Rol = u.Id_Rol,
+                    Nombre_Rol = u.Rol?.Nombre ?? "Sin rol",
+                    Codigo_Rol = u.Rol?.Codigo ?? "Sin código",
+                    Fecha_Creacion = u.Fecha_Creacion,
+                    Ultimo_Acceso = u.Fecha_Ultimo_Acceso,
+                    Estatus = u.Estatus == 1 ? "Activo" : "Inactivo"
+                }).ToList();
+
                 // Exportar
-                bool resultado = ExcelExporter.ExportToExcel(usuarios, rutaArchivo, "Usuarios", filtro);
+                bool resultado = ExcelExporter.ExportToExcel(usuariosParaExportar, rutaArchivo, "Usuarios", filtro);
 
                 if (resultado)
                 {
-                    _logger.Info($"Archivo exportado correctamente a {rutaArchivo}"); 
+                    _logger.Info($"Archivo exportado correctamente a {rutaArchivo}");
                     MessageBox.Show("La exportación a Excel se completó exitosamente.", "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
                 else
                 {
                     _logger.Warn("No se pudo exportar el archivo.");
-                    MessageBox.Show("La exportación a Excel a fallado.", "Exportación incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("No se pudo exportar el archivo.", "Exportación Fallida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Error al exportar usuarios a Excel");
+                _logger.Error(ex, "Error al exportar usuarios a Excel.");
+                MessageBox.Show("Ocurrió un error inesperado durante la exportación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
-
             }
         }
 

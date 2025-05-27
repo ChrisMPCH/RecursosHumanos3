@@ -342,17 +342,7 @@ namespace RecursosHumanos.Controller
                     MessageBox.Show("No se encontraron auditorías para exportar.", "Exportación Incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
-
-                // Filtro adicional si se quiere refinar más aún (ejemplo: exportar solo auditorías activas)
-                Func<Auditoria, bool> filtro = a =>
-                    (!idTipo.HasValue || a.Id_Tipo == idTipo.Value) &&
-                    (!idAccion.HasValue || a.Id_Accion == idAccion.Value) &&
-                    (!fechaInicio.HasValue || a.Fecha_Movimiento >= fechaInicio.Value) &&
-                    (!fechaFin.HasValue || a.Fecha_Movimiento <= fechaFin.Value) &&
-                    (string.IsNullOrEmpty(ipEquipo) || a.Ip_Equipo == ipEquipo) &&
-                    (string.IsNullOrEmpty(nombreEquipo) || a.Nombre_Equipo == nombreEquipo) &&
-                    (!idUsuario.HasValue || a.Id_Usuario == idUsuario.Value) &&
-                    (!estatus.HasValue || a.Estatus == estatus.Value);
+                UsuariosController usuariosController = new UsuariosController();
 
                 // Ruta del archivo
                 var nombreArchivo = $"Auditorias_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
@@ -362,8 +352,22 @@ namespace RecursosHumanos.Controller
                 if (!Directory.Exists(carpetaDestino))
                     Directory.CreateDirectory(carpetaDestino);
 
-                // Exportar
-                bool resultado = ExcelExporter.ExportToExcel(auditorias, rutaArchivo, "Auditorias", filtro);
+                // Crear una lista de objetos anónimos con los campos que queremos exportar
+                var auditoriasParaExportar = auditorias.Select(a => new
+                {
+                    ID_Auditoria = a.Id_Auditoria,
+                    Tipo = ObtenerNombreTipo(a.Id_Tipo),
+                    Accion = ObtenerNombreAccion(a.Id_Accion),
+                    Fecha_Movimiento = a.Fecha_Movimiento,
+                    IP_Equipo = a.Ip_Equipo,
+                    Nombre_Equipo = a.Nombre_Equipo,
+                    Usuario_Responsable = a.UsuarioResponsable?.UsuarioNombre ?? "Desconocido",
+                    Detalle = a.Detalle,
+                    Estatus = a.Estatus == 1 ? "Activo" : "Inactivo"
+                }).ToList();
+
+                // Exportar sin filtro ya que los datos ya vienen filtrados de la base de datos
+                bool resultado = ExcelExporter.ExportToExcel(auditoriasParaExportar, rutaArchivo, "Auditorias");
 
                 if (resultado)
                 {
@@ -383,6 +387,31 @@ namespace RecursosHumanos.Controller
                 _logger.Error(ex, "Error al exportar auditorías a Excel");
                 MessageBox.Show("Ocurrió un error inesperado durante la exportación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
+            }
+        }
+
+        private string ObtenerNombreTipo(short idTipo)
+        {
+            switch (idTipo)
+            {
+                case 1: return "Empleado";
+                case 2: return "Contrato";
+                case 3: return "Usuario";
+                case 4: return "Rol";
+                case 5: return "Permiso";
+                case 6: return "Otro";
+                default: return "Desconocido";
+            }
+        }
+
+        private string ObtenerNombreAccion(short idAccion)
+        {
+            switch (idAccion)
+            {
+                case 0: return "Baja";
+                case 1: return "Alta";
+                case 2: return "Actualización";
+                default: return "Desconocida";
             }
         }
     }

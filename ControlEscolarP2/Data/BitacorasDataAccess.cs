@@ -72,15 +72,17 @@ namespace RecursosHumanos.Data
                     query += " AND a.id_accion = @IdAccion";
                     parametros.Add(_dbAccess.CreateParameter("@IdAccion", idAccion.Value));
                 }
-                if (fechaInicio.HasValue)
-                {
-                    query += " AND a.fecha_movimiento >= @FechaInicio";
-                    parametros.Add(_dbAccess.CreateParameter("@FechaInicio", fechaInicio.Value));
-                }
-                if (fechaFin.HasValue)
-                {
-                    query += " AND a.fecha_movimiento <= @FechaFin";
-                    parametros.Add(_dbAccess.CreateParameter("@FechaFin", fechaFin.Value));
+                if(fechaInicio.HasValue != fechaFin.HasValue) { 
+                    if (fechaInicio.HasValue)
+                    {
+                        query += " AND a.fecha_movimiento >= @FechaInicio";
+                        parametros.Add(_dbAccess.CreateParameter("@FechaInicio", fechaInicio.Value));
+                    }
+                    if (fechaFin.HasValue)
+                    {
+                        query += " AND a.fecha_movimiento <= @FechaFin";
+                        parametros.Add(_dbAccess.CreateParameter("@FechaFin", fechaFin.Value));
+                    }
                 }
                 if (!string.IsNullOrEmpty(ipEquipo))
                 {

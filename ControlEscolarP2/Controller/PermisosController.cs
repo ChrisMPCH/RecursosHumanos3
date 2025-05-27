@@ -14,6 +14,7 @@ namespace RecursosHumanos.Controller
 
         // Acceso a datos de permisos
         private readonly PermisosDataAccess _permisosData;
+        private readonly RolesPermisosDataAccess _rolesPermisosData;
 
         /// <summary>
         /// Constructor del controlador de permisos
@@ -23,6 +24,7 @@ namespace RecursosHumanos.Controller
             try
             {
                 _permisosData = new PermisosDataAccess();
+                _rolesPermisosData = new RolesPermisosDataAccess();
             }
             catch (Exception ex)
             {
@@ -93,18 +95,34 @@ namespace RecursosHumanos.Controller
                 if (!Directory.Exists(carpetaDestino))
                     Directory.CreateDirectory(carpetaDestino);
 
+                // Crear una lista de objetos anónimos con los campos que queremos exportar
+                var permisosParaExportar = permisos.Select(p => {
+                    var roles = _rolesPermisosData.ObtenerRolesPorPermiso(p.Id_Permiso);
+                    return new
+                    {
+                        ID_Permiso = p.Id_Permiso,
+                        Codigo = p.Codigo,
+                        Nombre = p.Nombre,
+                        Descripcion = p.Descripcion,
+                        Roles_Asignados = string.Join(", ", roles.Select(r => $"{r.Nombre} ({r.Codigo})")),
+                        Roles_Detalle = string.Join("\n", roles.Select(r => $"- {r.Nombre}: {r.Descripcion}")),
+                        Cantidad_Roles = roles.Count,
+                        Estatus = p.Estatus == 1 ? "Activo" : "Inactivo"
+                    };
+                }).ToList();
+
                 // Exportación usando el método genérico
-                bool resultado = ExcelExporter.ExportToExcel(permisos, rutaArchivo, "Permisos");
+                bool resultado = ExcelExporter.ExportToExcel(permisosParaExportar, rutaArchivo, "Permisos");
 
                 if (resultado)
                 {
-                    _logger.Info($"Permisos exportados correctamente a {rutaArchivo}");
-                    MessageBox.Show("La exportación de permisos se completó exitosamente.", "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    _logger.Info($"Archivo exportado correctamente a {rutaArchivo}");
+                    MessageBox.Show("La exportación a Excel se completó exitosamente.", "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
                 else
                 {
-                    _logger.Warn("No se pudo exportar el archivo de permisos.");
+                    _logger.Warn("No se pudo exportar el archivo.");
                     MessageBox.Show("No se pudo exportar el archivo.", "Exportación Fallida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }

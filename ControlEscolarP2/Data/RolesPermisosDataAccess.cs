@@ -212,6 +212,52 @@ namespace RecursosHumanos.Data
             }
         }
         
+        /// <summary>
+        /// Obtiene los roles que tienen asignado un permiso específico
+        /// </summary>
+        public List<Rol> ObtenerRolesPorPermiso(int idPermiso)
+        {
+            List<Rol> roles = new List<Rol>();
 
+            try
+            {
+                string query = @"
+                    SELECT r.*
+                    FROM administration.roles r
+                    INNER JOIN administration.roles_permisos rp ON rp.id_rol = r.id_rol
+                    WHERE rp.id_permiso = @IdPermiso AND r.estatus = 1";
+
+                var param = _dbAccess.CreateParameter("@IdPermiso", idPermiso);
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query, param);
+
+                foreach (DataRow row in resultado.Rows)
+                {
+                    Rol rol = new Rol
+                    {
+                        Id_Rol = Convert.ToInt32(row["id_rol"]),
+                        Codigo = row["codigo"].ToString() ?? "",
+                        Nombre = row["nombre"].ToString() ?? "",
+                        Descripcion = row["descripcion"].ToString() ?? "",
+                        Estatus = Convert.ToInt16(row["estatus"])
+                    };
+
+                    roles.Add(rol);
+                }
+
+                _logger.Info($"Se encontraron {roles.Count} roles para el permiso ID {idPermiso}");
+                return roles;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error al obtener los roles del permiso ID {idPermiso}");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+        }
     }
 }

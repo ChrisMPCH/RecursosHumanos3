@@ -227,8 +227,24 @@ namespace RecursosHumanos.Controller
                 if (!Directory.Exists(carpetaDestino))
                     Directory.CreateDirectory(carpetaDestino);
 
+                // Crear una lista de objetos anónimos con los campos que queremos exportar
+                var rolesParaExportar = roles.Select(r => {
+                    var permisos = _rolesPermisosData.ObtenerPermisosPorRol(r.Id_Rol);
+                    return new
+                    {
+                        ID_Rol = r.Id_Rol,
+                        Codigo = r.Codigo,
+                        Nombre = r.Nombre,
+                        Descripcion = r.Descripcion,
+                        Permisos = string.Join(", ", permisos.Select(p => $"{p.Nombre} ({p.Codigo})")),
+                        Permisos_Detalle = string.Join("\n", permisos.Select(p => $"- {p.Nombre}: {p.Descripcion}")),
+                        Cantidad_Permisos = permisos.Count,
+                        Estatus = r.Estatus == 1 ? "Activo" : "Inactivo"
+                    };
+                }).ToList();
+
                 // Exportación genérica
-                bool resultado = ExcelExporter.ExportToExcel(roles, rutaArchivo, "Roles");
+                bool resultado = ExcelExporter.ExportToExcel(rolesParaExportar, rutaArchivo, "Roles");
 
                 if (resultado)
                 {
