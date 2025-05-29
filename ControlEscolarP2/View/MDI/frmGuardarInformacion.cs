@@ -1,4 +1,4 @@
-﻿using RecursosHumanos.Controller;
+﻿using RecursosHumanosCore.Controller;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;

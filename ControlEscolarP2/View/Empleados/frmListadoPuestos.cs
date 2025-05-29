@@ -1,6 +1,6 @@
 using Guna.UI2.WinForms;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Models;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Models;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -86,8 +86,17 @@ namespace RecursosHumanos.View
         {
             PuestoController controller = new PuestoController();
 
-            // Exportar a Excel
-            controller.ExportarPuestosExcel(true);
+            var (exito, mensaje) = controller.ExportarPuestosExcel(true);
+
+            if (exito)
+            {
+                MessageBox.Show(mensaje, "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show(mensaje, "Exportación Incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
+
     }
 }

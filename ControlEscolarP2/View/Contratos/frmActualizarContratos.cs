@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Model;
+using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Model;
 using RecursosHumanos.Utilities;
+using RecursosHumanosCore.Utilities;
 
 namespace RecursosHumanos.View.Contratos
 {
@@ -299,8 +300,9 @@ namespace RecursosHumanos.View.Contratos
                 Descripcion = txtDescripcion.Text.Trim(),
                 Estatus = true
             };
+            int idUsuario = LoggingManager.UsuarioActual.Id_Usuario;
+            var resultado = _contratosController.ActualizarContrato(contratoActualizado, idUsuario);
 
-            var resultado = _contratosController.ActualizarContrato(contratoActualizado);
 
             if (resultado.exito)
             {

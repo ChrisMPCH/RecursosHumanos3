@@ -1,7 +1,7 @@
-﻿using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Data;
-using RecursosHumanos.Model;
+﻿using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Data;
+using RecursosHumanosCore.Model;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RecursosHumanosCore.Utilities;
 
 namespace RecursosHumanos.View
 {
@@ -241,8 +242,8 @@ namespace RecursosHumanos.View
                     MessageBox.Show("Por seguridad del Programa, no se puede eliminar el rol ADMIN.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                var resultado = _rolesController.EliminarRol(idRol, LoggingManager.UsuarioActual.Id_Usuario);
 
-                var resultado = _rolesController.EliminarRol(idRol);
 
                 if (resultado.exito)
                 {
@@ -495,10 +496,20 @@ namespace RecursosHumanos.View
             }
         }
 
-        private void btnExcel_Click(object sender, EventArgs e)
-        {
-            RolesController controller = new RolesController();
-            controller.ExportarRolesExcel();
-        }
+      private void btnExcel_Click(object sender, EventArgs e)
+{
+    RolesController controller = new RolesController();
+    var (exito, mensaje) = controller.ExportarRolesExcel();
+
+    if (exito)
+    {
+        MessageBox.Show(mensaje, "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+    else
+    {
+        MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+    }
+}
+
     }
 }

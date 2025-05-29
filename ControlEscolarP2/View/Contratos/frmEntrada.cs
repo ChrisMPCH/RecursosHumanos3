@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
-using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Controllers;
-using RecursosHumanos.DataAccess;
-using RecursosHumanos.Models;
+using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Controllers;
+using RecursosHumanosCore.DataAccess;
+using RecursosHumanosCore.Models;
 using RecursosHumanos.Utilities;
 using Timer = System.Windows.Forms.Timer;
 

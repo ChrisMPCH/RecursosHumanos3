@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Model;
+using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Model;
 using RecursosHumanos.Utilities;
 using static System.Net.Mime.MediaTypeNames;
+using RecursosHumanosCore.Utilities;
 
 namespace RecursosHumanos.View
 {
@@ -254,8 +255,9 @@ namespace RecursosHumanos.View
                         Genero = ((KeyValuePair<int, string>)cbxGenero.SelectedItem).Value
                     }
                 };
+                int idUsuario = LoggingManager.UsuarioActual.Id_Usuario;
+                bool actualizado = _empleadosController.ActualizarEmpleado(empleadoActualizado, idUsuario);
 
-                bool actualizado = _empleadosController.ActualizarEmpleado(empleadoActualizado);
 
                 if (actualizado)
                 {

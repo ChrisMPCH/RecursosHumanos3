@@ -1,4 +1,4 @@
-﻿using RecursosHumanos.Controller;
+﻿using RecursosHumanosCore.Controller;
 using RecursosHumanos.Utilities;
 using RecursosHumanos.View.Contratos;
 using RecursosHumanos.View.Usuarios;

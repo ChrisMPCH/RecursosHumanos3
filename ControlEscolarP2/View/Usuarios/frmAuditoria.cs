@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Model;
+using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Model;
 using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View.Usuarios
@@ -366,7 +366,17 @@ namespace RecursosHumanos.View.Usuarios
 
             int? estatus = 1; // Valor fijo o podría tomarse de otro control
 
-            controller.ExportarAuditoriasExcel(idTipo, idAccion, fechaInicio, fechaFin, ipEquipo, nombreEquipo, idUsuario, estatus);
+            var resultado = controller.ExportarAuditoriasExcel(idTipo, idAccion, fechaInicio, fechaFin, ipEquipo, nombreEquipo, idUsuario, estatus);
+
+            if (resultado.exito)
+            {
+                MessageBox.Show(resultado.mensaje, "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show(resultado.mensaje, "Exportación Incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
+
     }
 }

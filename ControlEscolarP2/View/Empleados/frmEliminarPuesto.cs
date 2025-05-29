@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
-using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
+using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
 using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View

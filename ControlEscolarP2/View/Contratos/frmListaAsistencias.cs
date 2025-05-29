@@ -1,7 +1,7 @@
 ﻿using RecursosHumanos.Utilities;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Controllers;
-using RecursosHumanos.Models;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Controllers;
+using RecursosHumanosCore.Models;
 
 namespace RecursosHumanos.View
 {

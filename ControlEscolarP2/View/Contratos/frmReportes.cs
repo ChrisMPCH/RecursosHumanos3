@@ -7,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RecursosHumanos.Bussines;
+using RecursosHumanosCore.Bussines;
 using RecursosHumanos.Utilities;
-using  RecursosHumanos.Model;
-using RecursosHumanos.Controller;
+using  RecursosHumanosCore.Model;
+using RecursosHumanosCore.Controller;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using static RecursosHumanos.View.frmListaUsuarios;
 using System.Windows.Forms;
-using RecursosHumanos.Models;
-using RecursosHumanos.Data;
+using RecursosHumanosCore.Models;
+using RecursosHumanosCore.Data;
 
 namespace RecursosHumanos.View
 {

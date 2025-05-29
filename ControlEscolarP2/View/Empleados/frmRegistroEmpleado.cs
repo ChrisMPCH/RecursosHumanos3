@@ -1,7 +1,8 @@
-﻿using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Models;
+﻿using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Models;
 using RecursosHumanos.Utilities;
+using RecursosHumanosCore.Utilities;
 
 namespace RecursosHumanos.View
 {
@@ -160,7 +161,10 @@ namespace RecursosHumanos.View
                 };
 
                 EmpleadosController empleadosController = new EmpleadosController();
-                var (exito, mensaje) = empleadosController.RegistrarEmpleado(nuevoEmpleado);
+
+                int idUsuario = LoggingManager.UsuarioActual.Id_Usuario;
+                var (exito, mensaje) = empleadosController.RegistrarEmpleado(nuevoEmpleado, idUsuario);
+
 
                 if (!exito)
                 {

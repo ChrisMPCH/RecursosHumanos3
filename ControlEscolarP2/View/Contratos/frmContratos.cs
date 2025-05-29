@@ -1,14 +1,15 @@
-﻿using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Model;
+﻿using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Model;
 using RecursosHumanos.Utilities;
+using RecursosHumanosCore.Utilities;
 
 namespace RecursosHumanos.View
 {
     public partial class frmContratos : Form
     {
         private readonly ContratoController _contratosController = new ContratoController();
-        // private readonly EmpleadosController _empleadosController = new EmpleadosController();
+        private readonly EmpleadosController _empleadosController = new EmpleadosController();
 
 
         public frmContratos()
@@ -168,7 +169,9 @@ namespace RecursosHumanos.View
                 };
 
                 // LLAMADA AL CONTROLLER con matrícula como parámetro
-                var resultado = _contratosController.RegistrarContrato(matricula, contrato);
+                int idUsuario = LoggingManager.UsuarioActual.Id_Usuario;
+                var resultado = _contratosController.RegistrarContrato(matricula, contrato, idUsuario);
+
 
                 if (resultado.id > 0)
                 {

@@ -1,5 +1,5 @@
-﻿using RecursosHumanos.Controller;
-using RecursosHumanos.Model;
+﻿using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Model;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -117,9 +117,17 @@ namespace RecursosHumanos.View
         private void btnExcel_Click(object sender, EventArgs e)
         {
             UsuariosController controller = new UsuariosController();
+            bool exportado = controller.ExportarUsuariosExcel(cbRoles.SelectedIndex);
 
-            // Exportar a Excel
-            controller.ExportarUsuariosExcel(cbRoles.SelectedIndex);
+            if (exportado)
+            {
+                MessageBox.Show("La exportación a Excel se completó exitosamente.", "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("La exportación a Excel ha fallado.", "Exportación Incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
+
     }
 }

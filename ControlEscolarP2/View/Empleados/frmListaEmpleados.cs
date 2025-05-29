@@ -1,5 +1,5 @@
 ﻿using RecursosHumanos.Utilities;
-using RecursosHumanos.Controller;
+using RecursosHumanosCore.Controller;
 
 namespace RecursosHumanos.View
 {
@@ -222,8 +222,17 @@ namespace RecursosHumanos.View
         {
             EmpleadosController controller = new EmpleadosController();
 
-            // Exportar a Excel
-            controller.ExportarEmpleadosExcel();
+            var (exito, mensaje) = controller.ExportarEmpleadosExcel();
+
+            if (exito)
+            {
+                MessageBox.Show(mensaje, "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show(mensaje, "Exportación Incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
+
     }
 }

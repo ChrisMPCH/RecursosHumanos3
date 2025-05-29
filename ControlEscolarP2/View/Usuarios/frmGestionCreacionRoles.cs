@@ -1,6 +1,6 @@
-﻿using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Model;
+﻿using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Model;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -261,7 +261,18 @@ namespace RecursosHumanos.View
         private void btnExcel_Click(object sender, EventArgs e)
         {
             PermisosController permisosController = new PermisosController();
-            permisosController.ExportarPermisosExcel();
+
+            var (exito, mensaje) = permisosController.ExportarPermisosExcel();
+
+            if (exito)
+            {
+                MessageBox.Show(mensaje, "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show(mensaje, "Exportación Fallida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
+
     }
 }
