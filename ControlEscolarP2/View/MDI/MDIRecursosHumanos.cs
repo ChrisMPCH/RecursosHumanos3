@@ -307,11 +307,11 @@ namespace RecursosHumanos.View
             {
                 btnLisUsuarios.Enabled = true;
             }
-            if (permisosUsuario.Contains(28) || permisosUsuario.Contains(35)) // Agregar usuario y empleado
+            if (permisosUsuario.Contains(15) || permisosUsuario.Contains(39)) // Agregar usuario y empleado
             {
                 subRegistroPersonas.Enabled = true;
             }
-            if (permisosUsuario.Contains(16) || permisosUsuario.Contains(35)) // Editar usuario
+            if (permisosUsuario.Contains(15)) // Editar usuario
             {
                 btnActualizarUsuarios.Enabled = true;
             }
@@ -353,7 +353,7 @@ namespace RecursosHumanos.View
             {
                 btnListaEmpleados.Enabled = true;
             }
-            if (permisosUsuario.Contains(29) || permisosUsuario.Contains(35)) // Editar empleados
+            if (permisosUsuario.Contains(41)) // Editar empleados
             {
                 btnActualizarEmpleados.Enabled = true;
             }
