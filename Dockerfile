@@ -1,15 +1,15 @@
-# Etapa de construcción
+# Etapa de construcciÃ³n
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-# Copiar toda la solución primero
+# Copiar toda la soluciÃ³n primero
 COPY . ./
 
-# Listar los directorios para depuración
+# Listar los directorios para depuraciÃ³n
 RUN ls -la
 
 # Intentar construir solo el proyecto API
-RUN find . -name "ControlEstudiantesAPI.csproj" -exec dotnet publish {} -c Release -o /app/out \;
+RUN find . -name "API_RecursosHumanos_Test.csproj" -exec dotnet publish {} -c Release -o /app/out \;
 
 # Si lo anterior falla, intentar buscar la API por nombre
 RUN if [ ! -d /app/out ]; then \
@@ -26,5 +26,5 @@ EXPOSE 443
 # Buscar el nombre exacto del DLL de la API
 RUN find . -name "*.dll" | grep -i api
 
-# Entrypoint dinámico que busca el archivo API.dll
+# Entrypoint dinÃ¡mico que busca el archivo API.dll
 ENTRYPOINT ["sh", "-c", "dotnet $(find . -name \"*API.dll\" | head -1)"]
