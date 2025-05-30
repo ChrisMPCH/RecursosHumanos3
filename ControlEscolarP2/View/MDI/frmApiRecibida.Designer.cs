@@ -1,6 +1,6 @@
 ﻿namespace RecursosHumanos.View.MDI
 {
-    partial class ApiRecibida
+    partial class frmApiRecibida
     {
         /// <summary>
         /// Required designer variable.

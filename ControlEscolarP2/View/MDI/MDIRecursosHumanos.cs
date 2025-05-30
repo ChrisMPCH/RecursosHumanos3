@@ -215,7 +215,7 @@ namespace RecursosHumanos.View
 
         private void btnContarDias_Click(object sender, EventArgs e)
         {
-            Form frmDias_calculados = new ApiRecibida();
+            Form frmDias_calculados = new frmApiRecibida();
             abrirChildFormMDI(frmDias_calculados);
         }
 
