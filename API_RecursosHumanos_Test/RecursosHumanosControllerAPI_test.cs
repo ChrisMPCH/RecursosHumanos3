@@ -48,15 +48,26 @@ namespace API_RecursosHumanos_Test
         {
             try
             {
+                _logger.LogInformation($"Iniciando consulta para matricula={matricula}, fechaInicio={fechaInicio}, fechaFin={fechaFin}");
+
                 Empleado empleado = _empleadosDataAccess.ObtenerEmpleadoPorMatricula(matricula);
                 if (empleado == null)
+                {
+                    _logger.LogWarning($"Empleado con matrícula {matricula} no encontrado.");
                     return NotFound($"Empleado con matrícula {matricula} no encontrado.");
+                }
+                _logger.LogInformation("Empleado encontrado.");
 
                 var contrato = _contratosController.ObtenerContratoActivoPorMatricula(matricula);
                 if (contrato == null)
+                {
+                    _logger.LogWarning($"Contrato activo no encontrado para la matrícula {matricula}.");
                     return BadRequest("El empleado no tiene un contrato activo.");
+                }
+                _logger.LogInformation("Contrato activo encontrado.");
 
                 int diasTrabajados = _asistenciaDataAccess.ContarDiasTrabajados(empleado.Id_Empleado, fechaInicio, fechaFin);
+                _logger.LogInformation($"Días trabajados calculados: {diasTrabajados}");
 
                 var info = new WorkDaysInfo
                 {
@@ -68,6 +79,7 @@ namespace API_RecursosHumanos_Test
                     Salario = contrato.Sueldo
                 };
 
+                _logger.LogInformation($"Consulta finalizada exitosamente para matricula={matricula}.");
                 return Ok(info);
             }
             catch (Exception ex)
