@@ -265,5 +265,28 @@ namespace RecursosHumanosCore.Controller
                 return (false, "Error inesperado al obtener la hora de entrada.", null);
             }
         }
+
+        public List<Contrato> ObtenerContratosAPI(
+    string matricula,
+    DateTime? fechaInicio,
+    DateTime? fechaFin)
+        {
+            try
+            {
+                return _contratosDataAccess.ObtenerContratosAPI(
+                    matricula,
+                    fechaInicio,
+                    fechaFin
+                );
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener contratos filtrados");
+                return new List<Contrato>();
+            }
+        }
+
+      
+
     }
 }

@@ -460,6 +460,93 @@ WHERE 1=1");
             }
         }
 
+        public List<Contrato> ObtenerContratosAPI(string matricula, DateTime? fechaInicio, DateTime? fechaFin)
+        {
+            List<Contrato> contratos = new List<Contrato>();
+
+            try
+            {
+                StringBuilder query = new StringBuilder(@"
+                    SELECT  
+                        e.matricula,
+                        CONCAT(p.nombre, ' ', p.ap_paterno, ' ', p.ap_materno) AS nombre_empleado,
+                        p.email,
+                        p.telefono,
+                        d.nombre_departamento,
+                        pu.nombre_puesto,
+                        e.estatus AS estatus_empleado,
+                        tc.nombre AS tipo_contrato,
+                        c.salario,
+                        c.fecha_inicio,
+                        c.fecha_fin,
+                        c.hora_entrada,
+                        c.hora_salida
+                    FROM human_resours.contrato c
+                    JOIN human_resours.empleado e ON c.id_empleado = e.id_empleado
+                    JOIN human_resours.persona p ON e.id_persona = p.id_persona
+                    JOIN human_resours.departamento d ON e.id_departamento = d.id_departamento
+                    JOIN human_resours.puesto pu ON e.id_puesto = pu.id_puesto
+                    JOIN human_resours.tipocontrato tc ON c.id_tipocontrato = tc.id_tipocontrato
+                    WHERE 1=1");
+
+                List<NpgsqlParameter> parametros = new List<NpgsqlParameter>();
+
+                if (!string.IsNullOrWhiteSpace(matricula) && matricula != "Ingresa la matricula")
+                {
+                    query.Append(" AND e.matricula = @matricula");
+                    parametros.Add(_dbAccess.CreateParameter("@matricula", matricula));
+                }
+
+                if (fechaInicio.HasValue)
+                {
+                    query.Append(" AND c.fecha_inicio >= @fechaInicio");
+                    parametros.Add(_dbAccess.CreateParameter("@fechaInicio", fechaInicio.Value));
+                }
+
+                if (fechaFin.HasValue)
+                {
+                    query.Append(" AND c.fecha_fin <= @fechaFin");
+                    parametros.Add(_dbAccess.CreateParameter("@fechaFin", fechaFin.Value));
+                }
+
+                _dbAccess.Connect();
+                DataTable resultado = _dbAccess.ExecuteQuery_Reader(query.ToString(), parametros.ToArray());
+
+                foreach (DataRow row in resultado.Rows)
+                {
+                    Contrato contrato = new Contrato
+                    {
+                        Matricula = row["matricula"]?.ToString() ?? "",
+                        NombreEmpleado = row["nombre_empleado"]?.ToString() ?? "",
+                        Correo = row["email"]?.ToString() ?? "",
+                        Telefono = row["telefono"]?.ToString() ?? "",
+                        NombreDepartamento = row["nombre_departamento"]?.ToString() ?? "",
+                        NombrePuesto = row["nombre_puesto"]?.ToString() ?? "",
+                        EstatusEmpleado = Convert.ToInt32(row["estatus_empleado"]) == 1 ? "Activo" : "Inactivo",
+                        NombreTipoContrato = row["tipo_contrato"]?.ToString() ?? "",
+                        Sueldo = Convert.ToDouble(row["salario"]),
+                        FechaInicio = Convert.ToDateTime(row["fecha_inicio"]),
+                        FechaFin = row["fecha_fin"] != DBNull.Value ? Convert.ToDateTime(row["fecha_fin"]) : DateTime.MinValue,
+                        HoraEntrada = row["hora_entrada"] != DBNull.Value ? TimeSpan.Parse(row["hora_entrada"].ToString()) : TimeSpan.Zero,
+                        HoraSalida = row["hora_salida"] != DBNull.Value ? TimeSpan.Parse(row["hora_salida"].ToString()) : TimeSpan.Zero
+                    };
+
+                    contratos.Add(contrato);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error al obtener contratos filtrados");
+                throw;
+            }
+            finally
+            {
+                _dbAccess.Disconnect();
+            }
+
+            return contratos;
+        }
+
 
 
 

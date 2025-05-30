@@ -18,7 +18,11 @@ namespace RecursosHumanosCore.Model
         public double Sueldo { get; set; }
         public string Descripcion { get; set; }
         public bool Estatus { get; set; }
+        public string Correo { get; set; }
+        public string Telefono { get; set; }
 
+        public string NombrePuesto { get; set; }
+        public string EstatusEmpleado { get; set; }
         // Propiedades adicionales solo para reportes
         public string NombreTipoContrato { get; set; }
         public string NombreEmpleado { get; set; }           // Solo reportes
