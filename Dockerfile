@@ -12,12 +12,14 @@ RUN dotnet restore "API_RecursosHumanos_Test/API_RecursosHumanos_Test.csproj"
 # Copiar el resto del código
 COPY . .
 
+# Usar WORKDIR para build y publish para que los paths sean relativos
+WORKDIR /src/API_RecursosHumanos_Test
+
 # Compilar la aplicación
-WORKDIR "/src/API_RecursosHumanos_Test"
 RUN dotnet build "API_RecursosHumanos_Test.csproj" -c Release -o /app/build
 
 # Publicar la aplicación
-RUN dotnet publish "API_RecursosHumanos_Test/API_RecursosHumanos_Test.csproj" -c Release -o /app/publish
+RUN dotnet publish "API_RecursosHumanos_Test.csproj" -c Release -o /app/publish
 
 # Imagen final
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
@@ -29,7 +31,7 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 # Copiar los archivos publicados
 COPY --from=build /app/publish .
 
-# Variables de entorno por defecto
+# Variables de entorno
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENV ASPNETCORE_URLS=http://+:80
 ENV ConnectionStrings__DefaultConnection="Host=dpg-d0knhi7fte5s738rd8hg-a.oregon-postgres.render.com;Port=5432;Database=recursoshumanos;Username=recursoshumanos_user;Password=UpgPeaoHYijsjjagibEF6m8dzcXyNP3j;SSL Mode=Require;Trust Server Certificate=true;"
@@ -42,5 +44,5 @@ EXPOSE 443
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
     CMD curl -f http://localhost:80/health || exit 1
 
-# Comando para ejecutar la aplicación
-ENTRYPOINT ["dotnet", "API_RecursosHumanos_Test.dll"] 
+# Ejecutar la app
+ENTRYPOINT ["dotnet", "API_RecursosHumanos_Test.dll"]
