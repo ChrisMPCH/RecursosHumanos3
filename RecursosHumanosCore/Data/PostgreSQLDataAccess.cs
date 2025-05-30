@@ -11,16 +11,13 @@ using Npgsql;
 
 namespace RecursosHumanosCore.Data
 {
-     class PostgreSQLDataAccess
+    public class PostgreSQLDataAccess
     {
-        //Logger usando el logginManeger
         private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Data.PostgreSQLDataAccess");
-
-        //Cadena de conexión desde App.config
+        private static string _connectionString;
         private NpgsqlConnection _connection;
         private static PostgreSQLDataAccess? _instance;
 
-        // Propiedad para establecer la cadena de conexión desde el API
         public static string ConnectionString
         {
             get
@@ -29,7 +26,6 @@ namespace RecursosHumanosCore.Data
                 {
                     try
                     {
-                        // Intenta obtener desde ConfigurationManager (Windows Forms)
                         _connectionString = ConfigurationManager.ConnectionStrings["ConexionBD"]?.ConnectionString;
                     }
                     catch (Exception ex)
@@ -42,7 +38,7 @@ namespace RecursosHumanosCore.Data
             set { _connectionString = value; }
         }
 
-        private PosgresSQLAccess()
+        private PostgreSQLDataAccess()
         {
             try
             {
@@ -79,7 +75,6 @@ namespace RecursosHumanosCore.Data
                     _connection.Open();
                     _logger.Info("Conexión a la base de datos establecida correctamente");
                 }
-
                 return true;
             }
             catch (Exception ex)
@@ -115,7 +110,6 @@ namespace RecursosHumanosCore.Data
                 _logger.Debug($"Ejecutando consulta: {query}");
                 using (NpgsqlCommand command = CreateCommand(query, parameters))
                 {
-
                     using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
                     {
                         adapter.Fill(dataTable);
@@ -131,7 +125,6 @@ namespace RecursosHumanosCore.Data
             }
         }
 
-        //prepra con los parametros
         private NpgsqlCommand CreateCommand(string query, NpgsqlParameter[] parameters)
         {
             NpgsqlCommand command = new NpgsqlCommand(query, _connection);
@@ -186,7 +179,6 @@ namespace RecursosHumanosCore.Data
 
         public NpgsqlParameter CreateParameter(string name, object value)
         {
-            //?? es como un if enfocado a nulos
             return new NpgsqlParameter(name, value ?? DBNull.Value);
         }
     }

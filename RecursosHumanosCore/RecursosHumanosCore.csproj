@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="8.0.5" />
-    <PackageReference Include="NLog" Version="5.4.0" />
-    <PackageReference Include="Npgsql" Version="9.0.3" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.5" />
+    <PackageReference Include="EPPlus" Version="7.0.8" />
+    <PackageReference Include="NLog" Version="5.2.8" />
+    <PackageReference Include="Npgsql" Version="7.0.6" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
   </ItemGroup>
 
 </Project>
