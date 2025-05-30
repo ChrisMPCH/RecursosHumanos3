@@ -4,7 +4,7 @@ using RecursosHumanosCore.Model;
 using System;
 using System.Collections.Generic;
 
-namespace API_RecursosHumanos_Test
+namespace API_RecursosHumanos_Test.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

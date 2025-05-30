@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RecursosHumanosCore.Controller;
-using API_RecursosHumanos_Test.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,9 +27,6 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader();
         });
 });
-
-// Inicializar la conexión a la base de datos
-DatabaseConnection.Initialize(builder.Configuration);
 
 var app = builder.Build();
 
