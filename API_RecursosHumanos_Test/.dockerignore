@@ -1,0 +1,95 @@
+﻿# Archivos y carpetas generales a ignorar
+**/.classpath
+**/.dockerignore
+**/.env
+**/.git
+**/.gitignore
+**/.project
+**/.settings
+**/.toolstarget
+**/.vs
+**/.vscode
+**/*.*proj.user
+**/*.dbmdl
+**/*.jfm
+**/bin
+**/obj
+**/charts
+**/docker-compose*
+**/compose*
+**/Dockerfile*
+**/node_modules
+**/npm-debug.log
+**/secrets.dev.yaml
+**/values.dev.yaml
+README.md
+
+# Ignorar específicamente el proyecto Windows Forms
+ControlEscolar/
+ControlEscolar.Tests/
+# Cualquier otro proyecto específico de Windows que no sea necesario para la API
+
+# Archivos de desarrollo
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Archivos de compilación
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Archivos de Visual Studio
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+
+# Archivos de NuGet
+*.nupkg
+# Los paquetes NuGet necesitan ser incluidos en el build
+!**/*.csproj.nuget.g.props
+!**/*.csproj.nuget.g.targets
+
+# Archivos de Git
+.git/
+.gitignore
+
+# Archivos de configuración local
+appsettings.Development.json
+*.Development.json
+
+# Archivos de Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Archivos de prueba
+**/*.Tests/
+**/*.Test/
+**/TestResults/
+
+# Archivos temporales
+[Tt]emp/
+*.tmp
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
