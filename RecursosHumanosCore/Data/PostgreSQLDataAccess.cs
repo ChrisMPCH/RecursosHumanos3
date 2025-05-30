@@ -17,26 +17,52 @@ namespace RecursosHumanosCore.Data
         public static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Data.PostgreSQLDataAccess");
 
         //Cadena de conexión desde App.config
-
-        public static readonly string _ConnectionString = ConfigurationManager.ConnectionStrings["ConexionBD"].ConnectionString;
+        private static string _connectionString;
 
         public NpgsqlConnection _connection;
         public static PostgreSQLDataAccess? _instance;
 
-        public PostgreSQLDataAccess()
+
+        public static string ConnectionString
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_connectionString))
+                {
+                    try
+                    {
+                        // Intenta obtener desde ConfigurationManager (Windows Forms)
+                        _connectionString = ConfigurationManager.ConnectionStrings["ConexionBD"]?.ConnectionString;
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Warn(ex, "No se pudo obtener la cadena de conexión desde ConfigurationManager");
+                    }
+                }
+                return _connectionString;
+            }
+            set { _connectionString = value; }
+        }
+
+        private PostgreSQLDataAccess()
         {
             try
             {
-                _connection = new NpgsqlConnection(_ConnectionString);
+                if (string.IsNullOrEmpty(ConnectionString))
+                {
+                    throw new InvalidOperationException("La cadena de conexión no está configurada. Asegúrate de establecer PostgreSQLDataAccess.ConnectionString antes de usar la clase.");
+                }
+
+                _connection = new NpgsqlConnection(ConnectionString);
                 _logger.Info("Instancia de acceso a datos creada correctamente");
             }
             catch (Exception ex)
             {
                 _logger.Fatal(ex, "Error al inicializar el acceso a la base de datos");
-
                 throw;
             }
         }
+
 
         public static PostgreSQLDataAccess GetInstance()
         {

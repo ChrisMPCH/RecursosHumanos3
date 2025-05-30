@@ -9,17 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 PostgreSQLDataAccess.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Configurar CORS
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowSpecificOrigins",
-        builder =>
-        {
-            var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
-            builder.WithOrigins(allowedOrigins ?? Array.Empty<string>())
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
-});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
