@@ -1,15 +1,15 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using RecursosHumanosCore.Controller;
-using RecursosHumanosCore.Controllers;
-using RecursosHumanosCore.Data;
-using Microsoft.Extensions.Configuration;
+using API_RecursosHumanos_Test.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Agregar servicios al contenedor
 builder.Services.AddControllers();
-
-// Configurar la conexión a la base de datos
-PostgreSQLDataAccess.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // Registrar los controladores
 builder.Services.AddSingleton<UsuariosController>();
@@ -29,24 +29,21 @@ builder.Services.AddCors(options =>
         });
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Inicializar la conexión a la base de datos
+DatabaseConnection.Initialize(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurar el pipeline de solicitud HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// Usar CORS
+app.UseHttpsRedirection();
 app.UseCors("AllowAll");
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

@@ -102,8 +102,28 @@ namespace API_RecursosHumanos_Test
         {
             try
             {
-                // TODO: Implementar la lógica para obtener el histórico de pagos
-                var historicoPagos = new List<HistoricoPagosDTO>();
+                // 1. Validar parámetros
+                if (string.IsNullOrWhiteSpace(matricula))
+                {
+                    return BadRequest("La matrícula es requerida.");
+                }
+
+                // 2. Obtener información del empleado
+                var empleado = _empleadosController.ObtenerEmpleadoPorMatricula(matricula);
+                if (empleado == null)
+                {
+                    return NotFound($"No se encontró un empleado con la matrícula {matricula}.");
+                }
+
+                // 3. Obtener contrato activo
+                var contrato = _contratoController.ObtenerContratoActivoPorMatricula(matricula);
+                if (contrato == null)
+                {
+                    return NotFound($"No se encontró un contrato activo para el empleado con matrícula {matricula}.");
+                }
+
+                // 4. Obtener histórico de pagos
+                var historicoPagos = _contratoController.ObtenerHistorialPagos(matricula);
 
                 return Ok(historicoPagos);
             }

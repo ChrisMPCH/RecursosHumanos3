@@ -207,5 +207,43 @@ namespace RecursosHumanosCore.Controllers
             }
         }
 
+        public int ObtenerDiasTrabajados(string matricula)
+        {
+            try
+            {
+                // Validar matrícula
+                if (string.IsNullOrWhiteSpace(matricula))
+                    throw new ArgumentException("La matrícula no puede estar vacía.");
+
+                // Obtener empleado
+                var empleado = _empleadosDataAccess.ObtenerEmpleadoPorMatricula(matricula);
+                if (empleado == null)
+                    throw new ArgumentException($"No se encontró un empleado con la matrícula {matricula}.");
+
+                // Obtener contrato activo
+                var contrato = _contratosController.ObtenerContratoActivoPorMatricula(matricula);
+                if (contrato == null)
+                    throw new ArgumentException($"No se encontró un contrato activo para el empleado con matrícula {matricula}.");
+
+                // Obtener días trabajados del mes actual
+                var fechaInicio = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                var fechaFin = DateTime.Now;
+
+                int diasTrabajados = _asistenciaDataAccess.ContarDiasTrabajados(empleado.Id_Empleado, fechaInicio, fechaFin);
+
+                return diasTrabajados;
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.Warn(ex, "Validación fallida al obtener días trabajados");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error inesperado al obtener los días trabajados");
+                throw new ApplicationException("Hubo un error al obtener los días trabajados. Por favor intente nuevamente más tarde.", ex);
+            }
+        }
+
     }
 }
