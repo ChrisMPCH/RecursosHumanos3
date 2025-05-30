@@ -75,6 +75,7 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges44 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmActualizarEmpleado));
             pnlInfoEsmpleado = new Guna.UI2.WinForms.Guna2GradientPanel();
+            guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             lblGenero = new Label();
             ptbInfoMatricula = new Guna.UI2.WinForms.Guna2PictureBox();
             cbxEstatus = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -94,7 +95,7 @@
             btnGuardar = new Guna.UI2.WinForms.Guna2Button();
             btnCancelar = new Guna.UI2.WinForms.Guna2Button();
             lblDireccion = new Label();
-            guna2DateTimePicker1 = new Guna.UI2.WinForms.Guna2DateTimePicker();
+            dtpFechaNac = new Guna.UI2.WinForms.Guna2DateTimePicker();
             lblFechaNacimiento = new Label();
             lblNombre = new Label();
             lblApellidoM = new Label();
@@ -116,7 +117,6 @@
             lblRegistroEmpleados = new Label();
             pnlFondo = new Guna.UI2.WinForms.Guna2Panel();
             InfoMatricula = new ToolTip(components);
-            guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             pnlInfoEsmpleado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ptbInfoMatricula).BeginInit();
             SuspendLayout();
@@ -146,7 +146,7 @@
             pnlInfoEsmpleado.Controls.Add(btnGuardar);
             pnlInfoEsmpleado.Controls.Add(btnCancelar);
             pnlInfoEsmpleado.Controls.Add(lblDireccion);
-            pnlInfoEsmpleado.Controls.Add(guna2DateTimePicker1);
+            pnlInfoEsmpleado.Controls.Add(dtpFechaNac);
             pnlInfoEsmpleado.Controls.Add(lblFechaNacimiento);
             pnlInfoEsmpleado.Controls.Add(lblNombre);
             pnlInfoEsmpleado.Controls.Add(lblApellidoM);
@@ -171,6 +171,14 @@
             pnlInfoEsmpleado.ShadowDecoration.CustomizableEdges = customizableEdges42;
             pnlInfoEsmpleado.Size = new Size(1027, 766);
             pnlInfoEsmpleado.TabIndex = 4;
+            // 
+            // guna2Separator2
+            // 
+            guna2Separator2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            guna2Separator2.Location = new Point(8, 116);
+            guna2Separator2.Name = "guna2Separator2";
+            guna2Separator2.Size = new Size(1013, 10);
+            guna2Separator2.TabIndex = 72;
             // 
             // lblGenero
             // 
@@ -550,24 +558,24 @@
             lblDireccion.TabIndex = 50;
             lblDireccion.Text = "Dirección:";
             // 
-            // guna2DateTimePicker1
+            // dtpFechaNac
             // 
-            guna2DateTimePicker1.BackColor = Color.Transparent;
-            guna2DateTimePicker1.Checked = true;
-            guna2DateTimePicker1.CustomizableEdges = customizableEdges35;
-            guna2DateTimePicker1.FillColor = Color.White;
-            guna2DateTimePicker1.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            guna2DateTimePicker1.Format = DateTimePickerFormat.Long;
-            guna2DateTimePicker1.ImeMode = ImeMode.NoControl;
-            guna2DateTimePicker1.Location = new Point(735, 379);
-            guna2DateTimePicker1.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
-            guna2DateTimePicker1.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
-            guna2DateTimePicker1.Name = "guna2DateTimePicker1";
-            guna2DateTimePicker1.RightToLeft = RightToLeft.No;
-            guna2DateTimePicker1.ShadowDecoration.CustomizableEdges = customizableEdges36;
-            guna2DateTimePicker1.Size = new Size(229, 31);
-            guna2DateTimePicker1.TabIndex = 65;
-            guna2DateTimePicker1.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
+            dtpFechaNac.BackColor = Color.Transparent;
+            dtpFechaNac.Checked = true;
+            dtpFechaNac.CustomizableEdges = customizableEdges35;
+            dtpFechaNac.FillColor = Color.White;
+            dtpFechaNac.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dtpFechaNac.Format = DateTimePickerFormat.Long;
+            dtpFechaNac.ImeMode = ImeMode.NoControl;
+            dtpFechaNac.Location = new Point(735, 379);
+            dtpFechaNac.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
+            dtpFechaNac.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
+            dtpFechaNac.Name = "dtpFechaNac";
+            dtpFechaNac.RightToLeft = RightToLeft.No;
+            dtpFechaNac.ShadowDecoration.CustomizableEdges = customizableEdges36;
+            dtpFechaNac.Size = new Size(229, 31);
+            dtpFechaNac.TabIndex = 65;
+            dtpFechaNac.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
             // 
             // lblFechaNacimiento
             // 
@@ -623,7 +631,6 @@
             lblTelefono.Size = new Size(104, 25);
             lblTelefono.TabIndex = 36;
             lblTelefono.Text = "Telefono: ";
-            lblTelefono.Click += lblTelefono_Click;
             // 
             // lblCURP
             // 
@@ -804,14 +811,6 @@
             pnlFondo.Size = new Size(1027, 767);
             pnlFondo.TabIndex = 24;
             // 
-            // guna2Separator2
-            // 
-            guna2Separator2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            guna2Separator2.Location = new Point(8, 116);
-            guna2Separator2.Name = "guna2Separator2";
-            guna2Separator2.Size = new Size(1013, 10);
-            guna2Separator2.TabIndex = 72;
-            // 
             // frmActualizarEmpleado
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -852,7 +851,7 @@
         private Label lblGenero;
         private Label lblApellidoM;
         private Label lblNombre;
-        private Guna.UI2.WinForms.Guna2DateTimePicker guna2DateTimePicker1;
+        private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaNac;
         private Label lblFechaNacimiento;
         private Label lblDireccion;
         private Guna.UI2.WinForms.Guna2Panel pnlFondo;

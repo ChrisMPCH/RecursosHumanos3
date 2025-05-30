@@ -77,20 +77,20 @@
             lblInfoUsuario = new Label();
             lblTitulo = new Label();
             pnlDatos = new Guna.UI2.WinForms.Guna2GradientPanel();
-            txtDireccion = new Guna.UI2.WinForms.Guna2TextBox();
-            txtCorreo = new Guna.UI2.WinForms.Guna2TextBox();
-            txtTelefono1 = new Guna.UI2.WinForms.Guna2TextBox();
-            txtCurp1 = new Guna.UI2.WinForms.Guna2TextBox();
-            lblDireccion = new Label();
-            lblCurp = new Label();
-            lblTelefono = new Label();
-            lblEmail = new Label();
+            txtNombreCompleto = new Guna.UI2.WinForms.Guna2TextBox();
             btnBuscar = new Guna.UI2.WinForms.Guna2Button();
+            txtCorreo = new Guna.UI2.WinForms.Guna2TextBox();
             guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
+            txtTelefono = new Guna.UI2.WinForms.Guna2TextBox();
             label4 = new Label();
+            txtCurp = new Guna.UI2.WinForms.Guna2TextBox();
             ptbInfoMatricula = new Guna.UI2.WinForms.Guna2PictureBox();
-            txtMatricula1 = new Guna.UI2.WinForms.Guna2TextBox();
+            lblNombreCompleto = new Label();
+            lblCurp = new Label();
+            txtMatricula = new Guna.UI2.WinForms.Guna2TextBox();
+            lblTelefono = new Label();
             lblMatricula = new Label();
+            lblEmail = new Label();
             imprimir = new System.Drawing.Printing.PrintDocument();
             toolTipMatricula = new ToolTip(components);
             guna2GradientPanel1.SuspendLayout();
@@ -216,7 +216,7 @@
             btnRegresar.ShadowDecoration.CustomizableEdges = customizableEdges8;
             btnRegresar.Size = new Size(188, 43);
             btnRegresar.TabIndex = 52;
-            btnRegresar.Text = "Cancelar";
+            btnRegresar.Text = "Regresar";
             btnRegresar.Click += Regresar;
             // 
             // dtpFechaInicio1
@@ -336,20 +336,20 @@
             // 
             pnlDatos.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlDatos.BackColor = Color.White;
-            pnlDatos.Controls.Add(txtDireccion);
-            pnlDatos.Controls.Add(txtCorreo);
-            pnlDatos.Controls.Add(txtTelefono1);
-            pnlDatos.Controls.Add(txtCurp1);
-            pnlDatos.Controls.Add(lblDireccion);
-            pnlDatos.Controls.Add(lblCurp);
-            pnlDatos.Controls.Add(lblTelefono);
-            pnlDatos.Controls.Add(lblEmail);
+            pnlDatos.Controls.Add(txtNombreCompleto);
             pnlDatos.Controls.Add(btnBuscar);
+            pnlDatos.Controls.Add(txtCorreo);
             pnlDatos.Controls.Add(guna2Separator1);
+            pnlDatos.Controls.Add(txtTelefono);
             pnlDatos.Controls.Add(label4);
+            pnlDatos.Controls.Add(txtCurp);
             pnlDatos.Controls.Add(ptbInfoMatricula);
-            pnlDatos.Controls.Add(txtMatricula1);
+            pnlDatos.Controls.Add(lblNombreCompleto);
+            pnlDatos.Controls.Add(lblCurp);
+            pnlDatos.Controls.Add(txtMatricula);
+            pnlDatos.Controls.Add(lblTelefono);
             pnlDatos.Controls.Add(lblMatricula);
+            pnlDatos.Controls.Add(lblEmail);
             pnlDatos.CustomizableEdges = customizableEdges29;
             pnlDatos.Location = new Point(3, 67);
             pnlDatos.Name = "pnlDatos";
@@ -357,147 +357,35 @@
             pnlDatos.Size = new Size(1009, 307);
             pnlDatos.TabIndex = 3;
             // 
-            // txtDireccion
+            // txtNombreCompleto
             // 
-            txtDireccion.Animated = true;
-            txtDireccion.BorderRadius = 5;
-            txtDireccion.CustomizableEdges = customizableEdges15;
-            txtDireccion.DefaultText = "";
-            txtDireccion.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtDireccion.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtDireccion.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtDireccion.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtDireccion.Enabled = false;
-            txtDireccion.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtDireccion.Font = new Font("Segoe UI", 9.75F);
-            txtDireccion.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtDireccion.Location = new Point(233, 238);
-            txtDireccion.Margin = new Padding(3, 4, 3, 4);
-            txtDireccion.MaxLength = 250;
-            txtDireccion.Name = "txtDireccion";
-            txtDireccion.PlaceholderText = "";
-            txtDireccion.SelectedText = "";
-            txtDireccion.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            txtDireccion.Size = new Size(642, 34);
-            txtDireccion.TabIndex = 80;
-            // 
-            // txtCorreo
-            // 
-            txtCorreo.Animated = true;
-            txtCorreo.BorderRadius = 5;
-            txtCorreo.CustomizableEdges = customizableEdges17;
-            txtCorreo.DefaultText = "";
-            txtCorreo.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtCorreo.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtCorreo.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtCorreo.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtCorreo.Enabled = false;
-            txtCorreo.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCorreo.Font = new Font("Segoe UI", 9.75F);
-            txtCorreo.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCorreo.Location = new Point(233, 188);
-            txtCorreo.Margin = new Padding(3, 4, 3, 4);
-            txtCorreo.MaxLength = 250;
-            txtCorreo.Name = "txtCorreo";
-            txtCorreo.PlaceholderText = "";
-            txtCorreo.SelectedText = "";
-            txtCorreo.ShadowDecoration.CustomizableEdges = customizableEdges18;
-            txtCorreo.Size = new Size(642, 34);
-            txtCorreo.TabIndex = 79;
-            // 
-            // txtTelefono1
-            // 
-            txtTelefono1.Animated = true;
-            txtTelefono1.BorderRadius = 5;
-            txtTelefono1.CustomizableEdges = customizableEdges19;
-            txtTelefono1.DefaultText = "";
-            txtTelefono1.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtTelefono1.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtTelefono1.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtTelefono1.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtTelefono1.Enabled = false;
-            txtTelefono1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtTelefono1.Font = new Font("Segoe UI", 9.75F);
-            txtTelefono1.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtTelefono1.Location = new Point(640, 134);
-            txtTelefono1.Margin = new Padding(3, 4, 3, 4);
-            txtTelefono1.MaxLength = 10;
-            txtTelefono1.Name = "txtTelefono1";
-            txtTelefono1.PlaceholderText = "";
-            txtTelefono1.SelectedText = "";
-            txtTelefono1.ShadowDecoration.CustomizableEdges = customizableEdges20;
-            txtTelefono1.Size = new Size(235, 34);
-            txtTelefono1.TabIndex = 78;
-            // 
-            // txtCurp1
-            // 
-            txtCurp1.Animated = true;
-            txtCurp1.BorderRadius = 5;
-            txtCurp1.CustomizableEdges = customizableEdges21;
-            txtCurp1.DefaultText = "";
-            txtCurp1.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtCurp1.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtCurp1.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtCurp1.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtCurp1.Enabled = false;
-            txtCurp1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCurp1.Font = new Font("Segoe UI", 9.75F);
-            txtCurp1.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCurp1.Location = new Point(233, 134);
-            txtCurp1.Margin = new Padding(3, 4, 3, 4);
-            txtCurp1.MaxLength = 18;
-            txtCurp1.Name = "txtCurp1";
-            txtCurp1.PlaceholderText = "";
-            txtCurp1.SelectedText = "";
-            txtCurp1.ShadowDecoration.CustomizableEdges = customizableEdges22;
-            txtCurp1.Size = new Size(235, 34);
-            txtCurp1.TabIndex = 77;
-            // 
-            // lblDireccion
-            // 
-            lblDireccion.AutoSize = true;
-            lblDireccion.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblDireccion.Location = new Point(91, 238);
-            lblDireccion.Name = "lblDireccion";
-            lblDireccion.Size = new Size(124, 25);
-            lblDireccion.TabIndex = 76;
-            lblDireccion.Text = "Direccion *";
-            // 
-            // lblCurp
-            // 
-            lblCurp.AutoSize = true;
-            lblCurp.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblCurp.Location = new Point(137, 134);
-            lblCurp.Name = "lblCurp";
-            lblCurp.Size = new Size(81, 25);
-            lblCurp.TabIndex = 74;
-            lblCurp.Text = "CURP *";
-            // 
-            // lblTelefono
-            // 
-            lblTelefono.AutoSize = true;
-            lblTelefono.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblTelefono.Location = new Point(495, 134);
-            lblTelefono.Name = "lblTelefono";
-            lblTelefono.Size = new Size(112, 25);
-            lblTelefono.TabIndex = 73;
-            lblTelefono.Text = "Telefono *";
-            // 
-            // lblEmail
-            // 
-            lblEmail.AutoSize = true;
-            lblEmail.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblEmail.Location = new Point(137, 197);
-            lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(82, 25);
-            lblEmail.TabIndex = 75;
-            lblEmail.Text = "Email *";
+            txtNombreCompleto.Animated = true;
+            txtNombreCompleto.BorderRadius = 5;
+            txtNombreCompleto.CustomizableEdges = customizableEdges15;
+            txtNombreCompleto.DefaultText = "";
+            txtNombreCompleto.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtNombreCompleto.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtNombreCompleto.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtNombreCompleto.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtNombreCompleto.Enabled = false;
+            txtNombreCompleto.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtNombreCompleto.Font = new Font("Segoe UI", 9.75F);
+            txtNombreCompleto.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtNombreCompleto.Location = new Point(345, 132);
+            txtNombreCompleto.Margin = new Padding(3, 4, 3, 4);
+            txtNombreCompleto.MaxLength = 250;
+            txtNombreCompleto.Name = "txtNombreCompleto";
+            txtNombreCompleto.PlaceholderText = "";
+            txtNombreCompleto.SelectedText = "";
+            txtNombreCompleto.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            txtNombreCompleto.Size = new Size(497, 34);
+            txtNombreCompleto.TabIndex = 61;
             // 
             // btnBuscar
             // 
             btnBuscar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnBuscar.Animated = true;
-            btnBuscar.CustomizableEdges = customizableEdges23;
+            btnBuscar.CustomizableEdges = customizableEdges17;
             btnBuscar.DisabledState.BorderColor = Color.DarkGray;
             btnBuscar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnBuscar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -507,11 +395,35 @@
             btnBuscar.ForeColor = Color.White;
             btnBuscar.Location = new Point(640, 68);
             btnBuscar.Name = "btnBuscar";
-            btnBuscar.ShadowDecoration.CustomizableEdges = customizableEdges24;
+            btnBuscar.ShadowDecoration.CustomizableEdges = customizableEdges18;
             btnBuscar.Size = new Size(188, 43);
             btnBuscar.TabIndex = 72;
             btnBuscar.Text = "Buscar";
             btnBuscar.Click += btnBuscar_Click;
+            // 
+            // txtCorreo
+            // 
+            txtCorreo.Animated = true;
+            txtCorreo.BorderRadius = 5;
+            txtCorreo.CustomizableEdges = customizableEdges19;
+            txtCorreo.DefaultText = "";
+            txtCorreo.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtCorreo.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtCorreo.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtCorreo.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtCorreo.Enabled = false;
+            txtCorreo.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtCorreo.Font = new Font("Segoe UI", 9.75F);
+            txtCorreo.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtCorreo.Location = new Point(200, 242);
+            txtCorreo.Margin = new Padding(3, 4, 3, 4);
+            txtCorreo.MaxLength = 250;
+            txtCorreo.Name = "txtCorreo";
+            txtCorreo.PlaceholderText = "";
+            txtCorreo.SelectedText = "";
+            txtCorreo.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            txtCorreo.Size = new Size(642, 34);
+            txtCorreo.TabIndex = 60;
             // 
             // guna2Separator1
             // 
@@ -520,6 +432,30 @@
             guna2Separator1.Name = "guna2Separator1";
             guna2Separator1.Size = new Size(1007, 8);
             guna2Separator1.TabIndex = 55;
+            // 
+            // txtTelefono
+            // 
+            txtTelefono.Animated = true;
+            txtTelefono.BorderRadius = 5;
+            txtTelefono.CustomizableEdges = customizableEdges21;
+            txtTelefono.DefaultText = "";
+            txtTelefono.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtTelefono.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtTelefono.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtTelefono.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtTelefono.Enabled = false;
+            txtTelefono.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtTelefono.Font = new Font("Segoe UI", 9.75F);
+            txtTelefono.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtTelefono.Location = new Point(607, 188);
+            txtTelefono.Margin = new Padding(3, 4, 3, 4);
+            txtTelefono.MaxLength = 10;
+            txtTelefono.Name = "txtTelefono";
+            txtTelefono.PlaceholderText = "";
+            txtTelefono.SelectedText = "";
+            txtTelefono.ShadowDecoration.CustomizableEdges = customizableEdges22;
+            txtTelefono.Size = new Size(235, 34);
+            txtTelefono.TabIndex = 59;
             // 
             // label4
             // 
@@ -532,12 +468,36 @@
             label4.Text = "Información del empleado";
             label4.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // txtCurp
+            // 
+            txtCurp.Animated = true;
+            txtCurp.BorderRadius = 5;
+            txtCurp.CustomizableEdges = customizableEdges23;
+            txtCurp.DefaultText = "";
+            txtCurp.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtCurp.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtCurp.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtCurp.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtCurp.Enabled = false;
+            txtCurp.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtCurp.Font = new Font("Segoe UI", 9.75F);
+            txtCurp.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtCurp.Location = new Point(200, 188);
+            txtCurp.Margin = new Padding(3, 4, 3, 4);
+            txtCurp.MaxLength = 18;
+            txtCurp.Name = "txtCurp";
+            txtCurp.PlaceholderText = "";
+            txtCurp.SelectedText = "";
+            txtCurp.ShadowDecoration.CustomizableEdges = customizableEdges24;
+            txtCurp.Size = new Size(235, 34);
+            txtCurp.TabIndex = 58;
+            // 
             // ptbInfoMatricula
             // 
             ptbInfoMatricula.CustomizableEdges = customizableEdges25;
             ptbInfoMatricula.Image = Properties.Resources._40796_help___icon;
             ptbInfoMatricula.ImageRotate = 0F;
-            ptbInfoMatricula.Location = new Point(410, 76);
+            ptbInfoMatricula.Location = new Point(429, 81);
             ptbInfoMatricula.Margin = new Padding(3, 2, 3, 2);
             ptbInfoMatricula.Name = "ptbInfoMatricula";
             ptbInfoMatricula.ShadowDecoration.CustomizableEdges = customizableEdges26;
@@ -547,38 +507,78 @@
             ptbInfoMatricula.TabStop = false;
             toolTipMatricula.SetToolTip(ptbInfoMatricula, "E-Año de ingreso-Número de empleado");
             // 
-            // txtMatricula1
+            // lblNombreCompleto
             // 
-            txtMatricula1.Animated = true;
-            txtMatricula1.BorderRadius = 5;
-            txtMatricula1.CustomizableEdges = customizableEdges27;
-            txtMatricula1.DefaultText = "Ingresa tu matricula";
-            txtMatricula1.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtMatricula1.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtMatricula1.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtMatricula1.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtMatricula1.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtMatricula1.Font = new Font("Segoe UI", 9.75F);
-            txtMatricula1.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtMatricula1.Location = new Point(234, 72);
-            txtMatricula1.Margin = new Padding(3, 4, 3, 4);
-            txtMatricula1.MaxLength = 15;
-            txtMatricula1.Name = "txtMatricula1";
-            txtMatricula1.PlaceholderText = "";
-            txtMatricula1.SelectedText = "";
-            txtMatricula1.ShadowDecoration.CustomizableEdges = customizableEdges28;
-            txtMatricula1.Size = new Size(167, 34);
-            txtMatricula1.TabIndex = 70;
+            lblNombreCompleto.AutoSize = true;
+            lblNombreCompleto.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            lblNombreCompleto.Location = new Point(104, 141);
+            lblNombreCompleto.Name = "lblNombreCompleto";
+            lblNombreCompleto.Size = new Size(216, 25);
+            lblNombreCompleto.TabIndex = 57;
+            lblNombreCompleto.Text = "Nombre Completo *";
+            // 
+            // lblCurp
+            // 
+            lblCurp.AutoSize = true;
+            lblCurp.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            lblCurp.Location = new Point(104, 188);
+            lblCurp.Name = "lblCurp";
+            lblCurp.Size = new Size(81, 25);
+            lblCurp.TabIndex = 55;
+            lblCurp.Text = "CURP *";
+            // 
+            // txtMatricula
+            // 
+            txtMatricula.Animated = true;
+            txtMatricula.BorderRadius = 5;
+            txtMatricula.CustomizableEdges = customizableEdges27;
+            txtMatricula.DefaultText = "Ingresa tu matricula";
+            txtMatricula.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtMatricula.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtMatricula.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtMatricula.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtMatricula.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtMatricula.Font = new Font("Segoe UI", 9.75F);
+            txtMatricula.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtMatricula.Location = new Point(253, 77);
+            txtMatricula.Margin = new Padding(3, 4, 3, 4);
+            txtMatricula.MaxLength = 15;
+            txtMatricula.Name = "txtMatricula";
+            txtMatricula.PlaceholderText = "";
+            txtMatricula.SelectedText = "";
+            txtMatricula.ShadowDecoration.CustomizableEdges = customizableEdges28;
+            txtMatricula.Size = new Size(167, 34);
+            txtMatricula.TabIndex = 70;
+            // 
+            // lblTelefono
+            // 
+            lblTelefono.AutoSize = true;
+            lblTelefono.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            lblTelefono.Location = new Point(462, 188);
+            lblTelefono.Name = "lblTelefono";
+            lblTelefono.Size = new Size(112, 25);
+            lblTelefono.TabIndex = 54;
+            lblTelefono.Text = "Telefono *";
             // 
             // lblMatricula
             // 
             lblMatricula.AutoSize = true;
             lblMatricula.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
-            lblMatricula.Location = new Point(92, 72);
+            lblMatricula.Location = new Point(111, 77);
             lblMatricula.Name = "lblMatricula";
             lblMatricula.Size = new Size(123, 25);
             lblMatricula.TabIndex = 50;
             lblMatricula.Text = "Matricula *";
+            // 
+            // lblEmail
+            // 
+            lblEmail.AutoSize = true;
+            lblEmail.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
+            lblEmail.Location = new Point(104, 252);
+            lblEmail.Name = "lblEmail";
+            lblEmail.Size = new Size(82, 25);
+            lblEmail.TabIndex = 56;
+            lblEmail.Text = "Email *";
             // 
             // frmDias_calculados
             // 
@@ -615,20 +615,20 @@
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
         private Label label4;
         private Guna.UI2.WinForms.Guna2Button btnBuscar;
-        public Guna.UI2.WinForms.Guna2TextBox txtDireccion;
-        public Guna.UI2.WinForms.Guna2TextBox txtCorreo;
-        public Guna.UI2.WinForms.Guna2TextBox txtTelefono1;
-        public Guna.UI2.WinForms.Guna2TextBox txtCurp1;
-        private Label lblDireccion;
-        private Label lblCurp;
-        private Label lblTelefono;
-        private Label lblEmail;
         private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaFin1;
         private Guna.UI2.WinForms.Guna2DateTimePicker dtpFechaInicio1;
         private Label lblFechaInicio;
         private Label lblFechaFin;
         private Guna.UI2.WinForms.Guna2Button btnCalcular;
         public Guna.UI2.WinForms.Guna2TextBox txtHorasTrabajadas;
-        public static Guna.UI2.WinForms.Guna2TextBox txtMatricula1;
+        public Guna.UI2.WinForms.Guna2TextBox txtNombreCompleto;
+        public Guna.UI2.WinForms.Guna2TextBox txtCorreo;
+        public Guna.UI2.WinForms.Guna2TextBox txtTelefono;
+        public Guna.UI2.WinForms.Guna2TextBox txtCurp;
+        private Label lblNombreCompleto;
+        private Label lblCurp;
+        private Label lblTelefono;
+        private Label lblEmail;
+        public Guna.UI2.WinForms.Guna2TextBox txtMatricula;
     }
 }

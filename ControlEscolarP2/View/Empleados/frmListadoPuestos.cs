@@ -1,6 +1,6 @@
 using Guna.UI2.WinForms;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Models;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Models;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -38,7 +38,7 @@ namespace RecursosHumanos.View
         {
             Formas.ConfigurarEstiloDataGridView(dgvPuestos);
         }
-        
+
 
         private void btnRegresar_Click(object sender, EventArgs e)
         {
@@ -81,5 +81,22 @@ namespace RecursosHumanos.View
         {
 
         }
+
+        private void btnExportarPuestos_Click(object sender, EventArgs e)
+        {
+            PuestoController controller = new PuestoController();
+
+            var (exito, mensaje) = controller.ExportarPuestosExcel(true);
+
+            if (exito)
+            {
+                MessageBox.Show(mensaje, "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show(mensaje, "Exportación Incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
     }
 }

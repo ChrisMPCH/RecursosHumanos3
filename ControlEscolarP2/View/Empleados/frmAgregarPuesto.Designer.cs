@@ -59,7 +59,7 @@ namespace RecursosHumanos.View
             // 
             // pnlInfoEsmpleado
             // 
-            pnlInfoEsmpleado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlInfoEsmpleado.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlInfoEsmpleado.BackColor = Color.White;
             pnlInfoEsmpleado.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             pnlInfoEsmpleado.Controls.Add(txtDescripcion);
@@ -73,9 +73,10 @@ namespace RecursosHumanos.View
             pnlInfoEsmpleado.Controls.Add(lblBienvenida2);
             pnlInfoEsmpleado.CustomizableEdges = customizableEdges11;
             pnlInfoEsmpleado.Location = new Point(0, 0);
+            pnlInfoEsmpleado.Margin = new Padding(3, 4, 3, 4);
             pnlInfoEsmpleado.Name = "pnlInfoEsmpleado";
             pnlInfoEsmpleado.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            pnlInfoEsmpleado.Size = new Size(1001, 291);
+            pnlInfoEsmpleado.Size = new Size(1144, 388);
             pnlInfoEsmpleado.TabIndex = 4;
             // 
             // txtDescripcion
@@ -91,14 +92,14 @@ namespace RecursosHumanos.View
             txtDescripcion.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtDescripcion.Font = new Font("Segoe UI", 9.75F);
             txtDescripcion.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtDescripcion.Location = new Point(198, 162);
-            txtDescripcion.Margin = new Padding(3, 4, 3, 4);
+            txtDescripcion.Location = new Point(226, 216);
+            txtDescripcion.Margin = new Padding(3, 5, 3, 5);
             txtDescripcion.MaxLength = 250;
             txtDescripcion.Name = "txtDescripcion";
             txtDescripcion.PlaceholderText = "";
             txtDescripcion.SelectedText = "";
             txtDescripcion.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            txtDescripcion.Size = new Size(434, 34);
+            txtDescripcion.Size = new Size(496, 45);
             txtDescripcion.TabIndex = 40;
             // 
             // txtNombre
@@ -114,14 +115,14 @@ namespace RecursosHumanos.View
             txtNombre.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtNombre.Font = new Font("Segoe UI", 9.75F);
             txtNombre.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtNombre.Location = new Point(198, 104);
-            txtNombre.Margin = new Padding(3, 4, 3, 4);
+            txtNombre.Location = new Point(226, 139);
+            txtNombre.Margin = new Padding(3, 5, 3, 5);
             txtNombre.MaxLength = 100;
             txtNombre.Name = "txtNombre";
             txtNombre.PlaceholderText = "";
             txtNombre.SelectedText = "";
             txtNombre.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            txtNombre.Size = new Size(434, 34);
+            txtNombre.Size = new Size(496, 45);
             txtNombre.TabIndex = 37;
             // 
             // btnCargaMasiva
@@ -134,10 +135,11 @@ namespace RecursosHumanos.View
             btnCargaMasiva.FillColor = Color.DimGray;
             btnCargaMasiva.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnCargaMasiva.ForeColor = Color.White;
-            btnCargaMasiva.Location = new Point(791, 162);
+            btnCargaMasiva.Location = new Point(874, 171);
+            btnCargaMasiva.Margin = new Padding(3, 4, 3, 4);
             btnCargaMasiva.Name = "btnCargaMasiva";
             btnCargaMasiva.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            btnCargaMasiva.Size = new Size(188, 43);
+            btnCargaMasiva.Size = new Size(215, 57);
             btnCargaMasiva.TabIndex = 29;
             btnCargaMasiva.Text = "Carga Masiva";
             btnCargaMasiva.Click += btnCargaMasiva_Click;
@@ -152,10 +154,11 @@ namespace RecursosHumanos.View
             btnGuardar.FillColor = Color.DimGray;
             btnGuardar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnGuardar.ForeColor = Color.White;
-            btnGuardar.Location = new Point(791, 95);
+            btnGuardar.Location = new Point(874, 82);
+            btnGuardar.Margin = new Padding(3, 4, 3, 4);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            btnGuardar.Size = new Size(188, 43);
+            btnGuardar.Size = new Size(215, 57);
             btnGuardar.TabIndex = 25;
             btnGuardar.Text = "Guardar";
             btnGuardar.Click += btnGuardar_Click;
@@ -165,9 +168,9 @@ namespace RecursosHumanos.View
             lblNombre.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblNombre.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
             lblNombre.ForeColor = Color.Black;
-            lblNombre.Location = new Point(79, 107);
+            lblNombre.Location = new Point(90, 143);
             lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(114, 25);
+            lblNombre.Size = new Size(130, 33);
             lblNombre.TabIndex = 23;
             lblNombre.Text = "Nombre: ";
             // 
@@ -184,10 +187,11 @@ namespace RecursosHumanos.View
             btnCancelar.FillColor = Color.White;
             btnCancelar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnCancelar.ForeColor = Color.Black;
-            btnCancelar.Location = new Point(791, 223);
+            btnCancelar.Location = new Point(874, 252);
+            btnCancelar.Margin = new Padding(3, 4, 3, 4);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            btnCancelar.Size = new Size(188, 43);
+            btnCancelar.Size = new Size(215, 57);
             btnCancelar.TabIndex = 22;
             btnCancelar.Text = "Cancelar";
             btnCancelar.Click += btnCancelar_Click;
@@ -197,18 +201,19 @@ namespace RecursosHumanos.View
             lblDescripcion.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblDescripcion.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
             lblDescripcion.ForeColor = Color.Black;
-            lblDescripcion.Location = new Point(39, 162);
+            lblDescripcion.Location = new Point(45, 216);
             lblDescripcion.Name = "lblDescripcion";
-            lblDescripcion.Size = new Size(154, 25);
+            lblDescripcion.Size = new Size(176, 33);
             lblDescripcion.TabIndex = 9;
             lblDescripcion.Text = "Descripción:";
             // 
             // guna2Separator1
             // 
             guna2Separator1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            guna2Separator1.Location = new Point(7, 48);
+            guna2Separator1.Location = new Point(8, 64);
+            guna2Separator1.Margin = new Padding(3, 4, 3, 4);
             guna2Separator1.Name = "guna2Separator1";
-            guna2Separator1.Size = new Size(986, 10);
+            guna2Separator1.Size = new Size(1127, 13);
             guna2Separator1.TabIndex = 3;
             // 
             // lblBienvenida2
@@ -216,9 +221,9 @@ namespace RecursosHumanos.View
             lblBienvenida2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblBienvenida2.Font = new Font("Century Gothic", 20.25F, FontStyle.Bold);
             lblBienvenida2.ForeColor = Color.DimGray;
-            lblBienvenida2.Location = new Point(18, 13);
+            lblBienvenida2.Location = new Point(21, 17);
             lblBienvenida2.Name = "lblBienvenida2";
-            lblBienvenida2.Size = new Size(971, 37);
+            lblBienvenida2.Size = new Size(1110, 49);
             lblBienvenida2.TabIndex = 2;
             lblBienvenida2.Text = "Informacion del puesto";
             // 
@@ -228,13 +233,14 @@ namespace RecursosHumanos.View
             // 
             // frmAgregarPuesto
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(1001, 291);
+            ClientSize = new Size(1144, 388);
             Controls.Add(pnlInfoEsmpleado);
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
             Name = "frmAgregarPuesto";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmPrueba";

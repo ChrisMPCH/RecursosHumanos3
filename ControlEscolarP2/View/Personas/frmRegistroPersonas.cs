@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using Guna.UI2.WinForms.Suite;
-using RecursosHumanos.Bussines;
-using RecursosHumanos.Data;
-using RecursosHumanos.Model;
+using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Data;
+using RecursosHumanosCore.Model;
 using RecursosHumanos.Utilities;
-using RecursosHumanos.Controller;
+using RecursosHumanosCore.Controller;
 
 namespace RecursosHumanos.View
 {

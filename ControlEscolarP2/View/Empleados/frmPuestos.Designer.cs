@@ -50,9 +50,7 @@
             lblInfoUsuario = new Label();
             lblGenero = new Label();
             pnlCambiante = new Guna.UI2.WinForms.Guna2GradientPanel();
-            pnFondo = new Panel();
             pnlInfoUsuario.SuspendLayout();
-            pnFondo.SuspendLayout();
             SuspendLayout();
             // 
             // lblTitulo
@@ -83,7 +81,7 @@
             pnlInfoUsuario.Location = new Point(0, 67);
             pnlInfoUsuario.Name = "pnlInfoUsuario";
             pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            pnlInfoUsuario.Size = new Size(1027, 152);
+            pnlInfoUsuario.Size = new Size(1027, 142);
             pnlInfoUsuario.TabIndex = 26;
             // 
             // btnConsultar
@@ -97,7 +95,7 @@
             btnConsultar.FillColor = Color.DimGray;
             btnConsultar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnConsultar.ForeColor = Color.White;
-            btnConsultar.Location = new Point(797, 72);
+            btnConsultar.Location = new Point(797, 68);
             btnConsultar.Name = "btnConsultar";
             btnConsultar.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnConsultar.Size = new Size(208, 43);
@@ -113,10 +111,11 @@
             btnEliminar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnEliminar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnEliminar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnEliminar.Enabled = false;
             btnEliminar.FillColor = Color.DimGray;
             btnEliminar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnEliminar.ForeColor = Color.White;
-            btnEliminar.Location = new Point(280, 72);
+            btnEliminar.Location = new Point(280, 68);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.ShadowDecoration.CustomizableEdges = customizableEdges4;
             btnEliminar.Size = new Size(210, 43);
@@ -132,10 +131,11 @@
             btnActualizar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnActualizar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnActualizar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnActualizar.Enabled = false;
             btnActualizar.FillColor = Color.DimGray;
             btnActualizar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnActualizar.ForeColor = Color.White;
-            btnActualizar.Location = new Point(541, 72);
+            btnActualizar.Location = new Point(541, 68);
             btnActualizar.Name = "btnActualizar";
             btnActualizar.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnActualizar.Size = new Size(208, 43);
@@ -151,10 +151,11 @@
             btnAgregar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnAgregar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnAgregar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnAgregar.Enabled = false;
             btnAgregar.FillColor = Color.DimGray;
             btnAgregar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnAgregar.ForeColor = Color.White;
-            btnAgregar.Location = new Point(18, 72);
+            btnAgregar.Location = new Point(18, 68);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.ShadowDecoration.CustomizableEdges = customizableEdges8;
             btnAgregar.Size = new Size(210, 43);
@@ -165,7 +166,7 @@
             // separador1
             // 
             separador1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            separador1.Location = new Point(15, 56);
+            separador1.Location = new Point(15, 50);
             separador1.Name = "separador1";
             separador1.Size = new Size(997, 10);
             separador1.TabIndex = 3;
@@ -181,7 +182,6 @@
             lblInfoUsuario.TabIndex = 2;
             lblInfoUsuario.Text = "Selecciona la opción deseada";
             lblInfoUsuario.TextAlign = ContentAlignment.MiddleLeft;
-            lblInfoUsuario.Click += lblInfoUsuario_Click;
             // 
             // lblGenero
             // 
@@ -200,20 +200,11 @@
             pnlCambiante.BackColor = Color.White;
             pnlCambiante.CustomizableEdges = customizableEdges11;
             pnlCambiante.Font = new Font("Microsoft Sans Serif", 8.25F);
-            pnlCambiante.Location = new Point(0, 224);
+            pnlCambiante.Location = new Point(0, 218);
             pnlCambiante.Name = "pnlCambiante";
             pnlCambiante.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            pnlCambiante.Size = new Size(1027, 601);
-            pnlCambiante.TabIndex = 30;
-            // 
-            // pnFondo
-            // 
-            pnFondo.Anchor = AnchorStyles.Left;
-            pnFondo.Controls.Add(pnlCambiante);
-            pnFondo.Location = new Point(0, 0);
-            pnFondo.Name = "pnFondo";
-            pnFondo.Size = new Size(1027, 825);
-            pnFondo.TabIndex = 31;
+            pnlCambiante.Size = new Size(1027, 341);
+            pnlCambiante.TabIndex = 31;
             // 
             // frmPuestos
             // 
@@ -221,15 +212,14 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoValidate = AutoValidate.EnablePreventFocusChange;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(1027, 825);
+            ClientSize = new Size(1027, 569);
+            Controls.Add(pnlCambiante);
             Controls.Add(lblTitulo);
             Controls.Add(pnlInfoUsuario);
-            Controls.Add(pnFondo);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmPuestos";
             Text = "frmRegistroU";
             pnlInfoUsuario.ResumeLayout(false);
-            pnFondo.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -240,11 +230,10 @@
         private Guna.UI2.WinForms.Guna2Separator separador1;
         private Label lblInfoUsuario;
         public static Guna.UI2.WinForms.Guna2TextBox txtApMaterno;
-        private Panel pnFondo;
+        public Guna.UI2.WinForms.Guna2Button btnConsultar;
+        public Guna.UI2.WinForms.Guna2Button btnActualizar;
+        public Guna.UI2.WinForms.Guna2Button btnEliminar;
+        public Guna.UI2.WinForms.Guna2Button btnAgregar;
         public Guna.UI2.WinForms.Guna2GradientPanel pnlCambiante;
-        private Guna.UI2.WinForms.Guna2Button btnConsultar;
-        private Guna.UI2.WinForms.Guna2Button btnActualizar;
-        private Guna.UI2.WinForms.Guna2Button btnEliminar;
-        private Guna.UI2.WinForms.Guna2Button btnAgregar;
     }
 }

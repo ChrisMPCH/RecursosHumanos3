@@ -49,8 +49,8 @@
             separador1 = new Guna.UI2.WinForms.Guna2Separator();
             lblInfoUsuario = new Label();
             lblGenero = new Label();
-            pnlCambiante = new Guna.UI2.WinForms.Guna2GradientPanel();
             pnFondo = new Panel();
+            pnlCambiante = new Guna.UI2.WinForms.Guna2GradientPanel();
             pnlInfoUsuario.SuspendLayout();
             pnFondo.SuspendLayout();
             SuspendLayout();
@@ -113,6 +113,7 @@
             btnActualizar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnActualizar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnActualizar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnActualizar.Enabled = false;
             btnActualizar.FillColor = Color.DimGray;
             btnActualizar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnActualizar.ForeColor = Color.White;
@@ -132,6 +133,7 @@
             btnEliminar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnEliminar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnEliminar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnEliminar.Enabled = false;
             btnEliminar.FillColor = Color.DimGray;
             btnEliminar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnEliminar.ForeColor = Color.White;
@@ -151,6 +153,7 @@
             btnAgregar.DisabledState.CustomBorderColor = Color.DarkGray;
             btnAgregar.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnAgregar.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnAgregar.Enabled = false;
             btnAgregar.FillColor = Color.DimGray;
             btnAgregar.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
             btnAgregar.ForeColor = Color.White;
@@ -193,6 +196,15 @@
             lblGenero.TabIndex = 36;
             lblGenero.Text = "Género";
             // 
+            // pnFondo
+            // 
+            pnFondo.Controls.Add(pnlCambiante);
+            pnFondo.Dock = DockStyle.Fill;
+            pnFondo.Location = new Point(0, 0);
+            pnFondo.Name = "pnFondo";
+            pnFondo.Size = new Size(1027, 559);
+            pnFondo.TabIndex = 31;
+            // 
             // pnlCambiante
             // 
             pnlCambiante.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -202,17 +214,8 @@
             pnlCambiante.Location = new Point(0, 208);
             pnlCambiante.Name = "pnlCambiante";
             pnlCambiante.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            pnlCambiante.Size = new Size(1027, 617);
+            pnlCambiante.Size = new Size(1027, 341);
             pnlCambiante.TabIndex = 30;
-            // 
-            // pnFondo
-            // 
-            pnFondo.Controls.Add(pnlCambiante);
-            pnFondo.Dock = DockStyle.Fill;
-            pnFondo.Location = new Point(0, 0);
-            pnFondo.Name = "pnFondo";
-            pnFondo.Size = new Size(1027, 825);
-            pnFondo.TabIndex = 31;
             // 
             // frmDepartamentos
             // 
@@ -220,7 +223,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoValidate = AutoValidate.EnablePreventFocusChange;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(1027, 825);
+            ClientSize = new Size(1027, 559);
             Controls.Add(lblTitulo);
             Controls.Add(pnlInfoUsuario);
             Controls.Add(pnFondo);
@@ -240,10 +243,10 @@
         private Label lblInfoUsuario;
         public static Guna.UI2.WinForms.Guna2TextBox txtApMaterno;
         private Panel pnFondo;
+        public Guna.UI2.WinForms.Guna2Button btnConsultar;
+        public Guna.UI2.WinForms.Guna2Button btnActualizar;
+        public Guna.UI2.WinForms.Guna2Button btnEliminar;
+        public Guna.UI2.WinForms.Guna2Button btnAgregar;
         public Guna.UI2.WinForms.Guna2GradientPanel pnlCambiante;
-        private Guna.UI2.WinForms.Guna2Button btnConsultar;
-        private Guna.UI2.WinForms.Guna2Button btnActualizar;
-        private Guna.UI2.WinForms.Guna2Button btnEliminar;
-        private Guna.UI2.WinForms.Guna2Button btnAgregar;
     }
 }

@@ -41,6 +41,8 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             lblTitulo = new Label();
@@ -54,6 +56,7 @@
             pnlTabla = new Guna.UI2.WinForms.Guna2Panel();
             dataGridUsuarios = new Guna.UI2.WinForms.Guna2DataGridView();
             pnlInfoUsuario = new Guna.UI2.WinForms.Guna2GradientPanel();
+            btnExcel = new Guna.UI2.WinForms.Guna2Button();
             lblInfo = new Label();
             pnlTabla.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridUsuarios).BeginInit();
@@ -240,6 +243,7 @@
             // 
             pnlInfoUsuario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlInfoUsuario.BackColor = Color.White;
+            pnlInfoUsuario.Controls.Add(btnExcel);
             pnlInfoUsuario.Controls.Add(lblInfo);
             pnlInfoUsuario.Controls.Add(pnlTabla);
             pnlInfoUsuario.Controls.Add(guna2ContainerControl1);
@@ -249,13 +253,33 @@
             pnlInfoUsuario.Controls.Add(dtpFechaIngreso);
             pnlInfoUsuario.Controls.Add(lblFechaNacimiento);
             pnlInfoUsuario.Controls.Add(separador1);
-            pnlInfoUsuario.CustomizableEdges = customizableEdges11;
+            pnlInfoUsuario.CustomizableEdges = customizableEdges13;
             pnlInfoUsuario.Font = new Font("Microsoft Sans Serif", 8.25F);
             pnlInfoUsuario.Location = new Point(0, 64);
             pnlInfoUsuario.Name = "pnlInfoUsuario";
-            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges14;
             pnlInfoUsuario.Size = new Size(1011, 739);
             pnlInfoUsuario.TabIndex = 27;
+            // 
+            // btnExcel
+            // 
+            btnExcel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnExcel.Animated = true;
+            btnExcel.CustomizableEdges = customizableEdges11;
+            btnExcel.DisabledState.BorderColor = Color.DarkGray;
+            btnExcel.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnExcel.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnExcel.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnExcel.FillColor = Color.DimGray;
+            btnExcel.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
+            btnExcel.ForeColor = Color.White;
+            btnExcel.Location = new Point(583, 45);
+            btnExcel.Name = "btnExcel";
+            btnExcel.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            btnExcel.Size = new Size(162, 45);
+            btnExcel.TabIndex = 55;
+            btnExcel.Text = "Exportar a Excel";
+            btnExcel.Click += btnExcel_Click;
             // 
             // lblInfo
             // 
@@ -298,5 +322,6 @@
         private Guna.UI2.WinForms.Guna2DataGridView dataGridUsuarios;
         private Guna.UI2.WinForms.Guna2GradientPanel pnlInfoUsuario;
         private Label lblInfo;
+        private Guna.UI2.WinForms.Guna2Button btnExcel;
     }
 }

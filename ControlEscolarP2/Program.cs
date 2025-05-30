@@ -1,3 +1,4 @@
+using OfficeOpenXml;
 using RecursosHumanos.View;
 
 namespace RecursosHumanos
@@ -13,6 +14,8 @@ namespace RecursosHumanos
         [STAThread]
         static void Main()
         {
+            ExcelPackage.License.SetNonCommercialOrganization("My Noncommercial organization");
+
             //Activa los estilos visuales modernos de Windows
             // Sin esta l�nea, los controles como botones,
             // cuadros de texto y pesta�as se ver�n con el estilo antiguo de Windows 95/98.

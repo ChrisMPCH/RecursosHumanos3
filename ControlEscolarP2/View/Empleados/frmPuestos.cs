@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RecursosHumanos.Bussines;
+using RecursosHumanosCore.Bussines;
 using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View
@@ -18,6 +18,7 @@ namespace RecursosHumanos.View
         {
             InitializeComponent();
             InicializarVentana();
+            VerificarPermisos();
         }
 
         public void InicializarVentana()
@@ -61,7 +62,33 @@ namespace RecursosHumanos.View
             Formas.abrirPanelForm(formLeer, pnlCambiante);
         }
 
-        private void lblInfoUsuario_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Verifica los permisos del usuario para habilitar o deshabilitar los botones de registro.
+        /// </summary>
+        private void VerificarPermisos()
+        {
+            var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
+
+            if (permisosUsuario.Contains(4) || permisosUsuario.Contains(35)) // Agregar puesto  
+            {
+                btnAgregar.Enabled = true;
+            }
+            if (permisosUsuario.Contains(5) || permisosUsuario.Contains(35)) // Editar puesto  
+            {
+                btnActualizar.Enabled = true;
+            }
+            if (permisosUsuario.Contains(6) || permisosUsuario.Contains(35)) // Eliminar puesto  
+            {
+                btnEliminar.Enabled = true;
+            }
+        }
+
+        private void pnFondo_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pnlCambiante_Paint(object sender, PaintEventArgs e)
         {
 
         }

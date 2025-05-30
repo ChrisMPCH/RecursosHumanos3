@@ -1,6 +1,6 @@
-﻿using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Model;
+﻿using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Model;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -23,6 +23,7 @@ namespace RecursosHumanos.View
             InitializeComponent();
             _permisosController = new PermisosController();
             InicializarVentana();
+            VerificarPermisos();
         }
 
         private void InicializarVentana()
@@ -243,5 +244,35 @@ namespace RecursosHumanos.View
             }
             return permisosIds;
         }
+
+        /// <summary>
+        /// Verifica los permisos del usuario para habilitar o deshabilitar los botones de registro.
+        /// </summary>
+        private void VerificarPermisos()
+        {
+            var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
+
+            if (!permisosUsuario.Contains(27)) // CreaR rol
+            {
+                btnGuardar.Enabled = false;
+            }
+        }
+
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            PermisosController permisosController = new PermisosController();
+
+            var (exito, mensaje) = permisosController.ExportarPermisosExcel();
+
+            if (exito)
+            {
+                MessageBox.Show(mensaje, "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show(mensaje, "Exportación Fallida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
     }
 }

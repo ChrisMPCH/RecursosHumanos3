@@ -1,6 +1,7 @@
-﻿using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Model;
+﻿using Guna.UI2.AnimatorNS;
+using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Model;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,10 @@ namespace RecursosHumanos.View
 {
     public partial class frmLogin : Form
     {
+        public static List<int> permisosUsuario = new List<int>();
+        public static LoginController controller = new LoginController();
+        public static Usuario? usuarioLogueado = null;
+
         public frmLogin()
         {
             InitializeComponent();
@@ -43,12 +48,18 @@ namespace RecursosHumanos.View
             string usuario = txtUsuario.Text.Trim();
             string contrasenia = txtContrasenia.Text.Trim();
 
-            UsuariosController controller = new UsuariosController();
-            Usuario? usuarioLogueado = controller.Login(usuario, contrasenia);
+            usuarioLogueado = controller.Login(usuario, contrasenia);
 
             if (usuarioLogueado != null)
             {
                 MessageBox.Show($"Bienvenido, {usuarioLogueado.DatosPersonales.Nombre}", "Login exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+                // Obtener los permisos del usuario
+                List<int> idPermisosUsuario = controller.ObtenerPermisosUsuario(usuarioLogueado.Id_Usuario);
+
+                // Pasar los permisos para ternerlos en la interfaz principal
+                permisosUsuario = idPermisosUsuario;
+
                 this.DialogResult = DialogResult.OK;
                 this.Close();
                 return true;
@@ -92,16 +103,26 @@ namespace RecursosHumanos.View
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            VerificarUsuario();
+            if (VerificarUsuario())
+            {
+                // Actualizar fecha de acceso del usuario logueado
+                if (usuarioLogueado != null)
+                {
+                    usuarioLogueado.Fecha_Ultimo_Acceso = DateTime.Now;
+                    controller.ActualizarFechaUltimoAcceso(usuarioLogueado);
+                }
+            }
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void pcVerContraseña_Click(object sender, EventArgs e)
         { 
             txtContrasenia.UseSystemPasswordChar = !txtContrasenia.UseSystemPasswordChar;
         }
+
+        //-------------------------------------------------------------------------------Permisos
+        
     }
 }

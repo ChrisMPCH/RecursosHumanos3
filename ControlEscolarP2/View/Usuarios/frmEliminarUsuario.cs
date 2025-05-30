@@ -1,6 +1,6 @@
-﻿using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Model;
+﻿using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Model;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RecursosHumanosCore.Utilities;
 
 namespace RecursosHumanos.View
 {
@@ -230,7 +231,8 @@ namespace RecursosHumanos.View
             }
 
             UsuariosController controller = new UsuariosController();
-            var resultado = controller.EliminarUsuario(idUsuarioEncontrado.Value);
+
+            var resultado = controller.EliminarUsuario(idUsuarioEncontrado.Value, LoggingManager.UsuarioActual.Id_Usuario);
 
             if (resultado.exito)
             {

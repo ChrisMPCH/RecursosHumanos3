@@ -1,6 +1,6 @@
-﻿using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Model;
+﻿using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Model;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RecursosHumanosCore.Utilities;
 
 namespace RecursosHumanos.View
 {
@@ -106,12 +107,15 @@ namespace RecursosHumanos.View
                 MessageBox.Show("Faltan los datos de la persona.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            if (!DatosVaciosUsuario())
+
+            if (!DatosVaciosUsuario() || !DatosCorrectosUsuario())
             {
                 return false;
             }
-            if (!DatosCorrectosUsuario())
+
+            if (!LoggingManager.EstaLogueado())
             {
+                MessageBox.Show("No hay un usuario logueado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -128,15 +132,15 @@ namespace RecursosHumanos.View
                 Estatus = 1
             };
 
-            var (exito, mensaje) = controller.RegistrarUsuario(nuevoUsuario);
+            int idResponsable = LoggingManager.UsuarioActual.Id_Usuario;
+            var (exito, mensaje) = controller.RegistrarUsuario(nuevoUsuario, idResponsable);
+
             if (exito)
             {
                 MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Limpiar y volver a panel anterior
                 frmRegistroPersonas.InicializarCampos();
                 frmRegistroPersonas.DesbloquearCampos(true);
-
                 InicializarCampos();
 
                 MDIRecursosHumanos.DesbloquearBotonesMenu();
@@ -152,19 +156,22 @@ namespace RecursosHumanos.View
             }
         }
 
+
         private void btnCancelar_Click_1(object sender, EventArgs e)
         {
-            PersonasController personasController = new PersonasController();
-            var exito = personasController.CancelarRegistroPersona(frmRegistroPersonas.IdPersonaRegistrada);
-            if (!exito)
+            if (frmRegistroPersonas.IdPersonaRegistrada > 0)
             {
-                MessageBox.Show("No se canceló el registro, no se pudo eliminar la persona.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                PersonasController personasController = new PersonasController();
+                var exito = personasController.CancelarRegistroPersona(frmRegistroPersonas.IdPersonaRegistrada);
+                if (!exito)
+                {
+                    MessageBox.Show("No se canceló el registro, no se pudo eliminar la persona.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                frmRegistroPersonas.IdPersonaRegistrada = 0;
+                frmRegistroPersonas.DesbloquearCampos(true);
+                MessageBox.Show("Se canceló el registro y se eliminó la persona.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            frmRegistroPersonas.IdPersonaRegistrada = 0;
-            frmRegistroPersonas.DesbloquearCampos(true);
-            MessageBox.Show("Se canceló el registro y se eliminó la persona.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
             InicializarCampos();
             MDIRecursosHumanos.DesbloquearBotonesMenu();
 
