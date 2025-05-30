@@ -219,6 +219,12 @@ namespace RecursosHumanos.View
             abrirChildFormMDI(frmDias_calculados);
         }
 
+        private void btnAPI_Click(object sender, EventArgs e)
+        {
+            Form frmApiRecibida = new frmApiRecibida();
+            abrirChildFormMDI(frmApiRecibida);
+        }
+
         #endregion
         //-----------------------------------------------------------------------Funciones de MDI
         private void abrirChildFormMDI(Form formChild)
@@ -496,5 +502,7 @@ namespace RecursosHumanos.View
             else
                 return $"Hace {(int)diferencia.TotalDays} días";
         }
+
+        
     }
 }

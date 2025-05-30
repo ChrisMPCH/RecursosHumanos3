@@ -37,9 +37,35 @@ namespace RecursosHumanos.View.MDI
         private void IniciarTabla()
         {
             Formas.ConfigurarEstiloDataGridView(tblEmpleado); // Configurar el estilo del DataGridView
+            Formas.ConfigurarEstiloDataGridView(tblApiRecibida); // Configurar el estilo del DataGridView
             ConfigurarColumnas(); // Agregar columnas personalizadas
+            ConfigurarColumnasE();
         }
         private void ConfigurarColumnas()
+        {
+            tblApiRecibida.Columns.Clear();
+            tblApiRecibida.AutoGenerateColumns = false;
+
+            tblApiRecibida.Columns.Add("Id_Contrato", "ID Contrato");
+            tblApiRecibida.Columns.Add("Matricula", "Matrícula");
+            tblApiRecibida.Columns.Add("NombreEmpleado", "Empleado");
+            tblApiRecibida.Columns.Add("Correo", "Correo");
+            tblApiRecibida.Columns.Add("Telefono", "Teléfono");
+            tblApiRecibida.Columns.Add("NombreDepartamento", "Departamento");
+            tblApiRecibida.Columns.Add("NombrePuesto", "Puesto");
+            tblApiRecibida.Columns.Add("FechaInicio", "Fecha Inicio");
+            tblApiRecibida.Columns.Add("FechaFin", "Fecha Fin");
+            tblApiRecibida.Columns.Add("HoraEntrada", "Hora Entrada");
+            tblApiRecibida.Columns.Add("HoraSalida", "Hora Salida");
+            tblApiRecibida.Columns.Add("Sueldo", "Salario");
+            tblApiRecibida.Columns.Add("Descripcion", "Descripción");
+            tblApiRecibida.Columns.Add("Estatus", "Estatus");
+            tblApiRecibida.Columns.Add("NombreTipoContrato", "Tipo de Contrato");
+
+            tblApiRecibida.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        private void ConfigurarColumnasE()
         {
             tblEmpleado.Columns.Clear();
             tblEmpleado.AutoGenerateColumns = false;
@@ -73,34 +99,67 @@ namespace RecursosHumanos.View.MDI
                 return;
             }
 
+            DateTime? fechaInicio = null;
+            DateTime? fechaFin = null;
+            if (!(dtpFechaInicio1.Value.Date == DateTime.Today && dtpFechaFin1.Value.Date == DateTime.Today))
+            {
+                fechaInicio = dtpFechaInicio1.Value.Date;
+                fechaFin = dtpFechaFin1.Value.Date;
+            }
+
+            // Obtener contratos
+            List<Contrato> contratos = new List<Contrato>();
+            try
+            {
+                contratos = _contratosController.ObtenerContratosAPI(matricula, fechaInicio, fechaFin);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al obtener contratos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            tblEmpleado.Rows.Clear();
+            foreach (var c in contratos)
+            {
+                tblEmpleado.Rows.Add(
+                    c.Id_Contrato,
+                    c.Matricula,
+                    c.NombreEmpleado,
+                    c.Correo,
+                    c.Telefono,
+                    c.NombreDepartamento,
+                    c.NombrePuesto,
+                    c.FechaInicio.ToShortDateString(),
+                    c.FechaFin.ToShortDateString(),
+                    c.HoraEntrada.ToString(@"hh\:mm"),
+                    c.HoraSalida.ToString(@"hh\:mm"),
+                    c.Sueldo.ToString("C"),
+                    c.Estatus ? "Activo" : "Inactivo",
+                    c.NombreTipoContrato
+                );
+            }
+
+            // Obtener nóminas
             try
             {
                 var nominas = await _apiService.ObtenerNominasPorEmpleadoAsync(matricula);
 
-                if (nominas.Count == 0)
-                {
-                    MessageBox.Show("No se encontraron nóminas para esta matrícula.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
+                tblApiRecibida.Rows.Clear();
+                tblApiRecibida.Columns.Clear();
 
-                // Configurar las columnas para esta vista si es diferente, o limpiar la tabla actual
-                tblEmpleado.Rows.Clear();
+                tblApiRecibida.Columns.Add("IdNomina", "ID Nómina");
+                tblApiRecibida.Columns.Add("FechaInicio", "Fecha Inicio");
+                tblApiRecibida.Columns.Add("FechaFin", "Fecha Fin");
+                tblApiRecibida.Columns.Add("EstadoPago", "Estado Pago");
+                tblApiRecibida.Columns.Add("MontoTotal", "Monto Total");
+                tblApiRecibida.Columns.Add("MontoLetras", "Monto en Letras");
 
-                // Opcional: configurar columnas específicas para nóminas si quieres
-                // Aquí ejemplo simple:
-                tblEmpleado.Columns.Clear();
-                tblEmpleado.Columns.Add("IdNomina", "ID Nómina");
-                tblEmpleado.Columns.Add("FechaInicio", "Fecha Inicio");
-                tblEmpleado.Columns.Add("FechaFin", "Fecha Fin");
-                tblEmpleado.Columns.Add("EstadoPago", "Estado Pago");
-                tblEmpleado.Columns.Add("MontoTotal", "Monto Total");
-                tblEmpleado.Columns.Add("MontoLetras", "Monto en Letras");
-
-                tblEmpleado.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                tblApiRecibida.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
                 foreach (var n in nominas)
                 {
-                    tblEmpleado.Rows.Add(
+                    tblApiRecibida.Rows.Add(
                         n.idNomina,
                         n.fechaInicio.ToShortDateString(),
                         n.fechaFin.ToShortDateString(),
@@ -117,3 +176,5 @@ namespace RecursosHumanos.View.MDI
         }
     }
 }
+
+
