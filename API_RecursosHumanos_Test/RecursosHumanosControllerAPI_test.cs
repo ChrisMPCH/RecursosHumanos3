@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Controllers;
 using RecursosHumanosCore.Model;
 using System;
 using System.Collections.Generic;
@@ -97,41 +98,41 @@ namespace API_RecursosHumanos_Test.Controllers
         /// </summary>
         /// <param name="matricula">Matrícula del empleado</param>
         /// <returns>Lista de pagos históricos</returns>
-        [HttpGet("historico-pagos")]
-        public IActionResult GetHistoricoPagos([FromQuery] string matricula)
-        {
-            try
-            {
-                // 1. Validar parámetros
-                if (string.IsNullOrWhiteSpace(matricula))
-                {
-                    return BadRequest("La matrícula es requerida.");
-                }
+        //[HttpGet("historico-pagos")]
+        //public IActionResult GetHistoricoPagos([FromQuery] string matricula)
+        //{
+        //    try
+        //    {
+        //        // 1. Validar parámetros
+        //        if (string.IsNullOrWhiteSpace(matricula))
+        //        {
+        //            return BadRequest("La matrícula es requerida.");
+        //        }
 
-                // 2. Obtener información del empleado
-                var empleado = _empleadosController.ObtenerEmpleadoPorMatricula(matricula);
-                if (empleado == null)
-                {
-                    return NotFound($"No se encontró un empleado con la matrícula {matricula}.");
-                }
+        //        // 2. Obtener información del empleado
+        //        var empleado = _empleadosController.ObtenerEmpleadoPorMatricula(matricula);
+        //        if (empleado == null)
+        //        {
+        //            return NotFound($"No se encontró un empleado con la matrícula {matricula}.");
+        //        }
 
-                // 3. Obtener contrato activo
-                var contrato = _contratoController.ObtenerContratoActivoPorMatricula(matricula);
-                if (contrato == null)
-                {
-                    return NotFound($"No se encontró un contrato activo para el empleado con matrícula {matricula}.");
-                }
+        //        // 3. Obtener contrato activo
+        //        var contrato = _contratoController.ObtenerContratoActivoPorMatricula(matricula);
+        //        if (contrato == null)
+        //        {
+        //            return NotFound($"No se encontró un contrato activo para el empleado con matrícula {matricula}.");
+        //        }
 
-                // 4. Obtener histórico de pagos
-                var historicoPagos = _contratoController.ObtenerHistorialPagos(matricula);
+        //        // 4. Obtener histórico de pagos
+        //        var historicoPagos = _contratoController.ObtenerHistorialPagos(matricula);
 
-                return Ok(historicoPagos);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error al obtener histórico de pagos");
-                return StatusCode(500, "Error interno del servidor: " + ex.Message);
-            }
-        }
+        //        return Ok(historicoPagos);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "Error al obtener histórico de pagos");
+        //        return StatusCode(500, "Error interno del servidor: " + ex.Message);
+        //    }
+        //}
     }
 }
