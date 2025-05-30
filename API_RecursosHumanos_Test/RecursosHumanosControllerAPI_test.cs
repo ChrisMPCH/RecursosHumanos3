@@ -42,6 +42,9 @@ namespace API_RecursosHumanos_Test
             public string EstatusContrato { get; set; }
             public int DiasTrabajados { get; set; }
             public double Salario { get; set; }
+            public string Departamento { get; set; }
+            public string RFC { get; set; }
+
         }
 
         public class EmpleadoInfo
@@ -103,7 +106,9 @@ namespace API_RecursosHumanos_Test
                     EstatusEmpleado = empleado.EstatusTexto,
                     EstatusContrato = contrato.Estatus ? "Activo" : "Inactivo",
                     DiasTrabajados = diasTrabajados,
-                    Salario = contrato.Sueldo
+                    Salario = contrato.Sueldo,
+                    Departamento = empleado.Departamento,
+                    RFC = empleado.DatosPersonales?.RFC ?? "No disponible"
                 };
 
                 _logger.LogInformation($"Consulta exitosa para matricula={matricula}");
