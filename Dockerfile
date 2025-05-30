@@ -2,33 +2,40 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copiar los archivos de proyecto y restaurar dependencias
+# Copiar los archivos de proyecto
 COPY ["API_RecursosHumanos_Test/API_RecursosHumanos_Test.csproj", "API_RecursosHumanos_Test/"]
 COPY ["RecursosHumanosCore/RecursosHumanosCore.csproj", "RecursosHumanosCore/"]
+
+# Restaurar dependencias
 RUN dotnet restore "API_RecursosHumanos_Test/API_RecursosHumanos_Test.csproj"
 
 # Copiar el resto del código
 COPY . .
 
-# Compilar la aplicación
-WORKDIR "/src/API_RecursosHumanos_Test"
-RUN dotnet build "API_RecursosHumanos_Test.csproj" -c Release -o /app/build
-
 # Publicar la aplicación
-FROM build AS publish
-RUN dotnet publish "API_RecursosHumanos_Test.csproj" -c Release -o /app/publish
+RUN dotnet publish "API_RecursosHumanos_Test/API_RecursosHumanos_Test.csproj" -c Release -o /app/publish
 
-# Etapa final
+# Imagen final
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
 
-# Exponer el puerto que usará la aplicación
+# Instalar curl para health check
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+# Copiar los archivos publicados
+COPY --from=build /app/publish .
+
+# Variables de entorno por defecto
+ENV ASPNETCORE_ENVIRONMENT=Production
+ENV ASPNETCORE_URLS=http://+:80
+ENV ConnectionStrings__DefaultConnection="Host=dpg-d0knhi7fte5s738rd8hg-a.oregon-postgres.render.com;Port=5432;Database=recursoshumanos;Username=recursoshumanos_user;Password=UpgPeaoHYijsjjagibEF6m8dzcXyNP3j;SSL Mode=Require;Trust Server Certificate=true;"
+
+# Exponer puertos
 EXPOSE 80
 EXPOSE 443
 
-# Establecer la variable de entorno para el puerto
-ENV ASPNETCORE_URLS=http://+:80
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
+    CMD curl -f http://localhost:80/health || exit 1
 
-# Comando para ejecutar la aplicación
 ENTRYPOINT ["dotnet", "API_RecursosHumanos_Test.dll"] 

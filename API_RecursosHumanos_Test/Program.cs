@@ -5,34 +5,51 @@ using RecursosHumanosCore.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configura aquí tus cadenas de conexión si es necesario
-// Por ejemplo:
-// PosgresSQLAccess.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// Configurar la cadena de conexiÃ³n
+PostgreSQLDataAccess.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Configurar CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins",
+        builder =>
+        {
+            var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+            builder.WithOrigins(allowedOrigins ?? Array.Empty<string>())
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Registra aquí todos los controladores y servicios que inyectas en RecursosHumanosControllerAPI_test
+// Registrar servicios
 builder.Services.AddScoped<ContratoController>();
 builder.Services.AddScoped<UsuariosController>();
 builder.Services.AddScoped<EmpleadosDataAccess>();
 builder.Services.AddScoped<AsistenciaDataAccess>();
 builder.Services.AddScoped<AusenciaController>();
-
-// Si usas PostgreSQLDataAccess como singleton o scoped, registra también:
 builder.Services.AddScoped<PostgreSQLDataAccess>();
+
+// Configurar health check
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
+// Configurar el pipeline de la aplicaciÃ³n
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+app.UseCors("AllowSpecificOrigins");
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();
