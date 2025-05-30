@@ -37,7 +37,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("AllowSpecificOrigins");
 app.UseAuthorization();
-
 app.MapControllers();
 app.MapHealthChecks("/health");
 

@@ -44,6 +44,26 @@ namespace RecursosHumanosCore.Data
             set { _connectionString = value; }
         }
 
+        public static string ConnectionString
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_connectionString))
+                {
+                    try
+                    {
+                        _connectionString = ConfigurationManager.ConnectionStrings["ConexionBD"]?.ConnectionString;
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Warn(ex, "No se pudo obtener la cadena de conexión desde ConfigurationManager");
+                    }
+                }
+                return _connectionString;
+            }
+            set { _connectionString = value; }
+        }
+
         private PostgreSQLDataAccess()
         {
             try
@@ -82,7 +102,6 @@ namespace RecursosHumanosCore.Data
                     _connection.Open();
                     _logger.Info("Conexión a la base de datos establecida correctamente");
                 }
-
                 return true;
             }
             catch (Exception ex)
@@ -118,7 +137,6 @@ namespace RecursosHumanosCore.Data
                 _logger.Debug($"Ejecutando consulta: {query}");
                 using (NpgsqlCommand command = CreateCommand(query, parameters))
                 {
-
                     using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(command))
                     {
                         adapter.Fill(dataTable);
@@ -168,7 +186,6 @@ namespace RecursosHumanosCore.Data
             }
         }
 
-
         public object? ExecuteScalar(string query, params NpgsqlParameter[] parameters)
         {
             try
@@ -190,10 +207,8 @@ namespace RecursosHumanosCore.Data
 
         public NpgsqlParameter CreateParameter(string name, object value)
         {
-            //?? es como un if enfocado a nulos
             return new NpgsqlParameter(name, value ?? DBNull.Value);
         }
-
     }
 }
 

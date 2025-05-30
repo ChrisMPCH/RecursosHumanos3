@@ -12,6 +12,10 @@ RUN dotnet restore "API_RecursosHumanos_Test/API_RecursosHumanos_Test.csproj"
 # Copiar el resto del código
 COPY . .
 
+# Compilar la aplicación
+WORKDIR "/src/API_RecursosHumanos_Test"
+RUN dotnet build "API_RecursosHumanos_Test.csproj" -c Release -o /app/build
+
 # Publicar la aplicación
 RUN dotnet publish "API_RecursosHumanos_Test/API_RecursosHumanos_Test.csproj" -c Release -o /app/publish
 
@@ -38,4 +42,5 @@ EXPOSE 443
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
     CMD curl -f http://localhost:80/health || exit 1
 
+# Comando para ejecutar la aplicación
 ENTRYPOINT ["dotnet", "API_RecursosHumanos_Test.dll"] 

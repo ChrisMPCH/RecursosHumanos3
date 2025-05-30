@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RecursosHumanos.View.MDI;
 
 namespace RecursosHumanos.View
 {
@@ -214,7 +215,7 @@ namespace RecursosHumanos.View
 
         private void btnContarDias_Click(object sender, EventArgs e)
         {
-            Form frmDias_calculados = new frmDias_calculados();
+            Form frmDias_calculados = new ApiRecibida();
             abrirChildFormMDI(frmDias_calculados);
         }
 
