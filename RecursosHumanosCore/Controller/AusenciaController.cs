@@ -6,7 +6,7 @@ using NLog;
 using RecursosHumanosCore.Controller;
 using RecursosHumanosCore.Utilities;
 
-namespace RecursosHumanosCore.Controllers
+namespace RecursosHumanosCore.Controller
 {
     public class AusenciaController
     {

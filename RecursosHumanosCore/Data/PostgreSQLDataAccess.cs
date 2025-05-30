@@ -11,19 +11,19 @@ using Npgsql;
 
 namespace RecursosHumanosCore.Data
 {
-     class PostgreSQLDataAccess
+    public class PostgreSQLDataAccess
     {
         //Logger usando el logginManeger
-        private static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Data.PostgreSQLDataAccess");
+        public static readonly Logger _logger = LoggingManager.GetLogger("RecursosHumanos.Data.PostgreSQLDataAccess");
 
         //Cadena de conexión desde App.config
 
-        private static readonly string _ConnectionString = ConfigurationManager.ConnectionStrings["ConexionBD"].ConnectionString;
+        public static readonly string _ConnectionString = ConfigurationManager.ConnectionStrings["ConexionBD"].ConnectionString;
 
-        private NpgsqlConnection _connection;
-        private static PostgreSQLDataAccess? _instance;
+        public NpgsqlConnection _connection;
+        public static PostgreSQLDataAccess? _instance;
 
-        private PostgreSQLDataAccess()
+        public PostgreSQLDataAccess()
         {
             try
             {
@@ -109,7 +109,7 @@ namespace RecursosHumanosCore.Data
         }
 
         //prepra con los parametros
-        private NpgsqlCommand CreateCommand(string query, NpgsqlParameter[] parameters)
+        public NpgsqlCommand CreateCommand(string query, NpgsqlParameter[] parameters)
         {
             NpgsqlCommand command = new NpgsqlCommand(query, _connection);
             if (parameters != null)

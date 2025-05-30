@@ -20,6 +20,9 @@ builder.Services.AddScoped<EmpleadosDataAccess>();
 builder.Services.AddScoped<AsistenciaDataAccess>();
 builder.Services.AddScoped<AusenciaController>();
 
+// Si usas PostgreSQLDataAccess como singleton o scoped, registra también:
+builder.Services.AddScoped<PostgreSQLDataAccess>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
