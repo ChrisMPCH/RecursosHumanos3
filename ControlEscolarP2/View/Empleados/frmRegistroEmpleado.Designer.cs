@@ -247,7 +247,7 @@
             dtpFechaIngreso.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dtpFechaIngreso.Format = DateTimePickerFormat.Short;
             dtpFechaIngreso.ImeMode = ImeMode.NoControl;
-            dtpFechaIngreso.Location = new Point(447, 298);
+            dtpFechaIngreso.Location = new Point(477, 319);
             dtpFechaIngreso.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
             dtpFechaIngreso.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
             dtpFechaIngreso.Name = "dtpFechaIngreso";
@@ -273,7 +273,7 @@
             lblFechaIngreso.Anchor = AnchorStyles.Left;
             lblFechaIngreso.Font = new Font("Century Gothic", 15.75F, FontStyle.Bold);
             lblFechaIngreso.ForeColor = Color.Black;
-            lblFechaIngreso.Location = new Point(283, 304);
+            lblFechaIngreso.Location = new Point(313, 325);
             lblFechaIngreso.Name = "lblFechaIngreso";
             lblFechaIngreso.Size = new Size(185, 25);
             lblFechaIngreso.TabIndex = 7;

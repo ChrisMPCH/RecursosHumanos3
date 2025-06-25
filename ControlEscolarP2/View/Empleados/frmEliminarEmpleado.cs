@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RecursosHumanos.Bussines;
+using RecursosHumanosCore.Bussines;
 using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View

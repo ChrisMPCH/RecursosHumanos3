@@ -14,9 +14,14 @@
 
   <ItemGroup>
     <PackageReference Include="AlphaGradientPanel" Version="1.1.2" />
+    <PackageReference Include="EPPlus" Version="8.0.5" />
     <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
     <PackageReference Include="NLog" Version="5.4.0" />
     <PackageReference Include="Npgsql" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RecursosHumanosCore\RecursosHumanosCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,7 +30,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="View\Empleados\frmListaEmpleados.cs" />
   </ItemGroup>
 
   <ItemGroup>

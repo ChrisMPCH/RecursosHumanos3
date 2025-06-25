@@ -5,6 +5,10 @@ VisualStudioVersion = 17.13.35716.79
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecursosHumanos", "ControlEscolarP2\RecursosHumanos.csproj", "{122A3F3B-C264-417B-97F9-E5FF7F1BAAA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecursosHumanosCore", "RecursosHumanosCore\RecursosHumanosCore.csproj", "{B7884E7D-1523-C734-52E6-D31F4421C0D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_RecursosHumanos_Test", "API_RecursosHumanos_Test\API_RecursosHumanos_Test.csproj", "{89DEE3DB-EC32-43C2-BF86-420403DAD2DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{122A3F3B-C264-417B-97F9-E5FF7F1BAAA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{122A3F3B-C264-417B-97F9-E5FF7F1BAAA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{122A3F3B-C264-417B-97F9-E5FF7F1BAAA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7884E7D-1523-C734-52E6-D31F4421C0D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7884E7D-1523-C734-52E6-D31F4421C0D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7884E7D-1523-C734-52E6-D31F4421C0D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7884E7D-1523-C734-52E6-D31F4421C0D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89DEE3DB-EC32-43C2-BF86-420403DAD2DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89DEE3DB-EC32-43C2-BF86-420403DAD2DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89DEE3DB-EC32-43C2-BF86-420403DAD2DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89DEE3DB-EC32-43C2-BF86-420403DAD2DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Model;
+﻿using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Model;
 using RecursosHumanos.Utilities;
+using RecursosHumanosCore.Utilities;
 
 namespace RecursosHumanos.View
 {
     public partial class frmContratos : Form
     {
         private readonly ContratoController _contratosController = new ContratoController();
-       // private readonly EmpleadosController _empleadosController = new EmpleadosController();
+        private readonly EmpleadosController _empleadosController = new EmpleadosController();
 
 
         public frmContratos()
@@ -31,6 +23,10 @@ namespace RecursosHumanos.View
             InicializaVentanaContratos(); // Llama al método para inicializar la ventana
             ConfigurarHoraEntradaSalida(); // Configura DateTimePicker para hora
             txtSalario.KeyPress += txtSalario_KeyPress; // Evento para validar solo números en txtSalario
+            dtpFechaInicio1.Value = DateTime.Today;
+            dtpFechaFin1.Value = DateTime.Today;
+            dtpHoraEntrada.Value = DateTime.Now;
+            dtpHoraSalida1.Value = DateTime.Now;
         }
 
         // Método para configurar la ventana al inicio
@@ -76,7 +72,7 @@ namespace RecursosHumanos.View
             cbxTipoContrato1.SelectedValue = 1;
         }
 
-   
+
 
         // Método para verificar si hay campos vacíos
         private bool DatosVacios()
@@ -147,28 +143,35 @@ namespace RecursosHumanos.View
                     return;
                 }
 
-                // CONSTRUCCIÓN DE EMPLEADO
-                Empleado empleado = new Empleado
-                {
-                    Matricula = matricula,
-                    // Asegúrate que tenga Id_Persona si ya fue buscado antes
-                };
+                // OBTENCIÓN DE FECHAS
+                DateTime fechaInicio = dtpFechaInicio1.Value.Date;
+                DateTime fechaFin = dtpFechaFin1.Value.Date;
 
-                // CONSTRUCCIÓN DE CONTRATO
+                // CÁLCULO DE ESTATUS AUTOMÁTICO
+                bool estatus = fechaFin >= DateTime.Now.Date;
+
+                if (!estatus)
+                {
+                    MessageBox.Show("Este contrato se registrará como INACTIVO porque la fecha de fin ya ha pasado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                // CONSTRUCCIÓN DE CONTRATO 
                 Contrato contrato = new Contrato
                 {
                     Id_TipoContrato = tipoContratoSeleccionado.Key,
-                    FechaInicio = dtpFechaInicio1.Value.Date,
-                    FechaFin = dtpFechaFin1.Value.Date,
+                    FechaInicio = fechaInicio,
+                    FechaFin = fechaFin,
                     HoraEntrada = dtpHoraEntrada.Value.TimeOfDay,
                     HoraSalida = dtpHoraSalida1.Value.TimeOfDay,
                     Sueldo = sueldo,
                     Descripcion = txtDescrpcion.Text.Trim(),
-                    Estatus = true
+                    Estatus = estatus
                 };
 
-                // LLAMADA AL CONTROLLER
-                var resultado = _contratosController.RegistrarContrato(contrato, empleado);
+                // LLAMADA AL CONTROLLER con matrícula como parámetro
+                int idUsuario = LoggingManager.UsuarioActual.Id_Usuario;
+                var resultado = _contratosController.RegistrarContrato(matricula, contrato, idUsuario);
+
 
                 if (resultado.id > 0)
                 {
@@ -186,23 +189,30 @@ namespace RecursosHumanos.View
             }
         }
 
+
         private void LimpiarFormulario()
         {
-            // TextBoxes
+            // TextBoxes del contrato
             txtMatricula1.Text = "Ingresa tu matricula";
             txtDescrpcion.Text = "Ingresa una descripcion";
             txtSalario.Text = "Ingresa el salario";
 
-            // ComboBox de tipo de contrato
+            // TextBoxes del empleado
+            txtNombreCompleto.Text = "";
+            txtCurp1.Text = "";
+            txtTelefono1.Text = "";
+            txtCorreo.Text = "";
+
+            // ComboBox
             cbxTipoContrato1.SelectedIndex = 0;
 
             // DateTimePickers
             dtpFechaInicio1.Value = DateTime.Today;
             dtpFechaFin1.Value = DateTime.Today;
-
             dtpHoraEntrada.Value = DateTime.Now;
             dtpHoraSalida1.Value = DateTime.Now;
         }
+
 
 
 
@@ -225,19 +235,19 @@ namespace RecursosHumanos.View
                 return;
             }
 
-            // Verificar existencia y estatus del empleado
-            //var empleado = new EmpleadoController().ObtenerEmpleadoPorMatricula(matricula);
-            //if (empleado == null)
-            //{
-             //   MessageBox.Show("No se encontró un empleado con esa matrícula.", "Empleado no encontrado", MessageBoxButtons.OK, MessageBoxIcon.Error);
-             //   return;
-           // }
+            //Verificar existencia y estatus del empleado
+            var empleado = new EmpleadosController().ObtenerEmpleadoPorMatricula(matricula);
+            if (empleado == null)
+            {
+                MessageBox.Show("No se encontró un empleado con esa matrícula.", "Empleado no encontrado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-           // if (!empleado.Estatus)
-            //{
-               // MessageBox.Show("Este empleado está dado de baja.\nNo se puede asignar un nuevo contrato.", "Acción no permitida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-               // return;
-           // }
+            if (empleado.Estatus == 0)
+            {
+                MessageBox.Show("Este empleado está dado de baja.\nNo se puede asignar un nuevo contrato.", "Acción no permitida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             // Verificar si ya tiene un contrato activo
             bool yaTieneContrato = _contratosController.TieneContratoActivo(matricula);
@@ -246,6 +256,11 @@ namespace RecursosHumanos.View
                 MessageBox.Show("Este empleado ya tiene un contrato activo.\nNo se puede registrar uno nuevo hasta finalizar el anterior.", "Contrato existente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            // Aquí llenamos los campos
+            txtNombreCompleto.Text = $"{empleado.DatosPersonales.Nombre} {empleado.DatosPersonales.Ap_Paterno} {empleado.DatosPersonales.Ap_Materno}";
+            txtCurp1.Text = empleado.DatosPersonales.CURP;
+            txtTelefono1.Text = empleado.DatosPersonales.Telefono;
+            txtCorreo.Text = empleado.DatosPersonales.Email;
 
             // Todo bien, puede continuar
             MessageBox.Show("Empleado válido. Puede generarse un nuevo contrato.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -290,6 +305,6 @@ namespace RecursosHumanos.View
             this.Close();
         }
 
-      
+
     }
 }

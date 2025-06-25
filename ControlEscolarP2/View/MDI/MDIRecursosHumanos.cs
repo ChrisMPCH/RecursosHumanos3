@@ -1,4 +1,5 @@
-﻿using RecursosHumanos.Utilities;
+﻿using RecursosHumanosCore.Controller;
+using RecursosHumanos.Utilities;
 using RecursosHumanos.View.Contratos;
 using RecursosHumanos.View.Usuarios;
 using System;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RecursosHumanos.View.MDI;
 
 namespace RecursosHumanos.View
 {
@@ -17,20 +19,22 @@ namespace RecursosHumanos.View
     public partial class MDIRecursosHumanos : Form
     {
         public static Form? formActivada = null;
+        public static List<int> permisosUsuario = frmLogin.permisosUsuario;
 
         // Constructor del formulario principal, se inicializan los componentes y el menú MDI
         public MDIRecursosHumanos()
         {
             InitializeComponent(); // Inicializa los controles en el formulario
             MDIRecursosHumanos_Load();
+            VerificarPermisos();
         }
-
         private void MDIRecursosHumanos_Load()
         {
+            ActualizarActividadReciente();
+            ActualizarEstadisticas(); // Llama a la función para actualizar las estadísticas al cargar el formulario
             horafecha_Tick(); // Llama a la función para mostrar la hora y fecha en el formulario
             inicioMenuMDI(); // Llama a la función para inicializar el estado del menú MDI
         }
-
         //Elementos para la fecha y hora
         private void horafecha_Tick()
         {
@@ -73,12 +77,10 @@ namespace RecursosHumanos.View
             // Si el submenú no está visible, lo mostramos
             subMenu.Visible = false; // Si ya está visible, lo ocultamos
         }
-
         private void picMenu_Click(object sender, EventArgs e)
         {
             Formas.CloseOtherForms(this);
         }
-
 
         //-----------------------------------------------------------------------Christopher
         #region
@@ -86,7 +88,6 @@ namespace RecursosHumanos.View
         {
             showSubMenu(subChristopherPanel); // Muestra u oculta el submenú de Usuarios
         }
-
         private void registrarPersonas_Click(object sender, EventArgs e)
         {
             // Creamos la instancia del formulario hijo
@@ -95,36 +96,30 @@ namespace RecursosHumanos.View
             // Usamos el método para abrir el formulario con las configuraciones estándar
             abrirChildFormMDI(frmRegistroPersonas);
         }
-
         private void btnLisUsuarios_Click(object sender, EventArgs e)
         {
             Form frmListaUsuarios = new frmListaUsuarios();
             abrirChildFormMDI(frmListaUsuarios);
         }
-
         private void btnActualizarUsuarios_Click(object sender, EventArgs e)
         {
             Form frmActualizarUsuario = new frmActualizarUsuario();
             abrirChildFormMDI(frmActualizarUsuario);
         }
-
         private void btnEliminarUsuarios_Click(object sender, EventArgs e)
         {
             Form frmEliminarUsuarios = new frmEliminarUsuario();
             abrirChildFormMDI(frmEliminarUsuarios);
         }
-
         private void btnRoles_Click_1(object sender, EventArgs e)
         {
             showSubMenu(pnlSubRoles); // Muestra u oculta el submenú de Roles
         }
-
         private void btnGestionRoles_Click(object sender, EventArgs e)
         {
             Form frmGestionRoles = new frmGestionRoles();
             abrirChildFormMDI(frmGestionRoles);
         }
-
         private void btnCreacionRoles_Click(object sender, EventArgs e)
         {
             Form frmGestionCreacionRoles = new frmGestionCreacionRoles();
@@ -138,25 +133,21 @@ namespace RecursosHumanos.View
         {
             showSubMenu(subVanessaPanel); // Muestra u oculta el submenú de Vanessa
         }
-
         private void RegistroEmpleados_Click(object sender, EventArgs e)
         {
             Form frmRegistroEmpleado = new frmRegistroEmpleado();
             abrirChildFormMDI(frmRegistroEmpleado);
         }
-
         private void ListaEmpleados_Click(object sender, EventArgs e)
         {
             Form frmListaEmpleados = new frmListaEmpleados();
             abrirChildFormMDI(frmListaEmpleados);
         }
-
         private void ActualizarEmpleados_Click(object sender, EventArgs e)
         {
             Form frmActualizarEmpleado = new frmActualizarEmpleado();
             abrirChildFormMDI(frmActualizarEmpleado);
         }
-
         private void btnEliminarEmpleados_Click(object sender, EventArgs e)
         {
             Form frmEliminarEmpleado = new frmEliminarEmpleado();
@@ -167,13 +158,11 @@ namespace RecursosHumanos.View
             Form frmDepartamentos = new frmDepartamentos();
             abrirChildFormMDI(frmDepartamentos);
         }
-
         private void btnPuestos_Click(object sender, EventArgs e)
         {
             Form frmPuestos = new frmPuestos();
             abrirChildFormMDI(frmPuestos);
         }
-
 
         private void btnContratos_Click_1(object sender, EventArgs e)
         {
@@ -194,16 +183,21 @@ namespace RecursosHumanos.View
             abrirChildFormMDI(fmrReporte);
         }
 
+        private void btnListaAsistencias_Click(object sender, EventArgs e)
+        {
+            Form fmrListaAsistencia = new frmListaAsistencias();
+            abrirChildFormMDI(fmrListaAsistencia);
+        }
+
+        private void btnListaAusencias_Click(object sender, EventArgs e)
+        {
+            Form fmrListaAusencia = new frmListaAusencias();
+            abrirChildFormMDI(fmrListaAusencia);
+        }
         private void btnEntradas_Click(object sender, EventArgs e)
         {
             Form frmEntrada = new frmEntrada();
             abrirChildFormMDI(frmEntrada);
-        }
-
-        private void btnSalidas_Click(object sender, EventArgs e)
-        {
-            Form frmInasistencias = new frmInasistencias();
-            abrirChildFormMDI(frmInasistencias);
         }
         private void btnListaContratos_Click(object sender, EventArgs e)
         {
@@ -219,12 +213,16 @@ namespace RecursosHumanos.View
             showSubMenu(subFridaPanel); // Muestra u oculta el submenú de Frida
         }
 
-
-
         private void btnContarDias_Click(object sender, EventArgs e)
         {
-            Form frmDias_calculados = new frmDias_calculados();
+            Form frmDias_calculados = new frmApiRecibida();
             abrirChildFormMDI(frmDias_calculados);
+        }
+
+        private void btnAPI_Click(object sender, EventArgs e)
+        {
+            Form frmApiRecibida = new frmApiRecibida();
+            abrirChildFormMDI(frmApiRecibida);
         }
 
         #endregion
@@ -296,5 +294,215 @@ namespace RecursosHumanos.View
             Form frmAuditoria = new frmAuditoria();
             abrirChildFormMDI(frmAuditoria);
         }
+
+        //-------------------------------------------------------------------------------Permisos
+
+        /// <summary>
+        /// Verifica los permisos del usuario actual y habilita o deshabilita los botones del menú según corresponda.
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        public static void VerificarPermisos()
+        {
+            if (permisosUsuario == null || permisosUsuario.Count == 0)
+            {
+                MessageBox.Show("No se han asignado permisos para este usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Usuarios
+            if (permisosUsuario.Contains(14)) // Ver usuarios
+            {
+                btnLisUsuarios.Enabled = true;
+            }
+            if (permisosUsuario.Contains(15) || permisosUsuario.Contains(39)) // Agregar usuario y empleado
+            {
+                subRegistroPersonas.Enabled = true;
+            }
+            if (permisosUsuario.Contains(15)) // Editar usuario
+            {
+                btnActualizarUsuarios.Enabled = true;
+            }
+            if (permisosUsuario.Contains(27)) // Eliminar usuario
+            {
+                btnEliminarUsuarios.Enabled = true;
+            }
+
+            // Roles
+            if (permisosUsuario.Contains(18)) // Ver roles
+            {
+                btnGestionRoles.Enabled = true;
+            }
+            if (permisosUsuario.Contains(23) || permisosUsuario.Contains(35)) // ver permisos de rol
+            {
+                btnCreacionRoles.Enabled = true;
+
+            }
+
+            // Ausencias y Asistencias
+            if (permisosUsuario.Contains(36)) // Ver 
+            {
+                btnListaAsistencias.Enabled = true;
+            }
+            if (permisosUsuario.Contains(37)) // ver 
+            {
+                btnListaAusencias.Enabled = true;
+            }
+
+
+            // Permisos
+            if (permisosUsuario.Contains(22)) // Ver permisos
+            {
+                btnCreacionRoles.Enabled = true;
+            }
+
+            // Empleados
+            if (permisosUsuario.Contains(27)) // Ver empleados
+            {
+                btnListaEmpleados.Enabled = true;
+            }
+            if (permisosUsuario.Contains(41)) // Editar empleados
+            {
+                btnActualizarEmpleados.Enabled = true;
+            }
+            if (permisosUsuario.Contains(30)) // Eliminar empleados
+            {
+                btnEliminarEmpleados.Enabled = true;
+            }
+
+            // Contratos
+            if (permisosUsuario.Contains(31) || permisosUsuario.Contains(35)) // Ver contratos
+            {
+                btnReportes.Enabled = true;
+            }
+            if (permisosUsuario.Contains(32) || permisosUsuario.Contains(35)) // Agregar contrato
+            {
+                btnContratos.Enabled = true;
+            }
+            if (permisosUsuario.Contains(33) || permisosUsuario.Contains(35)) // Editar contrato
+            {
+                btnListaContratos.Enabled = true;
+            }
+
+            // Bitácora 
+            if (permisosUsuario.Contains(1)) // Ver bitácora
+            {
+                btnRegistroAuditorias.Enabled = true;
+            }
+
+            // Puestos
+            if (permisosUsuario.Contains(3) || permisosUsuario.Contains(35)) // Ver puestos
+            {
+                btnPuestos.Enabled = true;
+
+            }
+
+            // Departamentos
+            if (permisosUsuario.Contains(7) || permisosUsuario.Contains(35)) // Ver departamentos
+            {
+                btnDepartamentos.Enabled = true;
+            }
+
+            // Asistencias
+            if (permisosUsuario.Contains(11) || permisosUsuario.Contains(35)) // Gestionar asistencias
+            {
+                btnEntradas.Enabled = true;
+            }
+
+            // Contar días trabajados
+            if (permisosUsuario.Contains(13) || permisosUsuario.Contains(35)) // Gestionar días trabajados
+            {
+                btnContarDias.Enabled = true;
+            }
+
+        }
+
+        private void ActualizarEstadisticas()
+        {
+            try
+            {
+                // Porcentaje de empleados activos
+                EmpleadosController empleadoController = new EmpleadosController();
+                double porcentajeEmpleadosActivos = empleadoController.ObtenerPorcentajeEmpleadosActivos();
+                lblEmpleadosActNumero.Text = $"{porcentajeEmpleadosActivos:F0}%"; // Formato sin decimales
+
+                // Porcentaje de asistencias hoy (ejemplo, necesitarás un método similar)
+                // Porcentaje de asistencias hoy
+                // AsistenciaController asistenciaController = new AsistenciaController();
+                //double porcentajeAsistenciasHoy = asistenciaController.ObtenerPorcentajeAsistenciasHoy();
+                //lblAsistenciaNumero.Text = $"{porcentajeAsistenciasHoy:F0}%";
+                // Porcentaje de cumpleaños (ejemplo, necesitarás un método similar)
+
+                // Porcentaje de contratos activos (ejemplo, necesitarás un método similar)
+                ContratoController contratoController = new ContratoController();
+                double porcentajeContratosActivos = contratoController.ObtenerPorcentajeContratosActivos();
+                lblContratosActNumero.Text = $"{porcentajeContratosActivos:F0}%";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al actualizar las estadísticas: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void ActualizarActividadReciente()
+        {
+            try
+            {
+                AuditoriasController auditoriasController = new AuditoriasController();
+                // Obtener las últimas 3 auditorías activas
+                var auditorias = auditoriasController.ObtenerAuditorias(estatus: 1)
+                    .OrderByDescending(a => a.Fecha_Movimiento)
+                    .Take(3)
+                    .ToList();
+
+                // Limpiar controles
+                lblUsuario1.Text = "";
+                lblAccion1.Text = "";
+                lblTempo1.Text = "";
+                lblUsuario2.Text = "";
+                lblAccion2.Text = "";
+                lblTempo2.Text = "";
+                lblUsuario3.Text = "";
+                lblAccion3.Text = "";
+                lblTempo3.Text = "";
+
+                // Mostrar las auditorías
+                if (auditorias.Count > 0)
+                {
+                    lblUsuario1.Text = auditorias[0].UsuarioResponsable?.UsuarioNombre ?? $"Usuario {auditorias[0].Id_Usuario}";
+                    lblAccion1.Text = auditorias[0].Detalle;
+                    lblTempo1.Text = CalcularTiempo(auditorias[0].Fecha_Movimiento);
+                }
+                if (auditorias.Count > 1)
+                {
+                    lblUsuario2.Text = auditorias[1].UsuarioResponsable?.UsuarioNombre ?? $"Usuario {auditorias[1].Id_Usuario}";
+                    lblAccion2.Text = auditorias[1].Detalle;
+                    lblTempo2.Text = CalcularTiempo(auditorias[1].Fecha_Movimiento);
+                }
+                if (auditorias.Count > 2)
+                {
+                    lblUsuario3.Text = auditorias[2].UsuarioResponsable?.UsuarioNombre ?? $"Usuario {auditorias[2].Id_Usuario}";
+                    lblAccion3.Text = auditorias[2].Detalle;
+                    lblTempo3.Text = CalcularTiempo(auditorias[2].Fecha_Movimiento);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar la actividad reciente: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private string CalcularTiempo(DateTime fechaHora)
+        {
+            TimeSpan diferencia = DateTime.Now - fechaHora;
+            if (diferencia.TotalMinutes < 1)
+                return "Hace menos de 1 min";
+            else if (diferencia.TotalMinutes < 60)
+                return $"Hace {(int)diferencia.TotalMinutes} min";
+            else if (diferencia.TotalHours < 24)
+                return $"Hace {(int)diferencia.TotalHours} horas";
+            else
+                return $"Hace {(int)diferencia.TotalDays} días";
+        }
+
+        
     }
 }

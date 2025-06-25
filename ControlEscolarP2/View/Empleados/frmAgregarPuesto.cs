@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
-using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Models;
+using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Models;
 using RecursosHumanos.Utilities;
+using RecursosHumanosCore.Utilities;
 
 namespace RecursosHumanos.View
 {
@@ -64,7 +65,7 @@ namespace RecursosHumanos.View
         {
             if (DatosVacios())
             {
-                MessageBox.Show("Por favor, llene todos los campos.", "Informacion del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, llene todos los campos.", "Información del sistema", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
@@ -77,13 +78,17 @@ namespace RecursosHumanos.View
                 Estatus = true
             };
 
-            var (idPuesto, mensaje) = controller.RegistrarPuesto(nuevoPuesto);
+            // Obtener el ID del usuario logueado desde frmLogin
+            int idUsuario = LoggingManager.UsuarioActual.Id_Usuario;
+
+            // Llamar al método pasándole el ID del usuario
+            var (idPuesto, mensaje) = controller.RegistrarPuesto(nuevoPuesto, idUsuario);
+
             if (idPuesto > 0)
             {
                 MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                MDIRecursosHumanos mid = new MDIRecursosHumanos();
-                mid.BloquearBotonesMenu();
+                MDIRecursosHumanos.BloquearBotonesMenu();
 
                 InicializarCampos();
                 DesbloquearCampos(true);
@@ -97,6 +102,7 @@ namespace RecursosHumanos.View
                 return false;
             }
         }
+
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {

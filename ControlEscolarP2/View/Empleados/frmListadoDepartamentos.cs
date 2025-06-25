@@ -1,7 +1,7 @@
 using Guna.UI2.WinForms;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Model;
-using RecursosHumanos.Models;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Model;
+using RecursosHumanosCore.Models;
 using RecursosHumanos.Utilities;
 using System;
 using System.Collections.Generic;
@@ -85,5 +85,21 @@ namespace RecursosHumanos.View
                 MessageBox.Show("Error al cargar departamentos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnExportar_Click(object sender, EventArgs e)
+        {
+            DepartamentoController controller = new DepartamentoController();
+            var (exito, mensaje, ruta) = controller.ExportarDepartamentosExcel(true);
+
+            if (exito)
+            {
+                MessageBox.Show(mensaje, "Exportación Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show(mensaje, "Exportación Incompleta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
     }
 }

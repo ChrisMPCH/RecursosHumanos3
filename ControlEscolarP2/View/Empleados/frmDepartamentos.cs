@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RecursosHumanos.Bussines;
+using RecursosHumanosCore.Bussines;
 using RecursosHumanos.Utilities;
 
 namespace RecursosHumanos.View
@@ -18,6 +18,7 @@ namespace RecursosHumanos.View
         {
             InitializeComponent();
             InicializarVentana();
+            VerificarPermisos();
         }
 
         public void InicializarVentana()
@@ -60,5 +61,31 @@ namespace RecursosHumanos.View
             frmListadoDepartamentos formLeer = new frmListadoDepartamentos(pnlCambiante);
             Formas.abrirPanelForm(formLeer, pnlCambiante);
         }
+
+        /// <summary>
+        /// Verifica los permisos del usuario para habilitar o deshabilitar los botones de registro.
+        /// </summary>
+        private void VerificarPermisos()
+        {
+            var permisosUsuario = MDIRecursosHumanos.permisosUsuario;
+
+            if (permisosUsuario.Contains(8) || permisosUsuario.Contains(35)) // Agregar departamento  
+            {
+                btnAgregar.Enabled = true;
+            }
+            if (permisosUsuario.Contains(9) || permisosUsuario.Contains(35)) // Editar departamento  
+            {
+                btnActualizar.Enabled = true;
+            }
+            if (permisosUsuario.Contains(10) || permisosUsuario.Contains(35)) // Eliminar departamento  
+            {
+                btnEliminar.Enabled = true;
+            }
+            if (permisosUsuario.Contains(7) || permisosUsuario.Contains(35)) // Consultar departamento  
+            {
+                btnConsultar.Enabled = true;
+            }
+        }
+
     }
 }

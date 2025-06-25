@@ -40,15 +40,17 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             lblTitulo = new Label();
             separador1 = new Guna.UI2.WinForms.Guna2Separator();
             lblFechaNacimiento = new Label();
@@ -67,6 +69,7 @@
             lblRolNombre = new Label();
             pnlTabla = new Guna.UI2.WinForms.Guna2Panel();
             dataGridPermisos = new Guna.UI2.WinForms.Guna2DataGridView();
+            btnExcel = new Guna.UI2.WinForms.Guna2Button();
             pnlInfoUsuario.SuspendLayout();
             pnlTabla.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridPermisos).BeginInit();
@@ -280,6 +283,7 @@
             // pnlInfoUsuario
             // 
             pnlInfoUsuario.BackColor = Color.White;
+            pnlInfoUsuario.Controls.Add(btnExcel);
             pnlInfoUsuario.Controls.Add(txtRolNombre);
             pnlInfoUsuario.Controls.Add(lblRolNombre);
             pnlInfoUsuario.Controls.Add(pnlTabla);
@@ -295,12 +299,12 @@
             pnlInfoUsuario.Controls.Add(dtpFechaIngreso);
             pnlInfoUsuario.Controls.Add(lblFechaNacimiento);
             pnlInfoUsuario.Controls.Add(separador1);
-            pnlInfoUsuario.CustomizableEdges = customizableEdges17;
+            pnlInfoUsuario.CustomizableEdges = customizableEdges19;
             pnlInfoUsuario.Dock = DockStyle.Fill;
             pnlInfoUsuario.Font = new Font("Microsoft Sans Serif", 8.25F);
             pnlInfoUsuario.Location = new Point(0, 64);
             pnlInfoUsuario.Name = "pnlInfoUsuario";
-            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            pnlInfoUsuario.ShadowDecoration.CustomizableEdges = customizableEdges20;
             pnlInfoUsuario.Size = new Size(1011, 739);
             pnlInfoUsuario.TabIndex = 28;
             // 
@@ -308,7 +312,7 @@
             // 
             txtRolNombre.Animated = true;
             txtRolNombre.BorderRadius = 5;
-            txtRolNombre.CustomizableEdges = customizableEdges13;
+            txtRolNombre.CustomizableEdges = customizableEdges15;
             txtRolNombre.DefaultText = "Ingrese nombre del Rol";
             txtRolNombre.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtRolNombre.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -323,7 +327,7 @@
             txtRolNombre.Name = "txtRolNombre";
             txtRolNombre.PlaceholderText = "";
             txtRolNombre.SelectedText = "";
-            txtRolNombre.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            txtRolNombre.ShadowDecoration.CustomizableEdges = customizableEdges16;
             txtRolNombre.Size = new Size(272, 36);
             txtRolNombre.TabIndex = 61;
             // 
@@ -342,10 +346,10 @@
             // 
             pnlTabla.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlTabla.Controls.Add(dataGridPermisos);
-            pnlTabla.CustomizableEdges = customizableEdges15;
+            pnlTabla.CustomizableEdges = customizableEdges17;
             pnlTabla.Location = new Point(13, 245);
             pnlTabla.Name = "pnlTabla";
-            pnlTabla.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            pnlTabla.ShadowDecoration.CustomizableEdges = customizableEdges18;
             pnlTabla.Size = new Size(981, 482);
             pnlTabla.TabIndex = 60;
             // 
@@ -402,6 +406,26 @@
             dataGridPermisos.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
             dataGridPermisos.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
             // 
+            // btnExcel
+            // 
+            btnExcel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnExcel.Animated = true;
+            btnExcel.CustomizableEdges = customizableEdges13;
+            btnExcel.DisabledState.BorderColor = Color.DarkGray;
+            btnExcel.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnExcel.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnExcel.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnExcel.FillColor = Color.DimGray;
+            btnExcel.Font = new Font("Century Gothic", 12F, FontStyle.Bold);
+            btnExcel.ForeColor = Color.White;
+            btnExcel.Location = new Point(821, 194);
+            btnExcel.Name = "btnExcel";
+            btnExcel.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            btnExcel.Size = new Size(162, 45);
+            btnExcel.TabIndex = 71;
+            btnExcel.Text = "Exportar a Excel";
+            btnExcel.Click += btnExcel_Click;
+            // 
             // frmGestionCreacionRoles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -437,5 +461,6 @@
         private Guna.UI2.WinForms.Guna2DataGridView dataGridPermisos;
         private Guna.UI2.WinForms.Guna2TextBox txtRolNombre;
         private Label lblRolNombre;
+        private Guna.UI2.WinForms.Guna2Button btnExcel;
     }
 }

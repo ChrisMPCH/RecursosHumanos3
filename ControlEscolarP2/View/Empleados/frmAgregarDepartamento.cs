@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
-using RecursosHumanos.Bussines;
-using RecursosHumanos.Controller;
-using RecursosHumanos.Data;
-using RecursosHumanos.Model;
-using RecursosHumanos.Models;
+using RecursosHumanosCore.Bussines;
+using RecursosHumanosCore.Controller;
+using RecursosHumanosCore.Data;
+using RecursosHumanosCore.Model;
+using RecursosHumanosCore.Models;
 using RecursosHumanos.Utilities;
+using RecursosHumanosCore.Utilities;
 
 namespace RecursosHumanos.View
 {
@@ -100,13 +101,13 @@ namespace RecursosHumanos.View
                 EmailDepartamento = txtCorreo.Text.Trim(),
                 Estatus = true
             };
+            int idUsuario = LoggingManager.UsuarioActual.Id_Usuario;
+            var (idDepartamento, mensaje) = controller.RegistrarDepartamento(nuevoDepartamento, idUsuario);
 
-            var (idDepartamento, mensaje) = controller.RegistrarDepartamento(nuevoDepartamento);
             if (idDepartamento > 0)
             {
                 MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                MDIRecursosHumanos mid = new MDIRecursosHumanos();
-                mid.BloquearBotonesMenu();
+                MDIRecursosHumanos.BloquearBotonesMenu();
                 InicializarCampos();
                 DesbloquearCampos(true);
                 Form frmGuardarInf = new frmGuardarInformacion();

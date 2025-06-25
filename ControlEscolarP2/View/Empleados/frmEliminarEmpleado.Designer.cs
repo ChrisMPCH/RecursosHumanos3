@@ -74,7 +74,6 @@
             // 
             // pnlInfoEsmpleado
             // 
-            pnlInfoEsmpleado.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pnlInfoEsmpleado.BackColor = Color.White;
             pnlInfoEsmpleado.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             pnlInfoEsmpleado.Controls.Add(dtpFechaBaja);
@@ -92,6 +91,7 @@
             pnlInfoEsmpleado.Controls.Add(guna2Separator1);
             pnlInfoEsmpleado.Controls.Add(lblBienvenida2);
             pnlInfoEsmpleado.CustomizableEdges = customizableEdges17;
+            pnlInfoEsmpleado.Dock = DockStyle.Fill;
             pnlInfoEsmpleado.Location = new Point(0, 61);
             pnlInfoEsmpleado.Name = "pnlInfoEsmpleado";
             pnlInfoEsmpleado.ShadowDecoration.CustomizableEdges = customizableEdges18;
@@ -113,7 +113,7 @@
             dtpFechaBaja.Name = "dtpFechaBaja";
             dtpFechaBaja.RightToLeft = RightToLeft.No;
             dtpFechaBaja.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            dtpFechaBaja.Size = new Size(121, 31);
+            dtpFechaBaja.Size = new Size(252, 31);
             dtpFechaBaja.TabIndex = 13;
             dtpFechaBaja.Value = new DateTime(2025, 3, 7, 0, 3, 12, 692);
             // 
@@ -249,6 +249,7 @@
             // 
             // btmBuscarM
             // 
+            btmBuscarM.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btmBuscarM.CustomizableEdges = customizableEdges13;
             btmBuscarM.DisabledState.BorderColor = Color.DarkGray;
             btmBuscarM.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -267,6 +268,7 @@
             // 
             // btnEliminar
             // 
+            btnEliminar.Anchor = AnchorStyles.Right;
             btnEliminar.CustomizableEdges = customizableEdges15;
             btnEliminar.DisabledState.BorderColor = Color.DarkGray;
             btnEliminar.DisabledState.CustomBorderColor = Color.DarkGray;

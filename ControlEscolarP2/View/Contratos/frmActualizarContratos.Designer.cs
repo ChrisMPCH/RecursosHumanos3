@@ -345,6 +345,7 @@
             txtMatriculaA.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
             txtMatriculaA.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             txtMatriculaA.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtMatriculaA.Enabled = false;
             txtMatriculaA.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtMatriculaA.Font = new Font("Segoe UI", 9.75F);
             txtMatriculaA.HoverState.BorderColor = Color.FromArgb(94, 148, 255);

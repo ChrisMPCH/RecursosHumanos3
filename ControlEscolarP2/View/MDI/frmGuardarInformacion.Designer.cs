@@ -225,8 +225,8 @@
         private Guna.UI2.WinForms.Guna2Button btnCancelar;
         private Guna.UI2.WinForms.Guna2Button btnUsuario;
         private Label lblGuardar;
-        private Guna.UI2.WinForms.Guna2Button btnRegitrarEmpleado;
-        private Guna.UI2.WinForms.Guna2Button btnRegistrarUsuario;
+        public static Guna.UI2.WinForms.Guna2Button btnRegitrarEmpleado;
+        public static Guna.UI2.WinForms.Guna2Button btnRegistrarUsuario;
         public Guna.UI2.WinForms.Guna2GradientPanel pnlCambiante;
     }
 }
